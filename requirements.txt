@@ -1,0 +1,34 @@
+# Core NLP & ML
+torch>=2.0
+transformers>=4.30
+sentence-transformers>=2.2
+scikit-learn>=1.3
+
+# Vietnamese NLP
+vncorenlp
+underthesea
+
+# Data processing
+pandas>=2.0
+numpy>=1.24
+pyarrow
+
+# Visualization
+matplotlib>=3.7
+seaborn>=0.12
+
+# PDF extraction
+pdfplumber
+PyPDF2
+
+# Statistics
+scipy>=1.11
+
+# Config
+pyyaml
+
+# Environment
+python-dotenv
+
+google-genai
+dotenv
