@@ -1,0 +1,6 @@
+Topic,Total Sentences,Implemented,Planning,Indeterminate,Implemented %,Planning %,Indeterminate %,Washing Rate,Evidence Rate,Mean ES
+G,21527,6330,605,14592,29.4,2.8,67.8,0.706,0.313,0.4674
+S_labor,6883,2263,160,4460,32.9,2.3,64.8,0.6712,0.3048,0.437
+E,4699,1935,285,2479,41.2,6.1,52.8,0.5882,0.5565,0.4482
+S_community,2934,1259,71,1604,42.9,2.4,54.7,0.5709,0.4468,0.4382
+S_product,8881,3868,465,4548,43.6,5.2,51.2,0.5645,0.3398,0.4395

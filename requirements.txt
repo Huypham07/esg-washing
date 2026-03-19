@@ -29,3 +29,6 @@ pyyaml
 
 # Environment
 python-dotenv
+
+google-genai
+dotenv
