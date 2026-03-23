@@ -1,24 +1,3 @@
-"""
-Topic-Level EWRI Analysis
-
-The core justification for using 6 ESG subtopics:
-shows that washing risk varies significantly ACROSS topics,
-revealing which ESG dimensions banks tend to "wash" most.
-
-Key outputs:
-1. Washing rate per topic: % Indeterminate/Planning per topic
-2. EWRI per topic per bank: heatmap showing where washing concentrates
-3. Cross-tabulation: Topic × Actionability distribution
-4. Statistical test: chi-square for independence between topic and washing
-
-This answers: "Which ESG areas are most prone to washing?"
-and justifies why a 3-label E/S/G split is insufficient.
-
-Usage:
-    python src/evaluation/topic_ewri_analysis.py \
-        --data data/corpus/esg_sentences_enhanced.parquet
-"""
-
 import argparse
 import pandas as pd
 import numpy as np

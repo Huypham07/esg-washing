@@ -1,15 +1,3 @@
-"""
-Claim-Evidence Linking Module
-
-This module implements semantic similarity-based linking between ESG claims
-and supporting evidence sentences using sentence embeddings.
-
-Key improvement over regex-only approach:
-- Uses NLP (embeddings) to find semantically related evidence
-- Computes continuous similarity scores instead of binary matching
-- Enables explicit claim→evidence mapping for academic contribution
-"""
-
 import pandas as pd
 import numpy as np
 from pathlib import Path

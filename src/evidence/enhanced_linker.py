@@ -1,32 +1,3 @@
-"""
-Enhanced Claim-Evidence Linking Module (v2)
-
-Improvements over the original claim_evidence_linker.py:
-
-1. **Document-level search with TF-IDF pre-filtering**:
-   - Instead of fixed ±5 window, searches ALL sentences in the same document
-   - Uses TF-IDF to pre-filter top-K candidates, then semantic similarity
-   - Captures long-range evidence (e.g., claim in intro, evidence in appendix)
-
-2. **Multi-evidence aggregation**:
-   - Links each claim to TOP-K supporting evidence (not just best match)
-   - Aggregates evidence strength from multiple sources
-   - More robust than single-match approach
-
-3. **NLI verification (optional)**:
-   - Uses NLI model/rules to verify entailment between claim and evidence
-   - Filters out high-similarity but non-supporting sentences
-   - Adds entailment_score to evidence strength formula
-
-Enhanced Evidence Strength formula:
-    ES_v2 = w_sim × max_sim + w_R × R(e) + w_nli × NLI(claim, evidence)
-    
-Where:
-    - w_sim = 0.35 (semantic similarity weight)
-    - w_R   = 0.35 (rule-based evidence weight)
-    - w_nli = 0.30 (NLI entailment weight)
-"""
-
 import pandas as pd
 import numpy as np
 from pathlib import Path

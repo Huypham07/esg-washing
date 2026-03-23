@@ -1,21 +1,3 @@
-"""
-Unified Evaluation Framework for ESG-Washing Detection Methods
-
-Compares all methods on the Gold Set:
-1. Keyword-only baseline (Florstedt 2025)
-2. TF-IDF + Sentiment baseline (Lagasio 2024 ESGSI)
-3. Green-Washing BERT baseline (adapted for Vietnamese)
-4. Proposed neuro-symbolic framework (EVINCE)
-
-Metrics:
-- Precision, Recall, F1 (per-class and macro/weighted)
-- Cohen's Kappa
-- McNemar's test for statistical significance
-
-Usage:
-    python baselines/evaluation.py --gold-set data/labels/gold_set.parquet
-"""
-
 import argparse
 import pandas as pd
 import numpy as np

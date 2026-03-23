@@ -1,27 +1,3 @@
-"""
-NLI-based Evidence Verifier for ESG Claim-Evidence Linking
-
-Uses a cross-lingual Natural Language Inference (NLI) model to verify 
-whether a candidate evidence sentence actually supports (entails) the claim,
-rather than just being semantically similar.
-
-Three NLI labels:
-- Entailment: Evidence supports the claim → strong evidence
-- Neutral: Evidence is related but doesn't directly support → weak evidence  
-- Contradiction: Evidence contradicts the claim → negative signal
-
-This addresses a key weakness of cosine-similarity-only approaches:
-high similarity ≠ logical support (e.g., "We plan to reduce emissions" 
-and "We have not reduced emissions" are similar but contradictory).
-
-Model: joeddav/xlm-roberta-large-xnli (cross-lingual, supports Vietnamese)
-Fallback: MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7
-
-References:
-    Conneau et al. (2018). XNLI: Evaluating Cross-lingual Sentence Representations
-    Laurer et al. (2022). Less Annotating, More Classifying (mDeBERTa NLI)
-"""
-
 import numpy as np
 import torch
 from typing import List, Dict, Tuple, Optional

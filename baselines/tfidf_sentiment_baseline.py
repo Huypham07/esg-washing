@@ -1,19 +1,3 @@
-"""
-Baseline 2: TF-IDF + Sentiment Analysis for ESG-Washing Detection
-Inspired by Lagasio (2024) ESG-washing Severity Index (ESGSI)
-
-Approach:
-- Uses TF-IDF features to measure content depth/specificity
-- Uses sentiment analysis to measure positivity
-- ESG-washing = high positivity + low content depth
-- Computes ESGSI = Sentiment_Gap × (1 - Specificity)
-
-Reference:
-    Lagasio, V. (2024). ESG-washing Severity Index: A Text-Mining
-    Analysis of Sustainability Reports. Sapienza University of Rome.
-    Available at: ResearchGate / REPEC.
-"""
-
 import re
 import pandas as pd
 import numpy as np

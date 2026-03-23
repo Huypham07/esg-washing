@@ -1,30 +1,3 @@
-"""
-Grounded Labeling Rules for ESG Topic Classification and Actionability
-
-All rules in this module are derived from established academic sources:
-- GRI Standards (2021): Topic taxonomy for E/S/G classification
-- UN SDGs: Sustainable Development Goals keyword mapping
-- Hyland (2005): Hedging/boosting indicators for vagueness detection
-- Bloom's Taxonomy: Action verb hierarchy for actionability classification
-- Florstedt, Fahlbusch & Sontheimer (2025): Greenwashing indicators
-
-References:
-[1] GRI (2021). GRI Universal Standards 2021. Global Reporting Initiative.
-    https://www.globalreporting.org/standards/
-[2] UN (2015). Transforming our world: The 2030 Agenda for Sustainable
-    Development Goals (SDGs).
-[3] Hyland, K. (2005). Metadiscourse: Exploring Interaction in Writing.
-    Continuum, London.
-[4] Florstedt, J., Fahlbusch, C. & Sontheimer, M. (2025). Detecting
-    Greenwashing in ESG Reports: A Comparative Analysis of Machine
-    Learning Methods in Traffic-Related Emissions Disclosure.
-    ACL Anthology.
-[5] Crismore, A., Markkanen, R. & Steffensen, M.S. (1993). Metadiscourse
-    in Persuasive Writing. Written Communication, 10(1), 39-71.
-[6] Anderson, L.W. & Krathwohl, D.R. (2001). A Taxonomy for Learning,
-    Teaching, and Assessing: A Revision of Bloom's Taxonomy. Longman.
-"""
-
 import re
 from dataclasses import dataclass, field
 from typing import List, Optional

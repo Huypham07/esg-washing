@@ -1,32 +1,9 @@
-"""
-Baseline 3: Weak Supervision + BERT Binary Classifier
-Inspired by Green-Washing repo approach
-
-Approach:
-- Uses weak supervision labels based on sentence category:
-  - Evidence-based: has_metric=True → label 0
-  - Grey-area: action without metric → label 1
-  - Greenwashing-prone: vision/marketing without evidence → label 2
-- Fine-tunes PhoBERT for binary classification (substantive vs. wash)
-- Adapted from the Green-Washing repo for Vietnamese banking context
-
-Reference:
-    Green-Washing repo (https://github.com/...) using BERT + weak supervision
-    Original: bert-base-uncased, adapted to PhoBERT for Vietnamese
-"""
-
 import re
 import pandas as pd
 import numpy as np
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-
-# ============================================================
-# CATEGORY CLASSIFICATION (from Green-Washing repo)
-# ============================================================
-
-# Role patterns adapted from atomic_extractor.py in Green-Washing
 ROLE_PATTERNS = {
     "metric": re.compile(
         r"\b\d+(\.\d+)?\s*(%|tấn|kg|tỷ|triệu|nghìn|kWh|MWh|CO2|VND|USD)\b",

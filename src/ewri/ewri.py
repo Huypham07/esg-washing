@@ -1,12 +1,3 @@
-"""
-Module 5: EWRI (ESG-Washing Risk Index)
-Calculate washing risk scores for each bank-year based on Actionability and Evidence.
-
-EWRI = Symbolic_Ratio × (1 - Evidence_Ratio) × 100
-- High EWRI → More Indeterminate + Less evidence → High washing risk
-- Low EWRI → More Implemented + More evidence → Substantive disclosure
-"""
-
 import pandas as pd
 import numpy as np
 from pathlib import Path

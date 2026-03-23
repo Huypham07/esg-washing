@@ -1,20 +1,3 @@
-"""
-Weight Tuning via Grid Search
-
-Tunes the heuristic weights (w_text, w_ctx, threshold) in the grounded rules
-using grid search on the validation/gold set to find optimal values.
-
-Reports:
-- Best weight configuration for each task (topic, actionability)
-- Sensitivity heatmap: how much F1 changes across weight choices
-- If F1 is stable → proves pipeline is robust to weight selection
-
-Usage:
-    python src/evaluation/weight_tuning.py \
-        --task topic \
-        --gold data/labels/topic_gold.parquet
-"""
-
 import argparse
 import itertools
 import pandas as pd

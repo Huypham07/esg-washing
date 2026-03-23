@@ -1,22 +1,3 @@
-"""
-Baseline 1: Keyword-Only ESG-Washing Detection
-Inspired by Florstedt, Fahlbusch & Sontheimer (2025)
-
-Approach:
-- Uses keyword matching ONLY (no neural models)
-- Classifies sentences by presence of vague vs. substantive language
-- Computes washing risk as ratio of vague/unsubstantiated claims
-
-This serves as the simplest baseline to compare against the proposed
-neuro-symbolic framework.
-
-Reference:
-    Florstedt, J., Fahlbusch, C. & Sontheimer, M. (2025). Detecting
-    Greenwashing in ESG Reports: A Comparative Analysis of Machine
-    Learning Methods in Traffic-Related Emissions Disclosure.
-    ACL Anthology.
-"""
-
 import re
 import pandas as pd
 import numpy as np

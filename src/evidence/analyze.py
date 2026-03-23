@@ -1,8 +1,3 @@
-"""
-Module 4: Evidence Analysis
-Cross-tab Actionability × Evidence and sensitivity analysis for paper.
-"""
-
 import pandas as pd
 import numpy as np
 from pathlib import Path

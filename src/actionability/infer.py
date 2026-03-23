@@ -1,8 +1,3 @@
-"""
-Step 3.6: Inference Actionability on full ESG corpus
-Output: esg_sentences_with_actionability.parquet
-"""
-
 import torch
 import pandas as pd
 from pathlib import Path

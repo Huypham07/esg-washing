@@ -1,15 +1,3 @@
-"""
-Module 4: Evidence Detection for ESG Claims
-Detects verifiable evidence elements that support ESG disclosures.
-
-Evidence Types:
-- KPI: Quantitative metrics (%, tons, kWh, etc.)
-- Standard: International frameworks (GRI, SBTi, ISO, SDG)
-- Time-bound: Specific time references
-- Third-party: External verification
-- Initiative: Named programs/projects
-"""
-
 import re
 import pandas as pd
 from pathlib import Path

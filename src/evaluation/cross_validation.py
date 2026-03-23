@@ -1,18 +1,3 @@
-"""
-K-Fold Stratified Cross-Validation for ESG Classifiers
-
-Provides rigorous evaluation of both ESG Topic Classifier and
-Actionability Classifier using stratified k-fold cross-validation.
-
-Reports mean ± std for each metric across folds.
-
-Usage:
-    python src/evaluation/cross_validation.py \
-        --data data/labels/gold_set_topic.parquet \
-        --task topic \
-        --k 5
-"""
-
 import argparse
 import pandas as pd
 import numpy as np
