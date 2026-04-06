@@ -107,8 +107,8 @@ def create_hybrid_labels(min_confidence: float = 0.5) -> pd.DataFrame:
             label_sources.append("none")
             n_unlabeled += 1
     
-    df["label"] = final_topics
-    df["confidence"] = final_confs
+    df["topic_label"] = final_topics
+    df["topic_confidence"] = final_confs
     df["label_source"] = label_sources
     
     # ---- Agreement Stats ----
@@ -135,15 +135,15 @@ def create_hybrid_labels(min_confidence: float = 0.5) -> pd.DataFrame:
         print(f"  Cohen's Kappa: {kappa:.4f}")
     
     # ---- Confidence Filter ----
-    df_labeled = df[df["label"].notna()].copy()
-    df_filtered = df_labeled[df_labeled["confidence"] >= min_confidence].copy()
+    df_labeled = df[df["topic_label"].notna()].copy()
+    df_filtered = df_labeled[df_labeled["topic_confidence"] >= min_confidence].copy()
     
     print(f"\n=== CONFIDENCE FILTERING (>= {min_confidence}) ===")
     print(f"  Before: {len(df_labeled):,}")
     print(f"  After:  {len(df_filtered):,} ({len(df_filtered)/max(len(df_labeled),1)*100:.1f}%)")
     
     print(f"\n=== FINAL LABEL DISTRIBUTION ===")
-    print(df_filtered["label"].value_counts())
+    print(df_filtered["topic_label"].value_counts())
     
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     cols_to_keep = [c for c in df_filtered.columns if not c.startswith("_") and c not in ["llm_label", "llm_confidence", "llm_reason", "rule_label", "rule_source", "label_source"]]
@@ -157,13 +157,13 @@ def prepare_splits(df: pd.DataFrame, val_ratio: float = 0.1, test_ratio: float =
     
     # First split off test
     train_val, test = train_test_split(
-        df, test_size=test_ratio, stratify=df["label"], random_state=seed
+        df, test_size=test_ratio, stratify=df["topic_label"], random_state=seed
     )
     
     # Then split remain into train/val
     val_rel_ratio = val_ratio / (1.0 - test_ratio)
     train, val = train_test_split(
-        train_val, test_size=val_rel_ratio, stratify=train_val["label"], random_state=seed
+        train_val, test_size=val_rel_ratio, stratify=train_val["topic_label"], random_state=seed
     )
     
     train.to_parquet(OUTPUT_PATH / "train.parquet", index=False)
@@ -181,12 +181,8 @@ def prepare_splits(df: pd.DataFrame, val_ratio: float = 0.1, test_ratio: float =
 def create_esg_subset(df: pd.DataFrame):
     print(f"\n=== CREATING ESG SUBSET ===")
     # Filter out Non_ESG
-    esg_df = df[df["label"] != "Non_ESG"].copy()
-    
-    esg_df = esg_df.rename(columns={
-        "label": "topic_label",
-        "confidence": "topic_confidence"
-    })
+    esg_df = df[df["topic_label"] != "Non_ESG"].copy()
+
     esg_path = Path("data/corpus/esg_sentences.parquet")
     esg_path.parent.mkdir(parents=True, exist_ok=True)
     esg_df.to_parquet(esg_path, index=False)

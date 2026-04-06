@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass, field
 import warnings
+from tqdm.auto import tqdm
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity as sklearn_cosine
@@ -18,10 +19,8 @@ EVIDENCE_VARIANTS = {
         "similarity_threshold": 0.5,
         "top_k_evidence": 3,
         "use_nli": True,
-        "nli_mode": "model",
-        "weight_config": "default",
     },
-    # legacy-style local retrieval (no doc-level, no NLI)
+    # Local window retrieval only (no doc-level, no NLI)
     "window": {
         "window_size": 5,
         "document_level": False,
@@ -29,10 +28,8 @@ EVIDENCE_VARIANTS = {
         "similarity_threshold": 0.5,
         "top_k_evidence": 1,
         "use_nli": False,
-        "nli_mode": "model",
-        "weight_config": "no_nli",
     },
-    # same retrieval settings as main variant but without NLI
+    # Document + window retrieval without NLI
     "no_nli": {
         "window_size": 5,
         "document_level": True,
@@ -40,8 +37,6 @@ EVIDENCE_VARIANTS = {
         "similarity_threshold": 0.5,
         "top_k_evidence": 3,
         "use_nli": False,
-        "nli_mode": "model",
-        "weight_config": "no_nli",
     },
 }
 
@@ -50,7 +45,7 @@ EVIDENCE_VARIANTS = {
 class ClaimEvidenceLink:
     claim_id: str
     claim_text: str
-    actionability: str
+    action_label: str
     
     # Primary (best) evidence
     evidence_found: bool
@@ -73,14 +68,18 @@ class ClaimEvidenceLink:
 
 
 class ClaimEvidenceLinker:
-    # Weight configurations for evidence strength
-    WEIGHT_CONFIGS = {
-        "default": {"w_sim": 0.35, "w_R": 0.35, "w_nli": 0.30},
-        "no_nli": {"w_sim": 0.50, "w_R": 0.50, "w_nli": 0.00},
-        "nli_heavy": {"w_sim": 0.25, "w_R": 0.25, "w_nli": 0.50},
-        "sim_heavy": {"w_sim": 0.50, "w_R": 0.30, "w_nli": 0.20},
-    }
-    
+    """
+    Link ESG claims to supporting evidence sentences using:
+    1. Window-based local retrieval (proximity context)
+    2. Document-level TF-IDF pre-filtering (global context)
+    3. Semantic similarity ranking (sentence-transformers)
+    4. Optional NLI verification (mDeBERTa-xnli)
+
+    Outputs raw linking signals (similarity, NLI, evidence types).
+    The unified Evidence Strength (ES) is computed downstream by the
+    EWRI module, following GRI (2021) and Cho et al. (2012).
+    """
+
     def __init__(
         self,
         model_name: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
@@ -90,8 +89,6 @@ class ClaimEvidenceLinker:
         similarity_threshold: float = 0.5,
         top_k_evidence: int = 3,
         use_nli: bool = True,
-        nli_mode: str = "model",
-        weight_config: str = "default",
         device: str = None,
     ):
         import torch
@@ -103,7 +100,7 @@ class ClaimEvidenceLinker:
         print(f"[EvidenceLinker] Loading: {model_name}")
         print(f"[EvidenceLinker] Device: {device}")
         print(f"[EvidenceLinker] Document-level: {document_level}, TF-IDF top-K: {tfidf_top_k}")
-        print(f"[EvidenceLinker] NLI: {use_nli} (mode={nli_mode})")
+        print(f"[EvidenceLinker] NLI: {use_nli}")
         print(f"[EvidenceLinker] Top-K evidence: {top_k_evidence}")
         
         self.model = SentenceTransformer(model_name, device=device)
@@ -113,32 +110,26 @@ class ClaimEvidenceLinker:
         self.similarity_threshold = similarity_threshold
         self.top_k_evidence = top_k_evidence
         self.use_nli = use_nli
-        self.nli_mode = nli_mode
         self.device = device
-        self.weights = self.WEIGHT_CONFIGS.get(weight_config, self.WEIGHT_CONFIGS["default"])
         
         # NLI verifier
         self._nli_verifier = None
         if use_nli:
-            self._init_nli(nli_mode)
+            self._init_nli()
         
         # Caches
         self._embeddings_cache = None
         self._tfidf_cache = {}
     
-    def _init_nli(self, mode: str):
-        """Initialize NLI verifier."""
+    def _init_nli(self):
+        """Initialize model-based NLI verifier (mDeBERTa-xnli)."""
         try:
-            from src.pipeline.nli_verifier import NLIVerifier, RuleBasedNLIVerifier
+            from src.pipeline.nli_verifier import NLIVerifier
         except Exception:
             from pipeline.nli_verifier import NLIVerifier
 
-        if mode == "model":
-            self._nli_verifier = NLIVerifier(entailment_threshold=0.5, device=self.device)
-            print("[EvidenceLinker] Using model-based NLI verifier")
-        elif mode == "rule":
-            self._nli_verifier = RuleBasedNLIVerifier(entailment_threshold=0.5)
-            print("[EvidenceLinker] Using rule-based NLI verifier")
+        self._nli_verifier = NLIVerifier(entailment_threshold=0.5, device=self.device)
+        print("[EvidenceLinker] NLI verifier initialized")
     
     def embed_sentences(self, texts: List[str], batch_size: int = 64) -> np.ndarray:
         """Embed sentences using sentence transformer."""
@@ -252,7 +243,7 @@ class ClaimEvidenceLinker:
             return ClaimEvidenceLink(
                 claim_id=f"{claim_row['bank']}_{claim_row['year']}_{claim_idx}",
                 claim_text=claim_text,
-                actionability=claim_row.get("actionability", "Unknown"),
+                action_label=claim_row.get("action_label", "Unknown"),
                 evidence_found=False,
                 best_evidence=None,
                 best_evidence_idx=None,
@@ -276,6 +267,7 @@ class ClaimEvidenceLinker:
         sorted_indices = np.argsort(boosted_similarities)[::-1]
         
         all_evidence = []
+        pre_candidates = []
         for rank, sort_idx in enumerate(sorted_indices[:self.top_k_evidence * 2]):
             sim = float(boosted_similarities[sort_idx])
             raw_sim = float(raw_similarities[sort_idx])
@@ -289,30 +281,49 @@ class ClaimEvidenceLinker:
             evidence_types = evidence_row.get("evidence_types", [])
             if not isinstance(evidence_types, list):
                 evidence_types = []
-            
-            # NLI verification
-            nli_score = 0.5  # default neutral
-            nli_label = "neutral"
-            
-            if self.use_nli and self._nli_verifier is not None:
-                nli_result = self._nli_verifier.verify_pair(claim_text, evidence_text)
-                nli_score = nli_result.entailment_score
-                nli_label = nli_result.label
-                
-                # Skip contradicting evidence
-                if nli_label == "contradiction" and nli_score < 0.2:
-                    continue
-            
-            all_evidence.append({
+
+            pre_candidates.append({
+                "rank": rank,
                 "evidence_idx": candidate_idx,
                 "evidence_text": evidence_text,
                 "raw_similarity": round(raw_sim, 4),
                 "boosted_similarity": round(sim, 4),
+                "evidence_types": evidence_types,
+                "is_local": abs(candidate_idx - claim_idx) <= self.window_size,
+            })
+
+        nli_by_rank = {}
+        if self.use_nli and self._nli_verifier is not None and pre_candidates:
+            claims_batch = [claim_text] * len(pre_candidates)
+            evidences_batch = [item["evidence_text"] for item in pre_candidates]
+            nli_results = self._nli_verifier.verify_batch(
+                claims_batch,
+                evidences_batch,
+                batch_size=16,
+                show_progress=False,
+            )
+            for item, nli_result in zip(pre_candidates, nli_results):
+                nli_by_rank[item["rank"]] = (
+                    float(nli_result.entailment_score),
+                    str(nli_result.label),
+                )
+
+        for item in pre_candidates:
+            nli_score, nli_label = nli_by_rank.get(item["rank"], (0.5, "neutral"))
+
+            if nli_label == "contradiction" and nli_score < 0.2:
+                continue
+
+            all_evidence.append({
+                "evidence_idx": item["evidence_idx"],
+                "evidence_text": item["evidence_text"],
+                "raw_similarity": item["raw_similarity"],
+                "boosted_similarity": item["boosted_similarity"],
                 "nli_score": round(nli_score, 4),
                 "nli_label": nli_label,
-                "evidence_types": evidence_types,
-                "rank": rank,
-                "is_local": abs(candidate_idx - claim_idx) <= self.window_size,
+                "evidence_types": item["evidence_types"],
+                "rank": item["rank"],
+                "is_local": item["is_local"],
             })
             
             if len(all_evidence) >= self.top_k_evidence:
@@ -323,7 +334,7 @@ class ClaimEvidenceLinker:
             return ClaimEvidenceLink(
                 claim_id=f"{claim_row['bank']}_{claim_row['year']}_{claim_idx}",
                 claim_text=claim_text,
-                actionability=claim_row.get("actionability", "Unknown"),
+                action_label=claim_row.get("action_label", "Unknown"),
                 evidence_found=False,
                 best_evidence=None,
                 best_evidence_idx=None,
@@ -345,7 +356,7 @@ class ClaimEvidenceLinker:
         return ClaimEvidenceLink(
             claim_id=f"{claim_row['bank']}_{claim_row['year']}_{claim_idx}",
             claim_text=claim_text,
-            actionability=claim_row.get("actionability", "Unknown"),
+            action_label=claim_row.get("action_label", "Unknown"),
             evidence_found=True,
             best_evidence=best["evidence_text"],
             best_evidence_idx=best["evidence_idx"],
@@ -358,44 +369,6 @@ class ClaimEvidenceLinker:
             evidence_types=list(all_ev_types),
             search_method=search_method,
         )
-    
-    def compute_evidence_strength(self, link: ClaimEvidenceLink) -> float:
-        """
-        Compute evidence strength (ES_v2) with multi-source scoring.
-        
-        ES_v2 = w_sim × max_sim + w_R × R(e) + w_nli × NLI(claim, evidence)
-        """
-        w_sim = self.weights["w_sim"]
-        w_R = self.weights["w_R"]
-        w_nli = self.weights["w_nli"]
-        
-        if not link.evidence_found:
-            return 0.0
-        
-        # Component 1: Semantic similarity (best match)
-        sim_component = w_sim * min(max(link.similarity_score, 0.0), 1.0)
-        
-        # Component 2: Rule-based evidence (count of evidence types)
-        valid_types = ["KPI", "Standard", "Time_bound", "Third_party"]
-        type_count = sum(1 for t in link.evidence_types if t in valid_types)
-        rule_component = w_R * min(type_count / 4.0, 1.0)
-        
-        # Component 3: NLI entailment
-        if self.use_nli:
-            nli_component = w_nli * min(max(link.nli_entailment_score, 0.0), 1.0)
-        else:
-            # Redistribute NLI weight
-            sim_component += w_nli * 0.5 * min(max(link.similarity_score, 0.0), 1.0)
-            rule_component += w_nli * 0.5 * min(type_count / 4.0, 1.0)
-            nli_component = 0.0
-        
-        # Multi-evidence bonus: more evidence = more confidence
-        multi_bonus = 0.0
-        if link.num_evidence > 1:
-            multi_bonus = min(0.05 * (link.num_evidence - 1), 0.1)
-        
-        strength = sim_component + rule_component + nli_component + multi_bonus
-        return min(strength, 1.0)
     
     def link_corpus(
         self,
@@ -420,18 +393,14 @@ class ClaimEvidenceLinker:
         
         # Link each claim
         results = []
-        for idx in range(len(df)):
-            if idx % 500 == 0:
-                print(f"  Linking {idx}/{len(df)}...")
-            
+        for idx in tqdm(range(len(df)), desc="Linking claims"):
             link = self.link_claim_to_evidence(idx, df, embeddings, text_column)
-            es_v2 = self.compute_evidence_strength(link)
-            
+
             results.append({
                 "claim_id": link.claim_id,
                 "claim_idx": idx,
                 "claim_text": link.claim_text,
-                "actionability": link.actionability,
+                "action_label": link.action_label,
                 "evidence_found": link.evidence_found,
                 "best_evidence": link.best_evidence,
                 "best_evidence_idx": link.best_evidence_idx,
@@ -442,16 +411,14 @@ class ClaimEvidenceLinker:
                 "nli_label": link.nli_label,
                 "evidence_types": link.evidence_types,
                 "search_method": link.search_method,
-                "evidence_strength_v2": es_v2,
             })
-        
+
         result_df = pd.DataFrame(results)
-        
+
         # Summary
         found = result_df["evidence_found"].sum()
         print(f"\n[EvidenceLinker] Evidence found: {found}/{len(result_df)} ({100*found/len(result_df):.1f}%)")
         print(f"[EvidenceLinker] Avg similarity: {result_df['similarity_score'].mean():.3f}")
-        print(f"[EvidenceLinker] Avg ES_v2: {result_df['evidence_strength_v2'].mean():.3f}")
         
         if self.use_nli:
             entails = (result_df["nli_label"] == "entailment").sum()
@@ -486,15 +453,3 @@ def run_linking_variant(
             raise ValueError("Input dataframe must contain either 'sentence' or 'text' column")
 
     return linker.link_corpus(df, text_column=text_column)
-
-
-
-
-
-if __name__ == "__main__":
-    print("Claim-Evidence Linker (v2)")
-    print("=" * 50)
-    print("Usage:")
-    print("  from src.pipeline.evidence_linker import ClaimEvidenceLinker")
-    print("  linker = ClaimEvidenceLinker()")
-    print("  results = linker.link_corpus(df)")

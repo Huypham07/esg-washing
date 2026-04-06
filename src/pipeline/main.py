@@ -8,9 +8,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.training.corpus.build_corpus import build as build_corpus
 from src.pipeline.evidence_experiments import apply_evidence_variant, run_experiments
-from src.pipeline.ewri import calculate_bank_year_ewri, scores_to_dataframe, EWRIScore
+from src.pipeline.ewri import (
+    calculate_bank_year_ewri, scores_to_dataframe, EWRIScore,
+    enrich_with_risk_scores, print_ewri_summary,
+)
 from src.training.neuro_symbolic import SymbolicReasoner, create_constrained_inference
 from src.pipeline.report import ESGWashingReport, generate_report
+from src.pipeline.analysis import run_full_analysis, save_analysis, print_analysis_summary
 
 
 def load_pipeline_config(config_path: str = "config/pipeline.yml") -> dict:
@@ -159,12 +163,10 @@ class ESGWashingPipeline:
             for aug in augmented:
                 all_labels.append(aug.label)
                 all_probs.append(aug.confidence)
-                all_explanations.append("; ".join(aug.explanations[:2]))
         
         df = df.copy()
         df["topic_label"] = all_labels
-        df["topic_prob"] = all_probs
-        df["topic_explanation"] = all_explanations
+        df["topic_confidence"] = all_probs
         
         print(f"\nTopic distribution:")
         print(df["topic_label"].value_counts())
@@ -208,153 +210,177 @@ class ESGWashingPipeline:
                 all_probs.append(aug.confidence)
                 all_explanations.append("; ".join(aug.explanations[:2]))
         
-        esg_df["action_pred"] = all_labels
-        esg_df["action_prob"] = all_probs
-        esg_df["action_explanation"] = all_explanations
+        esg_df["action_label"] = all_labels
+        esg_df["action_confidence"] = all_probs
         
         print(f"\nActionability distribution:")
-        print(esg_df["action_pred"].value_counts())
+        print(esg_df["action_label"].value_counts())
         
         return esg_df
     
     def evidence_extr(self, df: pd.DataFrame, evidence_variant: str = "nli") -> pd.DataFrame:
         print("\n" + "="*60)
-        print(f"Evidence Detection - Linking [{evidence_variant}]")
+        print(f"Evidence Detection + Linking [{evidence_variant}]")
         print("="*60)
 
         df = apply_evidence_variant(df, variant=evidence_variant)
         has_ev = int(df["has_evidence"].sum()) if "has_evidence" in df.columns else 0
         print(f"Sentences with evidence: {has_ev:,} / {len(df):,} ({100*has_ev/max(len(df),1):.1f}%)")
         return df
-    
+
     def ewri(self, df: pd.DataFrame) -> tuple[pd.DataFrame, list[EWRIScore]]:
         print("\n" + "="*60)
         print("EWRI Calculation")
         print("="*60)
-        
+
+        # Enrich with per-sentence risk scores
+        df = enrich_with_risk_scores(df)
+
+        # Calculate bank-year EWRI
         scores = calculate_bank_year_ewri(df)
         df_scores = scores_to_dataframe(scores)
         df_scores = df_scores.sort_values("ewri", ascending=False)
-        
-        print(f"Total bank-years: {len(df_scores)}")
-        print(f"Average EWRI: {df_scores['ewri'].mean():.2f}")
-        print(df_scores[["bank", "year", "ewri", "risk_level"]].to_string(index=False))
-        
-        return df_scores, scores
-    
-    def report(
+
+        # Print summary
+        print_ewri_summary(df_scores, scores)
+
+        return df, df_scores, scores
+
+    def analysis(
         self, df: pd.DataFrame, ewri_scores: list[EWRIScore], df_scores: pd.DataFrame
-    ) -> ESGWashingReport:
-        """Step 6: Generate structured report."""
+    ) -> dict:
+        """Run comprehensive ESG-washing analysis."""
         print("\n" + "="*60)
-        print("STEP 6: Report Generation")
+        print("Comprehensive Analysis")
         print("="*60)
-        
-        report = generate_report(df, ewri_scores, df_scores)
-        
-        # Save outputs
+
+        analysis_results = run_full_analysis(df, ewri_scores, df_scores)
+        print_analysis_summary(analysis_results)
+
+        # Save analysis outputs
+        output_dir = self.config["paths"].get("analysis_dir", "outputs/analysis")
+        save_analysis(analysis_results, output_dir)
+
+        return analysis_results
+
+    def report(
+        self, df: pd.DataFrame, ewri_scores: list[EWRIScore], df_scores: pd.DataFrame,
+        analysis_results: Optional[dict] = None,
+    ) -> ESGWashingReport:
+        """Generate structured report with analysis."""
+        print("\n" + "="*60)
+        print("Report Generation")
+        print("="*60)
+
+        report = generate_report(df, ewri_scores, df_scores, analysis_results)
+
         output_dir = Path(self.config["paths"].get("report_dir", "outputs/reports"))
         output_dir.mkdir(parents=True, exist_ok=True)
-        
         report.save(output_dir)
         print(f"Report saved to: {output_dir}")
-        
+
         return report
-    
+
     def run(
         self,
         skip_corpus: bool = False,
         raw_txt_path: Optional[str] = None,
-        evidence_variant: str = "nli",
+        evidence_variant: Optional[str] = "nli",
         run_evidence_experiments: bool = False,
         evidence_experiment_variants: Optional[list[str]] = None,
+        skip_to_ewri: bool = False,
+        evidence_input: Optional[str] = None,
     ) -> dict:
         block_path = Path(self.config["paths"]["blocks"])
         sentences_path = Path(self.config["paths"]["sentences"])
         esg_sentences_path = Path(self.config["paths"]["esg_sentences"])
         actionability_sentences_path = Path(self.config["paths"]["actionability_sentences"])
 
-        corpus_df = None
-        if skip_corpus:
+        df = None
+
+        # ── Stage: Load or Build Data ──────────────────────────────
+        if skip_to_ewri and evidence_input:
+            # Load pre-computed evidence data directly
+            print(f"\n[Pipeline] Loading pre-computed evidence data: {evidence_input}")
+            df = pd.read_parquet(evidence_input)
+            print(f"[Pipeline] Loaded {len(df):,} rows")
+
+        elif skip_corpus:
             if not actionability_sentences_path.exists():
-                raise FileNotFoundError(f"file not found: {actionability_sentences_path}. Cannot skip corpus build.")
-
+                raise FileNotFoundError(
+                    f"File not found: {actionability_sentences_path}. Cannot skip corpus build."
+                )
             df = pd.read_parquet(actionability_sentences_path)
-            print(f"[Pipeline] Skip corpus enabled. Loaded: {actionability_sentences_path} ({len(df):,} rows)")
+            print(f"[Pipeline] Loaded classified sentences: {len(df):,} rows")
+
+            # ── Evidence ─────────────────────────────────────────
+            if run_evidence_experiments:
+                exp_output_dir = self.config["paths"].get(
+                    "evidence_experiments_dir", "outputs/experiments/evidence"
+                )
+                print("\n" + "=" * 60)
+                print("Running Evidence Experiments (Ablation)")
+                print("=" * 60)
+                summary_df = run_experiments(
+                    input_path=str(actionability_sentences_path),
+                    output_dir=exp_output_dir,
+                    variants=evidence_experiment_variants,
+                )
+                print(summary_df.to_string(index=False))
+
+                # Use primary variant for downstream
+                evidence_path = Path(exp_output_dir) / f"evidence_{evidence_variant}.parquet"
+                if evidence_path.exists():
+                    df = pd.read_parquet(evidence_path)
+                else:
+                    df = self.evidence_extr(df, evidence_variant=evidence_variant)
+            else:
+                df = self.evidence_extr(df, evidence_variant=evidence_variant)
         else:
+            # Full pipeline: build corpus → classify → evidence
             corpus_df = self.build_corpus(raw_txt_path=raw_txt_path)
-
-            if block_path.exists():
-                block_df = pd.read_parquet(block_path)
-                print(f"Loaded blocks: {len(block_df):,} rows")
-
-            if not sentences_path.exists():
-                raise FileNotFoundError(f"Sentences file not found after corpus build: {sentences_path}")
 
             sentences_df = pd.read_parquet(sentences_path)
             print(f"Loaded sentences: {len(sentences_df):,} rows")
 
             topic_df = self.topic_classification(sentences_df)
             esg_df = topic_df[topic_df["topic_label"] != "Non_ESG"].copy()
-
             esg_sentences_path.parent.mkdir(parents=True, exist_ok=True)
             esg_df.to_parquet(esg_sentences_path, index=False)
-            print(f"Saved ESG sentences: {esg_sentences_path} ({len(esg_df):,} rows)")
 
             df = self.actionability_classification(topic_df)
             actionability_sentences_path.parent.mkdir(parents=True, exist_ok=True)
             df.to_parquet(actionability_sentences_path, index=False)
-            print(f"Saved actionability sentences: {actionability_sentences_path} ({len(df):,} rows)")
 
-        if "label" in df.columns:
-            df = df.rename(columns={"label": "action_label"})
+            df = self.evidence_extr(df, evidence_variant=evidence_variant)
 
-        if run_evidence_experiments:
-            exp_output_dir = self.config["paths"].get("evidence_experiments_dir", "outputs/experiments/evidence")
-            exp_input_path = str(actionability_sentences_path if actionability_sentences_path.exists() else "")
-            if not exp_input_path:
-                tmp_path = Path("data/corpus/actionability_sentences_tmp.parquet")
-                tmp_path.parent.mkdir(parents=True, exist_ok=True)
-                df.to_parquet(tmp_path, index=False)
-                exp_input_path = str(tmp_path)
+        # ── EWRI ──────────────────────────────────────────────
+        df, df_scores, ewri_scores = self.ewri(df)
 
-            print("\n" + "=" * 60)
-            print("Running Evidence Experiments")
-            print("=" * 60)
-            summary_df = run_experiments(
-                input_path=exp_input_path,
-                output_dir=exp_output_dir,
-                variants=evidence_experiment_variants,
-            )
-            print(summary_df.to_string(index=False))
-        
-        # Evidence
-        df = self.evidence_extr(df, evidence_variant=evidence_variant)
-        
-        # Save intermediate
-        es_scored_path = Path(
+        # ── Analysis ──────────────────────────────────────────
+        analysis_results = self.analysis(df, ewri_scores, df_scores)
+
+        # ── Report ────────────────────────────────────────────
+        report = self.report(df, ewri_scores, df_scores, analysis_results)
+
+        # ── Save enriched data ────────────────────────────────
+        output_data_path = Path(
             self.config["paths"].get("es_scored", "data/corpus/esg_sentences_es_scored.parquet")
         )
-        es_scored_path.parent.mkdir(parents=True, exist_ok=True)
-        df.to_parquet(es_scored_path, index=False)
-        print(f"\nSaved evidence-scored corpus: {es_scored_path}")
-        
-        # EWRI
-        df_scores, ewri_scores = self.ewri(df)
-        
-        # Step 6: Report
-        report = self.report(df, ewri_scores, df_scores)
-        
+        output_data_path.parent.mkdir(parents=True, exist_ok=True)
+        df.to_parquet(output_data_path, index=False)
+        print(f"\nSaved enriched data: {output_data_path}")
+
         print("\n" + "=" * 60)
-        print("COMPLETE")
+        print("PIPELINE COMPLETE")
         print("=" * 60)
-        
+
         return {
-            "corpus": corpus_df,
             "esg_df": df,
             "ewri_scores": ewri_scores,
             "df_scores": df_scores,
             "report": report,
+            "analysis": analysis_results,
         }
 
 
@@ -386,6 +412,17 @@ if __name__ == "__main__":
         default=None,
         help="Comma-separated variants for experiment runner",
     )
+    parser.add_argument(
+        "--skip-to-ewri",
+        action="store_true",
+        help="Skip to EWRI stage; requires --evidence-input",
+    )
+    parser.add_argument(
+        "--evidence-input",
+        type=str,
+        default=None,
+        help="Path to pre-computed evidence parquet file (used with --skip-to-ewri)",
+    )
     args = parser.parse_args()
     experiment_variants = (
         [v.strip() for v in args.evidence_experiment_variants.split(",") if v.strip()]
@@ -400,4 +437,6 @@ if __name__ == "__main__":
         evidence_variant=args.evidence_variant,
         run_evidence_experiments=args.run_evidence_experiments,
         evidence_experiment_variants=experiment_variants,
+        skip_to_ewri=args.skip_to_ewri,
+        evidence_input=args.evidence_input,
     )

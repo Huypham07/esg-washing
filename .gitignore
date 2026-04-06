@@ -9,3 +9,5 @@ venv
 *.log
 .idea
 py_utils
+old
+olds

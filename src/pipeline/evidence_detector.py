@@ -1,31 +1,67 @@
+"""
+ESG Evidence Detection Module
+==============================
+
+Pattern-based detection of evidence elements in ESG disclosure text.
+
+Evidence Quality Hierarchy (GRI Standards, 2021; Cho et al., 2012):
+----------------------------------------------------------------------
+Tier 1 — Third_party (w=0.35): External verification/certification.
+    Strongest substantiation — independent, verifiable. (GRI 2-5)
+Tier 2 — KPI (w=0.30): Quantitative metrics with ESG relevance.
+    Measurable, comparable, falsifiable. (GRI 302/305)
+Tier 3 — Standard (w=0.20): References to normative frameworks.
+    Demonstrates awareness and alignment. (GRI 2-23)
+Tier 4 — Time_bound (w=0.15): Temporal specificity.
+    Adds concreteness but not independently verifiable. (GRI 3-3)
+
+References:
+    GRI (2021). GRI Universal Standards 2021.
+    Cho, C.H., et al. (2012). "The Role of Environmental Disclosure
+        Quality." J. Account. Public Policy, 31(1), 73-90.
+    Patten, D.M. (2002). "The relation between environmental performance
+        and environmental disclosure." Accounting, Orgs & Society.
+"""
+
 import re
 import pandas as pd
 from pathlib import Path
 from dataclasses import dataclass
-from typing import Optional
 
-ESG_SENTENCES_PATH = Path("data/corpus/esg_sentences_with_actionability.parquet")
-OUTPUT_PATH = Path("data/corpus/esg_sentences_with_evidence.parquet")
-
-# ============================================================
-# EVIDENCE PATTERNS
-# ============================================================
 
 @dataclass
 class EvidencePattern:
     name: str
     patterns: list[str]
-    weight: float  # Default weight (can be varied for sensitivity)
+    weight: float
 
 
 EVIDENCE_TYPES = {
+    "Third_party": EvidencePattern(
+        name="Third_party",
+        weight=0.35,  # Tier 1: External verification (GRI 2-5)
+        patterns=[
+            # Verification
+            r"\b(kiểm toán|audited?|xác nhận|verified|certified)\b",
+            r"\b(chứng nhận|certification|accreditation)\b",
+            r"\b(đánh giá độc lập|independent assessment)\b",
+            # Known auditors/verifiers
+            r"\b(Deloitte|PwC|KPMG|EY|Ernst\s*&\s*Young)\b",
+            r"\b(Bureau Veritas|DNV|SGS)\b",
+            r"\b(FiinRatings|Vietnam Credit)\b",
+            # External recognition
+            r"\b(giải thưởng|award|recognition)\b",
+            r"\b(top\s*\d+|ranking|xếp hạng)\b",
+        ],
+    ),
+
     "KPI": EvidencePattern(
         name="KPI",
-        weight=0.35,
+        weight=0.30,  # Tier 2: Quantitative, falsifiable (GRI 302/305)
         patterns=[
             # Numbers with units
             r"\d+[\.,]?\d*\s*(%|phần trăm|percent)",
-            r"\d+[\.,]?\d*\s*(tỷ|triệu|nghìn|ngàn)\s*(đồng|VND|USD)?",
+            r"\d+[\.,]?\d*\s*(tỷ|triệu)\s*(đồng|VND|USD)?",
             r"\d+[\.,]?\d*\s*(tấn|kg|ton|tonnes?)\s*(CO2|carbon)?",
             r"\d+[\.,]?\d*\s*(kWh|MWh|GWh|MW)",
             r"\d+[\.,]?\d*\s*(m2|m3|ha|hecta)",
@@ -40,7 +76,7 @@ EVIDENCE_TYPES = {
     
     "Standard": EvidencePattern(
         name="Standard",
-        weight=0.20,
+        weight=0.20,  # Tier 3: Normative framework (GRI 2-23)
         patterns=[
             # International standards
             r"\b(GRI\s*\d*|Global Reporting Initiative)\b",
@@ -61,7 +97,7 @@ EVIDENCE_TYPES = {
     
     "Time_bound": EvidencePattern(
         name="Time_bound",
-        weight=0.15,
+        weight=0.15,  # Tier 4: Temporal specificity (GRI 3-3)
         patterns=[
             # Specific years
             r"\b(năm|year)\s*(20\d{2})\b",
@@ -77,108 +113,28 @@ EVIDENCE_TYPES = {
         ],
     ),
     
-    "Third_party": EvidencePattern(
-        name="Third_party",
-        weight=0.25,
-        patterns=[
-            # Verification
-            r"\b(kiểm toán|audited?|xác nhận|verified|certified)\b",
-            r"\b(chứng nhận|certification|accreditation)\b",
-            r"\b(đánh giá độc lập|independent assessment)\b",
-            # Known auditors/verifiers
-            r"\b(Deloitte|PwC|KPMG|EY|Ernst\s*&\s*Young)\b",
-            r"\b(Bureau Veritas|DNV|SGS)\b",
-            r"\b(FiinRatings|Vietnam Credit)\b",
-            # External recognition
-            r"\b(giải thưởng|award|recognition)\b",
-            r"\b(top\s*\d+|ranking|xếp hạng)\b",
-        ],
-    ),
-    
-    "Initiative": EvidencePattern(
-        name="Initiative",
-        weight=0.05,
-        patterns=[
-            # Program/project names
-            r"\b(dự án|project|chương trình|program)\s+[A-ZĐÀÁẢÃẠ][a-zđàáảãạ]+",
-            r"\b(sáng kiến|initiative)\s+[A-ZĐÀÁẢÃẠ][a-zđàáảãạ]+",
-            # Named campaigns
-            r"\b(chiến dịch|campaign)\s+\"?[A-ZĐÀÁẢÃẠ][a-zđàáảãạ]+",
-            # Green/ESG branded
-            r"[A-Z][a-zA-Z]*\s*(Xanh|Green|ESG|Bền vững)\b",
-            r"\b(Green\s*[A-Z][a-z]+|Xanh\s*[A-ZĐÀÁẢÃẠ][a-z]+)\b",
-        ],
-    ),
 }
 
-# Weight configurations for sensitivity analysis
-WEIGHT_CONFIGS = {
-    "default": {"KPI": 0.35, "Standard": 0.20, "Time_bound": 0.15, "Third_party": 0.25, "Initiative": 0.05},
-    "kpi_heavy": {"KPI": 0.45, "Standard": 0.15, "Time_bound": 0.15, "Third_party": 0.20, "Initiative": 0.05},
-    "uniform": {"KPI": 0.20, "Standard": 0.20, "Time_bound": 0.20, "Third_party": 0.20, "Initiative": 0.20},
-    "verif_heavy": {"KPI": 0.30, "Standard": 0.15, "Time_bound": 0.10, "Third_party": 0.40, "Initiative": 0.05},
-}
+# Evidence quality weights — GRI disclosure quality hierarchy
+QUALITY_WEIGHTS = {t: p.weight for t, p in EVIDENCE_TYPES.items()}
 
-# Revised weights for Neuro-Symbolic approach (User specification 2026-01-20)
-# Only 4 rule types now: KPI, Standard, Time_bound, Third_party
-EVIDENCE_SCORE_WEIGHTS = {
-    "w_sim": 0.5,    # Weight for similarity component
-    "w_R": 0.5,      # Weight for rule-based component (divided equally among 4 types)
-}
-
-# List of valid evidence types for the new formula
-VALID_EVIDENCE_TYPES = ["KPI", "Standard", "Time_bound", "Third_party"]
+# Valid evidence types
+VALID_EVIDENCE_TYPES = list(EVIDENCE_TYPES.keys())
 
 
 # ============================================================
 # DETECTION FUNCTIONS
 # ============================================================
 
-def calculate_evidence_strength_v2(evidence_types: list, similarity_score: float = 0.0) -> float:
+def detect_evidence(text: str, context: str = "") -> dict:
     """
-    Calculate evidence strength using NEW formula (2026-01-20):
-    
-    ES = w_sim × S + (w_R / 4) × Σ(has_evidence_type_r)
-    
-    Where:
-    - w_sim = 0.5 (similarity weight)
-    - w_R = 0.5 (rule weight, divided equally among 4 types)
-    - S = similarity_score ∈ [0, 1]
-    - Σ(has_evidence_type_r) = count of evidence types found (max 4)
-    
-    Each rule type contributes: w_R / 4 = 0.5 / 4 = 0.125
-    """
-    w_sim = EVIDENCE_SCORE_WEIGHTS["w_sim"]
-    w_R = EVIDENCE_SCORE_WEIGHTS["w_R"]
-    
-    # Component 1: Similarity
-    sim_component = w_sim * min(max(similarity_score, 0.0), 1.0)
-    
-    # Component 2: Rule-based (count valid types)
-    # Filter to only the 4 valid types
-    valid_types_found = [t for t in evidence_types if t in VALID_EVIDENCE_TYPES]
-    rule_count = len(valid_types_found)
-    
-    # Each type contributes w_R / 4
-    rule_component = (w_R / 4.0) * rule_count
-    
-    # Total strength
-    strength = sim_component + rule_component
-    
-    return min(strength, 1.0)  # Cap at 1.0
+    Detect evidence elements in text using pattern matching.
 
-
-def detect_evidence(text: str, context: str = "", similarity_score: float = 0.0) -> dict:
-    """
-    Detect evidence elements in text.
-    
     Returns:
         dict with:
         - has_evidence: bool
         - evidence_types: list of detected types
         - evidence_matches: dict of type -> list of matches
-        - evidence_strength: float (0-1) using v2 scoring weights
-        - rule_based_strength: float (0-1) using old heuristic weights
     """
     full_text = f"{context} {text}".lower() if context else text.lower()
     
@@ -196,28 +152,28 @@ def detect_evidence(text: str, context: str = "", similarity_score: float = 0.0)
             evidence_types.append(etype)
             evidence_matches[etype] = list(set(matches))[:5]  # Keep top 5 unique
     
-    # Calculate strengths
-    rule_strength = calculate_strength(evidence_types, "default")
-    v2_strength = calculate_evidence_strength_v2(evidence_types, similarity_score)
-    
     return {
         "has_evidence": len(evidence_types) > 0,
         "evidence_types": evidence_types,
         "evidence_matches": evidence_matches,
-        "evidence_strength": v2_strength,
-        "rule_based_strength": rule_strength,
     }
 
 
-def calculate_strength(evidence_types: list, config: str = "default") -> float:
-    """Calculate heuristic strength (Rule-based only)."""
+def calculate_quality_score(evidence_types: list) -> float:
+    """
+    Calculate evidence quality from detected types (GRI hierarchy).
+
+    Quality = Σ(weights of found types) / Σ(all weights)
+
+    This is only the regex-based quality signal. The full Evidence
+    Strength (ES) is computed in the EWRI module by combining quality,
+    calibrated similarity, and directional NLI.
+    """
     if not evidence_types:
         return 0.0
-    
-    weights = WEIGHT_CONFIGS.get(config, WEIGHT_CONFIGS["default"])
-    total = sum(weights[et] for et in evidence_types if et in weights)
-    max_possible = sum(weights.values())
-    
+
+    total = sum(QUALITY_WEIGHTS.get(et, 0.0) for et in evidence_types)
+    max_possible = sum(QUALITY_WEIGHTS.values())
     return min(total / max_possible, 1.0) if max_possible > 0 else 0.0
 
 
@@ -245,61 +201,21 @@ def extract_kpi_values(text: str) -> list[str]:
 # ============================================================
 
 def process_dataframe(df: pd.DataFrame, text_col: str = "sentence") -> pd.DataFrame:
-    """Process entire dataframe and add evidence columns."""
-    print(f"Processing {len(df):,} sentences...")
-    
+    """Process entire dataframe and add evidence detection columns."""
+    print(f"Detecting evidence in {len(df):,} sentences...")
+
     results = []
     for _, row in df.iterrows():
         text = str(row[text_col])
         ctx = f"{row.get('ctx_prev', '')} {row.get('ctx_next', '')}"
-        
+
         result = detect_evidence(text, ctx)
         result["kpi_values"] = extract_kpi_values(text)
         results.append(result)
-    
-    # Add columns
+
     df = df.copy()
     df["has_evidence"] = [r["has_evidence"] for r in results]
     df["evidence_types"] = [r["evidence_types"] for r in results]
-    df["evidence_strength"] = [r["evidence_strength"] for r in results]
     df["kpi_values"] = [r["kpi_values"] for r in results]
-    
+
     return df
-
-
-def run(input_path: Path = ESG_SENTENCES_PATH, output_path: Path = OUTPUT_PATH):
-    """Run evidence detection on ESG sentences."""
-    print(f"Loading data from {input_path}...")
-    df = pd.read_parquet(input_path)
-    print(f"Loaded {len(df):,} sentences")
-    
-    df = process_dataframe(df)
-    
-    # Summary statistics
-    print("\n" + "="*60)
-    print("EVIDENCE DETECTION SUMMARY")
-    print("="*60)
-    
-    has_ev = df["has_evidence"].sum()
-    print(f"Sentences with evidence: {has_ev:,} / {len(df):,} ({has_ev/len(df)*100:.1f}%)")
-    
-    print("\nBy Evidence Type:")
-    for etype in EVIDENCE_TYPES.keys():
-        count = df["evidence_types"].apply(lambda x: etype in x).sum()
-        print(f"  {etype:15} {count:>6,}  ({count/len(df)*100:5.1f}%)")
-    
-    print("\nEvidence Strength Distribution:")
-    print(f"  Mean:   {df['evidence_strength'].mean():.3f}")
-    print(f"  Median: {df['evidence_strength'].median():.3f}")
-    print(f"  Max:    {df['evidence_strength'].max():.3f}")
-    
-    # Save
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    df.to_parquet(output_path, index=False)
-    print(f"\nSaved: {output_path}")
-    
-    return df
-
-
-if __name__ == "__main__":
-    run()

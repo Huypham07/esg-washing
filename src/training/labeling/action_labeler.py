@@ -109,8 +109,8 @@ def create_hybrid_labels(min_confidence: float = 0.5) -> pd.DataFrame:
             label_sources.append("none")
             counters["none"] += 1
     
-    df["label"] = final_actions
-    df["confidence"] = final_confs
+    df["action_label"] = final_actions
+    df["action_confidence"] = final_confs
     df["label_source"] = label_sources
     
     total = sum(v for k, v in counters.items() if k != "none")
@@ -129,14 +129,14 @@ def create_hybrid_labels(min_confidence: float = 0.5) -> pd.DataFrame:
         print(f"  Items: {len(both):,}, Agreement: {agree_pct:.1f}%, Kappa: {kappa:.4f}")
     
     # Filter
-    df_labeled = df[df["label"].notna()].copy()
-    df_filtered = df_labeled[df_labeled["confidence"] >= min_confidence].copy()
+    df_labeled = df[df["action_label"].notna()].copy()
+    df_filtered = df_labeled[df_labeled["action_confidence"] >= min_confidence].copy()
     
     print(f"\n=== CONFIDENCE FILTERING (>= {min_confidence}) ===")
     print(f"  Before: {len(df_labeled):,}, After: {len(df_filtered):,}")
     
     print(f"\n=== FINAL DISTRIBUTION ===")
-    print(df_filtered["label"].value_counts())
+    print(df_filtered["action_label"].value_counts())
     
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     cols_to_keep = [c for c in df_filtered.columns if not c.startswith("_") and c not in ["llm_label", "llm_confidence", "llm_reason", "rule_label", "rule_source", "label_source"]]
@@ -151,13 +151,13 @@ def prepare_splits(df: pd.DataFrame, val_ratio: float = 0.1, test_ratio: float =
     
     # First split off test
     train_val, test = train_test_split(
-        df, test_size=test_ratio, stratify=df["label"], random_state=seed
+        df, test_size=test_ratio, stratify=df["action_label"], random_state=seed
     )
     
     # Then split remain into train/val
     val_rel_ratio = val_ratio / (1.0 - test_ratio)
     train, val = train_test_split(
-        train_val, test_size=val_rel_ratio, stratify=train_val["label"], random_state=seed
+        train_val, test_size=val_rel_ratio, stratify=train_val["action_label"], random_state=seed
     )
     
     train.to_parquet(OUTPUT_PATH / "train.parquet", index=False)

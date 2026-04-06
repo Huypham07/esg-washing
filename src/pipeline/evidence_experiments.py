@@ -26,7 +26,6 @@ def apply_evidence_variant(df: pd.DataFrame, variant: str) -> pd.DataFrame:
     base_df["search_method"] = links_df["search_method"].values
     base_df["nli_entailment_score"] = links_df["nli_entailment_score"].values
     base_df["nli_label"] = links_df["nli_label"].values
-    base_df["evidence_strength"] = links_df["evidence_strength_v2"].values
     base_df["evidence_variant"] = variant
 
     return base_df
@@ -35,26 +34,29 @@ def apply_evidence_variant(df: pd.DataFrame, variant: str) -> pd.DataFrame:
 def summarize_variant(df: pd.DataFrame, variant: str) -> dict:
     total = len(df)
     evidence_rate = float(df["has_evidence"].mean()) if total else 0.0
-    avg_strength = float(df["evidence_strength"].mean()) if total else 0.0
     avg_similarity = float(df.get("similarity_score", pd.Series([0.0] * max(total, 1))).mean())
+    avg_nli_entailment = float(df["nli_entailment_score"].mean()) if "nli_entailment_score" in df.columns and total else 0.0
 
-    action_col = None
-    for col in ["action_pred", "action_label", "label"]:
-        if col in df.columns:
-            action_col = col
-            break
+    action_col = "action_label" if "action_label" in df.columns else None
 
     high_risk_rate = 0.0
     if action_col is not None and total:
         mask = (df[action_col] == "Indeterminate") & (~df["has_evidence"].astype(bool))
         high_risk_rate = float(mask.mean())
 
+    # NLI label distribution
+    nli_dist = {}
+    if "nli_label" in df.columns and total:
+        nli_dist = df["nli_label"].value_counts(normalize=True).to_dict()
+
     return {
         "variant": variant,
         "rows": total,
         "evidence_rate": round(evidence_rate, 4),
-        "avg_evidence_strength": round(avg_strength, 4),
         "avg_similarity": round(avg_similarity, 4),
+        "avg_nli_entailment": round(avg_nli_entailment, 4),
+        "nli_entailment_pct": round(nli_dist.get("entailment", 0.0), 4),
+        "nli_contradiction_pct": round(nli_dist.get("contradiction", 0.0), 4),
         "high_risk_rate": round(high_risk_rate, 4),
     }
 
@@ -83,7 +85,7 @@ def run_experiments(input_path: str, output_dir: str, variants: list[str] | None
 
         records.append(summarize_variant(result_df, variant))
 
-    summary_df = pd.DataFrame(records).sort_values("avg_evidence_strength", ascending=False)
+    summary_df = pd.DataFrame(records).sort_values("evidence_rate", ascending=False)
     summary_file = out_dir / "evidence_variant_summary.csv"
     summary_df.to_csv(summary_file, index=False)
     print(f"\nSaved summary: {summary_file}")

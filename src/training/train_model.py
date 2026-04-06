@@ -153,13 +153,19 @@ def build_text_column(df: pd.DataFrame, config: dict) -> pd.DataFrame:
     return result
 
 
+def _source_label_col(config: dict) -> str:
+    """Return the source label column name for a task."""
+    task = config.get("runtime", {}).get("task", "topic")
+    return "topic_label" if task == "topic" else "action_label"
+
+
 def load_train_val_data(config: dict) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, int]]:
     train_df = build_text_column(load_dataframe(Path(config["paths"]["train_data"])), config)
     val_df = build_text_column(load_dataframe(Path(config["paths"]["val_data"])), config)
 
     labels = config["labels"]
     label2id = {name: idx for idx, name in enumerate(labels)}
-    label_col = 'label'
+    label_col = _source_label_col(config)
 
     train_df = encode_labels(train_df, label_col, label2id)
     val_df = encode_labels(val_df, label_col, label2id)
@@ -172,7 +178,8 @@ def load_test_data(config: dict, label2id: dict[str, int]) -> pd.DataFrame | Non
         return None
 
     test_df = build_text_column(load_dataframe(test_path), config)
-    for col in config.get("test_label_candidates", ["label"]):
+    source_col = _source_label_col(config)
+    for col in config.get("test_label_candidates", [source_col]):
         if col in test_df.columns:
             return encode_labels(test_df, col, label2id)
     return None
