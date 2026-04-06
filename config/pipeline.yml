@@ -1,0 +1,121 @@
+# ESG-Washing Pipeline Configuration
+# Central config file for all pipeline components
+
+# ============================================================
+# Model Configuration
+# ============================================================
+model:
+  topic:
+    name: "vinai/phobert-base"
+    path: "outputs/models/topic_classifier/final"
+    max_length: 256
+    labels: ["E", "S_labor", "S_community", "S_product", "G", "Non_ESG"]
+
+  actionability:
+    name: "vinai/phobert-base"
+    path: "outputs/models/action_classifier"
+    max_length: 256
+    labels: ["Implemented", "Planning", "Indeterminate"]
+
+  sentence_transformer: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+  nli_model: "joeddav/xlm-roberta-large-xnli"
+
+# ============================================================
+# Training Configuration
+# ============================================================
+training:
+  epochs: 5
+  batch_size: 16
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  use_class_weights: true
+  weight_method: "sqrt_inverse"  # inverse, sqrt_inverse, effective
+
+# ============================================================
+# Neuro-Symbolic Configuration
+# ============================================================
+neuro_symbolic:
+  # Constraint loss weight (λ): higher = more symbolic influence
+  constraint_lambda: 0.3
+
+  # Rule-augmented inference weight (α): how much rules adjust logits
+  rule_alpha: 0.5
+
+  # Minimum rule confidence to trigger constraint
+  min_rule_confidence: 0.3
+
+# ============================================================
+# Evidence Detection Configuration
+# ============================================================
+evidence:
+  # Weight configurations for evidence strength
+  weights:
+    w_sim: 0.5     # Similarity weight
+    w_R: 0.5       # Rule-based weight (divided among 4 types)
+  
+  # Evidence linking
+  linker:
+    window_size: 5
+    document_level: true
+    tfidf_top_k: 20
+    similarity_threshold: 0.5
+    top_k_evidence: 3
+    use_nli: true
+    nli_mode: "rule"  # "rule" (fast) or "model" (accurate)
+
+# ============================================================
+# EWRI Configuration
+# ============================================================
+ewri:
+  # Risk formula weights
+  alpha: 2.0    # Indeterminate penalty
+  beta: 1.0     # Planning penalty
+  gamma: 1.0    # Evidence gap penalty
+
+  # Risk level thresholds
+  risk_levels:
+    low: 30
+    medium: 50
+    high: 70
+
+  # Traceability
+  top_risk_claims: 10  # Number of top risk claims to include in report
+
+# ============================================================
+# Data Paths
+# ============================================================
+paths:
+  # Corpus
+  blocks: "data/corpus/blocks.parquet"
+  sentences: "data/corpus/sentences.parquet"
+  esg_sentences: "data/corpus/esg_sentences.parquet"
+  actionability_sentences: "data/corpus/actionability_sentences.parquet"
+  es_scored: "data/corpus/esg_sentences_es_scored.parquet"
+
+# ============================================================
+# Data Quality Configuration
+# ============================================================
+data_quality:
+  min_sentence_length: 20
+  max_sentence_length: 500
+  duplicate_threshold: 0.9  # Jaccard similarity for near-duplicate
+  min_alpha_ratio: 0.3
+  min_class_percentage: 5.0  # Minimum % per class
+
+# ============================================================
+# Banks & Years
+# ============================================================
+banks:
+  - agribank
+  - bidv
+  - bsc
+  - mbbank
+  - shb
+  - techcombank
+  - ocb
+  - vietcombank
+  - viettinbank
+  - vpbank
+
+years: [2020, 2021, 2022, 2023, 2024]
