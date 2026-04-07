@@ -12,9 +12,9 @@ py_utils
 old
 olds
 # thesis
-*.tex
-*.bib
-*.sty
-*.cls
-*.lof
-*.lot
+# *.tex
+# *.bib
+# *.sty
+# *.cls
+# *.lof
+# *.lot

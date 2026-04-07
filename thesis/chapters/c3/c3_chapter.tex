@@ -1,0 +1,618 @@
+\chapter{Phương pháp đề xuất}
+\label{ch:method}
+\setcounter{footnote}{0}
+
+Chương này trình bày chi tiết phương pháp đề xuất để phát hiện và lượng hóa rủi ro ESG-washing trong báo cáo thường niên ngân hàng. Toàn bộ mã nguồn của hệ thống được công khai trên github\footnote{Mã nguồn: \url{https://github.com/Huypham07/esg-washing}}. Mục~\ref{sec:pipeline_overview} mô tả kiến trúc tổng thể của pipeline. Các mục tiếp theo lần lượt trình bày từng giai đoạn: thu thập và tiền xử lý dữ liệu (Mục~\ref{sec:data_preparation}), xây dựng bộ quy tắc ký hiệu (Mục~\ref{sec:symbolic_rules}), dán nhãn bằng LLM và đối chiếu (Mục~\ref{sec:labeling}), huấn luyện mô hình phân loại neuro-symbolic (Mục~\ref{sec:training}), liên kết bằng chứng hai giai đoạn (Mục~\ref{sec:evidence_linking}), và lượng hóa chỉ số rủi ro EWRI (Mục~\ref{sec:ewri_method}).
+
+
+%% ============================================================
+%% 3.1: TỔNG QUAN PIPELINE
+%% ============================================================
+\section{Tổng quan kiến trúc pipeline}
+\label{sec:pipeline_overview}
+
+Hệ thống đề xuất được thiết kế dưới dạng pipeline nối tiếp gồm bốn giai đoạn chính, xử lý từ văn bản thô đến chỉ số rủi ro tổng hợp (Hình~\ref{fig:framework}):
+
+\begin{enumerate}
+    \item \textbf{Phân loại chủ đề ESG} ở mức câu: Mỗi câu trong báo cáo thường niên được phân loại vào một trong sáu nhóm chủ đề --- E (Môi trường), S\_labor (Xã hội --- Lao động), S\_community (Xã hội --- Cộng đồng), S\_product (Xã hội --- Sản phẩm \& Trách nhiệm), G (Quản trị), hoặc Non\_ESG --- sử dụng mô hình PhoBERT kết hợp ràng buộc neuro-symbolic.
+
+    \item \textbf{Phân loại mức độ hành động} (Actionability): Các câu thuộc nhóm ESG (loại trừ Non\_ESG) được phân loại tiếp vào ba mức --- Implemented (đã thực hiện), Planning (kế hoạch), hoặc Indeterminate (mơ hồ) --- phản ánh mức độ cam kết và tính kiểm chứng của phát biểu.
+
+    \item \textbf{Liên kết bằng chứng} (Evidence Linking): Mỗi tuyên bố ESG được liên kết với các câu bằng chứng trong cùng tài liệu thông qua hai giai đoạn: truy xuất ứng viên (candidate retrieval) và xác minh bằng NLI.
+
+    \item \textbf{Lượng hóa rủi ro EWRI} (ESG-Washing Risk Index): Tổng hợp kết quả từ ba giai đoạn trên thành điểm rủi ro ở mức câu, sau đó tổng hợp thành chỉ số ở mức ngân hàng theo năm.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/framework.png}
+    \caption{Sơ đồ tổng thể quy trình phát hiện ESG-washing. Pipeline gồm bốn giai đoạn nối tiếp: phân loại chủ đề ESG, phân loại mức độ hành động, liên kết bằng chứng, và lượng hóa chỉ số rủi ro EWRI.}
+    \label{fig:framework}
+\end{figure}
+
+Điểm đặc trưng của pipeline là tính \textit{tự khép kín} (self-contained): toàn bộ quá trình phân tích chỉ sử dụng dữ liệu nội tại trong cùng một bản báo cáo, không phụ thuộc nguồn dữ liệu ESG bên ngoài hay điểm xếp hạng từ bên thứ ba. Thiết kế này cho phép áp dụng tại các thị trường mới nổi nơi hạ tầng giám sát ESG độc lập còn hạn chế.
+
+Hai giai đoạn phân loại (1) và (2) được huấn luyện theo kiến trúc neuro-symbolic (Chương~\ref{ch:theory}, Mục~\ref{sec:neuro_symbolic}), trong đó tri thức miền từ GRI, Bloom Taxonomy và Hyland Metadiscourse được tích hợp trực tiếp vào quá trình huấn luyện qua hàm mất mát ngữ nghĩa và vào quá trình suy luận qua posterior regularization. Quá trình tạo dữ liệu huấn luyện sử dụng phương pháp chắt lọc tri thức từ LLM, được đối chiếu với quy tắc ký hiệu để nâng cao chất lượng nhãn.
+
+
+%% ============================================================
+%% 3.2: THU THẬP VÀ TIỀN XỬ LÝ DỮ LIỆU
+%% ============================================================
+\section{Thu thập và tiền xử lý dữ liệu}
+\label{sec:data_preparation}
+
+\subsection{Nguồn dữ liệu}
+\label{subsec:data_source}
+
+Dữ liệu đầu vào là báo cáo thường niên của 10 ngân hàng thương mại Việt Nam trong giai đoạn 2020--2024, tổng cộng 50 quan sát ngân hàng-năm. Để đảm bảo tính khách quan, tên các ngân hàng được mã hóa thành NH\_A đến NH\_J theo thứ tự bảng chữ cái\footnote{Bảng mã hóa được lưu riêng và không công bố trong khóa luận.}. Báo cáo được thu thập ở dạng PDF từ trang web chính thức của các ngân hàng, sau đó chuyển đổi sang văn bản thô bằng công cụ OCR (nhận dạng ký tự quang học).
+
+\subsection{Quy trình tiền xử lý}
+\label{subsec:preprocessing}
+
+Từ văn bản OCR thô, quy trình tiền xử lý trải qua bốn bước chính để tạo ra ngữ liệu (corpus) ở mức câu:
+
+\textbf{Bước 1 --- Chuẩn hóa văn bản.} Văn bản OCR thường chứa nhiều lỗi định dạng. Các phép chuẩn hóa bao gồm: chuẩn hóa Unicode NFC (đồng nhất cách biểu diễn ký tự tiếng Việt), loại bỏ ký tự khoảng trắng không ngắt dòng (non-breaking space), và gộp các chuỗi khoảng trắng liên tiếp thành một.
+
+\textbf{Bước 2 --- Phân đoạn khối (block segmentation).} Văn bản được chia thành các khối (block) dựa trên dấu xuống dòng kép. Mỗi khối được phân loại tự động vào một trong sáu kiểu: \textit{heading\_like} (chỉ chứa đầu mục), \textit{table\_like} (dữ liệu dạng bảng --- phát hiện qua tỷ lệ ký tự ``$|$'' $\geq$ 0{,}5), \textit{bullet\_like} (danh sách gạch đầu dòng), \textit{kpi\_like} (chứa chỉ số định lượng với đơn vị đo lường ESG), hoặc \textit{paragraph} (đoạn văn thông thường). Các khối \textit{heading\_like} được theo dõi liên tục để gán thông tin \textit{tiêu đề chương mục} (section\_title) cho mỗi câu, phục vụ việc phân loại chủ đề ở giai đoạn sau.
+
+\textbf{Bước 3 --- Tách câu.} Mỗi khối được tách thành các câu riêng biệt bằng công cụ tách câu tiếng Việt \texttt{underthesea} (sử dụng mô hình tách câu dựa trên quy tắc ngôn ngữ và dữ liệu huấn luyện cho tiếng Việt). Trong trường hợp công cụ không khả dụng, hệ thống sử dụng phương án thay thế dựa trên biểu thức chính quy tách theo dấu câu kết thúc (dấu chấm, dấu hỏi, dấu chấm than).
+
+\textbf{Bước 4 --- Lọc nhiễu.} Các câu không mang thông tin hữu ích được loại bỏ dựa trên ba tiêu chí: (i)~câu có độ dài dưới 15 ký tự; (ii)~câu toàn chữ hoa có độ dài dưới 80 ký tự (thường là tiêu đề hoặc đầu mục bảng); và (iii)~câu có tỷ lệ ký tự chữ cái dưới 30\% (thường là dữ liệu bảng số hoặc phần từ mục). Ngoài ra, các thẻ hình ảnh (image tags) và số trang được loại bỏ bằng biểu thức chính quy.
+
+\subsection{Xây dựng ngữ cảnh câu}
+\label{subsec:context_window}
+
+Mỗi câu trong ngữ liệu được bổ sung hai trường ngữ cảnh: \textit{ctx\_prev} (câu liền trước trong cùng khối) và \textit{ctx\_next} (câu liền sau). Thông tin ngữ cảnh phục vụ hai mục đích: (1)~cung cấp ngữ cảnh bổ sung cho mô hình phân loại khi câu đơn lẻ quá ngắn hoặc mơ hồ; và (2)~hỗ trợ quy tắc ký hiệu trong việc phát hiện từ khóa từ ngữ cảnh lân cận.
+
+Kết quả sau tiền xử lý là ngữ liệu gồm 32.260 câu với cấu trúc: mã tài liệu, ngân hàng, năm, mã khối, mã câu, nội dung câu, ngữ cảnh trước/sau, kiểu khối, và tiêu đề chương mục.
+
+
+%% ============================================================
+%% 3.3: XÂY DỰNG BỘ QUY TẮC KÝ HIỆU
+%% ============================================================
+\section{Xây dựng bộ quy tắc ký hiệu}
+\label{sec:symbolic_rules}
+
+Bộ quy tắc ký hiệu (grounded rules) đóng vai trò trung tâm trong kiến trúc neuro-symbolic của hệ thống, được sử dụng tại ba giai đoạn: (1)~đối chiếu và nâng cao chất lượng nhãn từ LLM (Mục~\ref{sec:labeling}); (2)~tích hợp vào hàm mất mát ngữ nghĩa trong huấn luyện (Mục~\ref{subsec:training_semantic_loss}); và (3)~điều chỉnh dự đoán tại thời điểm suy luận (Mục~\ref{subsec:training_inference}). Mỗi quy tắc được hệ thống hóa từ cơ sở lý thuyết đã trình bày tại Chương~\ref{ch:theory}, đảm bảo tính khả giải (explainability) và tính truy vết (traceability).
+
+\subsection{Cấu trúc quy tắc}
+\label{subsec:rule_structure}
+
+Mỗi quy tắc được biểu diễn bằng bốn thành phần: \textit{tên quy tắc} (gắn với mã tiêu chuẩn GRI hoặc khung lý thuyết), \textit{danh sách từ khóa/mẫu} (biểu thức chính quy tiếng Việt), \textit{nguồn tham chiếu} (tiêu chuẩn GRI, Bloom Taxonomy, hoặc Hyland Metadiscourse), và \textit{trọng số} (mặc định bằng 1{,}0). Bảng tham chiếu đầy đủ các quy tắc và từ khóa được trình bày tại Phụ lục~\ref{appendix:grounded_rules}.
+
+
+\subsection{Quy tắc phân loại chủ đề ESG}
+\label{subsec:topic_rules}
+
+Bộ quy tắc chủ đề được xây dựng từ bộ tiêu chuẩn GRI 2016--2021 (Chương~\ref{ch:theory}, Mục~\ref{subsec:gri}) và SDGs~\cite{un_sdgs_2015}, tổ chức thành năm nhóm tương ứng với năm nhãn ESG:
+
+\begin{itemize}
+    \item \textbf{Môi trường (E):} 7 quy tắc ánh xạ từ GRI~301 (nguyên vật liệu), GRI~302 (năng lượng), GRI~303 (nước), GRI~305 (phát thải), GRI~306 (chất thải), GRI~304 (đa dạng sinh học), và tài chính khí hậu (TCFD). Ví dụ: quy tắc \texttt{GRI305\_Emissions} chứa các từ khóa ``khí thải'', ``phát thải'', ``CO2'', ``carbon'', ``net zero'', ``trung hòa carbon''.
+
+    \item \textbf{Xã hội --- Lao động (S\_labor):} 5 quy tắc từ GRI~401 (việc làm), GRI~402 (quan hệ lao động), GRI~403 (an toàn lao động), GRI~404 (đào tạo), GRI~405 (đa dạng và bình đẳng).
+
+    \item \textbf{Xã hội --- Cộng đồng (S\_community):} 1 quy tắc từ GRI~413 (cộng đồng địa phương), bao gồm FROM ``cộng đồng'', ``từ thiện'', ``CSR'', ``an sinh xã hội''.
+
+    \item \textbf{Xã hội --- Sản phẩm (S\_product):} 4 quy tắc từ GRI~416 (sức khỏe khách hàng), GRI~417 (marketing), GRI~418 (quyền riêng tư), và tài chính toàn diện (SDG~8 \& SDG~10).
+
+    \item \textbf{Quản trị (G):} 4 quy tắc từ GRI~205 (chống tham nhũng), GRI~2 (quản trị công ty), quản trị rủi ro (Basel~III), và kiểm toán/giám sát.
+\end{itemize}
+
+\textbf{Hàm so khớp.} Cho mỗi câu đầu vào, hàm so khớp tính điểm cho từng nhãn chủ đề bằng cách: cộng $0{,}4 \times \text{weight}$ cho mỗi mẫu khớp trực tiếp trong câu, cộng $0{,}1 \times \text{weight}$ cho mẫu khớp trong ngữ cảnh (ctx\_prev hoặc ctx\_next). Nhãn có điểm cao nhất được chọn; nếu điểm cao nhất dưới 0{,}3, câu được gán nhãn \texttt{Non\_ESG}.
+
+
+\subsection{Quy tắc phân loại mức độ hành động}
+\label{subsec:action_rules}
+
+Bộ quy tắc hành động được xây dựng từ Bloom's Taxonomy~\cite{anderson2001taxonomy} và Hyland Metadiscourse~\cite{rodina2007metadiscourse} (Chương~\ref{ch:theory}, Mục~\ref{subsec:bloom} và Mục~\ref{subsec:hyland}):
+
+\begin{itemize}
+    \item \textbf{Implemented} (2 quy tắc):
+    \begin{itemize}
+        \item \texttt{Bloom\_HighLevel\_Verbs}: Các động từ ở cấp độ nhận thức cao ($\geq$ Apply) ở thì quá khứ --- ``đã triển khai'', ``đã thực hiện'', ``hoàn thành'', ``đạt được''.
+        \item \texttt{Quantitative\_Results}: Kết quả định lượng với đơn vị đo lường --- ``đạt 100\%'', ``giảm 30\% phát thải CO$_2$'', ``tiết kiệm 500 kWh''.
+    \end{itemize}
+
+    \item \textbf{Planning} (1 quy tắc):
+    \begin{itemize}
+        \item \texttt{Future\_Commitment}: Các cam kết hướng tương lai --- ``sẽ triển khai'', ``dự kiến'', ``kế hoạch'', ``mục tiêu đến năm 2030'', ``lộ trình net-zero''.
+    \end{itemize}
+
+    \item \textbf{Indeterminate} (3 quy tắc):
+    \begin{itemize}
+        \item \texttt{Hedging\_Vagueness}: Rào đón (Hyland) --- ``có thể'', ``dần dần'', ``phần nào'', ``tương đối''.
+        \item \texttt{Boosting\_Exaggeration}: Tăng cường (Hyland) --- ``luôn luôn'', ``hoàn toàn'', ``tiên phong'', ``hàng đầu''.
+        \item \texttt{Vague\_Commitment}: Cam kết mơ hồ --- ``nỗ lực'', ``đẩy mạnh'', ``nâng cao nhận thức'', ``hướng tới''.
+    \end{itemize}
+\end{itemize}
+
+Hàm so khớp hoạt động tương tự quy tắc chủ đề, với hai điều chỉnh bổ sung: (i)~nếu câu chứa chỉ số định lượng (dạng số kèm đơn vị ESG), điểm Indeterminate bị trừ $0{,}3$ --- phản ánh rằng câu có số liệu cụ thể không nên bị phân loại là mơ hồ dù chứa từ hedging; và (ii)~nếu câu đề cập năm tương lai (2025--2050), điểm Planning được cộng $0{,}2$ và điểm Indeterminate bị trừ tương ứng. Nếu điểm cao nhất dưới 0{,}4, câu mặc định nhận nhãn \texttt{Indeterminate} (phản ánh nguyên tắc thận trọng --- khi không chắc chắn, giả định phát biểu là mơ hồ).
+
+
+%% ============================================================
+%% 3.4: DÁN NHÃN BẰNG LLM VÀ ĐỐI CHIẾU
+%% ============================================================
+\section{Dán nhãn bằng mô hình ngôn ngữ lớn và đối chiếu quy tắc}
+\label{sec:labeling}
+
+Nghiên cứu áp dụng phương pháp chắt lọc tri thức (Knowledge Distillation --- Chương~\ref{ch:theory}, Mục~\ref{sec:knowledge_distillation}) để tạo dữ liệu huấn luyện: LLM đóng vai trò mô hình giáo viên (teacher) tạo nhãn tự động, sau đó nhãn được đối chiếu với quy tắc ký hiệu để nâng cao chất lượng trước khi đưa vào huấn luyện mô hình PhoBERT (student).
+
+
+\subsection{Gán nhãn bằng LLM}
+\label{subsec:llm_labeling}
+
+Mô hình \texttt{Gemini 3.1 Flash Lite} được sử dụng làm teacher với cấu hình temperature $= 0{,}1$ (gần xác định --- giảm thiểu tính ngẫu nhiên trong đầu ra) và giới hạn 200 token đầu ra. Mô hình được hướng dẫn bằng prompt chi tiết mã hóa tri thức miền từ GRI, Bloom, và Hyland --- tận dụng khả năng in-context learning của LLM để áp dụng các khung phân loại dựa trên lý thuyết đã thiết lập mà không cần huấn luyện riêng.
+
+\subsubsection{Gán nhãn chủ đề ESG}
+
+Prompt hệ thống mã hóa đầy đủ hệ thống phân loại GRI, bao gồm định nghĩa chi tiết bằng tiếng Việt cho từng nhãn (E, S\_labor, S\_community, S\_product, G, Non\_ESG) kèm các ví dụ từ khóa tiêu biểu. Prompt cũng bao gồm \textit{quy tắc giải quyết xung đột} (conflict resolution rules) cho các trường hợp dễ nhầm lẫn --- ví dụ: tiểu sử thành viên hội đồng quản trị dù đề cập ``quản trị'' vẫn được gán nhãn \texttt{Non\_ESG}, phân biệt với nội dung về quản trị doanh nghiệp thực sự thuộc nhãn \texttt{G}.
+
+Mỗi câu được đưa vào LLM kèm ngữ cảnh bốn thành phần: câu liền trước (\textit{ctx\_prev}), câu cần phân loại, câu liền sau (\textit{ctx\_next}), và tiêu đề chương mục (\textit{section\_title}). LLM trả về kết quả ở dạng JSON gồm nhãn dự đoán (\textit{topic}), độ tin cậy (\textit{confidence}, thang 0--1), và lý do ngắn gọn (\textit{reason}).
+
+\subsubsection{Gán nhãn mức độ hành động}
+
+Được thực hiện trên tập con ESG (sau khi loại bỏ câu Non\_ESG). Prompt mã hóa ba mức hành động dựa trên Bloom Taxonomy và Metadiscourse, với quy tắc bổ sung quan trọng: \textit{nếu câu có dấu hiệu Indeterminate nhưng chứa số liệu định lượng cụ thể (KPI), buộc phải chọn Implemented} --- phản ánh rằng dữ liệu kiểm chứng được (falsifiable data) luôn ưu tiên hơn tín hiệu ngôn ngữ mơ hồ. Đầu vào bổ sung thêm nhãn chủ đề ESG đã được gán ở bước trước.
+
+Quá trình dán nhãn được thực hiện song song (20 luồng) với cơ chế lưu tiến trình (checkpoint) sau mỗi 2.000 câu, cho phép tiếp tục từ điểm dừng nếu bị gián đoạn.
+
+
+\subsection{Đối chiếu nhãn LLM với quy tắc ký hiệu}
+\label{subsec:label_aggregation}
+
+Nhãn từ LLM (silver labels) và nhãn từ quy tắc ký hiệu (rule labels) được tổng hợp thông qua chiến lược đối chiếu hai nguồn (dual-source aggregation), áp dụng cho cả hai bài toán phân loại (chủ đề và hành động):
+
+\begin{table}[htbp]
+\centering
+\caption{Chiến lược tổng hợp nhãn từ LLM và quy tắc ký hiệu}
+\label{tab:label_aggregation}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{3.5cm}|p{2.5cm}|p{3cm}|p{3cm}|}
+\hline
+\textbf{Điều kiện} & \textbf{Nhãn cuối} & \textbf{Độ tin cậy} & \textbf{Nguồn} \\
+\hline
+LLM và quy tắc \textbf{đồng thuận} & Nhãn LLM & $\max(c_{\text{LLM}}, 0{,}9)$ & \texttt{llm+rule\_agree} \\
+\hline
+LLM và quy tắc \textbf{bất đồng} & Nhãn LLM & $c_{\text{LLM}} \times 0{,}8$ & \texttt{llm+rule\_disagree} \\
+\hline
+Chỉ có LLM & Nhãn LLM & $c_{\text{LLM}}$ & \texttt{llm\_only} \\
+\hline
+Chỉ có quy tắc & Nhãn quy tắc & $0{,}6$ & \texttt{rule\_only} \\
+\hline
+Không có nhãn & --- & $0{,}0$ & \texttt{none} \\
+\hline
+\end{tabular}
+\end{table}
+
+Chiến lược này tuân theo ba nguyên tắc: (1)~khi cả hai nguồn đồng thuận, độ tin cậy được nâng lên mức cao ($\geq 0{,}9$) --- phản ánh sự xác nhận chéo từ cả phương pháp thống kê (LLM) lẫn phương pháp dựa trên quy tắc; (2)~khi bất đồng, LLM được ưu tiên nhưng độ tin cậy bị phạt ($\times 0{,}8$) --- phản ánh rủi ro tiềm ẩn; (3)~các mẫu có độ tin cậy dưới ngưỡng $0{,}5$ bị loại bỏ khỏi tập huấn luyện --- đảm bảo chất lượng dữ liệu.
+
+Để đánh giá mức độ nhất quán giữa hai nguồn, hệ số Cohen's Kappa ($\kappa$) được tính --- giá trị $\kappa$ cao cho thấy hai hệ thống phân loại độc lập có mức đồng thuận tốt, củng cố niềm tin vào chất lượng nhãn tổng hợp.
+
+Dữ liệu sau tổng hợp được chia thành ba tập huấn luyện, xác thực, và kiểm tra theo tỷ lệ 80/10/10 (phân tầng theo nhãn, seed cố định = 42 để tái tạo kết quả).
+
+
+%% ============================================================
+%% 3.5: HUẤN LUYỆN MÔ HÌNH NEURO-SYMBOLIC
+%% ============================================================
+\section{Huấn luyện mô hình phân loại neuro-symbolic}
+\label{sec:training}
+
+Mô hình phân loại sử dụng PhoBERT\textsubscript{base}~\cite{nguyen2020phobert} (\texttt{vinai/phobert-base}, $\sim$135 triệu tham số) làm bộ trích xuất đặc trưng, kết hợp lớp phân loại tuyến tính trên biểu diễn \texttt{[CLS]} (Chương~\ref{ch:theory}, Phương trình~\ref{eq:bert_cls}). Kiến trúc neuro-symbolic tích hợp tri thức ký hiệu vào cả hai giai đoạn: huấn luyện (qua hàm mất mát ngữ nghĩa) và suy luận (qua posterior regularization).
+
+
+\subsection{Cấu hình huấn luyện}
+\label{subsec:training_config}
+
+Bảng~\ref{tab:training_config} tổng hợp các siêu tham số huấn luyện.
+
+\begin{table}[htbp]
+\centering
+\caption{Siêu tham số huấn luyện mô hình phân loại}
+\label{tab:training_config}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Siêu tham số} & \textbf{Giá trị} \\
+\hline
+Mô hình nền & \texttt{vinai/phobert-base} \\
+\hline
+Độ dài tối đa chuỗi đầu vào & 128 token \\
+\hline
+Số epoch tối đa & 5 \\
+\hline
+Kích thước batch huấn luyện & 16 \\
+\hline
+Kích thước batch đánh giá & 32 \\
+\hline
+Tốc độ học (learning rate) & $2 \times 10^{-5}$ \\
+\hline
+Suy giảm trọng số (weight decay) & 0{,}01 \\
+\hline
+Tỷ lệ khởi động (warmup ratio) & 0{,}1 \\
+\hline
+Dừng sớm (early stopping) & Patience = 2, metric = macro F1 \\
+\hline
+Cân bằng lớp (class weights) & Nghịch đảo căn bậc hai (sqrt-inverse) \\
+\hline
+Cắt gradient (max grad norm) & 1{,}0 \\
+\hline
+Huấn luyện bán chính xác (FP16) & Tự động (auto) \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Đầu vào mô hình.} Mỗi mẫu đầu vào là nối chuỗi ba thành phần: ngữ cảnh trước + câu chính + ngữ cảnh sau (\textit{ctx\_prev} + \textit{sentence} + \textit{ctx\_next}), được tokenize bằng bộ tokenize PhoBERT với độ dài tối đa 128 token.
+
+\textbf{Cân bằng lớp.} Do phân bố nhãn không đồng đều (ví dụ: Non\_ESG và Indeterminate chiếm tỷ lệ cao), trọng số lớp được tính bằng phương pháp nghịch đảo căn bậc hai:
+\begin{equation}
+    w_i = \sqrt{\frac{N}{C \times n_i}}
+    \label{eq:class_weights}
+\end{equation}
+
+\noindent trong đó $N$ là tổng số mẫu, $C$ là số lớp, $n_i$ là số mẫu thuộc lớp $i$. Các trọng số được chuẩn hóa sao cho $\sum_i w_i = C$. Phương pháp này cân bằng tốt hơn nghịch đảo đơn thuần ($N / (C \times n_i)$) vì tránh tạo trọng số quá lớn cho các lớp rất hiếm, đồng thời vẫn ưu tiên đáng kể cho các lớp thiểu số.
+
+
+\subsection{Tích hợp hàm mất mát ngữ nghĩa}
+\label{subsec:training_semantic_loss}
+
+Nền tảng lý thuyết của hàm mất mát ngữ nghĩa đã được trình bày tại Chương~\ref{ch:theory}, Mục~\ref{subsec:semantic_loss}. Phần này mô tả cách triển khai cụ thể trong hệ thống.
+
+Trong mỗi bước huấn luyện, hệ thống thực hiện hai phép tính song song: (1)~cross-entropy $L_{\text{CE}}$ giữa logits của mô hình và nhãn silver; và (2)~semantic loss $L_{\text{semantic}}$ giữa logits và bộ quy tắc ký hiệu. Để tính semantic loss, chuỗi \texttt{input\_ids} được giải mã ngược (decode) thành văn bản gốc --- đây là cầu nối giữa thành phần neural (hoạt động trên tensor) và thành phần symbolic (hoạt động trên văn bản).
+
+Hàm mất mát tổng:
+\begin{equation}
+    L_{\text{total}} = L_{\text{CE}} + \lambda \cdot L_{\text{semantic}}
+\end{equation}
+
+\noindent trong đó $L_{\text{semantic}}$ bao gồm ba thành phần (xem Chương~\ref{ch:theory}, Phương trình~\ref{eq:total_loss}):
+
+\begin{equation}
+    L_{\text{semantic}} = w_1 \cdot L_{\text{exactly\_one}} + w_2 \cdot \overline{L}_{\text{impl}} + w_3 \cdot \overline{L}_{\text{neg}}
+\end{equation}
+
+Bảng~\ref{tab:semantic_loss_params} tổng hợp các siêu tham số của semantic loss.
+
+\begin{table}[htbp]
+\centering
+\caption{Siêu tham số hàm mất mát ngữ nghĩa}
+\label{tab:semantic_loss_params}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|l|l|p{6.5cm}|}
+\hline
+\textbf{Tham số} & \textbf{Giá trị} & \textbf{Ý nghĩa} \\
+\hline
+$\lambda$ & 0{,}3 & Trọng số tổng thể của semantic loss \\
+\hline
+$w_1$ & 1{,}0 & Trọng số ràng buộc exactly-one \\
+\hline
+$w_2$ & 0{,}5 & Trọng số ràng buộc implication \\
+\hline
+$w_3$ & 0{,}5 & Trọng số ràng buộc negation \\
+\hline
+\end{tabular}
+\end{table}
+
+Cụ thể, bộ tri thức mệnh đề (Propositional Knowledge Base) được biên dịch từ bộ quy tắc ký hiệu thành ba dạng ràng buộc:
+
+\textbf{Exactly-One.} Đảm bảo mỗi câu thuộc đúng một lớp --- được áp dụng cho mọi mẫu trong batch, không phụ thuộc vào quy tắc ký hiệu cụ thể. Loss tính theo Phương trình~\ref{eq:exactly_one} (Chương~\ref{ch:theory}).
+
+\textbf{Implication.} Khi quy tắc ký hiệu phát hiện bằng chứng textual cho nhãn $k$ --- ví dụ: quy tắc \texttt{GRI305\_Emissions} khớp từ khóa ``phát thải CO$_2$'' trong câu --- hệ thống tạo ràng buộc hàm ý ``kéo'' xác suất $p_k$ lên cao. Mức độ ``kéo'' tỷ lệ thuận với truth value $t = \min(\text{match\_count} \times 0{,}5, 1{,}0)$ --- giá trị mở (fuzzy) phản ánh số lượng từ khóa khớp. Loss tính theo Phương trình~\ref{eq:implication}.
+
+\textbf{Negation.} Áp dụng riêng cho bài toán phân loại hành động --- khi phát hiện tín hiệu hedging hoặc cam kết mơ hồ (``luôn luôn'', ``hướng tới'', ``nỗ lực''), ràng buộc phủ định ``đẩy'' xác suất $p_{\text{Implemented}}$ xuống thấp, ngăn mô hình gán nhãn Implemented cho các phát biểu mơ hồ. Loss tính theo Phương trình~\ref{eq:negation}.
+
+
+\subsection{Suy luận có ràng buộc}
+\label{subsec:training_inference}
+
+Tại thời điểm dự đoán (inference), phân phối xác suất cuối cùng được tính theo mô hình log-linear (Chương~\ref{ch:theory}, Phương trình~\ref{eq:constrained_inference}):
+
+\begin{equation}
+    \log P(y \mid x) = (1 - \alpha) \cdot \log P_{\text{neural}}(y \mid x) + \alpha \cdot \log P_{\text{rules}}(y \mid x)
+\end{equation}
+
+\noindent trong đó $\alpha$ được tối ưu bằng grid search trên tập xác thực với bốn giá trị ứng viên: $\{0{,}3;\; 0{,}5;\; 0{,}7;\; 0{,}9\}$. Mỗi dự đoán đi kèm thông tin giải thích: danh sách quy tắc kích hoạt, mức ảnh hưởng, và chỉ báo liệu nhãn cuối cùng có bị thay đổi so với dự đoán thuần neural (rule-adjusted). Tính giải thích này cho phép người dùng truy vết lý do phân loại --- ví dụ: ``phân loại thành E do phát hiện quy tắc GRI305 (phát thải CO$_2$) với $t = 0{,}8$, điều chỉnh từ S\_labor (neural) sang E (combined)''.
+
+
+\subsection{So sánh mô hình neural thuần và neuro-symbolic}
+\label{subsec:experiment_comparison}
+
+Để đánh giá đóng góp của thành phần symbolic, hệ thống cung cấp chế độ thực nghiệm so sánh: huấn luyện song song mô hình PhoBERT thuần (baseline --- chỉ $L_{\text{CE}}$) và mô hình neuro-symbolic (có $L_{\text{CE}} + L_{\text{semantic}}$) trên cùng dữ liệu, cùng siêu tham số, rồi so sánh các chỉ số đánh giá (macro F1, micro F1, per-class precision/recall/F1).
+
+
+%% ============================================================
+%% 3.6: LIÊN KẾT BẰNG CHỨNG HAI GIAI ĐOẠN
+%% ============================================================
+\section{Liên kết bằng chứng hai giai đoạn}
+\label{sec:evidence_linking}
+
+Sau khi phân loại chủ đề và mức độ hành động, mỗi tuyên bố ESG được liên kết với các câu bằng chứng hỗ trợ (hoặc mâu thuẫn) trong cùng tài liệu. Pipeline liên kết bằng chứng gồm ba bước: phát hiện loại bằng chứng, truy xuất ứng viên hai giai đoạn, và xác minh bằng NLI.
+
+
+\subsection{Phát hiện và phân cấp bằng chứng}
+\label{subsec:evidence_detection}
+
+Mỗi câu trong tài liệu được phân tích để phát hiện bốn loại bằng chứng, được tổ chức theo hệ phân cấp chất lượng dựa trên nguyên tắc báo cáo GRI~\cite{gri2021gri}. Bảng~\ref{tab:evidence_hierarchy} trình bày chi tiết.
+
+\begin{table}[htbp]
+\centering
+\caption{Hệ phân cấp chất lượng bằng chứng theo GRI}
+\label{tab:evidence_hierarchy}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|l|c|p{7cm}|}
+\hline
+\textbf{Hạng} & \textbf{Loại} & \textbf{Trọng số} & \textbf{Mô tả \& Ví dụ} \\
+\hline
+1 & Third\_party & 0{,}35 & Xác minh bên thứ ba: kiểm toán (Deloitte, PwC, KPMG, EY), chứng nhận (ISO, Bureau Veritas, DNV, SGS), giải thưởng, xếp hạng \\
+\hline
+2 & KPI & 0{,}30 & Chỉ số định lượng kiểm chứng được: phần trăm, đơn vị đo lường ESG (tỷ VND, tấn CO$_2$, kWh, m$^2$), so sánh trước-sau \\
+\hline
+3 & Standard & 0{,}20 & Tham chiếu đến khung chuẩn mực: GRI, SBTi, ISO~14001/26000, SDG, CDP, TCFD, UNGC, quy định NHNN \\
+\hline
+4 & Time\_bound & 0{,}15 & Tính cụ thể về thời gian: năm cụ thể, quý, giai đoạn, mốc mục tiêu \\
+\hline
+\end{tabular}
+\end{table}
+
+Hệ phân cấp phản ánh nguyên tắc: bằng chứng từ bên thứ ba độc lập đáng tin cậy nhất (GRI~2-5\footnote{GRI Standard 2-5: External assurance}), tiếp theo là dữ liệu kiểm chứng được (GRI~302/305), tham chiếu chuẩn mực (GRI~2-23\footnote{GRI Standard 2-23: Policy commitments}), và cuối cùng là tính cụ thể thời gian (GRI~3-3\footnote{GRI Standard 3-3: Management of material topics}).
+
+Mỗi loại bằng chứng được phát hiện bằng bộ biểu thức chính quy tối ưu cho tiếng Việt. Điểm chất lượng bằng chứng $Q$ của một câu được tính:
+\begin{equation}
+    Q = \frac{\sum_{t \in \text{found}} w_t}{\sum_{t \in \text{all}} w_t}
+    \label{eq:quality_score}
+\end{equation}
+
+\noindent trong đó $w_t$ là trọng số của loại bằng chứng $t$. Ví dụ: câu chứa cả KPI (0{,}30) và Time\_bound (0{,}15) sẽ có $Q = (0{,}30 + 0{,}15) / (0{,}35 + 0{,}30 + 0{,}20 + 0{,}15) = 0{,}45$.
+
+
+\subsection{Truy xuất ứng viên hai giai đoạn}
+\label{subsec:candidate_retrieval}
+
+Cho mỗi tuyên bố ESG (claim), hệ thống truy xuất các câu bằng chứng ứng viên (evidence candidates) từ cùng tài liệu (ngân hàng + năm) qua hai giai đoạn:
+
+\subsubsection{Giai đoạn 1 --- Truy xuất cửa sổ cục bộ (Window-based Retrieval)}
+
+Các câu nằm trong phạm vi $\pm w$ vị trí (window\_size $= 5$) so với tuyên bố trong cùng tài liệu được chọn làm ứng viên. Mỗi ứng viên nhận hệ số tăng cường theo khoảng cách (proximity boost):
+\begin{equation}
+    \text{boost}_{\text{prox}}(d) = 1{,}0 - \frac{d}{w + 1} \times 0{,}3
+    \label{eq:proximity_boost}
+\end{equation}
+
+\noindent trong đó $d$ là khoảng cách tuyệt đối (số câu) giữa claim và candidate. Hệ số này phản ánh giả thiết rằng bằng chứng liên quan thường nằm gần tuyên bố trong cùng đoạn văn hoặc chương mục.
+
+
+\subsubsection{Giai đoạn 2 --- Truy xuất cấp tài liệu bằng TF-IDF (Document-level Retrieval)}
+
+Khi tài liệu có trên 10 câu ($> 2 \times w$), giai đoạn thứ hai mở rộng phạm vi tìm kiếm ra toàn bộ tài liệu sử dụng mô hình TF-IDF~(Term Frequency --- Inverse Document Frequency). Cụ thể, ma trận TF-IDF được xây dựng trên toàn bộ câu trong tài liệu với cấu hình: tối đa 3.000 đặc trưng, n-gram 1 và 2, $\text{min\_df} = 1$, $\text{max\_df} = 0{,}95$. Từ ma trận này, 20 câu có cosine similarity cao nhất với tuyên bố được chọn (loại trừ các câu đã được chọn ở Giai đoạn~1). Hệ số tăng cường TF-IDF:
+\begin{equation}
+    \text{boost}_{\text{tfidf}}(s_{\text{tfidf}}) = 0{,}7 + s_{\text{tfidf}} \times 0{,}3
+    \label{eq:tfidf_boost}
+\end{equation}
+
+\noindent trong đó $s_{\text{tfidf}}$ là cosine similarity TF-IDF giữa claim và candidate. Giai đoạn này cho phép phát hiện bằng chứng ở xa trong tài liệu --- ví dụ: chương ``Báo cáo Phát triển Bền vững'' chứa tuyên bố ESG, nhưng số liệu KPI xác nhận nằm ở chương ``Phụ lục Dữ liệu'' cách hàng trăm câu.
+
+
+\subsection{Xếp hạng ngữ nghĩa}
+\label{subsec:semantic_ranking}
+
+Sau truy xuất, tất cả ứng viên được xếp hạng dựa trên độ tương đồng ngữ nghĩa. Vector biểu diễn câu (sentence embedding) được tạo bằng mô hình \texttt{paraphrase-multilingual-MiniLM-L12-v2}~\cite{reimers2019sentence}, tạo ra vector 384 chiều cho mỗi câu (Chương~\ref{ch:theory}, Mục~\ref{subsec:sentence_transformers}).
+
+Độ tương đồng ngữ nghĩa thô (raw cosine similarity) giữa claim và mỗi candidate được nhân với hệ số tăng cường (proximity hoặc TF-IDF) tương ứng:
+\begin{equation}
+    s_{\text{boosted}} = s_{\text{cosine}} \times \text{boost}
+    \label{eq:boosted_sim}
+\end{equation}
+
+Các ứng viên bị loại nếu $s_{\text{cosine}} < 0{,}8 \times \theta_{\text{sim}}$ (với $\theta_{\text{sim}} = 0{,}5$, tức loại nếu $s_{\text{cosine}} < 0{,}4$) --- ngưỡng này đảm bảo chỉ giữ lại các câu có mức tương đồng ngữ nghĩa tối thiểu.
+
+
+\subsection{Xác minh bằng NLI}
+\label{subsec:nli_verification}
+
+Các ứng viên qua vòng lọc ngữ nghĩa được đưa vào mô hình NLI đa ngôn ngữ \texttt{mDeBERTa-v3-base-xnli-multilingual-nli-2mil7}~\cite{laurer2023building} (Chương~\ref{ch:theory}, Mục~\ref{subsec:deberta}) để xác minh quan hệ logic. Mô hình nhận đầu vào dạng cặp câu: tuyên bố ESG (premise) và bằng chứng ứng viên (hypothesis), trả về phân phối xác suất trên ba nhãn \{entailment, neutral, contradiction\}.
+
+Xác minh NLI phục vụ hai mục đích:
+
+\textbf{Lọc bằng chứng mâu thuẫn.} Ứng viên có nhãn NLI = contradiction và điểm NLI $< 0{,}2$ bị loại khỏi danh sách bằng chứng hỗ trợ --- câu này mâu thuẫn rõ ràng với tuyên bố, không phải bằng chứng hỗ trợ.
+
+\textbf{Cung cấp tín hiệu cho EWRI.} Nhãn NLI và điểm entailment được lưu trữ kèm theo mỗi liên kết bằng chứng, phục vụ tính toán EWRI ở giai đoạn sau: bằng chứng entailment làm giảm rủi ro, bằng chứng contradiction làm tăng rủi ro (Mục~\ref{subsec:ewri_formula}).
+
+Sau xác minh NLI, hệ thống giữ lại tối đa 3 bằng chứng có điểm $s_{\text{boosted}}$ cao nhất cho mỗi tuyên bố.
+
+% [TODO: Hình minh họa quy trình liên kết bằng chứng hai giai đoạn — từ claim → Phase 1 (Window) + Phase 2 (TF-IDF) → Semantic Ranking → NLI Verification → Top-3 Evidence Links]
+
+
+%% ============================================================
+%% 3.7: LƯỢNG HÓA CHỈ SỐ RỦI RO EWRI
+%% ============================================================
+\section{Lượng hóa chỉ số rủi ro ESG-Washing (EWRI)}
+\label{sec:ewri_method}
+
+Giai đoạn cuối cùng tổng hợp kết quả từ ba giai đoạn trước thành chỉ số rủi ro ESG-Washing (EWRI) theo hai cấp: mức câu (Washing Risk Score --- WRS) và mức ngân hàng-năm (EWRI).
+
+
+\subsection{Công thức điểm rủi ro mức câu (WRS)}
+\label{subsec:ewri_formula}
+
+Cho mỗi câu ESG thứ $i$, điểm rủi ro ESG-washing ở mức câu được tính bằng công thức tương tác nhân tính (multiplicative interaction):
+\begin{equation}
+    \text{WRS}_i = P_{\text{action}}(y_i) \times \left(1 - \lambda(y_i) \times \text{ES}_i\right) \times C(\text{nli}_i)
+    \label{eq:wrs}
+\end{equation}
+
+\noindent Công thức phản ánh ba yếu tố tương tác:
+\begin{itemize}
+    \item $P_{\text{action}}(y_i)$: \textbf{Mức phạt hành động} --- rủi ro cơ sở dựa trên mức độ cam kết.
+    \item $1 - \lambda(y_i) \times \text{ES}_i$: \textbf{Hiệu chỉnh bằng chứng} --- bằng chứng mạnh làm giảm rủi ro, tùy thuộc vào độ nhạy $\lambda$ theo loại hành động.
+    \item $C(\text{nli}_i)$: \textbf{Khuếch đại mâu thuẫn} --- tăng rủi ro khi NLI phát hiện mâu thuẫn.
+\end{itemize}
+
+
+\subsubsection{Mức phạt hành động ($P_{\text{action}}$)}
+
+Mức phạt phản ánh mức độ rủi ro cơ sở của từng loại phát biểu (Bảng~\ref{tab:action_penalty}), dựa trên cơ sở lý thuyết từ các nghiên cứu về greenwashing:
+
+\begin{table}[htbp]
+\centering
+\caption{Mức phạt hành động $P_{\text{action}}$ và cơ sở lý thuyết}
+\label{tab:action_penalty}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|p{8cm}|}
+\hline
+\textbf{Nhãn hành động} & $\boldsymbol{P}$ & \textbf{Cơ sở lý thuyết} \\
+\hline
+Implemented & 0{,}08 & Phát biểu cụ thể, kiểm chứng được --- rủi ro ESG-washing rất thấp~\cite{lyon2015means, florstedt2025detecting} \\
+\hline
+Planning & 0{,}30 & Cam kết hướng tương lai, chưa có bằng chứng thực hiện --- rủi ro trung bình~\cite{marquis2016scrutiny} \\
+\hline
+Indeterminate & 0{,}55 & Phát biểu mơ hồ, thiếu cam kết cụ thể --- tuy nhiên, khoảng 30--40\% thuộc loại ngữ cảnh/thủ tục hành chính, không phải tuyên bố ESG thực sự~\cite{cho2007role}; do đó $P < 1{,}0$ \\
+\hline
+\end{tabular}
+\end{table}
+
+Giá trị $P_{\text{Indeterminate}} = 0{,}55$ (thay vì 1{,}0) phản ánh một nhận định thực tế quan trọng: không phải mọi phát biểu được phân loại Indeterminate đều là ESG-washing --- nhiều câu thuộc loại mô tả bối cảnh, thủ tục hành chính, hoặc giới thiệu chung, không mang tính chất tuyên bố cam kết ESG~\cite{cho2007role}.
+
+
+\subsubsection{Độ mạnh bằng chứng hợp nhất ($\text{ES}$)}
+
+Độ mạnh bằng chứng hợp nhất ba thành phần:
+\begin{equation}
+    \text{ES}_i = w_{\text{qual}} \times Q_i + w_{\text{sim}} \times \text{sim}_{\text{cal},i} + w_{\text{nli}} \times D_{\text{nli},i}
+    \label{eq:evidence_strength}
+\end{equation}
+
+\noindent trong đó:
+\begin{itemize}
+    \item $Q_i$: Điểm chất lượng bằng chứng theo hệ phân cấp GRI (Phương trình~\ref{eq:quality_score}), trọng số $w_{\text{qual}} = 0{,}35$.
+    \item $\text{sim}_{\text{cal},i}$: Độ tương đồng ngữ nghĩa đã hiệu chuẩn theo tài liệu, trọng số $w_{\text{sim}} = 0{,}35$:
+    \begin{equation}
+        \text{sim}_{\text{cal}} = \text{clamp}\left(\frac{s_{\text{raw}} - \mu_{\text{doc}}}{2\sigma_{\text{doc}}}, 0, 1\right)
+        \label{eq:calibrated_sim}
+    \end{equation}
+    trong đó $\mu_{\text{doc}}$ và $\sigma_{\text{doc}}$ là trung bình và độ lệch chuẩn của toàn bộ điểm similarity trong cùng tài liệu. Phép hiệu chuẩn này loại bỏ hiệu ứng ``đường cơ sở'' (baseline shift) giữa các tài liệu có mức tương đồng nền khác nhau.
+    \item $D_{\text{nli},i}$: Thành phần NLI có hướng, trọng số $w_{\text{nli}} = 0{,}30$:
+    \begin{equation}
+        D_{\text{nli}} = \begin{cases}
+            s_{\text{entailment}} & \text{nếu nhãn NLI = entailment} \\
+            0 & \text{các trường hợp khác}
+        \end{cases}
+        \label{eq:directional_nli}
+    \end{equation}
+    Thiết kế này đảm bảo chỉ bằng chứng thực sự hỗ trợ (entailment) mới đóng góp vào ES --- bằng chứng trung lập (neutral) không được ``thưởng''.
+\end{itemize}
+
+
+\subsubsection{Độ nhạy bằng chứng ($\lambda$)}
+
+Hệ số $\lambda(y)$ quyết định mức độ mà bằng chứng ảnh hưởng đến điểm rủi ro, tùy theo loại hành động (Bảng~\ref{tab:evidence_sensitivity}).
+
+\begin{table}[htbp]
+\centering
+\caption{Độ nhạy bằng chứng $\lambda$ theo loại hành động}
+\label{tab:evidence_sensitivity}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|p{8cm}|}
+\hline
+\textbf{Nhãn hành động} & $\boldsymbol{\lambda}$ & \textbf{Ý nghĩa} \\
+\hline
+Implemented & 0{,}80 & Bằng chứng xác nhận mạnh mẽ các hành động đã thực hiện --- giảm rủi ro đáng kể \\
+\hline
+Planning & 0{,}65 & Bằng chứng hỗ trợ phần nào --- kế hoạch có lộ trình cụ thể ít rủi ro hơn kế hoạch chung chung \\
+\hline
+Indeterminate & 0{,}50 & Bằng chứng cung cấp mức độ chứng thực vừa phải cho phát biểu mơ hồ \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\subsubsection{Hệ số khuếch đại mâu thuẫn ($C$)}
+
+Khi NLI phát hiện mâu thuẫn giữa tuyên bố và bằng chứng được truy xuất, rủi ro bị khuếch đại:
+\begin{equation}
+    C(\text{nli}) = \begin{cases}
+        1{,}3 & \text{nếu nhãn NLI = contradiction} \\
+        1{,}0 & \text{các trường hợp khác}
+    \end{cases}
+    \label{eq:contradiction_amplifier}
+\end{equation}
+
+Hệ số 1{,}3 phản ánh rằng mâu thuẫn nội bộ (doanh nghiệp tuyên bố một điều nhưng dữ liệu trong cùng báo cáo cho thấy điều ngược lại) là tín hiệu mạnh về ESG-washing~\cite{lyon2015means} --- đây chính xác là dạng ``tuyên bố sai lệch'' (false claims) trong phân loại của Delmas và Burbano~\cite{delmas2011drivers}.
+
+
+\subsection{Tổng hợp EWRI mức ngân hàng-năm}
+\label{subsec:ewri_aggregation}
+
+Chỉ số EWRI cho mỗi ngân hàng trong từng năm được tính bằng trung bình cộng WRS của tất cả $N$ câu ESG, nhân hệ số 100:
+\begin{equation}
+    \text{EWRI} = \frac{1}{N} \sum_{i=1}^{N} \text{WRS}_i \times 100
+    \label{eq:ewri}
+\end{equation}
+
+Bảng~\ref{tab:risk_thresholds} trình bày các ngưỡng phân loại mức rủi ro.
+
+\begin{table}[htbp]
+\centering
+\caption{Ngưỡng phân loại mức rủi ro EWRI}
+\label{tab:risk_thresholds}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|p{7cm}|}
+\hline
+\textbf{Mức rủi ro} & \textbf{Ngưỡng EWRI} & \textbf{Diễn giải} \\
+\hline
+Thấp (Low) & $< 25$ & Phần lớn tuyên bố ESG có hành động cụ thể và bằng chứng kiểm chứng \\
+\hline
+Trung bình (Medium) & $25 \leq \text{EWRI} < 38$ & Tỷ lệ đáng kể phát biểu mơ hồ nhưng có một phần bằng chứng hỗ trợ \\
+\hline
+Cao (High) & $38 \leq \text{EWRI} < 43$ & Nhiều phát biểu mơ hồ, thiếu bằng chứng kiểm chứng \\
+\hline
+Rất cao (Very High) & $\geq 43$ & Đa số phát biểu thiếu tính cam kết và bằng chứng hỗ trợ \\
+\hline
+\end{tabular}
+\end{table}
+
+Các ngưỡng được thiết lập dựa trên phân tích lý thuyết các kịch bản điển hình. Ví dụ minh họa:
+\begin{itemize}
+    \item \textit{Kịch bản tốt nhất} (100\% Implemented + bằng chứng đầy đủ): $\text{WRS} = 0{,}08 \times 0{,}20 = 0{,}016 \Rightarrow \text{EWRI} \approx 1{,}6$ (Thấp).
+    \item \textit{Kịch bản điển hình} (60\% Indeterminate + 35\% Implemented): $\text{EWRI} \approx 33$ (Trung bình).
+    \item \textit{Kịch bản xấu nhất} (100\% Indeterminate + không có bằng chứng): $\text{WRS} = 0{,}55 \times 1{,}0 = 0{,}55 \Rightarrow \text{EWRI} = 55$ (Rất cao).
+\end{itemize}
+
+
+\subsection{Các chỉ số bổ sung}
+\label{subsec:additional_metrics}
+
+Ngoài EWRI, hệ thống tính toán các chỉ số bổ sung phục vụ phân tích chuyên sâu:
+
+\textbf{Entropy chủ đề.} Đo mức độ đa dạng chủ đề ESG trong báo cáo bằng entropy Shannon chuẩn hóa:
+\begin{equation}
+    H = -\sum_{t} p_t \log_2(p_t) \Big/ \log_2(|T|)
+    \label{eq:topic_entropy}
+\end{equation}
+
+\noindent trong đó $p_t$ là tỷ lệ câu thuộc chủ đề $t$ và $|T|$ là tổng số chủ đề. Giá trị $H = 0$ khi báo cáo chỉ tập trung một chủ đề, $H = 1$ khi phân bố đều --- giúp phát hiện tình trạng ``chọn lọc công bố'' (selective disclosure), một dạng ESG-washing điển hình~\cite{marquis2016scrutiny}.
+
+\textbf{Phân tích EWRI theo chủ đề.} EWRI được tính riêng cho từng trụ cột (E, S, G) và từng nhóm con, kèm các chỉ số: tỷ lệ Implemented, tỷ lệ Indeterminate, và tỷ lệ câu có bằng chứng --- cho phép xác định cụ thể trụ cột nào có rủi ro ESG-washing cao nhất.
+
+\textbf{Truy vết câu rủi ro đầu.} Hệ thống xuất danh sách các câu có WRS cao nhất (top risk claims) kèm nội dung câu, nhãn chủ đề, nhãn hành động, điểm bằng chứng, và nhãn NLI --- phục vụ kiểm tra thủ công và audit.
+
+
+\subsection{Công thức cộng tính (Additive --- Baseline)}
+\label{subsec:additive_formula}
+
+Để đánh giá đóng góp riêng biệt của công thức nhân tính (multiplicative) đề xuất, hệ thống cũng triển khai công thức cộng tính (additive) làm baseline so sánh:
+\begin{equation}
+    \text{Risk}_i = \alpha \cdot \mathbf{1}[\text{Indeterminate}] + \beta \cdot \mathbf{1}[\text{Planning}] + \gamma \cdot (1 - \text{ES}_i)
+    \label{eq:additive_ewri}
+\end{equation}
+
+\begin{equation}
+    \text{EWRI}_{\text{add}} = \frac{\sum_i \text{Risk}_i}{N \times (\alpha + \beta + \gamma)} \times 100
+    \label{eq:additive_ewri_agg}
+\end{equation}
+
+\noindent với $\alpha = 2{,}0$ (phạt Indeterminate gấp đôi), $\beta = 1{,}0$ (phạt Planning đơn), $\gamma = 1{,}0$ (thiếu bằng chứng). Công thức cộng tính xử lý từng thành phần rủi ro độc lập, trong khi công thức nhân tính phản ánh sự \textit{tương tác} giữa hành động và bằng chứng --- ví dụ: phát biểu mơ hồ \textit{có} bằng chứng hỗ trợ ít rủi ro hơn phát biểu mơ hồ \textit{không} có bằng chứng.
