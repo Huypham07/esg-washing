@@ -1,0 +1,1277 @@
+{
+  "decomposition": {
+    "ewri_mean": 36.35,
+    "ewri_std": 2.69,
+    "ewri_min": 31.68,
+    "ewri_max": 45.75,
+    "components": {
+      "Indeterminate": {
+        "mean_contribution": 33.43,
+        "pct_of_ewri": 92.0,
+        "std": 3.13
+      },
+      "Planning": {
+        "mean_contribution": 0.69,
+        "pct_of_ewri": 1.9,
+        "std": 0.34
+      },
+      "Implemented": {
+        "mean_contribution": 2.23,
+        "pct_of_ewri": 6.1,
+        "std": 0.39
+      }
+    }
+  },
+  "interaction_matrix": {
+    "empirical_matrix": {
+      "Implemented": {
+        "None (0)": {
+          "count": 4075,
+          "pct_of_total": 12.63,
+          "avg_wrs": 0.08,
+          "avg_es": 0.021
+        },
+        "Low (0-0.3)": {
+          "count": 4085,
+          "pct_of_total": 12.66,
+          "avg_wrs": 0.07,
+          "avg_es": 0.178
+        },
+        "Medium (0.3-0.6)": {
+          "count": 2014,
+          "pct_of_total": 6.24,
+          "avg_wrs": 0.054,
+          "avg_es": 0.413
+        },
+        "High (0.6+)": {
+          "count": 228,
+          "pct_of_total": 0.71,
+          "avg_wrs": 0.038,
+          "avg_es": 0.651
+        }
+      },
+      "Planning": {
+        "None (0)": {
+          "count": 440,
+          "pct_of_total": 1.36,
+          "avg_wrs": 0.295,
+          "avg_es": 0.028
+        },
+        "Low (0-0.3)": {
+          "count": 302,
+          "pct_of_total": 0.94,
+          "avg_wrs": 0.263,
+          "avg_es": 0.193
+        },
+        "Medium (0.3-0.6)": {
+          "count": 157,
+          "pct_of_total": 0.49,
+          "avg_wrs": 0.22,
+          "avg_es": 0.412
+        },
+        "High (0.6+)": {
+          "count": 13,
+          "pct_of_total": 0.04,
+          "avg_wrs": 0.172,
+          "avg_es": 0.655
+        }
+      },
+      "Indeterminate": {
+        "None (0)": {
+          "count": 10230,
+          "pct_of_total": 31.71,
+          "avg_wrs": 0.55,
+          "avg_es": 0.017
+        },
+        "Low (0-0.3)": {
+          "count": 6285,
+          "pct_of_total": 19.48,
+          "avg_wrs": 0.5,
+          "avg_es": 0.197
+        },
+        "Medium (0.3-0.6)": {
+          "count": 3956,
+          "pct_of_total": 12.26,
+          "avg_wrs": 0.433,
+          "avg_es": 0.43
+        },
+        "High (0.6+)": {
+          "count": 475,
+          "pct_of_total": 1.47,
+          "avg_wrs": 0.377,
+          "avg_es": 0.63
+        }
+      }
+    },
+    "theoretical_matrix": {
+      "Implemented": {
+        "ES=0": 0.08,
+        "ES=0.25": 0.064,
+        "ES=0.5": 0.048,
+        "ES=0.75": 0.032,
+        "ES=1.0": 0.016
+      },
+      "Planning": {
+        "ES=0": 0.3,
+        "ES=0.25": 0.251,
+        "ES=0.5": 0.203,
+        "ES=0.75": 0.154,
+        "ES=1.0": 0.105
+      },
+      "Indeterminate": {
+        "ES=0": 0.55,
+        "ES=0.25": 0.481,
+        "ES=0.5": 0.413,
+        "ES=0.75": 0.344,
+        "ES=1.0": 0.275
+      }
+    }
+  },
+  "topic_analysis": {
+    "topic_summary": {
+      "E": {
+        "n": 3029,
+        "pct_of_corpus": 9.4,
+        "ewri": 33.33,
+        "risk_level": "Medium",
+        "implemented_pct": 37.6,
+        "planning_pct": 5.2,
+        "indeterminate_pct": 57.2,
+        "evidence_rate": 30.1,
+        "avg_evidence_strength": 0.159
+      },
+      "S_labor": {
+        "n": 5584,
+        "pct_of_corpus": 17.3,
+        "ewri": 36.42,
+        "risk_level": "Medium",
+        "implemented_pct": 33.1,
+        "planning_pct": 1.7,
+        "indeterminate_pct": 65.2,
+        "evidence_rate": 21.1,
+        "avg_evidence_strength": 0.146
+      },
+      "S_community": {
+        "n": 1996,
+        "pct_of_corpus": 6.2,
+        "ewri": 32.91,
+        "risk_level": "Medium",
+        "implemented_pct": 41.2,
+        "planning_pct": 0.7,
+        "indeterminate_pct": 58.1,
+        "evidence_rate": 27.0,
+        "avg_evidence_strength": 0.158
+      },
+      "S_product": {
+        "n": 4866,
+        "pct_of_corpus": 15.1,
+        "ewri": 34.94,
+        "risk_level": "Medium",
+        "implemented_pct": 36.6,
+        "planning_pct": 3.1,
+        "indeterminate_pct": 60.4,
+        "evidence_rate": 23.6,
+        "avg_evidence_strength": 0.125
+      },
+      "G": {
+        "n": 16785,
+        "pct_of_corpus": 52.0,
+        "ewri": 37.13,
+        "risk_level": "Medium",
+        "implemented_pct": 28.7,
+        "planning_pct": 3.0,
+        "indeterminate_pct": 68.4,
+        "evidence_rate": 24.8,
+        "avg_evidence_strength": 0.186
+      }
+    },
+    "bank_topic_distribution": {
+      "agribank": {
+        "counts": {
+          "E": 221,
+          "S_labor": 283,
+          "S_community": 163,
+          "S_product": 452,
+          "G": 425
+        },
+        "entropy": 0.958,
+        "dominant_topic": "S_product"
+      },
+      "bidv": {
+        "counts": {
+          "E": 375,
+          "S_labor": 649,
+          "S_community": 247,
+          "S_product": 475,
+          "G": 2584
+        },
+        "entropy": 0.752,
+        "dominant_topic": "G"
+      },
+      "bsc": {
+        "counts": {
+          "E": 45,
+          "S_labor": 364,
+          "S_community": 108,
+          "S_product": 223,
+          "G": 1026
+        },
+        "entropy": 0.725,
+        "dominant_topic": "G"
+      },
+      "mbbank": {
+        "counts": {
+          "E": 373,
+          "S_labor": 532,
+          "S_community": 298,
+          "S_product": 559,
+          "G": 1723
+        },
+        "entropy": 0.856,
+        "dominant_topic": "G"
+      },
+      "ocb": {
+        "counts": {
+          "E": 287,
+          "S_labor": 286,
+          "S_community": 91,
+          "S_product": 283,
+          "G": 769
+        },
+        "entropy": 0.876,
+        "dominant_topic": "G"
+      },
+      "shb": {
+        "counts": {
+          "E": 480,
+          "S_labor": 606,
+          "S_community": 274,
+          "S_product": 329,
+          "G": 2209
+        },
+        "entropy": 0.786,
+        "dominant_topic": "G"
+      },
+      "techcombank": {
+        "counts": {
+          "E": 312,
+          "S_labor": 1135,
+          "S_community": 191,
+          "S_product": 1040,
+          "G": 1625
+        },
+        "entropy": 0.864,
+        "dominant_topic": "G"
+      },
+      "vietcombank": {
+        "counts": {
+          "E": 147,
+          "S_labor": 343,
+          "S_community": 131,
+          "S_product": 176,
+          "G": 753
+        },
+        "entropy": 0.847,
+        "dominant_topic": "G"
+      },
+      "viettinbank": {
+        "counts": {
+          "E": 396,
+          "S_labor": 677,
+          "S_community": 296,
+          "S_product": 603,
+          "G": 3183
+        },
+        "entropy": 0.731,
+        "dominant_topic": "G"
+      },
+      "vpbank": {
+        "counts": {
+          "E": 393,
+          "S_labor": 709,
+          "S_community": 197,
+          "S_product": 726,
+          "G": 2488
+        },
+        "entropy": 0.784,
+        "dominant_topic": "G"
+      }
+    },
+    "topic_action_distribution": {
+      "E": {
+        "Implemented": 37.6,
+        "Planning": 5.2,
+        "Indeterminate": 57.2
+      },
+      "S_labor": {
+        "Implemented": 33.1,
+        "Planning": 1.7,
+        "Indeterminate": 65.2
+      },
+      "S_community": {
+        "Implemented": 41.2,
+        "Planning": 0.7,
+        "Indeterminate": 58.1
+      },
+      "S_product": {
+        "Implemented": 36.6,
+        "Planning": 3.1,
+        "Indeterminate": 60.4
+      },
+      "G": {
+        "Implemented": 28.7,
+        "Planning": 3.0,
+        "Indeterminate": 68.4
+      }
+    }
+  },
+  "temporal_trends": {
+    "yearly_trends": [
+      {
+        "year": 2020,
+        "ewri_mean": 37.077,
+        "ewri_std": 4.129,
+        "ewri_min": 31.68,
+        "ewri_max": 45.75,
+        "ewri_old_mean": 54.922,
+        "evidence_ratio_mean": 0.236,
+        "avg_es_mean": 0.16,
+        "impl_ratio_mean": 0.308,
+        "indet_ratio_mean": 0.665,
+        "plan_ratio_mean": 0.027,
+        "topic_entropy_mean": 0.788
+      },
+      {
+        "year": 2021,
+        "ewri_mean": 35.666,
+        "ewri_std": 2.925,
+        "ewri_min": 33.29,
+        "ewri_max": 41.21,
+        "ewri_old_mean": 53.589,
+        "evidence_ratio_mean": 0.269,
+        "avg_es_mean": 0.156,
+        "impl_ratio_mean": 0.34,
+        "indet_ratio_mean": 0.639,
+        "plan_ratio_mean": 0.021,
+        "topic_entropy_mean": 0.833
+      },
+      {
+        "year": 2022,
+        "ewri_mean": 35.976,
+        "ewri_std": 1.789,
+        "ewri_min": 33.09,
+        "ewri_max": 38.36,
+        "ewri_old_mean": 53.936,
+        "evidence_ratio_mean": 0.261,
+        "avg_es_mean": 0.167,
+        "impl_ratio_mean": 0.326,
+        "indet_ratio_mean": 0.65,
+        "plan_ratio_mean": 0.024,
+        "topic_entropy_mean": 0.806
+      },
+      {
+        "year": 2023,
+        "ewri_mean": 36.13,
+        "ewri_std": 2.133,
+        "ewri_min": 34.37,
+        "ewri_max": 41.43,
+        "ewri_old_mean": 54.183,
+        "evidence_ratio_mean": 0.241,
+        "avg_es_mean": 0.168,
+        "impl_ratio_mean": 0.321,
+        "indet_ratio_mean": 0.656,
+        "plan_ratio_mean": 0.023,
+        "topic_entropy_mean": 0.782
+      },
+      {
+        "year": 2024,
+        "ewri_mean": 36.903,
+        "ewri_std": 2.078,
+        "ewri_min": 33.71,
+        "ewri_max": 41.57,
+        "ewri_old_mean": 54.953,
+        "evidence_ratio_mean": 0.24,
+        "avg_es_mean": 0.166,
+        "impl_ratio_mean": 0.302,
+        "indet_ratio_mean": 0.666,
+        "plan_ratio_mean": 0.032,
+        "topic_entropy_mean": 0.795
+      }
+    ],
+    "bank_trends": {
+      "bsc": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          45.75,
+          40.38,
+          38.36,
+          41.43,
+          41.57
+        ],
+        "trend": "improving",
+        "ewri_change": -4.18
+      },
+      "vietcombank": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          41.73,
+          41.21,
+          37.06,
+          35.17,
+          38.43
+        ],
+        "trend": "improving",
+        "ewri_change": -3.3
+      },
+      "ocb": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          37.76,
+          33.94,
+          33.63,
+          34.51,
+          36.84
+        ],
+        "trend": "stable",
+        "ewri_change": -0.92
+      },
+      "viettinbank": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          37.63,
+          34.48,
+          33.09,
+          36.41,
+          35.11
+        ],
+        "trend": "improving",
+        "ewri_change": -2.52
+      },
+      "vpbank": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          35.29,
+          33.9,
+          37.54,
+          34.83,
+          33.71
+        ],
+        "trend": "stable",
+        "ewri_change": -1.58
+      },
+      "techcombank": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          37.39,
+          37.17,
+          37.11,
+          37.37,
+          36.85
+        ],
+        "trend": "stable",
+        "ewri_change": -0.54
+      },
+      "shb": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          35.67,
+          34.99,
+          35.99,
+          36.19,
+          37.33
+        ],
+        "trend": "stable",
+        "ewri_change": 1.66
+      },
+      "bidv": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          33.02,
+          33.29,
+          36.2,
+          36.54,
+          36.79
+        ],
+        "trend": "worsening",
+        "ewri_change": 3.77
+      },
+      "mbbank": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          34.85,
+          33.47,
+          36.74,
+          34.37,
+          35.91
+        ],
+        "trend": "stable",
+        "ewri_change": 1.06
+      },
+      "agribank": {
+        "years": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ewri_values": [
+          31.68,
+          33.83,
+          34.04,
+          34.48,
+          36.49
+        ],
+        "trend": "worsening",
+        "ewri_change": 4.81
+      }
+    }
+  },
+  "cross_bank": {
+    "ranking": [
+      {
+        "bank": "agribank",
+        "ewri_mean": 34.104,
+        "ewri_std": 1.717,
+        "ewri_min": 31.68,
+        "ewri_max": 36.49,
+        "ewri_old_mean": 51.924,
+        "total_sentences": 1544,
+        "impl_ratio": 0.368,
+        "plan_ratio": 0.027,
+        "indet_ratio": 0.605,
+        "ev_ratio": 0.301,
+        "avg_es": 0.159,
+        "topic_entropy": 0.934,
+        "rank": 1
+      },
+      {
+        "bank": "vpbank",
+        "ewri_mean": 35.054,
+        "ewri_std": 1.535,
+        "ewri_min": 33.71,
+        "ewri_max": 37.54,
+        "ewri_old_mean": 52.838,
+        "total_sentences": 4513,
+        "impl_ratio": 0.349,
+        "plan_ratio": 0.028,
+        "indet_ratio": 0.623,
+        "ev_ratio": 0.252,
+        "avg_es": 0.16,
+        "topic_entropy": 0.788,
+        "rank": 2
+      },
+      {
+        "bank": "mbbank",
+        "ewri_mean": 35.068,
+        "ewri_std": 1.284,
+        "ewri_min": 33.47,
+        "ewri_max": 36.74,
+        "ewri_old_mean": 52.956,
+        "total_sentences": 3485,
+        "impl_ratio": 0.337,
+        "plan_ratio": 0.033,
+        "indet_ratio": 0.63,
+        "ev_ratio": 0.303,
+        "avg_es": 0.175,
+        "topic_entropy": 0.832,
+        "rank": 3
+      },
+      {
+        "bank": "bidv",
+        "ewri_mean": 35.168,
+        "ewri_std": 1.852,
+        "ewri_min": 33.02,
+        "ewri_max": 36.79,
+        "ewri_old_mean": 52.9,
+        "total_sentences": 4330,
+        "impl_ratio": 0.343,
+        "plan_ratio": 0.035,
+        "indet_ratio": 0.622,
+        "ev_ratio": 0.256,
+        "avg_es": 0.164,
+        "topic_entropy": 0.744,
+        "rank": 4
+      },
+      {
+        "bank": "ocb",
+        "ewri_mean": 35.336,
+        "ewri_std": 1.849,
+        "ewri_min": 33.63,
+        "ewri_max": 37.76,
+        "ewri_old_mean": 53.26,
+        "total_sentences": 1716,
+        "impl_ratio": 0.344,
+        "plan_ratio": 0.014,
+        "indet_ratio": 0.642,
+        "ev_ratio": 0.258,
+        "avg_es": 0.168,
+        "topic_entropy": 0.808,
+        "rank": 5
+      },
+      {
+        "bank": "viettinbank",
+        "ewri_mean": 35.344,
+        "ewri_std": 1.75,
+        "ewri_min": 33.09,
+        "ewri_max": 37.63,
+        "ewri_old_mean": 53.226,
+        "total_sentences": 5155,
+        "impl_ratio": 0.337,
+        "plan_ratio": 0.021,
+        "indet_ratio": 0.642,
+        "ev_ratio": 0.244,
+        "avg_es": 0.176,
+        "topic_entropy": 0.753,
+        "rank": 6
+      },
+      {
+        "bank": "shb",
+        "ewri_mean": 36.034,
+        "ewri_std": 0.856,
+        "ewri_min": 34.99,
+        "ewri_max": 37.33,
+        "ewri_old_mean": 54.032,
+        "total_sentences": 3898,
+        "impl_ratio": 0.328,
+        "plan_ratio": 0.024,
+        "indet_ratio": 0.648,
+        "ev_ratio": 0.23,
+        "avg_es": 0.159,
+        "topic_entropy": 0.788,
+        "rank": 7
+      },
+      {
+        "bank": "techcombank",
+        "ewri_mean": 37.178,
+        "ewri_std": 0.22,
+        "ewri_min": 36.85,
+        "ewri_max": 37.39,
+        "ewri_old_mean": 55.426,
+        "total_sentences": 4303,
+        "impl_ratio": 0.293,
+        "plan_ratio": 0.038,
+        "indet_ratio": 0.669,
+        "ev_ratio": 0.246,
+        "avg_es": 0.159,
+        "topic_entropy": 0.833,
+        "rank": 8
+      },
+      {
+        "bank": "vietcombank",
+        "ewri_mean": 38.72,
+        "ewri_std": 2.77,
+        "ewri_min": 35.17,
+        "ewri_max": 41.73,
+        "ewri_old_mean": 57.006,
+        "total_sentences": 1550,
+        "impl_ratio": 0.274,
+        "plan_ratio": 0.022,
+        "indet_ratio": 0.704,
+        "ev_ratio": 0.221,
+        "avg_es": 0.151,
+        "topic_entropy": 0.81,
+        "rank": 9
+      },
+      {
+        "bank": "bsc",
+        "ewri_mean": 41.498,
+        "ewri_std": 2.701,
+        "ewri_min": 38.36,
+        "ewri_max": 45.75,
+        "ewri_old_mean": 59.598,
+        "total_sentences": 1766,
+        "impl_ratio": 0.219,
+        "plan_ratio": 0.015,
+        "indet_ratio": 0.767,
+        "ev_ratio": 0.184,
+        "avg_es": 0.164,
+        "topic_entropy": 0.716,
+        "rank": 10
+      }
+    ],
+    "profiles": {
+      "agribank": {
+        "rank": 1,
+        "ewri_mean": 34.1,
+        "risk_level": "Medium",
+        "total_sentences": 1544,
+        "strengths": [
+          "Lower-than-average washing risk",
+          "Better evidence coverage",
+          "Good topic coverage (diverse ESG reporting)"
+        ],
+        "weaknesses": []
+      },
+      "vpbank": {
+        "rank": 2,
+        "ewri_mean": 35.05,
+        "risk_level": "Medium",
+        "total_sentences": 4513,
+        "strengths": [],
+        "weaknesses": []
+      },
+      "mbbank": {
+        "rank": 3,
+        "ewri_mean": 35.07,
+        "risk_level": "Medium",
+        "total_sentences": 3485,
+        "strengths": [
+          "Better evidence coverage"
+        ],
+        "weaknesses": []
+      },
+      "bidv": {
+        "rank": 4,
+        "ewri_mean": 35.17,
+        "risk_level": "Medium",
+        "total_sentences": 4330,
+        "strengths": [],
+        "weaknesses": []
+      },
+      "ocb": {
+        "rank": 5,
+        "ewri_mean": 35.34,
+        "risk_level": "Medium",
+        "total_sentences": 1716,
+        "strengths": [],
+        "weaknesses": []
+      },
+      "viettinbank": {
+        "rank": 6,
+        "ewri_mean": 35.34,
+        "risk_level": "Medium",
+        "total_sentences": 5155,
+        "strengths": [],
+        "weaknesses": []
+      },
+      "shb": {
+        "rank": 7,
+        "ewri_mean": 36.03,
+        "risk_level": "Medium",
+        "total_sentences": 3898,
+        "strengths": [],
+        "weaknesses": []
+      },
+      "techcombank": {
+        "rank": 8,
+        "ewri_mean": 37.18,
+        "risk_level": "Medium",
+        "total_sentences": 4303,
+        "strengths": [],
+        "weaknesses": [
+          "High proportion of vague claims (>65%)"
+        ]
+      },
+      "vietcombank": {
+        "rank": 9,
+        "ewri_mean": 38.72,
+        "risk_level": "High",
+        "total_sentences": 1550,
+        "strengths": [],
+        "weaknesses": [
+          "Higher-than-average washing risk",
+          "High proportion of vague claims (>65%)"
+        ]
+      },
+      "bsc": {
+        "rank": 10,
+        "ewri_mean": 41.5,
+        "risk_level": "High",
+        "total_sentences": 1766,
+        "strengths": [],
+        "weaknesses": [
+          "Higher-than-average washing risk",
+          "Weak evidence coverage",
+          "Low implementation ratio",
+          "High proportion of vague claims (>65%)"
+        ]
+      }
+    }
+  },
+  "correlations": {
+    "ewri_correlations": {
+      "ewri_old": 0.998,
+      "implemented_ratio": -0.977,
+      "planning_ratio": -0.18,
+      "indeterminate_ratio": 0.983,
+      "evidence_ratio": -0.672,
+      "avg_evidence_strength": -0.098,
+      "topic_entropy": -0.379
+    },
+    "correlation_matrix": {
+      "ewri": {
+        "ewri": 1.0,
+        "ewri_old": 0.998,
+        "implemented_ratio": -0.977,
+        "planning_ratio": -0.18,
+        "indeterminate_ratio": 0.983,
+        "evidence_ratio": -0.672,
+        "avg_evidence_strength": -0.098,
+        "topic_entropy": -0.379
+      },
+      "ewri_old": {
+        "ewri": 0.998,
+        "ewri_old": 1.0,
+        "implemented_ratio": -0.983,
+        "planning_ratio": -0.172,
+        "indeterminate_ratio": 0.986,
+        "evidence_ratio": -0.671,
+        "avg_evidence_strength": -0.087,
+        "topic_entropy": -0.371
+      },
+      "implemented_ratio": {
+        "ewri": -0.977,
+        "ewri_old": -0.983,
+        "implemented_ratio": 1.0,
+        "planning_ratio": 0.061,
+        "indeterminate_ratio": -0.969,
+        "evidence_ratio": 0.658,
+        "avg_evidence_strength": -0.015,
+        "topic_entropy": 0.376
+      },
+      "planning_ratio": {
+        "ewri": -0.18,
+        "ewri_old": -0.172,
+        "implemented_ratio": 0.061,
+        "planning_ratio": 1.0,
+        "indeterminate_ratio": -0.268,
+        "evidence_ratio": 0.142,
+        "avg_evidence_strength": -0.024,
+        "topic_entropy": 0.166
+      },
+      "indeterminate_ratio": {
+        "ewri": 0.983,
+        "ewri_old": 0.986,
+        "implemented_ratio": -0.969,
+        "planning_ratio": -0.268,
+        "indeterminate_ratio": 1.0,
+        "evidence_ratio": -0.677,
+        "avg_evidence_strength": 0.005,
+        "topic_entropy": -0.396
+      },
+      "evidence_ratio": {
+        "ewri": -0.672,
+        "ewri_old": -0.671,
+        "implemented_ratio": 0.658,
+        "planning_ratio": 0.142,
+        "indeterminate_ratio": -0.677,
+        "evidence_ratio": 1.0,
+        "avg_evidence_strength": 0.134,
+        "topic_entropy": 0.606
+      },
+      "avg_evidence_strength": {
+        "ewri": -0.098,
+        "ewri_old": -0.087,
+        "implemented_ratio": -0.015,
+        "planning_ratio": -0.024,
+        "indeterminate_ratio": 0.005,
+        "evidence_ratio": 0.134,
+        "avg_evidence_strength": 1.0,
+        "topic_entropy": -0.095
+      },
+      "topic_entropy": {
+        "ewri": -0.379,
+        "ewri_old": -0.371,
+        "implemented_ratio": 0.376,
+        "planning_ratio": 0.166,
+        "indeterminate_ratio": -0.396,
+        "evidence_ratio": 0.606,
+        "avg_evidence_strength": -0.095,
+        "topic_entropy": 1.0
+      }
+    },
+    "sentence_level_correlations": {
+      "wrs_vs_es_combined": -0.553,
+      "wrs_vs_has_evidence": -0.4209
+    },
+    "action_label_effect": {
+      "eta_squared_action_on_wrs": 0.9517
+    }
+  },
+  "evidence_types": {
+    "type_importance": {
+      "KPI": {
+        "count": 2231,
+        "frequency_pct": 6.92,
+        "avg_wrs_present": 0.092,
+        "avg_wrs_absent": 0.381,
+        "risk_reduction_pct": 75.8
+      },
+      "Standard": {
+        "count": 1837,
+        "frequency_pct": 5.69,
+        "avg_wrs_present": 0.273,
+        "avg_wrs_absent": 0.366,
+        "risk_reduction_pct": 25.3
+      },
+      "Time_bound": {
+        "count": 3663,
+        "frequency_pct": 11.35,
+        "avg_wrs_present": 0.195,
+        "avg_wrs_absent": 0.382,
+        "risk_reduction_pct": 48.9
+      },
+      "Third_party": {
+        "count": 1663,
+        "frequency_pct": 5.15,
+        "avg_wrs_present": 0.298,
+        "avg_wrs_absent": 0.364,
+        "risk_reduction_pct": 18.3
+      }
+    },
+    "cooccurrence": {
+      "KPI+Standard": 149,
+      "KPI+Time_bound": 611,
+      "KPI+Third_party": 37,
+      "Standard+Time_bound": 410,
+      "Standard+Third_party": 86,
+      "Third_party+Time_bound": 252
+    },
+    "overall_avg_wrs": 0.361
+  },
+  "formula_comparison": {
+    "old_formula": {
+      "mean": 54.32,
+      "std": 2.85,
+      "iqr": 3.37,
+      "range": 13.01,
+      "cv": 5.3
+    },
+    "new_formula": {
+      "mean": 36.35,
+      "std": 2.69,
+      "iqr": 2.88,
+      "range": 14.07,
+      "cv": 7.4
+    },
+    "rank_correlation": 0.9975,
+    "old_risk_distribution": {
+      "Very High": 50
+    },
+    "new_risk_distribution": {
+      "Very High": 1,
+      "High": 7,
+      "Medium": 42
+    },
+    "std_improvement_pct": -5.6,
+    "range_improvement_pct": 8.1
+  },
+  "qualitative_samples": {
+    "high_risk_pure_washing": [
+      {
+        "sentence": "chính sách và 02 chương trình mục tiêu quốc gia, xây dựng các sản phẩm tín dụng ưu đãi phù hợp với nhiều đối tượng khách hàng, phát triển đa dạng các dịch vụ, kênh phân phối hỗ trợ người dân và doanh nghiệp ở khu vực nông nghiệp, nông thôn, vùng sâu, vùng xa tiếp cận dễ dàng hơn nguồn tài chính cần ",
+        "bank": "agribank",
+        "year": 2023,
+        "action_label": "Indeterminate",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.715,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "S_product"
+      },
+      {
+        "sentence": "GIA TĂNG NỀN KHÁCH HÀNG THEO HƯỚNG BỀN VỮNG, PHÙ HỢP MỤC TIÊU VÀ ĐỊNH HƯỚNG CHIẾN LƯỢC CỦA BIDV",
+        "bank": "bidv",
+        "year": 2020,
+        "action_label": "Indeterminate",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.715,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "S_product"
+      },
+      {
+        "sentence": "- Đầu tư mua sắm, tự phát triển các ứng dụng, kênh phân phối hiện đại, cung cấp các sản phẩm dịch vụ đa dạng, mang đến trải nghiệm hiện đại, tiên tiến và thuận tiện, an toàn nhất cho khách hàng cá nhân, khách hàng doanh nghiệp và khách hàng định chế tài chính với Hệ thống Ngân hàng di động có đầy đủ",
+        "bank": "bidv",
+        "year": 2020,
+        "action_label": "Indeterminate",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.715,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "S_product"
+      },
+      {
+        "sentence": "; Thu/Chi hộ Kho bạc NN, Tổng cục thuế...",
+        "bank": "bidv",
+        "year": 2020,
+        "action_label": "Indeterminate",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.715,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "S_product"
+      },
+      {
+        "sentence": "Các nội dung chỉ đạo, tổ chức triển khai thực hiện tiết kiệm chống lãng phí đều cụ thể về nội dung công việc, tiến độ, mục tiêu, chế độ kiểm tra giám sát và báo cáo đánh giá kết quả thực hiện.",
+        "bank": "bidv",
+        "year": 2021,
+        "action_label": "Indeterminate",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.715,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "G"
+      }
+    ],
+    "suspicious_unsubstantiated": [
+      {
+        "sentence": "000 căn nhà tình nghĩa, nhà đại đoàn kết cho người nghèo và đối tượng chính sách trong cả nước, 17 công trình trường học và phòng học, 06 trạm và cơ sở y tế, tặng các gói khám chữa bệnh cho người nghèo, hoạt động cứu trợ thiên tai...",
+        "bank": "agribank",
+        "year": 2022,
+        "action_label": "Implemented",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.104,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "S_community"
+      },
+      {
+        "sentence": "Kết quả đến 31/12/2024, doanh số cho vay lũy kế từ đầu chương trình đạt gần 90.",
+        "bank": "agribank",
+        "year": 2024,
+        "action_label": "Implemented",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.104,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "S_product"
+      },
+      {
+        "sentence": "- Tổ chức cuộc thi online \"Nét đẹp văn hóa BIDV\", đã thu hút được gần 40.",
+        "bank": "bidv",
+        "year": 2020,
+        "action_label": "Implemented",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.104,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "S_labor"
+      },
+      {
+        "sentence": "Kết quả có 04/7 video clip gửi dự thi đạt giải (trong đó có 01 giải Nhì, 2 giải Ba và 01 giải khuyến khích).",
+        "bank": "bidv",
+        "year": 2020,
+        "action_label": "Implemented",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.104,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "S_labor"
+      },
+      {
+        "sentence": "Một số chương trình tiêu biểu như: Ủng hộ Quỹ vắc xin của Chính phủ, hỗ trợ UBTW MTTQ Việt Nam, hỗ trợ nhiều bệnh viện và cơ sở y tế trên cả nước, hỗ trợ công tác phòng chống dịch tại các địa phương (TP.HCM, Bình Dương, Quảng Bình, Quảng Ngãi, Bắc Giang, Bắc Ninh, Phú Thọ.",
+        "bank": "bidv",
+        "year": 2021,
+        "action_label": "Implemented",
+        "evidence_strength": 0.0,
+        "washing_risk": 0.104,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "S_community"
+      }
+    ],
+    "medium_risk_planning": [
+      {
+        "sentence": "Mô hình Quản trị - Điều hành mục tiêu của Techcombank đến năm 2023",
+        "bank": "techcombank",
+        "year": 2020,
+        "action_label": "Planning",
+        "evidence_strength": 0.126,
+        "washing_risk": 0.358,
+        "has_evidence": true,
+        "evidence_types": [
+          "Time_bound"
+        ],
+        "topic": "G"
+      },
+      {
+        "sentence": "- Quy định điều kiện của các khoản nợ bao gồm số dư nợ gốc và/hoặc lãi được cơ cấu lại thời hạn trả nợ, đồng thời quy định về việc giữ nguyên nhóm nợ và phân loại nợ sau khi thực hiện cơ cấu lại thời hạn trả nợ; và\n- Quy định việc cơ cấu lại thời hạn trả nợ cho khách hàng theo quy định tại Thông tư ",
+        "bank": "shb",
+        "year": 2024,
+        "action_label": "Planning",
+        "evidence_strength": 0.169,
+        "washing_risk": 0.347,
+        "has_evidence": true,
+        "evidence_types": [
+          "Standard",
+          "Time_bound"
+        ],
+        "topic": "G"
+      },
+      {
+        "sentence": "Trên cơ sở đó, Agribank đã ban hành Kế hoạch hành động thực hiện các mục tiêu, giải pháp triển khai Bộ tiêu chuẩn ESG giai đoạn 2024-2030.",
+        "bank": "agribank",
+        "year": 2024,
+        "action_label": "Planning",
+        "evidence_strength": 0.18,
+        "washing_risk": 0.344,
+        "has_evidence": true,
+        "evidence_types": [
+          "Time_bound"
+        ],
+        "topic": "G"
+      },
+      {
+        "sentence": "Trong thời gian tới, công tác giám sát của HĐQT tiếp tục được đẩy mạnh, thể hiện qua nghị quyết của HĐQT đã được ban hành với các nội dung: (i) Triển khai Quy chế giám sát của HĐQT; (ii) Rà soát, thiết lập/củng cố vai trò của các đơn vị trong bộ máy giúp việc cho hoạt động giám sát của HĐQT gắn với ",
+        "bank": "bidv",
+        "year": 2020,
+        "action_label": "Planning",
+        "evidence_strength": 0.231,
+        "washing_risk": 0.331,
+        "has_evidence": false,
+        "evidence_types": [],
+        "topic": "G"
+      },
+      {
+        "sentence": "Theo đó, MB tăng cường quản trị rủi ro chặt chẽ, mục tiêu kiểm soát nợ xấu ≤1,5%, trích lập dự phòng đầy đủ theo quy định, nghiên cứu nhận diện, kiểm soát các loại rủi ro mới nổi liên quan tới môi trường và xã hội.",
+        "bank": "mbbank",
+        "year": 2022,
+        "action_label": "Planning",
+        "evidence_strength": 0.429,
+        "washing_risk": 0.281,
+        "has_evidence": true,
+        "evidence_types": [
+          "KPI"
+        ],
+        "topic": "G"
+      }
+    ],
+    "low_risk_substantive": [
+      {
+        "sentence": "Nhiều sản phẩm mới được triển khai, nâng cấp trong năm 2021 như phần mềm xác nhận lệnh online, tính năng mở tài khoản trực tuyến trên website của BSC và thông qua ứng dụng BIDV SmartBanking có ứng dụng công nghệ eKYC, trợ lý ảo iBroker, tổng đài 3CX...",
+        "bank": "bsc",
+        "year": 2021,
+        "action_label": "Implemented",
+        "evidence_strength": 0.806,
+        "washing_risk": 0.028,
+        "has_evidence": true,
+        "evidence_types": [
+          "Third_party",
+          "Time_bound"
+        ],
+        "topic": "S_product"
+      },
+      {
+        "sentence": "VPBank và Ngân hàng Hợp tác Quốc tế Nhật Bản (JBIC) ký kết hợp đồng tín dụng trị giá lên tới 150 triệu USD nhằm tài trợ cho các dự án năng lượng tái tạo và truyền tải điện tại Việt Nam, góp phần hiện thực hóa mục tiêu Net Zero tới năm 2050.",
+        "bank": "vpbank",
+        "year": 2024,
+        "action_label": "Implemented",
+        "evidence_strength": 0.78,
+        "washing_risk": 0.03,
+        "has_evidence": true,
+        "evidence_types": [
+          "KPI",
+          "Standard",
+          "Time_bound"
+        ],
+        "topic": "E"
+      },
+      {
+        "sentence": "SHB đã hoàn tất 03 trụ cột của Hiệp ước vốn Basel II từ năm 2020 và tiếp tục triển khai Basel II theo phương pháp nâng cao, đáp ứng tuân thủ toàn diện các yêu cầu của NHNN về hoạt động quản trị rủi ro nói riêng và hệ thống kiểm soát nội bộ nói chung.",
+        "bank": "shb",
+        "year": 2021,
+        "action_label": "Implemented",
+        "evidence_strength": 0.762,
+        "washing_risk": 0.031,
+        "has_evidence": true,
+        "evidence_types": [
+          "Standard",
+          "Time_bound"
+        ],
+        "topic": "G"
+      },
+      {
+        "sentence": "000 khách hàng và tổng dư nợ đạt gần 29.",
+        "bank": "agribank",
+        "year": 2024,
+        "action_label": "Implemented",
+        "evidence_strength": 0.752,
+        "washing_risk": 0.032,
+        "has_evidence": true,
+        "evidence_types": [
+          "KPI"
+        ],
+        "topic": "E"
+      },
+      {
+        "sentence": "000 khách hàng với tổng dư nợ gần 29.",
+        "bank": "agribank",
+        "year": 2024,
+        "action_label": "Implemented",
+        "evidence_strength": 0.746,
+        "washing_risk": 0.032,
+        "has_evidence": true,
+        "evidence_types": [
+          "KPI"
+        ],
+        "topic": "E"
+      }
+    ],
+    "quality_check": {
+      "top_claims_checked": 100,
+      "noise_count": 0,
+      "noise_rate_pct": 0.0
+    }
+  },
+  "metadata": {
+    "generated_at": "2026-04-06 23:41:42",
+    "total_sentences": 32260,
+    "total_bank_years": 50
+  }
+}

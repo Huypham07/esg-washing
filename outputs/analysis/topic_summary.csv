@@ -1,0 +1,6 @@
+topic,n,pct_of_corpus,ewri,risk_level,implemented_pct,planning_pct,indeterminate_pct,evidence_rate,avg_evidence_strength
+E,3029,9.4,33.33,Medium,37.6,5.2,57.2,30.1,0.159
+S_labor,5584,17.3,36.42,Medium,33.1,1.7,65.2,21.1,0.146
+S_community,1996,6.2,32.91,Medium,41.2,0.7,58.1,27.0,0.158
+S_product,4866,15.1,34.94,Medium,36.6,3.1,60.4,23.6,0.125
+G,16785,52.0,37.13,Medium,28.7,3.0,68.4,24.8,0.186

@@ -1,0 +1,5 @@
+type,count,frequency_pct,avg_wrs_present,avg_wrs_absent,risk_reduction_pct
+KPI,2231,6.92,0.092,0.381,75.8
+Standard,1837,5.69,0.273,0.366,25.3
+Time_bound,3663,11.35,0.195,0.382,48.9
+Third_party,1663,5.15,0.298,0.364,18.3

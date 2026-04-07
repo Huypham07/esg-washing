@@ -1,0 +1,124 @@
+sent_id,sentence,action_label,action_confidence,has_evidence,evidence_strength,washing_risk,topic,evidence_types,nli_label,best_evidence,bank,year
+agribank_2023_s615_0,"chính sách và 02 chương trình mục tiêu quốc gia, xây dựng các sản phẩm tín dụng ưu đãi phù hợp với nhiều đối tượng khách hàng, phát triển đa dạng các dịch vụ, kênh phân phối hỗ trợ người dân và doanh nghiệp ở khu vực nông nghiệp, nông thôn, vùng sâu,",Indeterminate,0.95,False,0.0,0.715,S_product,[],contradiction,- Tích cực triển khai nhiều chính sách tín dụng phục vụ phát triển nông nghiệp nông thôn với 07 chương trình tín dụng,agribank,2023
+bidv_2020_s486_0,"GIA TĂNG NỀN KHÁCH HÀNG THEO HƯỚNG BỀN VỮNG, PHÙ HỢP MỤC TIÊU VÀ ĐỊNH HƯỚNG CHIẾN LƯỢC CỦA BIDV",Indeterminate,0.76,False,0.0,0.715,S_product,[],contradiction,"TĂNG CƯỜNG CÔNG KHAI, MINH BẠCH TRONG HOẠT ĐỘNG; NÂNG CAO NĂNG LỰC QUẢN TRỊ RỦI RO VÀ CHẤT LƯỢNG, HIỆU QUẢ CÔNG TÁC KIỂM TRA GIÁM SÁT",bidv,2020
+bidv_2020_s863_0,"- Đầu tư mua sắm, tự phát triển các ứng dụng, kênh phân phối hiện đại, cung cấp các sản phẩm dịch vụ đa dạng, mang đến trải nghiệm hiện đại, tiên tiến và thuận tiện, an toàn nhất cho khách hàng cá nhân, khách hàng doanh nghiệp và khách hàng định chế ",Indeterminate,0.76,False,0.0,0.715,S_product,[],contradiction,- Nhân sự tại các điểm mạng lưới truyền thống khi tăng cường ứng dụng hệ thống công nghệ thông tin hiện đại trong hoạt động kinh doanh ngân hàng và phát triển các kênh phân phối điện tử.,bidv,2020
+bidv_2020_s945_2,"; Thu/Chi hộ Kho bạc NN, Tổng cục thuế...",Indeterminate,0.9,False,0.0,0.715,S_product,[],contradiction,CƠ CẤU TỔ CHỨC CHI NHÁNH BAN GIÁM ĐỐC KHỐI QUẢN LÝ RỦI RO CHI NHÁN BAN GIÁM ĐỐC TỔ CHỨ KHỐI QUẢN LÝ RỦI RO,bidv,2020
+bidv_2021_s1512_1,"Các nội dung chỉ đạo, tổ chức triển khai thực hiện tiết kiệm chống lãng phí đều cụ thể về nội dung công việc, tiến độ, mục tiêu, chế độ kiểm tra giám sát và báo cáo đánh giá kết quả thực hiện.",Indeterminate,0.72,False,0.0,0.715,G,[],contradiction,"Kết quả thực hành tiết kiệm, chống lãng 03 phí cụ thể trong các lĩnh vực",bidv,2021
+bidv_2021_s1587_7,"| Khách hàng
+ Nhân viên 
+ Cổ đông, nhà đầu tư
+ Nhà cung cấp dịch vụ
+ Cơ quan chính phủ
+ Cơ quan báo chí |
+| | 102-42 | Cơ sở của việc lựa chọn các bên liên quan để 
+ thực hiện tham vấn | Sự tham gia của các bên liên quan (Trang 134) |
+| | 102-43 | Ph",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"| | CỔ ĐÔNG/NHÀ ĐẦU TƯ |
+|----|-------------------------------|
+| | KHÁCH HÀNG |
+| | NGƯỜI LAO ĐỘNG |
+| | CƠ QUAN QUẢN LÝ |
+| | CỘNG ĐỒNG |
+| | CƠ QUAN BÁO CH |
+| | ĐỐI TÁC, NHÀ CUNG CẤP DỊCH VỤ |",bidv,2021
+bidv_2022_s1377_11,"6 | Công bố chính sách và các thực hành, mô tả cách thức 
+ bảo vệ quyền lợi của chủ nợ?",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"1 | Công bố chính sách và các thực hành nhằm bảo vệ 
+ quyền lợi khách hàng?",bidv,2022
+bidv_2022_s1661_0,(Đánh giá Ngân hàng Bền vững 2019 của WWF),Indeterminate,1.0,False,0.0,0.715,E,[],contradiction,Triển khai Hợp đồng Hạn mức tín dụng SUNREF trị giá,bidv,2022
+bidv_2022_s2068_7,"56 |
+| | 102-12 | Các sáng kiến bên ngoài: Liệt kê các điều khoản, 
+ nguyên tắc về kinh tế, môi trường và xã hội được 
+ phát triển bên ngoài tổ chức hoặc các sáng kiến 
+ khác mà tổ chức tán thành hoặc ủng hộ | Hoạt động kinh doanh hướng đến môi 
+ trư",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"124) |
+| | 102-21 | Tham vấn các bên liên quan về các chủ đề kinh 
+ tế, môi trường và xã hội | Tham vấn các bên liên quan (Tr.",bidv,2022
+bidv_2022_s2068_11,"110), Đánh giá của BĐH, 
+ Thông điệp của Ban lãnh đạo về phát 
+ triển bền vững |
+| | 102-15 | Các tác động, rủi ro và cơ hội chính | Các rủi ro bên ngoài và bên trong (Tr.",Indeterminate,1.0,False,0.0,0.715,G,[],contradiction,"56)
+ Tổng quan báo cáo phát triển bền vững |",bidv,2022
+bidv_2022_s2074_5,"204) |
+| | 417 | Tiếp thị và nhãn hiệu | Mục Trách nhiệm đối với khách hàng 
+ (Tr.",Indeterminate,1.0,False,0.0,0.715,S_product,[],contradiction,"184) |
+| GRI 300 | Tiêu chuẩn môi trường | Tiêu chuẩn môi trường | Tiêu chuẩn môi trường |
+| | 302-4 | Giảm tiêu hao năng lượng | Thực hành tiết kiệm và tuân thủ pháp 
+ luật về môi trường (Tr.",bidv,2022
+bidv_2022_s2137_0,"(sau đây gọi tắt là trái phiếu chưa niêm yết), không bao gồm mua trái phiếu chưa niêm yết bằng nguồn vốn ủy thác mà bên ủy thác chịu rủi ro;",Indeterminate,0.9,False,0.0,0.715,G,[],contradiction,Phân loại nợ và trích lập dự phòng rủi ro tín dụng,bidv,2022
+bidv_2023_s412_1,"Trong đó, chú trọng đóng góp vào sự phát triển toàn diện và bền vững của cộng đồng xã hội hướng đến sự thịnh vượng thông qua:",Indeterminate,0.95,False,0.0,0.715,S_community,[],contradiction,"Thực hiện các hoạt động an sinh xã hội; tham gia các hoạt động tài trợ mang tính động lực chung của xã hội và tương lai, qua đó tác động ngược trở lại tiếp tục góp phần tích cực cho chính hoạt động và",bidv,2023
+bidv_2023_s450_2,"Theo đó, Ngân hàng không còn cơ chế để chủ động xử lý nợ (thu giữ tài sản bảo đảm) nhằm rút ngắn thời gian thu hồi các khoản nợ xấu như trước.",Indeterminate,0.9,False,0.0,0.715,G,[],contradiction,"Liên quan tới vấn đề xử lý nợ xấu, hiện nay Nghị quyết số 42/2017/ QH14 (Nghị quyết số 42) về thí điểm xử lý nợ xấu của các TCTD đã hết hiệu lực vào ngày 31/12/2023 trong khi đó Bộ Luật dân sự năm 201",bidv,2023
+bidv_2023_s746_0,"""Nơi làm việc tốt nhất Việt Nam"" trong các tổ chức tín dụng",Indeterminate,1.0,False,0.0,0.715,S_labor,[],contradiction,"Với rất nhiều các hoạt động chăm sóc, quan tâm mọi mặt đến cán bộ, BIDV đã được xếp hạng 2 trong các tổ chức tín dụng, xếp hạng 17 trong tổng thể các doanh nghiệp tại Việt Nam theo khảo sát ""Nơi làm v",bidv,2023
+bidv_2023_s785_0,"Tài trợ, tổ chức các sự kiện Xanh",Indeterminate,1.0,False,0.0,0.715,E,[],contradiction,"tổ chức Giải chạy ""BIDV Run - Tết ấm cho người nghèo """,bidv,2023
+bidv_2023_s789_2,"Giải chạy vận động công chúng, khách hàng cùng tham gia đóng góp cho các chương trình ASXH, tặng quà Tết cho người nghèo và các hoạt động xanh bảo vệ môi trường như trồng cây xanh, xây nhà văn hóa cộng đồng tránh lũ theo tiêu thức BIDV quy đổi thành ",Indeterminate,0.9,False,0.0,0.715,S_community,[],contradiction,"tổ chức Giải chạy ""BIDV Run - Tết ấm cho người nghèo """,bidv,2023
+bidv_2023_s1189_0,"1 | Công ty có trả cổ tức (kỳ giữa và kỳ cuối hàng năm) một cách bình 
+ đẳng và kịp thời; nghĩa là, tất cả cổ đông được đối xử bình đẳng và 
+ được trả trong vòng 30 ngày sau khi được (i) công bố đối với cổ tức 
+ giữa kỳ và (ii) được cổ đông thông qua",Indeterminate,0.9,False,0.0,0.715,G,[],contradiction,"Trong trường hợp công ty công bố phương án 
+ chọn lựa chi trả cổ tức cổ phiếu (script dividend), công ty có trả cổ 
+ tức trong vòng 60 ngày kể từ ngày công bố hay không?",bidv,2023
+bidv_2023_s1242_18,"6 | Công bố chính sách và các thực hành, mô tả cách thức bảo vệ quyền 
+ lợi của chủ nợ?",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"1 | Công bố chính sách và các thực hành nhằm bảo vệ quyền lợi khách 
+ hàng?",bidv,2023
+bidv_2023_s1261_0,"| STT | Tiêu chí | Kết quả 
+ đánh giá | Cơ sở/Lý do đánh giá | |
+|--------|----------------------------------------------------------------|---|------------------------|----------------------------|
+| D.2 | Chất lượng của báo cáo thường niên | | | |
+",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"| | Thể hiện tại Báo cáo thường niê
+ Quản trị Công ty | o cáo thường niên - mục 
+ ty |
+| D.3 | Thù lao của thành viên HĐQT và Ban Điều hành | | | |
+| D.3.",bidv,2023
+bidv_2023_s1325_24,"| cáo 
+ độc |
+| E.3 | Quy trình HĐQT | | | |
+| | Họp và tham dự họp HĐQT | | | |
+| E.3.",Indeterminate,0.9,False,0.0,0.715,G,[],contradiction,"| STT | Thành viên HĐQT | Số phiên họp 
+ HĐQT tham dự | Tỷ lệ tham dự | Lý do không tham dự |
+|--------|----------------------|-------|------------------|-----------------------|
+| 1 | Ông Phan Đức Tú",bidv,2023
+bidv_2023_s1379_13,"5 | Công ty có công bố các hoạt động thực tế của HĐQT đối với việc 
+ quản trị các rủi ro và cơ hội liên quan đến phát triển bền vững 
+ không | | Công bố thông tin tại Bác cáo Phát triển 
+ bền vững | ển |
+| (B)C.1.",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"| | Công bố thông tin tại Bác cáo Phát triển 
+ bền vững | n |
+| (B)C.1.",bidv,2023
+bidv_2023_s1391_9,"| x | BIDV đang nghiên cứu thực hiện | |
+| (B)E.4 | Cơ cấu & Thành phần HĐQT | | | |
+| (B)E.4.",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"| x | BIDV đang nghiên cứu thực hiện | BIDV đang nghiên cứu thực hiện |
+| A.6.",bidv,2023
+bidv_2023_s1413_0,THẺ ĐIỂM PHẠT (tiếp theo),Indeterminate,0.9,False,0.0,0.715,G,[],contradiction,QUẢN LÝ RỦI RO (tiếp theo),bidv,2023
+bidv_2024_s1177_11,"6 | Công bố chính sách và các thực hành, mô tả cách thức bảo vệ 
+ quyền lợi của chủ nợ?",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"1 | Công bố chính sách và các thực hành nhằm bảo vệ quyền lợ
+ khách hàng?",bidv,2024
+bidv_2024_s1186_6,"| | Thể hiện tại Báo cáo thường niên và Báo cáo 
+ tài chính |
+| C.4 | Công bố Giao dịch bên liên quan (GDBLQ) | Công bố Giao dịch bên liên quan (GDBLQ) | Công bố Giao dịch bên liên quan (GDBLQ) |
+| C.4.",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"| | Thể hiện tại Báo cáo thường niên và Báo cáo 
+ tình hình Quản trị Công ty |
+| C.4.",bidv,2024
+bidv_2024_s1186_10,"1 | Công ty có công bố giao dịch cổ phiếu của công ty do người 
+ người nội bộ của công ty thực hiện?",Indeterminate,0.9,False,0.0,0.715,G,[],contradiction,"2 | Công ty có công bố tên của các bên liên quan, mối quan hệ, bản 
+ chất và giá trị của mỗi GDBLQ trọng yếu/quan trọng | | Thể hiện tại các văn bản công bố thông tin 
+ giao dịch bên liên quan trên We",bidv,2024
+bidv_2024_s1189_2,"4 | Thông tin trên phương tiện truyền thông/họp báo | | BIDV thực hiện các hoạt động tiếp xúc nhà 
+ đầu tư, các chuyên gia phân tích và cung cấp 
+ thông cáo báo chí tới cơ quan truyền thông 
+ định kỳ, đảm bảo thông tin minh bạch, kịp 
+ thời và đầy đủ",Indeterminate,0.9,False,0.0,0.715,G,[],contradiction,"| | Không, mức phí dịch vụ kiểm toán của BIDV 
+ không cao hơn phí dịch vụ kiểm toán |
+| C.7 | Phương tiện truyền thông | Phương tiện truyền thông | Phương tiện truyền thông |
+| | Công ty có sử dụng cá",bidv,2024
+bidv_2024_s1204_0,"| Mục | Nội dung | Kết quả 
+ đánh giá | Cơ sở đánh giá |
+|--------|----------------------------------------------------------------|------------------------------------|------------------------------------|
+| D.3 | Quy trình HĐQT | Quy trình HĐQT | Q",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"| Mục | Nội dung | Kết quả 
+ đánh giá | Cơ sở đánh giá |
+|--------|--------------------------|---|---------------------------------|
+| A | QUYỀN CỦA CỔ ĐÔNG | | |
+| A1 | Quyền cơ bản của cổ đông | | |",bidv,2024
+bidv_2024_s1218_7,"| X | HĐQT BIDV có thực hiện nội dung này nhưng 
+ chưa công bố |
+| D.5.",Indeterminate,0.95,False,0.0,0.715,G,[],contradiction,"| | Thể hiện tại Báo cáo thường niên - mục Đánh 
+ giá của HĐQT |
+| | Đánh giá HĐQT | | |
+| D.5.",bidv,2024

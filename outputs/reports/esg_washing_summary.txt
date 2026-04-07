@@ -1,0 +1,91 @@
+======================================================================
+ESG-WASHING RISK ASSESSMENT REPORT
+Generated: 2026-04-06 23:41:42
+======================================================================
+
+OVERVIEW
+  Banks analyzed: 10
+  Bank-years: 50
+  ESG sentences: 32,260
+  Average EWRI (new): 36.35 ± 2.69
+  Average EWRI (old): 54.32
+  EWRI Range: [31.68, 45.75]
+
+RISK DISTRIBUTION
+  Medium: 42
+  High: 7
+  Very High: 1
+
+EWRI DECOMPOSITION (Where does risk come from?)
+  Indeterminate  : 33.43 pts (92.0% of total)
+  Planning       : 0.69 pts (1.9% of total)
+  Implemented    : 2.23 pts (6.1% of total)
+
+BANK-YEAR SCORES
+  bsc             2020  EWRI= 45.8 (old= 62.1)  Very High
+  vietcombank     2020  EWRI= 41.7 (old= 60.4)  High
+  bsc             2024  EWRI= 41.6 (old= 60.3)  High
+  bsc             2023  EWRI= 41.4 (old= 60.1)  High
+  vietcombank     2021  EWRI= 41.2 (old= 60.0)  High
+  bsc             2021  EWRI= 40.4 (old= 58.5)  High
+  vietcombank     2024  EWRI= 38.4 (old= 56.3)  High
+  bsc             2022  EWRI= 38.4 (old= 57.0)  High
+  ocb             2020  EWRI= 37.8 (old= 55.8)  Medium
+  viettinbank     2020  EWRI= 37.6 (old= 56.1)  Medium
+  vpbank          2022  EWRI= 37.5 (old= 55.6)  Medium
+  techcombank     2020  EWRI= 37.4 (old= 55.9)  Medium
+  techcombank     2023  EWRI= 37.4 (old= 55.6)  Medium
+  shb             2024  EWRI= 37.3 (old= 55.7)  Medium
+  techcombank     2021  EWRI= 37.2 (old= 55.4)  Medium
+
+TOPIC ANALYSIS
+  E              : Avg EWRI=33.6  N=3029  Impl=37.6%
+  S_labor        : Avg EWRI=36.4  N=5584  Impl=33.1%
+  S_community    : Avg EWRI=34.0  N=1996  Impl=41.2%
+  S_product      : Avg EWRI=35.3  N=4866  Impl=36.6%
+  G              : Avg EWRI=37.8  N=16785  Impl=28.7%
+
+TOP RISK CLAIMS
+  1. [0.715] [Indeterminate] chính sách và 02 chương trình mục tiêu quốc gia, xây dựng các sản phẩm tín dụng ...
+  2. [0.715] [Indeterminate] GIA TĂNG NỀN KHÁCH HÀNG THEO HƯỚNG BỀN VỮNG, PHÙ HỢP MỤC TIÊU VÀ ĐỊNH HƯỚNG CHIẾ...
+  3. [0.715] [Indeterminate] - Đầu tư mua sắm, tự phát triển các ứng dụng, kênh phân phối hiện đại, cung cấp ...
+  4. [0.715] [Indeterminate] ; Thu/Chi hộ Kho bạc NN, Tổng cục thuế......
+  5. [0.715] [Indeterminate] Các nội dung chỉ đạo, tổ chức triển khai thực hiện tiết kiệm chống lãng phí đều ...
+  6. [0.715] [Indeterminate] | Khách hàng
+ Nhân viên 
+ Cổ đông, nhà đầu tư
+ Nhà cung cấp dịch vụ
+ Cơ quan chí...
+  7. [0.715] [Indeterminate] 6 | Công bố chính sách và các thực hành, mô tả cách thức 
+ bảo vệ quyền lợi của ...
+  8. [0.715] [Indeterminate] (Đánh giá Ngân hàng Bền vững 2019 của WWF)...
+  9. [0.715] [Indeterminate] 56 |
+| | 102-12 | Các sáng kiến bên ngoài: Liệt kê các điều khoản, 
+ nguyên tắc ...
+  10. [0.715] [Indeterminate] 110), Đánh giá của BĐH, 
+ Thông điệp của Ban lãnh đạo về phát 
+ triển bền vững |...
+
+EVIDENCE STATISTICS
+  sentences_with_evidence: 7939
+  evidence_rate: 24.6%
+  mean_evidence_strength: 0.166
+
+QUALITATIVE VERIFICATION SAMPLES
+
+  Pure Washing (Indeterminate + No Evidence):
+    [agribank 2023] WRS=0.715 "chính sách và 02 chương trình mục tiêu quốc gia, xây dựng các sản phẩm tín dụng ưu đãi phù hợp với n..."
+    [bidv 2020] WRS=0.715 "GIA TĂNG NỀN KHÁCH HÀNG THEO HƯỚNG BỀN VỮNG, PHÙ HỢP MỤC TIÊU VÀ ĐỊNH HƯỚNG CHIẾN LƯỢC CỦA BIDV..."
+    [bidv 2020] WRS=0.715 "- Đầu tư mua sắm, tự phát triển các ứng dụng, kênh phân phối hiện đại, cung cấp các sản phẩm dịch vụ..."
+
+  Suspicious (Implemented + No Evidence):
+    [agribank 2022] WRS=0.104 "000 căn nhà tình nghĩa, nhà đại đoàn kết cho người nghèo và đối tượng chính sách trong cả nước, 17 c..."
+    [agribank 2024] WRS=0.104 "Kết quả đến 31/12/2024, doanh số cho vay lũy kế từ đầu chương trình đạt gần 90...."
+    [bidv 2020] WRS=0.104 "- Tổ chức cuộc thi online "Nét đẹp văn hóa BIDV", đã thu hút được gần 40...."
+
+  Substantive (Implemented + Evidence):
+    [bsc 2021] WRS=0.028 "Nhiều sản phẩm mới được triển khai, nâng cấp trong năm 2021 như phần mềm xác nhận lệnh online, tính ..."
+    [vpbank 2024] WRS=0.030 "VPBank và Ngân hàng Hợp tác Quốc tế Nhật Bản (JBIC) ký kết hợp đồng tín dụng trị giá lên tới 150 tri..."
+    [shb 2021] WRS=0.031 "SHB đã hoàn tất 03 trụ cột của Hiệp ước vốn Basel II từ năm 2020 và tiếp tục triển khai Basel II the..."
+
+======================================================================

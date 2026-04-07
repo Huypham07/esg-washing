@@ -1,0 +1,6 @@
+metric,old_formula,new_formula
+mean,54.32,36.35
+std,2.85,2.69
+iqr,3.37,2.88
+range,13.01,14.07
+cv,5.3,7.4

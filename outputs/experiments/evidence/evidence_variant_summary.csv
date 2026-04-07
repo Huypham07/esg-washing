@@ -1,0 +1,4 @@
+variant,rows,evidence_rate,avg_similarity,avg_nli_entailment,nli_entailment_pct,nli_contradiction_pct,high_risk_rate
+nli,32260,0.2461,0.7249,0.3267,0.328,0.0293,0.5679
+window,32260,0.2461,0.6483,0.476,0.0,0.0,0.5679
+no_nli,32260,0.2461,0.7316,0.498,0.0,0.0,0.5679
