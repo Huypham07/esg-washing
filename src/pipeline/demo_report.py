@@ -57,7 +57,7 @@ h3 { font-size: 1em; color: #1a1a2e; margin-bottom: 8px; }
 /* ── Summary cards ── */
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 12px;
   margin-bottom: 10px;
 }
@@ -688,25 +688,7 @@ def generate_demo_report(
         t_rows,
     ))
 
-    parts.append('<h2>4. Phân tích bằng chứng (evidence linking)</h2>')
-    parts.append(
-        '<div style="background:#fff;border-radius:8px;padding:14px 18px;'
-        'box-shadow:0 1px 4px rgba(0,0,0,.08);margin:10px 0">'
-        '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:stretch">'
-        f'<div style="flex:1;min-width:160px;background:#f4f6fb;border-radius:6px;padding:10px 14px">'
-        f'<div style="font-size:.78em;color:#888">Truy xuất được bằng chứng</div>'
-        f'<div style="font-size:1.35em;font-weight:700;color:#0f3460">{_fmt_pct(n_evidence, n_esg)}</div>'
-        f'<div style="font-size:.78em;color:#999">{n_evidence:,}/{n_esg:,} câu - retrieval ngữ nghĩa + TF-IDF</div></div>'
-        f'<div style="flex:1;min-width:160px;background:#d4edda;border-radius:6px;padding:10px 14px">'
-        f'<div style="font-size:.78em;color:#155724">NLI xác nhận</div>'
-        f'<div style="font-size:1.35em;font-weight:700;color:#155724">{_fmt_pct(n_entail, n_esg)}</div>'
-        f'<div style="font-size:.78em;color:#155724;opacity:.8">{n_entail:,}/{n_esg:,} câu - entailment</div></div>'
-        f'<div style="flex:1;min-width:160px;background:#f8d7da;border-radius:6px;padding:10px 14px">'
-        f'<div style="font-size:.78em;color:#721c24">Mâu thuẫn</div>'
-        f'<div style="font-size:1.35em;font-weight:700;color:#721c24">{_fmt_pct(n_contra, n_esg)}</div>'
-        f'<div style="font-size:.78em;color:#721c24;opacity:.8">{n_contra:,}/{n_esg:,} câu - khuếch đại rủi ro ×{CONTRADICTION_AMPLIFIER:g}</div></div>'
-        '</div></div>'
-    )
+    parts.append('<h2>4. Phân tích bằng chứng</h2>')
     if "evidence_types" in esg_df.columns:
         counts: dict[str, int] = {t: 0 for t in EVIDENCE_TYPES}
         for et in esg_df["evidence_types"]:
@@ -716,7 +698,7 @@ def generate_demo_report(
                         counts[t] += 1
             except TypeError:
                 pass
-        parts.append('<h3 style="margin-top:12px">Loại bằng chứng (theo phân cấp GRI)</h3>')
+        parts.append('<h3 style="margin-top:12px">Loại bằng chứng</h3>')
         parts.append(_table_html(
             ["Loại bằng chứng", "Số câu chứa", "Tỷ lệ"],
             [[t, counts[t], _fmt_pct(counts[t], n_esg)] for t in EVIDENCE_TYPES],
@@ -725,7 +707,7 @@ def generate_demo_report(
         has_ev_df = esg_df[esg_df["has_evidence"].astype(bool)] if "has_evidence" in esg_df.columns else esg_df
         if len(has_ev_df):
             nli_counts = has_ev_df["nli_label"].value_counts(dropna=False)
-            parts.append('<h3 style="margin-top:12px">Phán định NLI (mDeBERTa-v3-base-xnli)</h3>')
+            parts.append('<h3 style="margin-top:12px">NLI</h3>')
             parts.append(_table_html(
                 ["NLI label", "Số câu", "Tỷ lệ"],
                 [[str(k or "neutral"), int(v), _fmt_pct(v, len(has_ev_df))]
