@@ -67,7 +67,7 @@ h3 { font-size: 1em; color: #1a1a2e; margin-bottom: 8px; }
   padding: 14px 16px;
   box-shadow: 0 1px 4px rgba(0,0,0,.1);
 }
-.stat-card .val { font-size: 1.7em; font-weight: 700; color: #e94560; line-height: 1.1; }
+.stat-card .val { font-size: 1.2em; font-weight: 700; color: #e94560; line-height: 1.1; }
 .stat-card .lbl { font-size: 0.8em; color: #666; margin-top: 2px; }
 
 /* ── Tables ── */
@@ -635,11 +635,10 @@ def generate_demo_report(
 
     parts.append('<h2>1. Tóm tắt</h2>')
     stats = [
-        (f"{ewri_score.ewri:.2f} / 100", "EWRI (điểm thô)"),
+        (f"{ewri_score.ewri:.2f} / 100", "EWRI"),
         (f"{total_sentences:,}",          "Tổng số câu"),
         (f"{n_esg:,} ({_fmt_pct(n_esg, total_sentences)})", "Câu ESG"),
         (_fmt_pct(n_evidence, n_esg),     "BC truy xuất được"),
-        (_fmt_pct(n_entail, n_esg),       "BC được NLI xác nhận"),
         (f"{entropy:.3f}",                "Topic entropy"),
     ]
     parts.append('<div class="stat-grid">')
