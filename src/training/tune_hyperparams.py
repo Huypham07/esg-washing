@@ -1,5 +1,6 @@
 import json
 import copy
+import shutil
 from pathlib import Path
 
 import optuna
@@ -32,9 +33,13 @@ def objective(trial: optuna.Trial, base_config: dict) -> float:
         constraint_lambda = trial.suggest_float("constraint_lambda", 0.05, 0.70, step=0.0001)
         config["neuro_symbolic"]["constraint_lambda"] = constraint_lambda
 
-    config["paths"]["output_dir"] = str(
-        Path(config["paths"]["output_dir"]) / f"trial_{trial.number}"
-    )
+    trial_dir = Path(config["paths"]["output_dir"]) / f"trial_{trial.number}"
+    config["paths"]["output_dir"] = str(trial_dir)
+
+    # Không lưu checkpoint trong quá trình tuning để tiết kiệm disk.
+    # EarlyStoppingCallback vẫn track best_metric qua state nên metric vẫn đúng.
+    config["training"]["save_strategy"] = "no"
+    config["training"]["load_best_model_at_end"] = False
 
     lambda_str = f", λ: {config['neuro_symbolic']['constraint_lambda']:.4f}" if "neuro_symbolic" in config else ""
     print(f"\n{'='*50}")
@@ -48,6 +53,10 @@ def objective(trial: optuna.Trial, base_config: dict) -> float:
     run_results = train_once(config, save_model=False)
     macro_f1 = run_results["trainer"].state.best_metric
     print(f"Trial {trial.number} → Macro-F1: {macro_f1:.4f}")
+
+    if trial_dir.exists():
+        shutil.rmtree(trial_dir, ignore_errors=True)
+
     return macro_f1
 
 
