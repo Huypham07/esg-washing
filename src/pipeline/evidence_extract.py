@@ -47,12 +47,20 @@ def evidence_extract(
     return df
 
 
-def main() -> None:
-    with open("config/pipeline.yml") as f:
+def main(args_cli=None) -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", default="config/pipeline.yml")
+    args = parser.parse_args(args_cli)
+
+    with open(args.config) as f:
         cfg = yaml.safe_load(f)
 
-    ACTION_PATH = Path("data/corpus/actionability_sentences.parquet")
-    CORPUS_PATH = Path("data/corpus/sentences.parquet")
+    ACTION_PATH = Path(cfg["paths"]["actionability_sentences"])
+    CORPUS_PATH = Path(cfg["paths"]["sentences"])
+    OUT_EV = Path(cfg["paths"]["evidence_experiments_dir"])
+
     if not ACTION_PATH.exists():
         raise FileNotFoundError(
             f"{ACTION_PATH} không tồn tại.\n"
@@ -64,18 +72,13 @@ def main() -> None:
 
     print(f"Corpus: {len(df):,} ESG sentences")
 
-    OUT_EV = Path("outputs/experiments/evidence")
     OUT_EV.mkdir(parents=True, exist_ok=True)
     rq2 = {}
     for variant in ["nli", "window", "no_nli"]:
         cache = OUT_EV / f"evidence_{variant}.parquet"
-        if cache.exists():
-            df_v = pd.read_parquet(cache)
-            print(f"[{variant}] loaded from cache")
-        else:
-            print(f"[{variant}] computing…")
-            df_v = evidence_extract(df.copy(), variant=variant, config=cfg, corpus_df=df_corpus)
-            df_v.to_parquet(cache, index=False)
+        print(f"[{variant}] computing…")
+        df_v = evidence_extract(df.copy(), variant=variant, config=cfg, corpus_df=df_corpus)
+        df_v.to_parquet(cache, index=False)
 
         n_total = len(df_v)
         n_ev = int(df_v["has_evidence"].sum()) if "has_evidence" in df_v.columns else 0
