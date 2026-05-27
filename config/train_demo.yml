@@ -9,7 +9,7 @@ tasks:
 
         model:
             name: vinai/phobert-base
-            max_length: 128
+            max_length: 256
             word_segment: true
             sentence_transformer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 
@@ -24,11 +24,11 @@ tasks:
             output_dir: demo/outputs/models/topic_classifier
 
         training:
-            epochs: 5
+            epochs: 8
             train_batch_size: 16
             eval_batch_size: 32
-            learning_rate: 1.951e-5
-            weight_decay: 0.0289
+            learning_rate: 3.465571194146687e-05
+            weight_decay: 0.0955
             warmup_ratio: 0.1
             use_class_weights: true
             weight_method: sqrt_inverse
@@ -44,7 +44,7 @@ tasks:
             threshold: 0.0
 
         neuro_symbolic:
-            constraint_lambda: 0.2798
+            constraint_lambda: 0.5319
             exactly_one_weight: 1.0
             implication_weight: 0.5
             negation_weight: 0.5
@@ -56,7 +56,7 @@ tasks:
 
         model:
             name: vinai/phobert-base
-            max_length: 128
+            max_length: 256
             word_segment: true
             sentence_transformer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 
@@ -71,11 +71,11 @@ tasks:
             output_dir: demo/outputs/models/action_classifier
 
         training:
-            epochs: 5
-            train_batch_size: 16
+            epochs: 10
+            train_batch_size: 8
             eval_batch_size: 32
-            learning_rate: 2.004e-5
-            weight_decay: 0.0456
+            learning_rate: 4.22406239258181e-05
+            weight_decay: 0.0017
             warmup_ratio: 0.1
             use_class_weights: true
             weight_method: sqrt_inverse
@@ -91,7 +91,7 @@ tasks:
             threshold: 0.0
 
         neuro_symbolic:
-            constraint_lambda: 0.1798
+            constraint_lambda: 0.6159
             exactly_one_weight: 1.0
             implication_weight: 0.5
             negation_weight: 0.5

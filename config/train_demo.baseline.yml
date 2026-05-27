@@ -23,11 +23,11 @@ tasks:
             output_dir: demo/outputs/models/topic_classifier_baseline
 
         training:
-            epochs: 5
+            epochs: 10
             train_batch_size: 16
             eval_batch_size: 32
-            learning_rate: 2.004e-5
-            weight_decay: 0.0456
+            learning_rate: 2.4106495902171624e-05
+            weight_decay: 0.0598
             warmup_ratio: 0.1
             use_class_weights: true
             weight_method: sqrt_inverse
@@ -63,11 +63,11 @@ tasks:
             output_dir: demo/outputs/models/action_classifier_baseline
 
         training:
-            epochs: 5
-            train_batch_size: 16
+            epochs: 9
+            train_batch_size: 8
             eval_batch_size: 32
-            learning_rate: 2.004e-5
-            weight_decay: 0.0456
+            learning_rate: 1.827226177606625e-05
+            weight_decay: 0.0058
             warmup_ratio: 0.1
             use_class_weights: true
             weight_method: sqrt_inverse
