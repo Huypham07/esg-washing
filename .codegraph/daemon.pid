@@ -1,6 +1,6 @@
 {
-  "pid": 28164,
+  "pid": 33743,
   "version": "0.9.9",
-  "socketPath": "\\\\.\\pipe\\codegraph-d684b105b7d1d2f2",
-  "startedAt": 1781086935189
+  "socketPath": "/Users/huypham/code/research/esg/esg-washing/.codegraph/daemon.sock",
+  "startedAt": 1781113195090
 }
