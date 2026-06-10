@@ -1,0 +1,11 @@
+# P1 - build corpus tu raw OCR (spec 01 #1)
+raw_zip: data/extracted/raw_ocr_annual_report.zip
+out_blocks: data/processed/blocks.parquet
+out_sentences: data/processed/sentences.parquet
+min_sentence_len: 10
+dedup:
+  exact: true
+  near_dup_minhash: true
+  scope: per_doc
+analysis_scope:
+  years: [2020, 2021, 2022, 2023, 2024]

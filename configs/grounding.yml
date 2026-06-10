@@ -1,0 +1,11 @@
+# P3 - grounding (spec 03)
+retriever: bkai-foundation-models/vietnamese-bi-encoder
+nli_model: MoritzLaurer/mDeBERTa-v3-base-mnli-xnli
+top_k: 5
+sim_floor: 0.5
+support_thresholds: [0.5, 0.7, 0.9]   # sensitivity sweep, bang chinh dung 0.7
+pool:                                   # spec 03 #1
+  numeric_regex: true
+  block_types: [table, list]
+  specific_fact: true                   # is_specific=1 & is_commitment=0
+output: outputs/grounding/claims_grounded.parquet

@@ -1,0 +1,7 @@
+# P4 - chi so (spec 04)
+bootstrap:
+  n_resamples: 1000
+  ci: 0.95
+min_commitments_per_cell: 30   # duoi nguong -> chi vao bang pooled
+theta_main: 0.7
+output: outputs/index/cti.parquet

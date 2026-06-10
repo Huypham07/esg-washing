@@ -1,0 +1,22 @@
+# M1 - topic E/S/G masked-BCE (spec 02 #1)
+backbone: vinai/phobert-base
+max_length: 256
+word_segment: true
+labels: [env, soc, gov]
+loss: masked_bce
+pos_weight: auto
+train:
+  lr: 2.0e-5
+  batch_size: 32
+  epochs: 5
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  seeds: [42, 43, 44, 45, 46]
+threshold_tuning: per_label_f1   # tune tren dev, khong mac dinh 0.5
+pseudo_label:
+  enabled: false                 # vong 2 optional (spec 01 #3)
+  confidence: 0.9
+augment_env_claims_positives: false   # ablation
+data:
+  merged_table: data/processed/gold/topic_masked.parquet
+output_dir: outputs/models/topic
