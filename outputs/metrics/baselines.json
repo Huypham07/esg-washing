@@ -1,0 +1,13 @@
+{
+  "tfidf_lr_topic": {
+    "f1_env": 0.8525,
+    "f1_soc": 0.85,
+    "f1_gov": 0.7377,
+    "macro_f1": 0.8134
+  },
+  "tfidf_lr_claim": {
+    "f1_commitment": 0.6432,
+    "f1_specificity": 0.6667,
+    "macro_f1": 0.6549
+  }
+}

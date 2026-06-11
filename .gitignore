@@ -37,3 +37,6 @@ notebooks/.ipynb_checkpoints/
 outputs/demo/
 outputs/demo_smoketest/
 thesis
+# Generated pipeline artifacts
+data/processed/
+outputs/models/

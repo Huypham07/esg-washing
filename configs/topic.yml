@@ -1,5 +1,7 @@
 # M1 - topic E/S/G masked-BCE (spec 02 #1)
 backbone: vinai/phobert-base
+en_backbone: roberta-base        # upper-bound E2
+zero_shot_backbone: xlm-roberta-base
 max_length: 256
 word_segment: true
 labels: [env, soc, gov]

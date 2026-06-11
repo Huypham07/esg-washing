@@ -1,0 +1,47 @@
+{
+  "topic": {
+    "n_rows": 3603,
+    "env": {
+      "n_labeled": 1959,
+      "pos_rate": 0.3241
+    },
+    "soc": {
+      "n_labeled": 1990,
+      "pos_rate": 0.4
+    },
+    "gov": {
+      "n_labeled": 1969,
+      "pos_rate": 0.2666
+    },
+    "split_sizes": {
+      "train": 2882,
+      "test": 361,
+      "dev": 360
+    }
+  },
+  "claim": {
+    "n_rows": 3937,
+    "sources": {
+      "env_claims": 2117,
+      "climatebert": 1320,
+      "action_500": 500
+    },
+    "commitment": {
+      "n_labeled": 1820,
+      "pos_rate": 0.4044
+    },
+    "specificity": {
+      "n_labeled": 1320,
+      "pos_rate": 0.3955
+    },
+    "claim": {
+      "n_labeled": 2117,
+      "pos_rate": 0.2513
+    },
+    "split_sizes": {
+      "train": 3517,
+      "test": 320,
+      "dev": 100
+    }
+  }
+}

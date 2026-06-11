@@ -5,6 +5,9 @@ word_segment: true
 heads: [commitment, specificity]
 aux_head_env_claims: true        # chi de regularize encoder
 augment_action_500: true         # commitment-side positives cho khoang trong S/G
+augment_ml_promise: false        # bat khi co data/translate/ml_promise_vi.csv
+en_backbone: roberta-base        # upper-bound E2 (train+test EN goc)
+zero_shot_backbone: xlm-roberta-base
 train:
   lr: 2.0e-5
   batch_size: 32
@@ -14,5 +17,5 @@ train:
   seeds: [42, 43, 44, 45, 46]
 fallback_single_task: true       # train ca 2 phuong an, chon theo dev
 data:
-  dir: data/en_gold/translate
+  dir: data/translate
 output_dir: outputs/models/claim

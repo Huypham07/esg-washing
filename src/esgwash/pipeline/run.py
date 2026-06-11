@@ -8,8 +8,10 @@ def main(argv=None):
     p = argparse.ArgumentParser(description="esgwash end-to-end pipeline")
     p.add_argument("--stage", default="all", choices=["all", *STAGES])
     args = p.parse_args(argv)
-    # TODO(Phase A1): load config tung stage, chay tuan tu
-    raise NotImplementedError
+    stages = STAGES if args.stage == "all" else [args.stage]
+    for name in stages:
+        print(f"=== stage: {name} ===")
+        run_stage(name)
 
 
 if __name__ == "__main__":

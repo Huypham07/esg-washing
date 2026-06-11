@@ -99,6 +99,6 @@ Code cũ `src/pipeline/`, `src/training/` giữ nguyên đến khi pipeline mớ
 2. Gán `bank_signals.csv` (10 bank × 5 năm × 5 cột) — nguồn: BCTN, HOSE/VNSI, SBV.
 3. Spot-check 100 cặp grounding — Phase C3 xuất file.
 4. Accept license HF cho `Unbabel/wmt22-cometkiwi-da` (nếu dùng QE chính; fallback LaBSE).
-5. ~~Đăng ký/tải ML-Promise~~ ĐÃ TẢI (`data/external/ml_promise/`, kiểm kê spec 01 §7.1).
+5. ~~Đăng ký/tải ML-Promise~~ ĐÃ TẢI (`data/source_dataset/ml_promise/`, kiểm kê spec 01 §7.1).
    Còn lại: **dịch sang VI 1.200 mẫu EN+FR+JA** (user hỗ trợ dịch; ZH 146 positive tùy chọn,
    KO bỏ vì không có text) → augment commitment S/G + eval grounding.

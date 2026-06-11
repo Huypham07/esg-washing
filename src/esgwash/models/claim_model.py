@@ -1,16 +1,47 @@
 """M2 - multi-task commitment + specificity (spec 02 #2).
 
-Hai head sigmoid tren cung PhoBERT (cung tap van ban - da xac minh trung 100%).
-Aux head env_claims (chi regularize). Fallback: 2 model single-task, chon theo dev.
+Hai head sigmoid tren cung PhoBERT (cung tap van ban - da xac minh trung 100%);
+aux head claim (env_claims) chi de regularize encoder, khong dung output.
+Fallback single-task: train 2 model 1 head rieng, chon theo dev (giu ca 2 cho ablation).
 """
+from __future__ import annotations
+
+import pandas as pd
+
+from esgwash.models.trainer import MultiHeadTrainer, multi_seed
+
+MAIN_HEADS = ("commitment", "specificity")
 
 
-class ClaimModel:
-    def __init__(self, config: dict): ...
+class ClaimModel(MultiHeadTrainer):
+    def __init__(self, config: dict):
+        heads = list(MAIN_HEADS)
+        if config.get("aux_head_env_claims", False):
+            heads.append("claim")
+        super().__init__({**config, "heads": heads})
 
-    def fit(self, train_df, dev_df):
-        raise NotImplementedError  # TODO(Phase B3)
+    def evaluate(self, df: pd.DataFrame, text_col: str = "text",
+                 use_thresholds: bool = False) -> dict:
+        """Macro-F1 chi tren 2 head chinh - aux claim khong tham gia model selection."""
+        out = super().evaluate(df, text_col=text_col, use_thresholds=use_thresholds)
+        mains = [out[f"f1_{h}"] for h in MAIN_HEADS if f"f1_{h}" in out]
+        out["macro_f1"] = round(sum(mains) / len(mains), 4) if mains else 0.0
+        return out
 
-    def predict(self, sentences: list):
-        """-> DataFrame[p_commitment, p_specific, is_commitment, is_specific]."""
-        raise NotImplementedError
+    def predict(self, sentences: list[str]) -> pd.DataFrame:
+        probs = self.predict_proba(sentences)
+        out = pd.DataFrame({f"p_{h}": probs[h] for h in MAIN_HEADS})
+        for h in MAIN_HEADS:
+            out[f"is_{h}"] = (probs[h] >= self.thresholds[h]).astype(int)
+        return out
+
+
+def run_single_task_fallback(config: dict, train_df, dev_df, test_df) -> dict:
+    """2 model 1 head rieng - so voi multi-task tren dev, ghi ca 2 vao ablation."""
+    results = {}
+    for h in MAIN_HEADS:
+        cfg = {**config, "heads": [h], "aux_head_env_claims": False}
+        sub_train = train_df.dropna(subset=[h])
+        results[h] = multi_seed(cfg, sub_train, dev_df.dropna(subset=[h]),
+                                test_df.dropna(subset=[h]))
+    return results

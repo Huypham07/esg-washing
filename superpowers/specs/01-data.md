@@ -4,7 +4,7 @@
 
 - Nguồn duy nhất: `data/extracted/raw_ocr_annual_report.zip` (59 file txt OCR, per bank/year;
   phủ rộng hơn corpus cũ — có thêm vib và các năm 2016–2019).
-- **Không** dùng `data/corpus/*.parquet` cũ — build lại từ raw để pipeline tái lập 100%.
+- **Không** dùng `data/legacy/corpus/*.parquet` cũ — build lại từ raw để pipeline tái lập 100%.
 - Output chuẩn: `data/processed/sentences.parquet` với schema
   `doc_id, bank, year, section_id, block_id, sent_id, sentence, ctx_prev, ctx_next, block_type, section_title`.
 - Tiền xử lý: NFC normalize, sửa lỗi OCR phổ biến, lọc câu rác (len < 10, header/footer,
@@ -14,7 +14,7 @@
 
 ## 2. Gold EN → VI (translate-train) — đã có đủ trên đĩa
 
-`data/en_gold/{topic,subst}/` (EN gốc) và `data/en_gold/translate/` (VI, đã dịch xong toàn bộ).
+`data/source_dataset/{topic,subst}/` (EN gốc) và `data/translate/` (VI, đã dịch xong toàn bộ).
 
 | Task | File | n | Nhãn | Vai trò |
 |---|---|---|---|---|
@@ -86,7 +86,7 @@ có CTI thấp hơn nhóm không.
 
 ### 7.1 ML-Promise / SemEval-2025 Task 6 (PromiseEval) — ĐÃ TẢI, đã kiểm kê
 
-Seki et al. 2024 (arXiv 2411.04473; EMNLP 2025). File: `data/external/ml_promise/Trainset_*.json`
+Seki et al. 2024 (arXiv 2411.04473; EMNLP 2025). File: `data/source_dataset/ml_promise/Trainset_*.json`
 (license CC BY-NC-SA 4.0 — paper xuất bản phải ghi nguồn, dataset đóng gói lại không được thương mại).
 Lưu ý kỹ thuật: JSON có BOM → đọc bằng `utf-8-sig`.
 

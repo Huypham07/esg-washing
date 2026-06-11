@@ -26,6 +26,9 @@ scipy>=1.11
 # Hyperparameter tuning
 optuna>=3.0
 
+# Noise filtering translate-train (spec 01 #4)
+cleanlab>=2.5
+
 # Config + env
 pyyaml
 python-dotenv

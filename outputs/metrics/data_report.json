@@ -1,0 +1,94 @@
+{
+  "topic_env": {
+    "n": 2000,
+    "median_chars": 168.5,
+    "n_empty_text": 0,
+    "pos_rate_env": 0.329
+  },
+  "topic_soc": {
+    "n": 2000,
+    "median_chars": 178.0,
+    "n_empty_text": 0,
+    "pos_rate_soc": 0.402
+  },
+  "topic_gov": {
+    "n": 2000,
+    "median_chars": 169.0,
+    "n_empty_text": 0,
+    "pos_rate_gov": 0.269
+  },
+  "claim_pair": {
+    "n": 1320,
+    "median_chars": 453.5,
+    "n_empty_text": 0,
+    "pos_rate_commitment": 0.3962,
+    "pos_rate_specificity": 0.3955,
+    "spec_missing_after_merge": 0
+  },
+  "env_claims": {
+    "n": 2647,
+    "median_chars": 166.0,
+    "n_empty_text": 0,
+    "pos_rate_claim": 0.2512
+  },
+  "action_500": {
+    "n": 500,
+    "median_chars": 188.0,
+    "n_empty_text": 0,
+    "pos_rate_action": 0.426
+  },
+  "ml_promise_vi": "chua co: Chua co ban dich: data/translate/ml_promise_vi.csv",
+  "ml_promise_src": {
+    "n": 1346,
+    "median_chars": 434.5,
+    "n_empty_text": 0,
+    "pos_rate_promise": 0.844,
+    "pos_rate_evidence": 0.6248
+  },
+  "topic_masked": {
+    "n_rows": 3603,
+    "env": {
+      "n_labeled": 1959,
+      "pos_rate": 0.3241
+    },
+    "soc": {
+      "n_labeled": 1990,
+      "pos_rate": 0.4
+    },
+    "gov": {
+      "n_labeled": 1969,
+      "pos_rate": 0.2666
+    },
+    "split_sizes": {
+      "train": 2882,
+      "test": 361,
+      "dev": 360
+    },
+    "multi_pillar_rows": 1302
+  },
+  "claim_table": {
+    "n_rows": 3937,
+    "sources": {
+      "env_claims": 2117,
+      "climatebert": 1320,
+      "action_500": 500
+    },
+    "commitment": {
+      "n_labeled": 1820,
+      "pos_rate": 0.4044
+    },
+    "specificity": {
+      "n_labeled": 1320,
+      "pos_rate": 0.3955
+    },
+    "claim": {
+      "n_labeled": 2117,
+      "pos_rate": 0.2513
+    },
+    "split_sizes": {
+      "train": 3517,
+      "test": 320,
+      "dev": 100
+    }
+  }
+}

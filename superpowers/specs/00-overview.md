@@ -34,10 +34,10 @@
   (chỉ số, cách gộp, ngưỡng) phải truy vết được về related work đã công bố; tham số tự do
   duy nhất được phép là ngưỡng quyết định, và phải xử lý bằng sensitivity analysis
   thay vì chọn cứng. Chỉ số = tỉ lệ output của các classifier đã công bố.
-- **Không dùng nhãn LLM cũ** (`data/labels/*/llm_prelabels.parquet`) làm nhãn train;
+- **Không dùng nhãn LLM cũ** (`data/legacy/labels/*/llm_prelabels.parquet`) làm nhãn train;
   có thể dùng làm weak-check phân phối.
 - Corpus đầu vào: **chỉ build lại từ raw extract** (`data/extracted/raw_ocr_annual_report.zip`),
-  không dùng các parquet dẫn xuất cũ trong `data/corpus/`.
+  không dùng các parquet dẫn xuất cũ trong `data/legacy/corpus/`.
 - Mọi kết luận phải kèm uncertainty (bootstrap CI) và ngưỡng n tối thiểu.
 
 ## 4. Kiến trúc pipeline (4 tầng)
