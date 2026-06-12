@@ -54,8 +54,9 @@ def split_stratified(df: pd.DataFrame, seed: int = 42,
     return df
 
 
-def augment_env_claims(df: pd.DataFrame, lang: str = "vi") -> pd.DataFrame:
-    """Positive cua env_claims la E-positive chac chan -> them env=1 (train only, ablation)."""
+def _append_env_claims(df: pd.DataFrame, lang: str = "vi") -> pd.DataFrame:
+    """Positive cua env_claims la E-positive chac chan -> them env=1
+    (train-only; soc/gov NaN de cross_label dien tiep)."""
     ec = load_env_claims(lang)
     pos = ec[(ec["claim"] == 1) & (ec["split"] == "train")]
     pos = pos[~pos["text_en"].isin(df["text_en"])]
@@ -65,8 +66,18 @@ def augment_env_claims(df: pd.DataFrame, lang: str = "vi") -> pd.DataFrame:
     return pd.concat([df, add], ignore_index=True)
 
 
-def cross_pseudo_label(df: pd.DataFrame, probs: pd.DataFrame, tau: float = 0.9) -> pd.DataFrame:
-    """Vong 2 optional: dien NaN khi model trai nguon du doan confidence >= tau.
+def build_topic_table(lang: str = "vi", seed: int = 42) -> pd.DataFrame:
+    """Bang masked hoan chinh, 1 ham duy nhat cho stage prepare_gold:
+    merge 3 tap -> split -> nhap env_claims positives. Sau do stage cross_label
+    dien NaN -> topic_labeled.parquet (file duy nhat train dung)."""
+    df = build_masked_table(lang)
+    df = split_stratified(df, seed=seed)
+    return _append_env_claims(df, lang=lang)
+
+
+def fill_cross_labels(df: pd.DataFrame, probs: pd.DataFrame, tau: float = 0.9) -> pd.DataFrame:
+    """Hoan thien bang nhan: dien o NaN khi model trai nguon du doan confidence >= tau
+    (vong 2 cua chuan bi data — esgbert_labels.build_labeled_table goi ham nay).
 
     probs: DataFrame cung index voi df, cot env/soc/gov = xac suat du doan.
     Chi dien cho split=train; nhan goc khong bi ghi de.

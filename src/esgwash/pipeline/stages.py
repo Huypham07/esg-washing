@@ -27,21 +27,22 @@ def stage_build_corpus() -> None:
 
 def stage_prepare_gold() -> None:
     from esgwash.data import claim_merge, topic_merge
-    cfg_topic = load_config("topic")
     GOLD_DIR.mkdir(parents=True, exist_ok=True)
 
-    topic = topic_merge.build_masked_table(lang="vi")
-    topic = topic_merge.split_stratified(topic, seed=42)
-    if cfg_topic.get("augment_env_claims_positives", False):
-        topic = topic_merge.augment_env_claims(topic, lang="vi")
-    topic.to_parquet(GOLD_DIR / "topic_masked.parquet", index=False)
+    # Nguon topic (2k + env_claims) da merge xong vao topic_masked.parquet va
+    # chuyen file goc vao unused/ (2026-06-12) -> chi rebuild duoc neu khoi phuc file.
+    if Path("data/source_dataset/topic/environmental_2k.csv").exists():
+        topic = topic_merge.build_topic_table(lang="vi", seed=42)
+        topic.to_parquet(GOLD_DIR / "topic_masked.parquet", index=False)
+    else:
+        topic = pd.read_parquet(GOLD_DIR / "topic_masked.parquet")
+        print("nguon topic da o unused/ — giu topic_masked.parquet hien co")
 
     cfg_claim = load_config("claim")
     claim = claim_merge.build_claim_table(
         lang="vi",
         augment_action=cfg_claim.get("augment_action_500", True),
-        aux_env_claims=cfg_claim.get("aux_head_env_claims", True),
-        augment_ml_promise=cfg_claim.get("augment_ml_promise", False))
+        augment_ml_promise=cfg_claim.get("augment_ml_promise", True))
     claim.to_parquet(GOLD_DIR / "claim_table.parquet", index=False)
 
     stats = {"topic": topic_merge.label_stats(topic),
@@ -49,6 +50,13 @@ def stage_prepare_gold() -> None:
     METRICS_DIR.mkdir(parents=True, exist_ok=True)
     (METRICS_DIR / "gold_stats.json").write_text(
         json.dumps(stats, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+    print(json.dumps(stats, indent=2, ensure_ascii=False, default=str))
+
+
+def stage_cross_label() -> None:
+    """Hoan thien nhan topic bang ESGBERT cross-inference (vong 2 chuan bi data)."""
+    from esgwash.data.esgbert_labels import build_labeled_table
+    stats = build_labeled_table(load_config("topic"))
     print(json.dumps(stats, indent=2, ensure_ascii=False, default=str))
 
 
@@ -79,6 +87,7 @@ def _todo(name: str):
 STAGE_FNS = {
     "build_corpus": stage_build_corpus,
     "prepare_gold": stage_prepare_gold,
+    "cross_label": stage_cross_label,
     "export_annotation": stage_export_annotation,
     "classify": _todo("classify"),
     "ground": _todo("ground"),

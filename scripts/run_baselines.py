@@ -5,6 +5,8 @@
 import argparse
 import json
 import sys
+
+import pandas as pd
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -20,7 +22,7 @@ def main():
     args = ap.parse_args()
     results = {}
 
-    topic_vi = topic_merge.split_stratified(topic_merge.build_masked_table("vi"))
+    topic_vi = pd.read_parquet("data/processed/gold/topic_masked.parquet")
     claim_vi = claim_merge.build_claim_table("vi")
     results["tfidf_lr_topic"] = tfidf_lr_baseline(
         topic_vi[topic_vi["split"] == "train"], topic_vi[topic_vi["split"] == "test"],
@@ -30,7 +32,7 @@ def main():
         heads=["commitment", "specificity"])
 
     if not args.skip_xlmr:
-        topic_en = topic_merge.split_stratified(topic_merge.build_masked_table("en"))
+        topic_en = topic_vi.assign(text=topic_vi["text_en"])
         claim_en = claim_merge.build_claim_table("en")
         cfg_t = {**load_config("topic"), "heads": ["env", "soc", "gov"]}
         cfg_c = {**load_config("claim"), "heads": ["commitment", "specificity"]}

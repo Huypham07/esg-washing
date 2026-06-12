@@ -4,13 +4,14 @@
 """
 import json
 import sys
+
+import pandas as pd
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from esgwash.data import claim_merge, topic_merge
-from esgwash.data.gold_loader import (load_action, load_claim_pair, load_env_claims,
-                                      load_ml_promise, load_topic)
+from esgwash.data.gold_loader import load_action, load_claim_pair, load_ml_promise
 
 
 def df_summary(df, label_cols):
@@ -25,12 +26,10 @@ def df_summary(df, label_cols):
 
 def main():
     report = {}
-    for p in ("env", "soc", "gov"):
-        report[f"topic_{p}"] = df_summary(load_topic(p, "vi"), [p])
+    # nguon topic 2k + env_claims da merge vao topic_masked.parquet (file goc o unused/)
     cp = load_claim_pair("vi")
     report["claim_pair"] = df_summary(cp, ["commitment", "specificity"])
     report["claim_pair"]["spec_missing_after_merge"] = int(cp["specificity"].isna().sum())
-    report["env_claims"] = df_summary(load_env_claims("vi"), ["claim"])
     report["action_500"] = df_summary(load_action("vi"), ["action"])
     try:
         mp = load_ml_promise("vi")
@@ -40,7 +39,7 @@ def main():
         mp = load_ml_promise("en")
         report["ml_promise_src"] = df_summary(mp, ["promise", "evidence"])
 
-    topic = topic_merge.split_stratified(topic_merge.build_masked_table("vi"))
+    topic = pd.read_parquet("data/processed/gold/topic_masked.parquet")
     report["topic_masked"] = topic_merge.label_stats(topic)
     report["topic_masked"]["multi_pillar_rows"] = int(
         (topic[["env", "soc", "gov"]].notna().sum(axis=1) > 1).sum())

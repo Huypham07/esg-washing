@@ -24,9 +24,12 @@ Baseline so sánh: zero-shot `xlm-roberta-base` (train EN, infer VI — không c
   chọn theo dev, báo cáo cả 2 trong ablation.
 - **Augment cho khoảng trống S/G (L2):** thêm `action_500` (ESG-wide) vào đầu commitment
   (action=1 → commitment-side positive theo định nghĩa ClimateBERT "commitment/action");
-  thêm `env_claims` làm auxiliary head thứ 3 (claim 0/1) — chỉ để regularize encoder, không dùng output;
-  khi có **ML-Promise** (spec 01 §7.1, chờ user tải + dịch): nhãn promise yes/no (full ESG)
+  **ML-Promise** EN+FR+JA 1.200 mẫu dịch VI (đã có): nhãn promise yes/no (full ESG)
   augment thêm đầu commitment.
+  ~~Auxiliary head thứ 3 từ env_claims~~ **ĐÃ BỎ** (quyết định 2026-06-12): không dùng
+  output, lợi ích regularization chưa chứng minh, và env_claims climate-only có nguy cơ
+  kéo encoder lệch thêm về E (ngược mục tiêu vá S/G); env_claims chỉ còn dùng cho
+  augment topic-E (spec 01 §3).
 - Phạm vi áp dụng khi inference: chỉ chạy trên câu đã qua M1 (topic ≠ non_esg).
 - Eval: F1 per head trên test dịch + VN human-eval set, **tách theo trụ E vs S/G**
   để định lượng domain shift (climate→S/G) thay vì chỉ thừa nhận suông.

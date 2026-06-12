@@ -41,14 +41,21 @@ có thể là positive của S/G (nhãn thiếu, không phải nhãn 0 cho trụ
 - Loss: BCE chỉ tính trên cột có nhãn (mask NaN). 3 đầu sigmoid độc lập trên PhoBERT.
 - Đây là cách chuẩn cho multi-label với partial labels; không bịa nhãn.
 
-**Chiến lược phụ — cross-pseudo-labeling (vòng 2, optional):**
-1. Train 3 mô hình nhị phân per-pillar trên tập riêng.
-2. Inference chéo: mô hình E dự đoán trên social_2k + governance_2k, v.v.
-3. Chỉ nhận pseudo-label có confidence ≥ τ (mặc định 0.9) → điền bớt NaN → retrain masked BCE.
-4. Báo cáo ablation: masked-only vs masked+pseudo.
+**Vòng 2 — cross-label bằng ESGBERT (CẬP NHẬT 2026-06-12: là bước chuẩn bị data mặc định):**
+1. Dùng 3 classifier đã công bố `ESGBERT/{Environmental,Social,Governance}BERT-*`
+   (Schimanski et al. 2023 — chính là model train trên 3 tập 2k gốc) thay vì tự train
+   3 mô hình nhị phân: rẻ hơn, EN-native, tránh confirmation bias của self-training.
+2. Inference chéo trên text_en, **chỉ ở ô (split=train, nhãn=NaN)** — chống leak vì model
+   trụ p chưa từng thấy nhãn p của câu đến từ tập khác; nhãn map sang VI qua row-alignment.
+3. Chỉ nhận nhãn có confidence ≥ τ (mặc định 0.9, positive lẫn negative) → điền NaN
+   → `topic_labeled.parquet` = **bảng nhãn đích, train mặc định dùng** (không gọi là
+   pseudo-label nữa). Stage: `cross_label`; script: `scripts/build_topic_labels.py`.
+4. Ablation: `train_topic.py --masked-only` (bảng masked trước cross-label) vs mặc định.
 
-**Augment positives cho E (optional):** câu positive của `env_claims` là E-positive
-chắc chắn → thêm `env=1` (soc/gov NaN). Báo cáo ablation có/không augment.
+**env_claims positives nhập vào data MẶC ĐỊNH (cập nhật 2026-06-12):** câu positive của
+`env_claims` là E-positive chắc chắn → thêm `env=1` (soc/gov NaN, train-only) ngay trong
+`topic_merge.build_topic_table` (một hàm duy nhất: merge 3 tập → split → nhập env_claims);
+cross_label điền tiếp soc/gov. Sau khi bỏ aux head M2, đây là vai trò duy nhất của env_claims.
 
 > **Không dùng:** `netzero_reduction.csv` — đã loại khỏi thiết kế (quyết định 2026-06-10);
 > giữ file trên đĩa nhưng không xuất hiện trong bất kỳ task/chỉ số nào.

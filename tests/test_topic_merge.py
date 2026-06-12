@@ -9,7 +9,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from esgwash.data.cleaning import dedup_mask, is_valid_sentence
-from esgwash.data.topic_merge import (PILLARS, cross_pseudo_label, label_stats,
+from esgwash.data.topic_merge import (PILLARS, fill_cross_labels, label_stats,
                                       split_stratified)
 
 
@@ -35,11 +35,11 @@ def test_split_no_leak_and_ratio():
     assert set(df["split"]) == {"train", "dev", "test"}
 
 
-def test_cross_pseudo_label_only_fills_train_nan():
+def test_fill_cross_labels_only_fills_train_nan():
     df = split_stratified(make_masked(100))
     probs = pd.DataFrame(0.95, index=df.index, columns=list(PILLARS))
     orig = df.copy()
-    out = cross_pseudo_label(df, probs, tau=0.9)
+    out = fill_cross_labels(df, probs, tau=0.9)
     labeled = orig[list(PILLARS)].notna()
     assert (out[list(PILLARS)].values[labeled.values]
             == orig[list(PILLARS)].values[labeled.values]).all()

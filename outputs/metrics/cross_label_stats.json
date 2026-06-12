@@ -1,0 +1,65 @@
+{
+  "tau": 0.9,
+  "table": "data/processed/gold/topic_labeled.parquet",
+  "env": {
+    "n_scored": 1312,
+    "n_filled": 1275,
+    "fill_rate": 0.9718,
+    "n_pos": 143,
+    "n_neg": 1132
+  },
+  "soc": {
+    "n_scored": 1823,
+    "n_filled": 1798,
+    "fill_rate": 0.9863,
+    "n_pos": 143,
+    "n_neg": 1655
+  },
+  "gov": {
+    "n_scored": 1841,
+    "n_filled": 1748,
+    "fill_rate": 0.9495,
+    "n_pos": 80,
+    "n_neg": 1668
+  },
+  "labels_before": {
+    "n_rows": 4135,
+    "env": {
+      "n_labeled": 2491,
+      "pos_rate": 0.4685
+    },
+    "soc": {
+      "n_labeled": 1990,
+      "pos_rate": 0.4
+    },
+    "gov": {
+      "n_labeled": 1969,
+      "pos_rate": 0.2666
+    },
+    "split_sizes": {
+      "train": 3414,
+      "test": 361,
+      "dev": 360
+    }
+  },
+  "labels_after": {
+    "n_rows": 4135,
+    "env": {
+      "n_labeled": 3766,
+      "pos_rate": 0.3478
+    },
+    "soc": {
+      "n_labeled": 3788,
+      "pos_rate": 0.2479
+    },
+    "gov": {
+      "n_labeled": 3717,
+      "pos_rate": 0.1628
+    },
+    "split_sizes": {
+      "train": 3414,
+      "test": 361,
+      "dev": 360
+    }
+  }
+}

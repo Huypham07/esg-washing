@@ -120,7 +120,10 @@ class MultiHeadTrainer:
         return torch.tensor(ws, dtype=torch.float32, device=self.device)
 
     def fit(self, train_df: pd.DataFrame, dev_df: pd.DataFrame,
-            text_col: str = "text", seed: int = 42) -> dict:
+            text_col: str = "text", seed: int = 42,
+            epoch_callback=None) -> dict:
+        """epoch_callback(epoch, dev_metrics): hook sau moi epoch — Optuna pruning
+        raise TrialPruned tu day de cat som trial te."""
         from transformers import get_linear_schedule_with_warmup
 
         set_seed(seed)
@@ -164,6 +167,8 @@ class MultiHeadTrainer:
                 best = {"macro_f1": dev_metrics["macro_f1"],
                         "state": {k: v.detach().cpu().clone()
                                   for k, v in self.model.state_dict().items()}}
+            if epoch_callback is not None:
+                epoch_callback(epoch, dev_metrics)
         if best["state"] is not None:
             self.model.load_state_dict(best["state"])
         self.tune_thresholds(dev_df, text_col=text_col)
@@ -235,7 +240,6 @@ def multi_seed(config: dict, train_df: pd.DataFrame, dev_df: pd.DataFrame,
                test_df: pd.DataFrame, text_col: str = "text",
                out_dir: str | Path | None = None,
                trainer_cls: type | None = None) -> dict:
-    """Chay het config['train']['seeds'], gop metrics test mean/std; luu model seed dau."""
     trainer_cls = trainer_cls or MultiHeadTrainer
     runs = []
     for i, seed in enumerate(config["train"]["seeds"]):
