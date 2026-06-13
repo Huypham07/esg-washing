@@ -23,7 +23,6 @@ TEST_PATH = Path("data/topic_test.parquet")
 
 
 def load_split(lang: str, val_seed: int = 42):
-    """Doc 2 file phang (khong con cot split); cat val tu train luc train."""
     train_full = pd.read_parquet(TRAIN_PATH)
     test = pd.read_parquet(TEST_PATH)
     if lang == "en":
