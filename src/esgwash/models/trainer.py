@@ -224,12 +224,19 @@ class MultiHeadTrainer:
         return out
 
     def save(self, out_dir: str | Path) -> None:
+        """Luu dang HF-uploadable: model.safetensors + tokenizer + config.json.
+
+        config.json giu them `heads`/`thresholds`/`backbone` de tai lai kien truc
+        multi-head tuy bien (khong phai AutoModelForSequenceClassification chuan)."""
+        from safetensors.torch import save_model
+
         out_dir = Path(out_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
-        torch.save(self.model.state_dict(), out_dir / "model.pt")
+        save_model(self.model, str(out_dir / "model.safetensors"))
+        self.tokenizer.save_pretrained(out_dir)
         (out_dir / "config.json").write_text(json.dumps(
             {**self.config, "heads": self.heads, "thresholds": self.thresholds},
-            indent=2, default=str), encoding="utf-8")
+            indent=2, default=str, ensure_ascii=False), encoding="utf-8")
 
     def load(self, out_dir: str | Path) -> "MultiHeadTrainer":
         out_dir = Path(out_dir)
@@ -237,8 +244,13 @@ class MultiHeadTrainer:
         self.thresholds = saved.get("thresholds", self.thresholds)
         self.model = MultiHeadClassifier(self.config["backbone"], self.heads,
                                          dropout=self.config.get("dropout", 0.1))
-        self.model.load_state_dict(torch.load(out_dir / "model.pt",
-                                              map_location="cpu"))
+        st = out_dir / "model.safetensors"
+        if st.exists():
+            from safetensors.torch import load_model
+            load_model(self.model, str(st))
+        else:  # tuong thich nguoc voi model.pt cu
+            self.model.load_state_dict(torch.load(out_dir / "model.pt",
+                                                  map_location="cpu"))
         self.model.to(self.device)
         return self
 

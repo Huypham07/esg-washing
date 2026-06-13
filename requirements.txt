@@ -34,6 +34,10 @@ cleanlab>=2.5
 pyyaml
 python-dotenv
 
+# Luu/upload model (safetensors + HF Hub)
+safetensors
+huggingface_hub
+
 # LLM labeling (Gemini)
 google-genai
 
