@@ -144,12 +144,16 @@ class MultiHeadTrainer:
         sched = get_linear_schedule_with_warmup(
             opt, int(steps * tc.get("warmup_ratio", 0.1)), steps)
 
+        from tqdm.auto import tqdm
+
         best = {"macro_f1": -1.0, "state": None}
         history = []
         for epoch in range(tc["epochs"]):
             self.model.train()
             total = 0.0
-            for batch in loader:
+            loop = tqdm(loader, desc=f"[{self.device}] epoch {epoch + 1}/{tc['epochs']}",
+                        leave=False)
+            for batch in loop:
                 targets = batch.pop("targets").to(self.device)
                 batch = {k: v.to(self.device) for k, v in batch.items()}
                 logits = self.model(**batch)
@@ -160,7 +164,10 @@ class MultiHeadTrainer:
                 sched.step()
                 opt.zero_grad()
                 total += loss.item()
+                loop.set_postfix(loss=f"{loss.item():.3f}")
             val_metrics = self.evaluate(val_df, text_col=text_col)
+            print(f"[{self.device}] epoch {epoch + 1}/{tc['epochs']} "
+                  f"loss={total / len(loader):.3f} val_macroF1={val_metrics['macro_f1']:.4f}")
             history.append({"epoch": epoch, "train_loss": total / len(loader),
                             **val_metrics})
             if val_metrics["macro_f1"] > best["macro_f1"]:
