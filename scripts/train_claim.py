@@ -39,13 +39,13 @@ def load_split(lang: str, val_seed: int = 42):
     return train, val, test
 
 
-def main():
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--lang", default="vi", choices=["vi", "en"])
     ap.add_argument("--tune", type=int, default=0, metavar="N",
                     help="so trial Optuna chay them truoc khi train (0 = bo qua)")
     ap.add_argument("--single-task", action="store_true")
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
 
     cfg = load_config("claim")
     cfg["heads"] = list(MAIN_HEADS)
