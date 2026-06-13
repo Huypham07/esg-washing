@@ -1,0 +1,126 @@
+# 5 binary classifiers (pivot CTI): topic env/soc/gov + substantiveness commitment/specificity.
+# Mỗi task: PhoBERT-v2, 2-class (labels [0,1] INT), gold data/vi_gold/<task>, sentence-only.
+# HP `training` hiện là DEFAULT — sau khi tune (notebooks/02-tune-classifiers.ipynb) thay per-task.
+
+defaults:
+    task: env
+
+# --- anchors model: 2 biến thể max_length (đo token thật từ vi_gold) ---
+# topic env/soc/gov: câu NGẮN (p99 ~130 token) -> 128 chỉ cắt ~1% câu -> đủ.
+# subst commitment/specificity: câu DÀI (p50=115, 38% câu >128 token) -> CẦN 256.
+_model_topic: &model_topic
+    name: vinai/phobert-base-v2
+    max_length: 128
+    word_segment: true            # tách từ ở runtime (gold để thô)
+
+_model_subst: &model_subst
+    name: vinai/phobert-base-v2
+    max_length: 256
+    word_segment: true
+
+# --- anchors search-space batch cho Optuna (đọc bởi tune_hyperparams.objective) ---
+# topic: train ~1580 dòng -> [8,16,32] OK.
+# subst: train chỉ 841 dòng -> bỏ 32 (bs32 = ~27 steps/epoch, quá ít cho data nhỏ).
+_tune_topic: &tune_topic
+    train_batch_size: [8, 16, 32]
+
+_tune_subst: &tune_subst
+    train_batch_size: [8, 16]
+
+_data: &data
+    use_context_prev: false        # gold không có ctx -> sentence-only
+    use_context_next: false
+
+_es: &es
+    enabled: true
+    patience: 2
+    threshold: 0.0
+
+_train: &train                     # DEFAULT HP (thay per-task sau khi Optuna tune)
+    epochs: 10                     # trần; EarlyStopping (patience 2) quyết best-epoch (Phase 02: bỏ tune epochs)
+    seeds: [42, 43, 44, 45, 46]    # multi-seed -> mean±std (Phase 02; train cuối; tune vẫn 1 seed)
+    train_batch_size: 16
+    eval_batch_size: 32
+    learning_rate: 2.0e-5
+    weight_decay: 0.01
+    warmup_ratio: 0.1
+    use_class_weights: true
+    weight_method: sqrt_inverse
+    gradient_accumulation_steps: 1
+    max_grad_norm: 1.0
+    label_smoothing_factor: 0.0
+    precision: bf16                # GPU Ampere+ (5070 Ti)
+    metric_for_best_model: macro_f1
+
+tasks:
+    # ===== Nhóm Topic (E/S/G) — max_length 128, batch [8,16,32] =====
+    env:
+        labels: [0, 1]
+        seed: 42
+        model: *model_topic
+        data: *data
+        tune: *tune_topic
+        paths:
+            train_data: data/vi_gold/env/train.parquet
+            val_data: data/vi_gold/env/val.parquet
+            test_data: data/vi_gold/env/test.parquet
+            output_dir: outputs/models/topic_e
+        training: *train
+        early_stopping: *es
+
+    soc:
+        labels: [0, 1]
+        seed: 42
+        model: *model_topic
+        data: *data
+        tune: *tune_topic
+        paths:
+            train_data: data/vi_gold/soc/train.parquet
+            val_data: data/vi_gold/soc/val.parquet
+            test_data: data/vi_gold/soc/test.parquet
+            output_dir: outputs/models/topic_s
+        training: *train
+        early_stopping: *es
+
+    gov:
+        labels: [0, 1]
+        seed: 42
+        model: *model_topic
+        data: *data
+        tune: *tune_topic
+        paths:
+            train_data: data/vi_gold/gov/train.parquet
+            val_data: data/vi_gold/gov/val.parquet
+            test_data: data/vi_gold/gov/test.parquet
+            output_dir: outputs/models/topic_g
+        training: *train
+        early_stopping: *es
+
+    # ===== Nhóm Substantiveness (đo washing) — max_length 256, batch [8,16] (data ít) =====
+    commitment:
+        labels: [0, 1]
+        seed: 42
+        model: *model_subst
+        data: *data
+        tune: *tune_subst
+        paths:
+            train_data: data/vi_gold/commitment/train.parquet
+            val_data: data/vi_gold/commitment/val.parquet
+            test_data: data/vi_gold/commitment/test.parquet
+            output_dir: outputs/models/commitment
+        training: *train
+        early_stopping: *es
+
+    specificity:
+        labels: [0, 1]
+        seed: 42
+        model: *model_subst
+        data: *data
+        tune: *tune_subst
+        paths:
+            train_data: data/vi_gold/specificity/train.parquet
+            val_data: data/vi_gold/specificity/val.parquet
+            test_data: data/vi_gold/specificity/test.parquet
+            output_dir: outputs/models/specificity
+        training: *train
+        early_stopping: *es

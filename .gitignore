@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Virtual envs
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+
+# Secrets
+.env
+*.key
+
+# Logs
+*.log
+
+# Aux scripts and one-off charts (kept locally only)
+py_utils/
+old/
+olds/
+
+# Notebook checkpoints
+notebooks/.ipynb_checkpoints/
+
+
+# Demo run outputs
+outputs/demo/
+outputs/demo_smoketest/
+thesis
+
+# ─── Gold-rigor upload curation (2026-06-13) ──────────────────────────
+# Trọng số model (~18G) — CHỈ giữ metrics/best_params/test_predictions/config.json
+outputs/models/**/checkpoint-*/
+outputs/models/**/*.safetensors
+outputs/models/**/*.pt
+outputs/models/**/*.bin
+outputs/models/**/bpe.codes
+outputs/models/**/vocab.txt
+# Archive + experiments + EWRI cũ (nặng)
+outputs/_archive_pre_phase03/
+outputs/experiments/
+outputs/ewri_grid_search_results.csv
+# Silver track (đã bỏ hẳn)
+data/vi_silver/
+data/labels_silver/
+outputs/index/*_silver.*
+outputs/index/*_smoke_*
+figures/phase05/
+# Data pre-pivot cũ (chỉ giữ data/corpus/sentences_clean.parquet)
+data/labels/
+data/corpus/sentences.parquet
+data/corpus/blocks.parquet
+data/corpus/actionability_sentences.parquet
+data/corpus/esg_sentences.parquet
+# Backup & tooling local
+data/_local_backup/
+src/_local_backup/
+.claude/
+.agent/
+.codegraph/

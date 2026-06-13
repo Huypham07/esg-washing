@@ -1,0 +1,59 @@
+{
+  "track": "gold",
+  "note": "CTI THUẦN gold (translate-train). Ranking TƯƠNG ĐỐI (CTI tuyệt đối lệch cao do cascade+specificity). SƠ BỘ — chờ Phase 04 (verify classifier trên VN thật) + Phase 06 (validation chỉ số).",
+  "n_cells": 27,
+  "n_valid": 27,
+  "n_low_n": 0,
+  "selective_disclosure_skew_cells": 2,
+  "cti_by_pillar": {
+    "E": {
+      "mean": 0.7723,
+      "median": 0.7633,
+      "n": 9
+    },
+    "S": {
+      "mean": 0.809,
+      "median": 0.8143,
+      "n": 9
+    },
+    "G": {
+      "mean": 0.9398,
+      "median": 0.9596,
+      "n": 9
+    }
+  },
+  "excluded_banks": [
+    "bsc"
+  ],
+  "sensitivity": {
+    "spec_thresholds": [
+      0.4,
+      0.5,
+      0.6
+    ],
+    "base": 0.5,
+    "kendall_tau": {
+      "E": {
+        "n_banks": 9,
+        "tau_vs_base": {
+          "0.4": 1.0,
+          "0.6": 0.778
+        }
+      },
+      "S": {
+        "n_banks": 9,
+        "tau_vs_base": {
+          "0.4": 0.778,
+          "0.6": 0.944
+        }
+      },
+      "G": {
+        "n_banks": 9,
+        "tau_vs_base": {
+          "0.4": 0.722,
+          "0.6": 0.667
+        }
+      }
+    }
+  }
+}

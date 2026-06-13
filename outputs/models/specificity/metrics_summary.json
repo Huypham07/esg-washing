@@ -1,0 +1,70 @@
+{
+  "task": "specificity",
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "n_seeds": 5,
+  "model_saved_seed": 42,
+  "inference_threshold": 0.5,
+  "per_seed": [
+    {
+      "seed": 42,
+      "test": {
+        "macro_f1": 0.8094660194174756,
+        "micro_f1": 0.8280254777070064,
+        "f1_positive": 0.75
+      },
+      "report": "              precision    recall  f1-score   support\n\n           0       0.82      0.93      0.87       193\n           1       0.85      0.67      0.75       121\n\n    accuracy                           0.83       314\n   macro avg       0.83      0.80      0.81       314\nweighted avg       0.83      0.83      0.82       314\n"
+    },
+    {
+      "seed": 43,
+      "test": {
+        "macro_f1": 0.8008418382056162,
+        "micro_f1": 0.8248407643312102,
+        "f1_positive": 0.7317073170731707
+      }
+    },
+    {
+      "seed": 44,
+      "test": {
+        "macro_f1": 0.8173238526179702,
+        "micro_f1": 0.8280254777070064,
+        "f1_positive": 0.773109243697479
+      }
+    },
+    {
+      "seed": 45,
+      "test": {
+        "macro_f1": 0.7905029218239543,
+        "micro_f1": 0.8152866242038217,
+        "f1_positive": 0.7184466019417476
+      }
+    },
+    {
+      "seed": 46,
+      "test": {
+        "macro_f1": 0.8219793178519594,
+        "micro_f1": 0.8407643312101911,
+        "f1_positive": 0.7641509433962265
+      }
+    }
+  ],
+  "test": {
+    "macro_f1": {
+      "mean": 0.808,
+      "std": 0.0113
+    },
+    "micro_f1": {
+      "mean": 0.8274,
+      "std": 0.0082
+    },
+    "f1_positive": {
+      "mean": 0.7475,
+      "std": 0.0202
+    }
+  }
+}

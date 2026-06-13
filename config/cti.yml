@@ -1,0 +1,38 @@
+# Cấu hình nhánh CTI (pivot) — chạy 5 binary classifier trên corpus -> CTI per (bank,year,pillar).
+# DEMO: track=silver (in-domain bank). Đổi track=gold sau Phase 04 để swap model.
+# CTI = tỉ lệ thuần classifier, KHÔNG trọng số tay (khác EWRI).
+
+track: gold            # silver | gold  (Phase 05: model gold translate-train)
+seed: 42
+batch_size: 64
+word_segment: true     # PhoBERT train trên text đã tách từ -> infer cũng phải tách
+
+# max_length theo nhóm (đo token thật: topic ngắn p99~130, subst dài 38% >128)
+max_length:
+    topic: 128
+    subst: 256
+
+# Đường dẫn 5 model theo track (mỗi model = thư mục .../final)
+models:
+    silver:
+        env:         outputs/models/topic_e_silver/final
+        soc:         outputs/models/topic_s_silver/final
+        gov:         outputs/models/topic_g_silver/final
+        commitment:  outputs/models/commitment_silver/final
+        specificity: outputs/models/specificity_silver/final
+    gold:
+        env:         outputs/models/topic_e/final
+        soc:         outputs/models/topic_s/final
+        gov:         outputs/models/topic_g/final
+        commitment:  outputs/models/commitment/final
+        specificity: outputs/models/specificity/final
+
+cti:
+    min_commit: 30       # ô < min_commit cam kết -> low_n (Phase 05: nâng 5->30, ranking pooled đáng tin)
+    bootstrap_B: 1000    # số lần resample cho CI 95%
+    spec_thresholds: [0.4, 0.5, 0.6]   # sensitivity: quét ngưỡng specificity (bias chính) -> Kendall τ
+    exclude_banks: [bsc]               # loại khỏi ranking CHÍNH (bsc = OCR mất dấu -> CTI artifact)
+
+paths:
+    corpus:  data/corpus/sentences_clean.parquet
+    out_dir: outputs/index           # enriched/cti/summary ghi vào đây, tên kèm _<track>
