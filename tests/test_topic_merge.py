@@ -32,20 +32,25 @@ def test_split_no_leak_and_ratio():
     assert df["text_en"].nunique() == len(df)
     sizes = df["split"].value_counts(normalize=True)
     assert abs(sizes["train"] - 0.8) < 0.05
-    assert set(df["split"]) == {"train", "dev", "test"}
+    assert set(df["split"]) == {"train", "val", "test"}
 
 
-def test_fill_cross_labels_only_fills_train_nan():
+def test_fill_cross_labels_fills_pool_keeps_test_gold():
     df = split_stratified(make_masked(100))
     probs = pd.DataFrame(0.95, index=df.index, columns=list(PILLARS))
     orig = df.copy()
     out = fill_cross_labels(df, probs, tau=0.9)
     labeled = orig[list(PILLARS)].notna()
+    # nhan goc khong bi ghi de
     assert (out[list(PILLARS)].values[labeled.values]
             == orig[list(PILLARS)].values[labeled.values]).all()
-    assert out.loc[out["split"] != "train", list(PILLARS)].isna().sum().sum() \
-        == orig.loc[orig["split"] != "train", list(PILLARS)].isna().sum().sum()
-    assert out.loc[out["split"] == "train", list(PILLARS)].isna().sum().sum() == 0
+    # pool train (split != test): moi o NaN confidence >= tau deu duoc dien
+    pool = out["split"] != "test"
+    assert out.loc[pool, list(PILLARS)].isna().sum().sum() == 0
+    # test giu GOLD thuan: o non-gold van NaN (de evaluate mask -> do tren gold)
+    is_test = out["split"] == "test"
+    assert (out.loc[is_test, list(PILLARS)].isna().sum().sum()
+            == orig.loc[is_test, list(PILLARS)].isna().sum().sum())
 
 
 def test_label_stats():

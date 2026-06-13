@@ -2,25 +2,25 @@
   "tau": 0.9,
   "table": "data/processed/gold/topic_labeled.parquet",
   "env": {
-    "n_scored": 1312,
-    "n_filled": 1275,
-    "fill_rate": 0.9718,
-    "n_pos": 143,
-    "n_neg": 1132
+    "n_scored": 1644,
+    "n_filled": 1599,
+    "fill_rate": 0.9726,
+    "n_pos": 187,
+    "n_neg": 1412
   },
   "soc": {
-    "n_scored": 1823,
-    "n_filled": 1798,
-    "fill_rate": 0.9863,
-    "n_pos": 143,
-    "n_neg": 1655
+    "n_scored": 2145,
+    "n_filled": 2117,
+    "fill_rate": 0.9869,
+    "n_pos": 171,
+    "n_neg": 1946
   },
   "gov": {
-    "n_scored": 1841,
-    "n_filled": 1748,
-    "fill_rate": 0.9495,
-    "n_pos": 80,
-    "n_neg": 1668
+    "n_scored": 2166,
+    "n_filled": 2058,
+    "fill_rate": 0.9501,
+    "n_pos": 91,
+    "n_neg": 1967
   },
   "labels_before": {
     "n_rows": 4135,
@@ -45,16 +45,16 @@
   "labels_after": {
     "n_rows": 4135,
     "env": {
-      "n_labeled": 3766,
-      "pos_rate": 0.3478
+      "n_labeled": 4090,
+      "pos_rate": 0.3311
     },
     "soc": {
-      "n_labeled": 3788,
-      "pos_rate": 0.2479
+      "n_labeled": 4107,
+      "pos_rate": 0.2355
     },
     "gov": {
-      "n_labeled": 3717,
-      "pos_rate": 0.1628
+      "n_labeled": 4027,
+      "pos_rate": 0.153
     },
     "split_sizes": {
       "train": 3414,

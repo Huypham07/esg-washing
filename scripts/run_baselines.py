@@ -12,8 +12,19 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from esgwash.config import load_config
-from esgwash.data import claim_merge, topic_merge
+from esgwash.data.topic_merge import PILLARS, carve_val
 from esgwash.models.baselines import tfidf_lr_baseline, xlmr_zero_shot
+
+CLAIM_HEADS = ["commitment", "specificity"]
+
+
+def _load(name: str, heads):
+    """Doc 2 file phang (khong cot split); cat val tu train (claim: climatebert-only)."""
+    train_full = pd.read_parquet(f"data/{name}_train.parquet")
+    test = pd.read_parquet(f"data/{name}_test.parquet")
+    mask = (train_full["source"] == "climatebert").to_numpy() if name == "claim" else None
+    train, val = carve_val(train_full, heads, mask=mask)
+    return train, val, test
 
 
 def main():
@@ -22,26 +33,19 @@ def main():
     args = ap.parse_args()
     results = {}
 
-    topic_vi = pd.read_parquet("data/processed/gold/topic_masked.parquet")
-    claim_vi = claim_merge.build_claim_table("vi")
-    results["tfidf_lr_topic"] = tfidf_lr_baseline(
-        topic_vi[topic_vi["split"] == "train"], topic_vi[topic_vi["split"] == "test"],
-        heads=["env", "soc", "gov"])
-    results["tfidf_lr_claim"] = tfidf_lr_baseline(
-        claim_vi[claim_vi["split"] == "train"], claim_vi[claim_vi["split"] == "test"],
-        heads=["commitment", "specificity"])
+    topic_tr, topic_val, topic_te = _load("topic", list(PILLARS))
+    claim_tr, claim_val, claim_te = _load("claim", CLAIM_HEADS)
+    results["tfidf_lr_topic"] = tfidf_lr_baseline(topic_tr, topic_te, heads=list(PILLARS))
+    results["tfidf_lr_claim"] = tfidf_lr_baseline(claim_tr, claim_te, heads=CLAIM_HEADS)
 
     if not args.skip_xlmr:
-        topic_en = topic_vi.assign(text=topic_vi["text_en"])
-        claim_en = claim_merge.build_claim_table("en")
-        cfg_t = {**load_config("topic"), "heads": ["env", "soc", "gov"]}
-        cfg_c = {**load_config("claim"), "heads": ["commitment", "specificity"]}
+        en = lambda d: d.assign(text=d["text_en"])  # noqa: E731
+        cfg_t = {**load_config("topic"), "heads": list(PILLARS)}
+        cfg_c = {**load_config("claim"), "heads": CLAIM_HEADS}
         results["xlmr_zero_shot_topic"] = xlmr_zero_shot(
-            cfg_t, topic_en[topic_en["split"] == "train"],
-            topic_en[topic_en["split"] == "dev"], topic_vi[topic_vi["split"] == "test"])
+            cfg_t, en(topic_tr), en(topic_val), topic_te)
         results["xlmr_zero_shot_claim"] = xlmr_zero_shot(
-            cfg_c, claim_en[claim_en["split"] == "train"],
-            claim_en[claim_en["split"] == "dev"], claim_vi[claim_vi["split"] == "test"])
+            cfg_c, en(claim_tr), en(claim_val), claim_te)
 
     out = Path("outputs/metrics/baselines.json")
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -3,12 +3,12 @@
 Nguyen tac:
 - TPESampler multivariate: hoc phan phoi tham so tot tu cac trial truoc;
   lr/weight_decay sample tren thang log (dung scale cua tham so).
-- MedianPruner: cat som trial co dev macro-F1 per-epoch duoi median — tiet kiem
+- MedianPruner: cat som trial co val macro-F1 per-epoch duoi median — tiet kiem
   ngan sach cho vung tham so hua hen (qua epoch_callback cua MultiHeadTrainer.fit).
 - Study luu SQLite -> resumable (chay them trial khong mat lich su).
-- Tune voi 1 seed co dinh tren dev; KHONG tune epochs nhu mot chieu rieng:
+- Tune voi 1 seed co dinh tren val; KHONG tune epochs nhu mot chieu rieng:
   epochs = max_epochs co dinh, early-stop ngam qua best-epoch checkpoint trong fit.
-- Tach biet tune (dev) / danh gia cuoi (test, multi-seed) — khong cham test khi tune.
+- Tach biet tune (val) / danh gia cuoi (test, multi-seed) — khong cham test khi tune.
 """
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ def _suggest(trial, space: dict) -> dict:
     }
 
 
-def tune(config: dict, train_df: pd.DataFrame, dev_df: pd.DataFrame, *,
+def tune(config: dict, train_df: pd.DataFrame, val_df: pd.DataFrame, *,
          n_trials: int, study_dir: str | Path, study_name: str,
          trainer_cls: type | None = None, text_col: str = "text", seed: int = 42):
     """Chay/tiep tuc study Optuna, tra ve study (best qua study.best_params)."""
@@ -69,14 +69,14 @@ def tune(config: dict, train_df: pd.DataFrame, dev_df: pd.DataFrame, *,
                          "epochs": max_epochs}}
         trainer = trainer_cls(cfg)
 
-        def on_epoch(epoch, dev_metrics):
-            trial.report(dev_metrics["macro_f1"], step=epoch)
+        def on_epoch(epoch, val_metrics):
+            trial.report(val_metrics["macro_f1"], step=epoch)
             if trial.should_prune():
                 raise optuna.TrialPruned()
 
-        info = trainer.fit(train_df, dev_df, text_col=text_col, seed=seed,
+        info = trainer.fit(train_df, val_df, text_col=text_col, seed=seed,
                            epoch_callback=on_epoch)
-        return info["best_dev_macro_f1"]
+        return info["best_val_macro_f1"]
 
     study.optimize(objective, n_trials=n_trials, gc_after_trial=True)
     return study
@@ -84,7 +84,7 @@ def tune(config: dict, train_df: pd.DataFrame, dev_df: pd.DataFrame, *,
 
 def save_best_params(study, path: str | Path, max_epochs: int) -> dict:
     best = {"params": study.best_params,
-            "dev_macro_f1": round(float(study.best_value), 4),
+            "val_macro_f1": round(float(study.best_value), 4),
             "epochs": max_epochs,
             "n_trials": len(study.trials),
             "tuned_at": datetime.now().isoformat(timespec="seconds")}

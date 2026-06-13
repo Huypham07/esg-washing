@@ -1,7 +1,7 @@
 """M2 - multi-task commitment + specificity (spec 02 #2).
 
 Hai head sigmoid tren cung PhoBERT (cung tap van ban - da xac minh trung 100%).
-Fallback single-task: train 2 model 1 head rieng, chon theo dev (giu ca 2 cho ablation).
+Fallback single-task: train 2 model 1 head rieng, chon theo val (giu ca 2 cho ablation).
 Aux head env_claims da BO (quyet dinh 2026-06-12).
 """
 from __future__ import annotations
@@ -25,12 +25,12 @@ class ClaimModel(MultiHeadTrainer):
         return out
 
 
-def run_single_task_fallback(config: dict, train_df, dev_df, test_df) -> dict:
-    """2 model 1 head rieng - so voi multi-task tren dev, ghi ca 2 vao ablation."""
+def run_single_task_fallback(config: dict, train_df, val_df, test_df) -> dict:
+    """2 model 1 head rieng - so voi multi-task tren val, ghi ca 2 vao ablation."""
     results = {}
     for h in MAIN_HEADS:
         cfg = {**config, "heads": [h]}
         sub_train = train_df.dropna(subset=[h])
-        results[h] = multi_seed(cfg, sub_train, dev_df.dropna(subset=[h]),
+        results[h] = multi_seed(cfg, sub_train, val_df.dropna(subset=[h]),
                                 test_df.dropna(subset=[h]))
     return results

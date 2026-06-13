@@ -2,7 +2,7 @@
 
 MultiHeadClassifier + masked BCE dung chung cho M1 (env/soc/gov partial labels)
 va M2 (commitment/specificity + aux claim) - chi khac config heads/data.
-Seed control, pos_weight per head, threshold tuning tren dev, luu artifact + config.
+Seed control, pos_weight per head, threshold tuning tren val, luu artifact + config.
 """
 from __future__ import annotations
 
@@ -119,10 +119,10 @@ class MultiHeadTrainer:
             ws.append((len(sub) - pos) / pos if pos > 0 else 1.0)
         return torch.tensor(ws, dtype=torch.float32, device=self.device)
 
-    def fit(self, train_df: pd.DataFrame, dev_df: pd.DataFrame,
+    def fit(self, train_df: pd.DataFrame, val_df: pd.DataFrame,
             text_col: str = "text", seed: int = 42,
             epoch_callback=None) -> dict:
-        """epoch_callback(epoch, dev_metrics): hook sau moi epoch — Optuna pruning
+        """epoch_callback(epoch, val_metrics): hook sau moi epoch — Optuna pruning
         raise TrialPruned tu day de cat som trial te."""
         from transformers import get_linear_schedule_with_warmup
 
@@ -160,19 +160,19 @@ class MultiHeadTrainer:
                 sched.step()
                 opt.zero_grad()
                 total += loss.item()
-            dev_metrics = self.evaluate(dev_df, text_col=text_col)
+            val_metrics = self.evaluate(val_df, text_col=text_col)
             history.append({"epoch": epoch, "train_loss": total / len(loader),
-                            **dev_metrics})
-            if dev_metrics["macro_f1"] > best["macro_f1"]:
-                best = {"macro_f1": dev_metrics["macro_f1"],
+                            **val_metrics})
+            if val_metrics["macro_f1"] > best["macro_f1"]:
+                best = {"macro_f1": val_metrics["macro_f1"],
                         "state": {k: v.detach().cpu().clone()
                                   for k, v in self.model.state_dict().items()}}
             if epoch_callback is not None:
-                epoch_callback(epoch, dev_metrics)
+                epoch_callback(epoch, val_metrics)
         if best["state"] is not None:
             self.model.load_state_dict(best["state"])
-        self.tune_thresholds(dev_df, text_col=text_col)
-        return {"history": history, "best_dev_macro_f1": best["macro_f1"],
+        self.tune_thresholds(val_df, text_col=text_col)
+        return {"history": history, "best_val_macro_f1": best["macro_f1"],
                 "thresholds": self.thresholds}
 
     @torch.no_grad()
@@ -185,11 +185,11 @@ class MultiHeadTrainer:
             probs.append(torch.sigmoid(self.model(**batch)).cpu().numpy())
         return pd.DataFrame(np.vstack(probs), columns=self.heads)
 
-    def tune_thresholds(self, dev_df: pd.DataFrame, text_col: str = "text") -> dict:
-        """Per-head maximize F1 tren dev (spec 02 #1) - khong mac dinh 0.5."""
-        probs = self.predict_proba(dev_df[text_col].tolist())
+    def tune_thresholds(self, val_df: pd.DataFrame, text_col: str = "text") -> dict:
+        """Per-head maximize F1 tren val (spec 02 #1) - khong mac dinh 0.5."""
+        probs = self.predict_proba(val_df[text_col].tolist())
         for h in self.heads:
-            y = dev_df[h].to_numpy(dtype=float)
+            y = val_df[h].to_numpy(dtype=float)
             valid = ~np.isnan(y)
             if not valid.any():
                 continue
@@ -236,7 +236,7 @@ class MultiHeadTrainer:
         return self
 
 
-def multi_seed(config: dict, train_df: pd.DataFrame, dev_df: pd.DataFrame,
+def multi_seed(config: dict, train_df: pd.DataFrame, val_df: pd.DataFrame,
                test_df: pd.DataFrame, text_col: str = "text",
                out_dir: str | Path | None = None,
                trainer_cls: type | None = None) -> dict:
@@ -244,11 +244,11 @@ def multi_seed(config: dict, train_df: pd.DataFrame, dev_df: pd.DataFrame,
     runs = []
     for i, seed in enumerate(config["train"]["seeds"]):
         trainer = trainer_cls(config)
-        fit_info = trainer.fit(train_df, dev_df, text_col=text_col, seed=seed)
+        fit_info = trainer.fit(train_df, val_df, text_col=text_col, seed=seed)
         test_metrics = trainer.evaluate(test_df, text_col=text_col, use_thresholds=True)
         runs.append({"seed": seed, "test": test_metrics,
                      "thresholds": dict(trainer.thresholds),
-                     "best_dev_macro_f1": fit_info["best_dev_macro_f1"]})
+                     "best_val_macro_f1": fit_info["best_val_macro_f1"]})
         if i == 0 and out_dir:
             trainer.save(out_dir)
     keys = runs[0]["test"].keys()

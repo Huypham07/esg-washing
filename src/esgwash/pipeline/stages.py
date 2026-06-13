@@ -53,13 +53,6 @@ def stage_prepare_gold() -> None:
     print(json.dumps(stats, indent=2, ensure_ascii=False, default=str))
 
 
-def stage_cross_label() -> None:
-    """Hoan thien nhan topic bang ESGBERT cross-inference (vong 2 chuan bi data)."""
-    from esgwash.data.esgbert_labels import build_labeled_table
-    stats = build_labeled_table(load_config("topic"))
-    print(json.dumps(stats, indent=2, ensure_ascii=False, default=str))
-
-
 def stage_export_annotation() -> None:
     from esgwash.data.vn_eval_set import sample_for_annotation
     cfg = load_config("corpus")
@@ -87,7 +80,6 @@ def _todo(name: str):
 STAGE_FNS = {
     "build_corpus": stage_build_corpus,
     "prepare_gold": stage_prepare_gold,
-    "cross_label": stage_cross_label,
     "export_annotation": stage_export_annotation,
     "classify": _todo("classify"),
     "ground": _todo("ground"),

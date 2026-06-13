@@ -15,13 +15,13 @@ class StubTrainer:
     def __init__(self, config):
         self.config = config
 
-    def fit(self, train_df, dev_df, text_col="text", seed=42, epoch_callback=None):
+    def fit(self, train_df, val_df, text_col="text", seed=42, epoch_callback=None):
         tc = self.config["train"]
         score = 1.0 - abs(float(tc["lr"]) - 3e-5) / 3e-5 - self.config["dropout"] * 0.1
         for epoch in range(tc["epochs"]):
             if epoch_callback is not None:
                 epoch_callback(epoch, {"macro_f1": score * (epoch + 1) / tc["epochs"]})
-        return {"best_dev_macro_f1": score}
+        return {"best_val_macro_f1": score}
 
 
 CONFIG = {

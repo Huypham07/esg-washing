@@ -44,14 +44,33 @@ def split_stratified(df: pd.DataFrame, seed: int = 42,
     pattern = pattern.where(pattern.map(rare) >= 10, "rare")
     idx_train, idx_rest = train_test_split(
         df.index, test_size=ratios[1] + ratios[2], stratify=pattern, random_state=seed)
-    idx_dev, idx_test = train_test_split(
+    idx_val, idx_test = train_test_split(
         idx_rest, test_size=ratios[2] / (ratios[1] + ratios[2]),
         stratify=pattern[idx_rest], random_state=seed)
     df = df.copy()
     df["split"] = "train"
-    df.loc[idx_dev, "split"] = "dev"
+    df.loc[idx_val, "split"] = "val"
     df.loc[idx_test, "split"] = "test"
     return df
+
+
+def carve_val(df: pd.DataFrame, label_cols, seed: int = 42,
+              val_frac: float = 0.1, mask=None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Cat val tu train ngay luc train (data tren dia khong con cot split).
+
+    Stratify theo pattern nhan kha dung; `mask` gioi han pool lay val (vd claim:
+    chi climatebert de val cung phan phoi voi test). Train = phan con lai (gom ca
+    cac dong ngoai mask), val = phan cat ra. Khong leak vi moi dong la 1 text duy nhat.
+    """
+    pool = df.index if mask is None else df.index[mask]
+    pattern = df.loc[pool, list(label_cols)].fillna(-1).astype(int).astype(str).agg("".join, axis=1)
+    rare = pattern.value_counts()
+    pattern = pattern.where(pattern.map(rare) >= 10, "rare")
+    _, val_idx = train_test_split(pool, test_size=val_frac, stratify=pattern,
+                                  random_state=seed)
+    val = df.loc[val_idx]
+    train = df.drop(index=val_idx)
+    return train, val
 
 
 def _append_env_claims(df: pd.DataFrame, lang: str = "vi") -> pd.DataFrame:
@@ -67,29 +86,38 @@ def _append_env_claims(df: pd.DataFrame, lang: str = "vi") -> pd.DataFrame:
 
 
 def build_topic_table(lang: str = "vi", seed: int = 42) -> pd.DataFrame:
-    """Bang masked hoan chinh, 1 ham duy nhat cho stage prepare_gold:
-    merge 3 tap -> split -> nhap env_claims positives. Sau do stage cross_label
-    dien NaN -> topic_labeled.parquet (file duy nhat train dung)."""
+    """Bang masked hoan chinh cho stage prepare_gold:
+    merge 3 tap -> split -> nhap env_claims positives. (Buoc dien NaN bang ESGBERT
+    da archive vao unused/esgbert_labels.py — topic build da dong bang 2026-06-13.)"""
     df = build_masked_table(lang)
     df = split_stratified(df, seed=seed)
     return _append_env_claims(df, lang=lang)
 
 
-def fill_cross_labels(df: pd.DataFrame, probs: pd.DataFrame, tau: float = 0.9) -> pd.DataFrame:
-    """Hoan thien bang nhan: dien o NaN khi model trai nguon du doan confidence >= tau
-    (vong 2 cua chuan bi data — esgbert_labels.build_labeled_table goi ham nay).
+def fill_cross_labels(
+    df: pd.DataFrame,
+    probs: pd.DataFrame,
+    tau: float = 0.9,
+) -> pd.DataFrame:
+    """Dien o NaN bang du doan ESGBERT confidence >= tau (positive lan negative).
 
-    probs: DataFrame cung index voi df, cot env/soc/gov = xac suat du doan.
-    Chi dien cho split=train; nhan goc khong bi ghi de.
+    CHI dien o pool train (split != 'test'); test giu NaN o tru khong co gold goc
+    -> evaluate() tu mask NaN nen test do tren GOLD thuan (quyet dinh user 2026-06-13).
+    val cat tu train luc train (carve_val) nen cung nam trong pool duoc dien (silver,
+    chap nhan duoc vi val chi de tune threshold/early-stop). Khong co cot split -> dien het.
     """
     df = df.copy()
-    train = df["split"] == "train"
+    fillable = df["split"] != "test" if "split" in df.columns else pd.Series(True, index=df.index)
+
     for p in PILLARS:
-        na = df[p].isna() & train
+        na = df[p].isna() & fillable
+
         conf_pos = na & (probs[p] >= tau)
         conf_neg = na & (probs[p] <= 1 - tau)
+
         df.loc[conf_pos, p] = 1.0
         df.loc[conf_neg, p] = 0.0
+
     return df
 
 

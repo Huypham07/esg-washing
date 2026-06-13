@@ -16,14 +16,14 @@ from esgwash.data.gold_loader import load_action, load_claim_pair, load_ml_promi
 HEADS = ("commitment", "specificity")
 
 
-def _carve_dev(df: pd.DataFrame, frac: float = 0.1, seed: int = 42) -> pd.DataFrame:
+def _carve_val(df: pd.DataFrame, frac: float = 0.1, seed: int = 42) -> pd.DataFrame:
     train = df[df["split"] == "train"]
     strat = (train["commitment"].fillna(-1).astype(int).astype(str)
              + train["specificity"].fillna(-1).astype(int).astype(str))
-    _, dev_idx = train_test_split(train.index, test_size=frac, stratify=strat,
+    _, val_idx = train_test_split(train.index, test_size=frac, stratify=strat,
                                   random_state=seed)
     df = df.copy()
-    df.loc[dev_idx, "split"] = "dev"
+    df.loc[val_idx, "split"] = "val"
     return df
 
 
@@ -32,7 +32,7 @@ def build_claim_table(lang: str = "vi", augment_action: bool = True,
     """-> DataFrame[text, text_en, commitment, specificity, source, split]."""
     base = load_claim_pair(lang)
     base["source"] = "climatebert"
-    base = _carve_dev(base, seed=seed)
+    base = _carve_val(base, seed=seed)
     parts = [base]
 
     if augment_action:

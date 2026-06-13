@@ -18,27 +18,17 @@ def main(argv=None):
         help="nguong confidence (mac dinh: cross_label.confidence trong topic.yml)",
     )
     ap.add_argument("--batch-size", type=int, default=64)
-    ap.add_argument(
-        "--force",
-        action="store_true",
-        help="tinh lai probs, bo cache",
-    )
 
     args = ap.parse_args(argv)
 
     stats = build_labeled_table(
         load_config("topic"),
         batch_size=args.batch_size,
-        tau=args.tau,
-        force=args.force,
+        tau=args.tau
     )
 
     print(json.dumps(stats, indent=2, default=str))
     return stats
-
-
-if __name__ == "__main__":
-    main()
 
 
 if __name__ == "__main__":
