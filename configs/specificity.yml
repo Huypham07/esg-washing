@@ -1,0 +1,11 @@
+# Specificity scorer bang small instruct-LLM + rubric (thay M2-specificity, 2026-06-14)
+model: Qwen/Qwen3-0.6B    # ~0.6B, da ngon ngu (co VI), thinking-mode; doi sang Qwen2.5-0.5B-Instruct neu can
+max_new_tokens: 256
+enable_thinking: false    # Qwen3: tat de output JSON gon; bat neu muon suy luan ky hon (cham hon)
+retries: 2                # so lan thu lai khi parse JSON loi (sau do fallback is_specific=0)
+score_weights:            # p_specificity = tong checklist co trong so (vao sensitivity sweep spec 05 V3)
+  quantified_attributable: 0.6   # co dai luong dinh luong QUY VE chu the (dieu kien cua is_specific)
+  baseline_or_timeline: 0.2      # co baseline/moc thoi gian
+  any_quantified: 0.2            # co bat ky dai luong dinh luong nao
+# is_specific = 1 <=> ton tai item vua is_quantified vua attributable_to_actor (luat tuong minh).
+# spec_rubric (JSON) duoc luu kem moi cau de phan tich nguoc.

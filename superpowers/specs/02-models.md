@@ -15,7 +15,22 @@ Baseline so sánh: zero-shot `xlm-roberta-base` (train EN, infer VI — không c
   (c) upper-bound: cùng kiến trúc train+test trên EN gốc.
 - Câu không trụ nào vượt ngưỡng → `non_esg`, loại khỏi các tầng sau.
 
-## 2. M2 — Claim model: Commitment + Specificity (multi-task, 2 đầu)
+> **CẬP NHẬT 2026-06-14 — luồng inference đổi khỏi M2 tự train:**
+> - **Commitment**: dùng model cộng sự `dqa2412/esg-washing-optimized` (PhoBERT-base-v2
+>   seq-classification, nhị phân, tokenize underthesea, Macro-F1 0.789) qua adapter
+>   `models/commitment_hf.py` + `configs/commitment.yml`.
+> - **Specificity**: thay encoder bằng **small-LLM + rubric** (`models/specificity_llm.py`,
+>   `configs/specificity.yml`, mặc định Qwen3-0.6B). Lý do: encoder bắt shortcut "có chữ số →
+>   specific" (vd câu BIDV đầy số nhưng số trỏ tới chiến lược quốc gia/điều kiện vay, không phải
+>   target định lượng quy về chủ thể). LLM phân rã "hành động/sự kiện → số liệu", trả JSON có cấu
+>   trúc (phân tích ngược được), nhãn suy ra bằng **luật tường minh**: is_specific=1 ⇔ tồn tại item
+>   vừa is_quantified vừa attributable_to_actor; p_specificity = checklist có trọng số (vào θ-sweep
+>   spec 05 V3). Có retry khi parse lỗi → fallback is_specific=0. LLM chỉ chạy trên câu commitment
+>   (mẫu số CTI) để tiết kiệm. **M2 multi-task cũ giữ nguyên trong code cho ablation.**
+> - Smoke test Qwen3-0.6B: câu BIDV → is_specific=0 (đúng), câu "giảm 30% phát thải vào 2030 vs
+>   2020" → is_specific=1 (đúng). Vẫn cần eval định lượng trên VN human-eval + diagnostic chèn-số (V2).
+
+## 2. M2 — Claim model: Commitment + Specificity (multi-task, 2 đầu) — [giữ làm ablation]
 
 - Vì 2 task chia sẻ đúng cùng tập văn bản (đã xác minh), train **một** PhoBERT
   2 đầu sigmoid: `is_commitment`, `is_specific`. Loss = BCE(commitment) + BCE(specificity).

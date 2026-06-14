@@ -70,20 +70,74 @@ def stage_export_annotation() -> None:
           + ("" if preds is not None else " (chua co preds topic - stratify theo bank)"))
 
 
-def _todo(name: str):
-    def _fn():
-        raise NotImplementedError(f"stage '{name}' trien khai o phase sau "
-                                  "(train dung scripts/, grounding Phase C)")
-    return _fn
+CLASSIFY_DIR = Path("outputs/classify")
+GROUND_DIR = Path("outputs/grounding")
+INDEX_DIR = Path("outputs/index")
+
+
+def _scope_sentences(sents: pd.DataFrame) -> pd.DataFrame:
+    """Loc theo analysis_scope (banks/years) trong corpus.yml neu co."""
+    scope = load_config("corpus").get("analysis_scope", {})
+    if scope.get("years"):
+        sents = sents[sents["year"].isin(scope["years"])]
+    if scope.get("banks"):
+        sents = sents[sents["bank"].isin(scope["banks"])]
+    return sents
+
+
+def stage_classify() -> None:
+    from esgwash.pipeline.inference import classify_sentences, load_trained_model
+    sents = _scope_sentences(pd.read_parquet(load_config("corpus")["out_sentences"]))
+    topic = load_trained_model("topic")
+    claim = load_trained_model("claim")
+    out = classify_sentences(sents, topic, claim)
+    CLASSIFY_DIR.mkdir(parents=True, exist_ok=True)
+    out.to_parquet(CLASSIFY_DIR / "sentences_classified.parquet", index=False)
+    print(f"classified {len(out)} cau | commitment={int(out['is_commitment'].sum())} "
+          f"| ESG={int((out[['is_env','is_soc','is_gov']].sum(axis=1) > 0).sum())}")
+
+
+def stage_ground() -> None:
+    from esgwash.grounding.nli import NLIScorer
+    from esgwash.grounding.retriever import EvidenceRetriever
+    from esgwash.pipeline.inference import ground_claims
+    cfg = load_config("grounding")
+    classified = pd.read_parquet(CLASSIFY_DIR / "sentences_classified.parquet")
+    grounded = ground_claims(classified, EvidenceRetriever(cfg), NLIScorer(cfg), cfg)
+    GROUND_DIR.mkdir(parents=True, exist_ok=True)
+    grounded.to_parquet(GROUND_DIR / "claims_grounded.parquet", index=False)
+    print(f"grounded {len(grounded)} commitment | support>=0.7: "
+          f"{int((grounded['support'] >= 0.7).sum())}")
+
+
+def stage_index() -> None:
+    from esgwash.indices.cti import build_cti_table
+    from esgwash.indices.disclosure import pillar_shares
+    from esgwash.pipeline.inference import attach_support, to_long
+    cfg = load_config("index")
+    gcfg = load_config("grounding")
+    classified = pd.read_parquet(CLASSIFY_DIR / "sentences_classified.parquet")
+    grounded = pd.read_parquet(GROUND_DIR / "claims_grounded.parquet")
+    long = attach_support(to_long(classified), grounded)
+    boot = cfg.get("bootstrap", {})
+    cti = build_cti_table(long, thetas=tuple(gcfg.get("support_thresholds", [0.5, 0.7, 0.9])),
+                          n_resamples=boot.get("n_resamples", 1000), ci=boot.get("ci", 0.95))
+    shares = pillar_shares(to_long(classified))
+    INDEX_DIR.mkdir(parents=True, exist_ok=True)
+    cti.merge(shares[["bank", "year", "pillar", "share", "share_dev"]],
+              on=["bank", "year", "pillar"], how="left").to_parquet(
+        INDEX_DIR / "cti.parquet", index=False)
+    shares.to_parquet(INDEX_DIR / "pillar_shares.parquet", index=False)
+    print(f"index xong: {len(cti)} o (bank,year,pillar) -> {INDEX_DIR}/cti.parquet")
 
 
 STAGE_FNS = {
     "build_corpus": stage_build_corpus,
     "prepare_gold": stage_prepare_gold,
     "export_annotation": stage_export_annotation,
-    "classify": _todo("classify"),
-    "ground": _todo("ground"),
-    "index": _todo("index"),
+    "classify": stage_classify,
+    "ground": stage_ground,
+    "index": stage_index,
 }
 STAGES = list(STAGE_FNS)
 
