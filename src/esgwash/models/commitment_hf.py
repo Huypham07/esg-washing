@@ -67,9 +67,11 @@ class CommitmentHF:
 
     @torch.no_grad()
     def predict_proba(self, sentences: list[str], batch_size: int = 64) -> np.ndarray:
+        from tqdm.auto import tqdm
         seg = self._segment(sentences)
         out = []
-        for i in range(0, len(seg), batch_size):
+        for i in tqdm(range(0, len(seg), batch_size), desc="commitment", unit="batch",
+                      leave=False):
             enc = self.tokenizer(seg[i:i + batch_size], truncation=True, padding=True,
                                  max_length=self.max_length, return_tensors="pt"
                                  ).to(self.device)

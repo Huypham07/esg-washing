@@ -184,10 +184,12 @@ class MultiHeadTrainer:
 
     @torch.no_grad()
     def predict_proba(self, texts: list[str], batch_size: int = 64) -> pd.DataFrame:
+        from tqdm.auto import tqdm
         self.model.eval()
         enc = self._encode(texts)
         probs = []
-        for i in range(0, len(texts), batch_size):
+        for i in tqdm(range(0, len(texts), batch_size), desc="topic", unit="batch",
+                      leave=False):
             batch = {k: v[i:i + batch_size].to(self.device) for k, v in enc.items()}
             probs.append(torch.sigmoid(self.model(**batch)).cpu().numpy())
         return pd.DataFrame(np.vstack(probs), columns=self.heads)

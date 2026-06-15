@@ -164,7 +164,9 @@ def ground_claims(classified: pd.DataFrame, retriever, nli, cfg: dict,
                 "item_grounding": json.dumps(trace, ensure_ascii=False),
                 **grounded_flags(support, thetas)}
 
-    for doc_id, doc in classified.groupby("doc_id"):
+    from tqdm.auto import tqdm
+    groups = list(classified.groupby("doc_id"))
+    for doc_id, doc in tqdm(groups, desc="grounding (docs)", unit="doc"):
         commit = doc[doc["is_commitment"] == 1]
         if commit.empty:
             continue
@@ -180,7 +182,8 @@ def ground_claims(classified: pd.DataFrame, retriever, nli, cfg: dict,
         ev_src = np.array(ev_src, dtype=int)
         ev_mat = retriever.embed(ev_txt) if ev_txt else np.empty((0, 1))
 
-        for _, c in commit.iterrows():
+        for _, c in tqdm(list(commit.iterrows()), desc=f"  {doc_id} claims",
+                         unit="claim", leave=False):
             items = _quantified_items(c.get("spec_rubric"))
             if not items or len(ev_txt) == 0:
                 rows.append(_row(c, 0.0, len(items), 0, [], []))

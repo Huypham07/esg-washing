@@ -145,7 +145,7 @@ class SpecificityLLM:
         self._device = get_device()
         self._tok = AutoTokenizer.from_pretrained(self.model_name)
         self._model = AutoModelForCausalLM.from_pretrained(
-            self.model_name, torch_dtype=torch.float32).to(self._device).eval()
+            self.model_name, dtype=torch.float32).to(self._device).eval()
 
     def _build_messages(self, text: str, stricter: bool = False) -> list[dict]:
         msgs = [{"role": "system", "content": SYSTEM}]
@@ -191,6 +191,8 @@ class SpecificityLLM:
                 "rubric": json.dumps(rubric, ensure_ascii=False)}
 
     def predict(self, sentences: list[str]) -> pd.DataFrame:
-        rows = [self.score_one(str(t)) for t in sentences]
+        from tqdm.auto import tqdm
+        rows = [self.score_one(str(t))
+                for t in tqdm(sentences, desc="specificity-LLM", unit="chunk")]
         return pd.DataFrame(rows, columns=["p_specificity", "is_specific",
                                            "parse_ok", "rubric"])
