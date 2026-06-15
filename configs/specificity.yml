@@ -1,6 +1,6 @@
 # Specificity scorer bang small instruct-LLM + rubric (thay M2-specificity, 2026-06-14)
 model: Qwen/Qwen3-1.7B    # 1.7B (2026-06-15): 0.6B copy few-shot + sai attributable_to_actor; cung ho Qwen3 nen giu nguyen prompt/enable_thinking. Chay tren Kaggle GPU.
-max_new_tokens: 256
+max_new_tokens: 512    # 256 hay bi cat cut JSON tren chunk nhieu item -> parse fail; 512 an toan hon
 enable_thinking: false    # Qwen3: tat de output JSON gon; bat neu muon suy luan ky hon (cham hon)
 retries: 2                # so lan thu lai khi parse JSON loi (sau do fallback is_specific=0)
 score_weights:            # p_specificity = tong checklist co trong so (vao sensitivity sweep spec 05 V3)

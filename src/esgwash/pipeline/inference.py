@@ -91,6 +91,7 @@ def classify_chunks(chunks: pd.DataFrame, topic_model, commitment_model,
     out["is_specific"] = 0
     out["spec_parse_ok"] = pd.NA
     out["spec_rubric"] = pd.NA
+    out["spec_raw"] = pd.NA  # raw response LLM truoc parse (trace / re-parse offline)
     mask = (out["is_commitment"] == 1) if spec_on_commitment else pd.Series(True, index=out.index)
     if specificity_model is not None and bool(mask.any()):
         sp = specificity_model.predict(out.loc[mask, "content_text"].astype(str).tolist())
@@ -98,6 +99,7 @@ def classify_chunks(chunks: pd.DataFrame, topic_model, commitment_model,
         out.loc[mask, "is_specific"] = sp["is_specific"].to_numpy()
         out.loc[mask, "spec_parse_ok"] = sp["parse_ok"].to_numpy()
         out.loc[mask, "spec_rubric"] = sp["rubric"].to_numpy()
+        out.loc[mask, "spec_raw"] = sp["raw"].to_numpy()
     return out
 
 

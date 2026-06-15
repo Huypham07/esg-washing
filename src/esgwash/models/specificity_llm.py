@@ -55,30 +55,64 @@ FEWSHOT = [
                  "attributable_to_actor": True}],
       "has_baseline_or_timeline": True,
       "reason": "Mục tiêu định lượng 30% có mốc 2020 làm baseline và mốc 2030, quy về chủ thể."}),
+    # Đoạn NHIỀU hành động -> NHIỀU item trong CÙNG một mảng "items" (KHÔNG tách mỗi item một mảng).
+    ("Năm 2023, dư nợ tín dụng xanh của ngân hàng đạt 74.000 tỷ đồng, tăng 12% so với năm trước; "
+     "đồng thời ngân hàng tài trợ 109,5 tỷ đồng cho lĩnh vực giáo dục và trồng 330.000 cây xanh.",
+     {"items": [{"action_or_event": "dư nợ tín dụng xanh", "figure": "74.000 tỷ đồng",
+                 "is_quantified": True, "attributable_to_actor": True},
+                {"action_or_event": "tài trợ lĩnh vực giáo dục", "figure": "109,5 tỷ đồng",
+                 "is_quantified": True, "attributable_to_actor": True},
+                {"action_or_event": "trồng cây xanh", "figure": "330.000 cây",
+                 "is_quantified": True, "attributable_to_actor": True}],
+      "has_baseline_or_timeline": True,
+      "reason": "Ba đại lượng định lượng quy về ngân hàng, có mốc 2023 và so với năm trước."}),
 ]
 
 DEFAULT_WEIGHTS = {"quantified_attributable": 0.6,
                    "baseline_or_timeline": 0.2, "any_quantified": 0.2}
 
 
+# Item object PHANG (khong ngoac long nhau) co khoa action_or_event — de salvage khi JSON hong.
+_ITEM_RE = re.compile(r'\{[^{}]*?"action_or_event"[^{}]*?\}', re.DOTALL)
+_HAS_BT_RE = re.compile(r'"has_baseline_or_timeline"\s*:\s*(true|false)')
+
+
 def _extract_json(text: str) -> dict | None:
-    """Bo <think>...</think> (Qwen3) roi lay object JSON dau tien bang khop ngoac."""
+    """Bo <think>...</think> (Qwen3) roi lay rubric. Thu parse chuan truoc; neu hong thi
+    SALVAGE: Qwen3-1.7B hay sinh sai ngoac ({"items":[o], [o], [o]}) hoac bi truncate ->
+    vot moi item object phang bang regex + tim co has_baseline_or_timeline. Giu duoc ~3/4
+    truong hop ma neu khong se fallback is_specific=0 (lam CTI thoi phong)."""
     text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
+    # 1) JSON dung chuan: lay object dau tien khop ngoac
     start = text.find("{")
-    if start < 0:
+    if start >= 0:
+        depth = 0
+        for i in range(start, len(text)):
+            if text[i] == "{":
+                depth += 1
+            elif text[i] == "}":
+                depth -= 1
+                if depth == 0:
+                    try:
+                        obj = json.loads(text[start:i + 1])
+                        if isinstance(obj, dict) and isinstance(obj.get("items"), list):
+                            return obj
+                    except json.JSONDecodeError:
+                        pass
+                    break
+    # 2) Salvage: gom moi item object phang con doc duoc (bo cai cuoi bi truncate)
+    items = []
+    for m in _ITEM_RE.finditer(text):
+        try:
+            o = json.loads(m.group(0))
+        except json.JSONDecodeError:
+            continue
+        if isinstance(o, dict) and "action_or_event" in o:
+            items.append(o)
+    if not items:
         return None
-    depth = 0
-    for i in range(start, len(text)):
-        if text[i] == "{":
-            depth += 1
-        elif text[i] == "}":
-            depth -= 1
-            if depth == 0:
-                try:
-                    return json.loads(text[start:i + 1])
-                except json.JSONDecodeError:
-                    return None
-    return None
+    hb = _HAS_BT_RE.search(text)
+    return {"items": items, "has_baseline_or_timeline": bool(hb and hb.group(1) == "true")}
 
 
 _DIGITS_RE = re.compile(r"\d+")
@@ -182,17 +216,18 @@ class SpecificityLLM:
             rubric = _extract_json(raw)
             if rubric is not None and "items" in rubric:
                 break
+        # LUON luu raw response (truoc parse) de trace / re-parse offline duoc.
         if rubric is None or "items" not in rubric:
             return {"p_specificity": 0.0, "is_specific": 0, "parse_ok": False,
-                    "rubric": json.dumps({"raw": raw[:500]}, ensure_ascii=False)}
+                    "rubric": pd.NA, "raw": raw}
         rubric = verify_rubric(rubric, text)  # huy figure bia / baseline khong co trong doan
         p, is_spec = derive(rubric, self.weights)
         return {"p_specificity": p, "is_specific": is_spec, "parse_ok": True,
-                "rubric": json.dumps(rubric, ensure_ascii=False)}
+                "rubric": json.dumps(rubric, ensure_ascii=False), "raw": raw}
 
     def predict(self, sentences: list[str]) -> pd.DataFrame:
         from tqdm.auto import tqdm
         rows = [self.score_one(str(t))
                 for t in tqdm(sentences, desc="specificity-LLM", unit="chunk")]
         return pd.DataFrame(rows, columns=["p_specificity", "is_specific",
-                                           "parse_ok", "rubric"])
+                                           "parse_ok", "rubric", "raw"])
