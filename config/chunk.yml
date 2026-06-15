@@ -1,0 +1,10 @@
+zip_path: data/extracted/raw_ocr_annual_report.zip
+output_dir: data/corpus_chunk
+
+scope:
+  banks: [agribank, bidv, bsc, mbbank, ocb, shb, techcombank, vietcombank, viettinbank, vpbank]
+  years: [2020, 2021, 2022, 2023, 2024]
+
+chunk:
+  max_tokens: 320
+  tokenizer: Qwen/Qwen3-0.6B

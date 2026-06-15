@@ -16,6 +16,37 @@ from esgwash.models.trainer import get_device
 DEFAULT_REPO = "dqa2412/esg-washing-optimized"
 
 
+def _patched_snapshot(repo: str) -> str:
+    """Tai snapshot repo + va config.json: id2label/label2id co value kieu int
+    ({"0": 0}) bi huggingface_hub moi reject (yeu cau dict[*, str]). Ep ve str,
+    ghi lai tai cho. Tra ve duong dan local de from_pretrained doc."""
+    import json
+    from pathlib import Path
+
+    if Path(repo).exists():
+        d = Path(repo)
+    else:
+        from huggingface_hub import snapshot_download
+        d = Path(snapshot_download(repo))
+
+    cfg_path = d / "config.json"
+    cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+    changed = False
+    if isinstance(cfg.get("id2label"), dict):
+        fixed = {str(k): str(v) for k, v in cfg["id2label"].items()}
+        if fixed != cfg["id2label"]:
+            cfg["id2label"] = fixed
+            changed = True
+    if isinstance(cfg.get("label2id"), dict):
+        fixed = {str(k): int(v) for k, v in cfg["label2id"].items()}
+        if fixed != cfg["label2id"]:
+            cfg["label2id"] = fixed
+            changed = True
+    if changed:
+        cfg_path.write_text(json.dumps(cfg, ensure_ascii=False, indent=2), encoding="utf-8")
+    return str(d)
+
+
 class CommitmentHF:
     def __init__(self, repo: str = DEFAULT_REPO, threshold: float = 0.5,
                  max_length: int = 256):
@@ -24,8 +55,9 @@ class CommitmentHF:
         self.threshold = threshold
         self.max_length = max_length
         self.device = get_device()
-        self.tokenizer = AutoTokenizer.from_pretrained(repo)
-        self.model = AutoModelForSequenceClassification.from_pretrained(repo)
+        local = _patched_snapshot(repo)  # va config.json id2label int -> str (validate strict)
+        self.tokenizer = AutoTokenizer.from_pretrained(local)
+        self.model = AutoModelForSequenceClassification.from_pretrained(local)
         self.model.to(self.device).eval()
 
     @staticmethod

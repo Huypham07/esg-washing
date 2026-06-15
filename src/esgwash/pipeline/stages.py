@@ -86,14 +86,19 @@ def _scope_sentences(sents: pd.DataFrame) -> pd.DataFrame:
 
 
 def stage_classify() -> None:
-    from esgwash.pipeline.inference import classify_sentences, load_trained_model
-    sents = _scope_sentences(pd.read_parquet(load_config("corpus")["out_sentences"]))
+    """Don vi = CHUNK (chuyen tu cau, 2026-06-15). Topic (ta) + commitment (cong su HF)
+    + specificity (small-LLM rubric); specificity chi cham tren chunk commitment."""
+    from esgwash.pipeline.inference import (classify_chunks, load_chunks,
+                                            load_commitment_model, load_specificity_model,
+                                            load_trained_model)
+    chunks = _scope_sentences(load_chunks())
     topic = load_trained_model("topic")
-    claim = load_trained_model("claim")
-    out = classify_sentences(sents, topic, claim)
+    commitment = load_commitment_model(load_config("commitment"))
+    specificity = load_specificity_model(load_config("specificity"))
+    out = classify_chunks(chunks, topic, commitment, specificity)
     CLASSIFY_DIR.mkdir(parents=True, exist_ok=True)
-    out.to_parquet(CLASSIFY_DIR / "sentences_classified.parquet", index=False)
-    print(f"classified {len(out)} cau | commitment={int(out['is_commitment'].sum())} "
+    out.to_parquet(CLASSIFY_DIR / "chunks_classified.parquet", index=False)
+    print(f"classified {len(out)} chunk | commitment={int(out['is_commitment'].sum())} "
           f"| ESG={int((out[['is_env','is_soc','is_gov']].sum(axis=1) > 0).sum())}")
 
 
@@ -102,7 +107,7 @@ def stage_ground() -> None:
     from esgwash.grounding.retriever import EvidenceRetriever
     from esgwash.pipeline.inference import ground_claims
     cfg = load_config("grounding")
-    classified = pd.read_parquet(CLASSIFY_DIR / "sentences_classified.parquet")
+    classified = pd.read_parquet(CLASSIFY_DIR / "chunks_classified.parquet")
     grounded = ground_claims(classified, EvidenceRetriever(cfg), NLIScorer(cfg), cfg)
     GROUND_DIR.mkdir(parents=True, exist_ok=True)
     grounded.to_parquet(GROUND_DIR / "claims_grounded.parquet", index=False)
@@ -116,7 +121,7 @@ def stage_index() -> None:
     from esgwash.pipeline.inference import attach_support, to_long
     cfg = load_config("index")
     gcfg = load_config("grounding")
-    classified = pd.read_parquet(CLASSIFY_DIR / "sentences_classified.parquet")
+    classified = pd.read_parquet(CLASSIFY_DIR / "chunks_classified.parquet")
     grounded = pd.read_parquet(GROUND_DIR / "claims_grounded.parquet")
     long = attach_support(to_long(classified), grounded)
     boot = cfg.get("bootstrap", {})

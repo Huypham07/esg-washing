@@ -8,6 +8,9 @@ import sys
 import textwrap
 from pathlib import Path
 
+if hasattr(sys.stdout, "reconfigure"):  # tranh crash print tieng Viet tren console cp1252 (Windows)
+    sys.stdout.reconfigure(encoding="utf-8")
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -20,8 +23,8 @@ from esgwash.grounding.nli import NLIScorer
 from esgwash.grounding.retriever import EvidenceRetriever
 from esgwash.indices.cti import build_cti_table
 from esgwash.indices.disclosure import pillar_shares
-from esgwash.pipeline.inference import (attach_support, classify_sentences,
-                                        ground_claims, load_commitment_model,
+from esgwash.pipeline.inference import (attach_support, classify_chunks,
+                                        ground_claims, load_chunks, load_commitment_model,
                                         load_specificity_model, load_trained_model, to_long)
 
 PILLARS = ["env", "soc", "gov"]
@@ -35,6 +38,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--bank", default="bidv")
     ap.add_argument("--year", type=int, default=2023)
+    ap.add_argument("--limit", type=int, default=0,
+                    help="0 = full; >0 = chi N chunk dau (smoke test)")
     args = ap.parse_args(argv)
 
     out_dir = Path(f"outputs/demo/{args.bank}_{args.year}")
@@ -42,15 +47,19 @@ def main(argv=None):
     gcfg = load_config("grounding")
     thetas = tuple(gcfg.get("support_thresholds", [0.5, 0.7, 0.9]))
 
-    sents = pd.read_parquet(load_config("corpus")["out_sentences"])
-    sub = sents[(sents["bank"] == args.bank) & (sents["year"] == args.year)].copy()
-    print(f"### {args.bank} {args.year}: {len(sub)} cau")
+    sub = load_chunks(bank=args.bank, year=args.year)
+    if sub.empty:
+        raise SystemExit(f"Khong co chunk cho {args.bank} {args.year} trong chunks.parquet")
+    if args.limit:
+        sub = sub.head(args.limit).copy()
+    print(f"### {args.bank} {args.year}: {len(sub)} chunk "
+          f"(token/chunk p50={sub['token_count'].median():.0f} max={sub['token_count'].max()})")
 
     # P2 classify: topic (ta) + commitment (cong su, HF) + specificity (small-LLM rubric)
     topic = load_trained_model("topic")
     commitment = load_commitment_model(load_config("commitment"))
     specificity = load_specificity_model(load_config("specificity"))
-    clf = classify_sentences(sub, topic, commitment, specificity)
+    clf = classify_chunks(sub, topic, commitment, specificity)
     clf.to_parquet(out_dir / "classified.parquet", index=False)
 
     long = to_long(clf)
@@ -59,10 +68,11 @@ def main(argv=None):
     print(f"ESG={int(n_esg)} ({n_esg/len(clf)*100:.1f}%) | commitment={n_commit} "
           f"| specific={int(clf['is_specific'].sum())}")
 
-    # P3 ground
+    # P3 ground — pool bang chung = TOAN BO bao cao (du --limit chi classify subset)
     retr = EvidenceRetriever(gcfg)
     nli = NLIScorer(gcfg)
-    grounded = ground_claims(clf, retr, nli, gcfg)
+    evidence_pool = load_chunks(bank=args.bank, year=args.year) if args.limit else clf
+    grounded = ground_claims(clf, retr, nli, gcfg, evidence_df=evidence_pool)
     grounded.to_parquet(out_dir / "claims_grounded.parquet", index=False)
 
     # P4 index
@@ -78,36 +88,38 @@ def main(argv=None):
 
     # ===== QUERY thu =====
     cm = clf[clf["is_commitment"] == 1].merge(
-        grounded[["sent_id", "support", "n_evidence", "top_evidence_ids"]], on="sent_id", how="left")
-    id2txt = dict(zip(clf["sent_id"], clf["sentence"]))
+        grounded[["chunk_index", "support", "n_evidence", "top_evidence_ids"]],
+        on="chunk_index", how="left")
+    id2txt = dict(zip(clf["chunk_index"], clf["content_text"]))
 
     print("\n### [Q1] 5 cam ket KHONG cu the (cheap talk thuan):")
     for _, r in cm[cm["is_specific"] == 0].head(5).iterrows():
-        print(" -", _wrap(r["sentence"]))
+        print(" -", _wrap(r["content_text"]))
 
     print("\n### [Q2] 5 cam ket CU THE co bang chung manh (support cao):")
     top = cm[(cm["is_specific"] == 1)].sort_values("support", ascending=False).head(5)
     for _, r in top.iterrows():
-        print(f" - [sup={r['support']:.2f}] CLAIM: {_wrap(r['sentence'], 90)}")
+        print(f" - [sup={r['support']:.2f}] CLAIM: {_wrap(r['content_text'], 90)}")
         for eid in (r["top_evidence_ids"] or [])[:1]:
             print(f"     └ EVIDENCE: {_wrap(id2txt.get(eid, '?'), 90)}")
 
     print("\n### [Q3] 5 cam ket CU THE nhung KHONG co bang chung do (cheap talk an, support<0.5):")
     for _, r in cm[(cm["is_specific"] == 1) & (cm["support"] < 0.5)].head(5).iterrows():
-        print(f" - [sup={r['support']:.2f}] {_wrap(r['sentence'], 100)}")
+        print(f" - [sup={r['support']:.2f}] {_wrap(r['content_text'], 100)}")
 
     # ===== KIEM MAT THONG TIN =====
-    wlen = clf["sentence"].astype(str).str.split().map(len)
     no_pool = int((cm["n_evidence"].fillna(0) == 0).sum())
+    n_spec_fail = int((clf["spec_parse_ok"] == False).sum())  # noqa: E712 - so chunk LLM parse loi
     info = {
-        "bank": args.bank, "year": args.year, "n_sentences": int(len(clf)),
+        "bank": args.bank, "year": args.year, "n_chunks": int(len(clf)),
         "n_non_esg_dropped": int(len(clf) - n_esg),
         "non_esg_share": round(float(1 - n_esg / len(clf)), 3),
         "n_commitment": n_commit,
         "commit_no_evidence_pool": no_pool,
         "commit_no_evidence_share": round(no_pool / max(n_commit, 1), 3),
-        "sent_words_p95": int(wlen.quantile(0.95)), "sent_words_max": int(wlen.max()),
-        "sent_gt_256w_truncation_risk": int((wlen > 256).sum()),
+        "tok_p95": int(clf["token_count"].quantile(0.95)), "tok_max": int(clf["token_count"].max()),
+        "chunk_gt_256tok_truncation_risk": int((clf["token_count"] > 256).sum()),
+        "spec_parse_fail": n_spec_fail,
         "any_nan_pillar": bool(clf[[f"p_{p}" for p in PILLARS]].isna().any().any()),
     }
     print("\n### KIEM MAT THONG TIN / SAI LECH")

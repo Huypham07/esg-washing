@@ -44,3 +44,5 @@ google-genai
 datasets
 accelerate
 sentencepiece
+
+semantic-text-splitter

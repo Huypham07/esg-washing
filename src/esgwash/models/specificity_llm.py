@@ -20,40 +20,41 @@ import re
 import pandas as pd
 
 SYSTEM = (
-    "Ban la chuyen gia phan tich bao cao ESG ngan hang. Voi moi cau, hay xac dinh "
-    "cau co chua CAM KET/HANH DONG DINH LUONG QUY VE CHINH CHU THE hay khong. "
-    "Mot con so chi tinh la 'dinh luong quy ve chu the' khi no la muc tieu/ket qua do "
-    "luong duoc cua chu the (vd: giam 30% phat thai, du no tin dung xanh 5.000 ty, "
-    "100 MW dien mat troi). KHONG tinh: nam cua chien luoc/luat quoc gia, ten tieu chuan "
-    "(ISO, VIETGAP), dieu kien du vay, tu mo ho ('hap dan', 'uu dai hon'). "
-    "Chi tra ve JSON, khong giai thich ngoai JSON."
+    "Bạn là chuyên gia phân tích báo cáo ESG ngân hàng. Với mỗi ĐOẠN VĂN, hãy xác định "
+    "đoạn có chứa CAM KẾT/HÀNH ĐỘNG ĐỊNH LƯỢNG QUY VỀ CHÍNH CHỦ THỂ hay không "
+    "(phân rã TỪNG hành động/sự kiện trong đoạn thành các item riêng). "
+    "Một con số chỉ tính là 'định lượng quy về chủ thể' khi nó là mục tiêu/kết quả đo "
+    "lường được của chủ thể (ví dụ: giảm 30% phát thải, dư nợ tín dụng xanh 5.000 tỷ, "
+    "100 MW điện mặt trời). KHÔNG tính: năm của chiến lược/luật quốc gia, tên tiêu chuẩn "
+    "(ISO, VIETGAP), điều kiện đủ để vay, từ mơ hồ ('hấp dẫn', 'ưu đãi hơn'). "
+    "Chỉ trả về JSON, không giải thích ngoài JSON."
 )
 
 SCHEMA_HINT = (
-    'Tra ve JSON dung dang:\n'
-    '{"items": [{"action_or_event": "<hanh dong/su kien>", "figure": "<so lieu gan voi '
-    'no hoac null>", "is_quantified": true/false, "attributable_to_actor": true/false}], '
-    '"has_baseline_or_timeline": true/false, "reason": "<giai thich ngan>"}'
+    'Trả về JSON đúng dạng:\n'
+    '{"items": [{"action_or_event": "<hành động/sự kiện>", "figure": "<số liệu gắn với '
+    'nó hoặc null>", "is_quantified": true/false, "attributable_to_actor": true/false}], '
+    '"has_baseline_or_timeline": true/false, "reason": "<giải thích ngắn>"}'
 )
 
-# Few-shot: 1 negative (BIDV - day so nhung khong quy ve chu the) + 1 positive.
+# Few-shot: 1 negative (BIDV - đầy số nhưng không quy về chủ thể) + 1 positive.
 FEWSHOT = [
-    ("Huong ung Chien luoc quoc gia ve tang truong xanh giai doan 2021-2030, tam nhin "
-     "2050, BIDV da ban hanh goi Tin dung xanh cho khach hang ca nhan vay phat trien nang "
-     "luong sach (dien mat troi, dien gio) hoac trong trot chan nuoi theo VIETGAP, ISO voi "
-     "lai suat hap dan va uu dai hon thong thuong.",
-     {"items": [{"action_or_event": "ban hanh goi Tin dung xanh", "figure": None,
+    ("Hưởng ứng Chiến lược quốc gia về tăng trưởng xanh giai đoạn 2021-2030, tầm nhìn "
+     "2050, BIDV đã ban hành gói Tín dụng xanh cho khách hàng cá nhân vay phát triển năng "
+     "lượng sạch (điện mặt trời, điện gió) hoặc trồng trọt chăn nuôi theo VIETGAP, ISO với "
+     "lãi suất hấp dẫn và ưu đãi hơn thông thường.",
+     {"items": [{"action_or_event": "ban hành gói Tín dụng xanh", "figure": None,
                  "is_quantified": False, "attributable_to_actor": True}],
       "has_baseline_or_timeline": False,
-      "reason": "Cac so (2021-2030, 2050, ISO, VIETGAP) tro toi chien luoc quoc gia va "
-                "dieu kien vay, khong phai dai luong dinh luong quy ve BIDV; lai suat mo ho."}),
-    ("Ngan hang dat muc tieu giam 30% cuong do phat thai khi nha kinh vao nam 2030 so voi "
-     "muc nam 2020.",
-     {"items": [{"action_or_event": "giam cuong do phat thai khi nha kinh",
-                 "figure": "30% vao 2030", "is_quantified": True,
+      "reason": "Các số (2021-2030, 2050, ISO, VIETGAP) trỏ tới chiến lược quốc gia và "
+                "điều kiện vay, không phải đại lượng định lượng quy về BIDV; lãi suất mơ hồ."}),
+    ("Ngân hàng đặt mục tiêu giảm 30% cường độ phát thải khí nhà kính vào năm 2030 so với "
+     "mức năm 2020.",
+     {"items": [{"action_or_event": "giảm cường độ phát thải khí nhà kính",
+                 "figure": "30% vào 2030", "is_quantified": True,
                  "attributable_to_actor": True}],
       "has_baseline_or_timeline": True,
-      "reason": "Muc tieu dinh luong 30% co m2020 lam baseline va moc 2030, quy ve chu the."}),
+      "reason": "Mục tiêu định lượng 30% có mốc 2020 làm baseline và mốc 2030, quy về chủ thể."}),
 ]
 
 DEFAULT_WEIGHTS = {"quantified_attributable": 0.6,
@@ -78,6 +79,35 @@ def _extract_json(text: str) -> dict | None:
                 except json.JSONDecodeError:
                     return None
     return None
+
+
+_DIGITS_RE = re.compile(r"\d+")
+_YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
+
+
+def _digit_runs(s: str) -> list[str]:
+    """Cac chuoi chu so trong s, da bo dau phan cach (1,89 / 5.000 -> 189 / 5000)."""
+    return _DIGITS_RE.findall(re.sub(r"(?<=\d)[.,\s](?=\d)", "", str(s)))
+
+
+def verify_rubric(rubric: dict, text: str) -> dict:
+    """Chong bia: model 0.6B hay copy figure tu few-shot / bia so khong co trong doan.
+    - item.is_quantified chi giu True neu figure co chu so XUAT HIEN trong `text`.
+    - has_baseline_or_timeline chi giu True neu doan co nam (19xx/20xx) hoac cum 'so voi'.
+    Tra ve ban rubric da loc (khong sua tai cho)."""
+    text_digits = set(_digit_runs(text))
+    low = str(text).lower()
+    items = []
+    for it in (rubric.get("items") or []):
+        it = dict(it)
+        if it.get("is_quantified"):
+            figs = _digit_runs(it.get("figure") or "")
+            if not figs or not any(f in text_digits for f in figs):
+                it["is_quantified"] = False  # figure khong co thuc trong doan -> huy
+        items.append(it)
+    has_bt = bool(rubric.get("has_baseline_or_timeline")) and (
+        bool(_YEAR_RE.search(text)) or "so với" in low or "so voi" in low)
+    return {**rubric, "items": items, "has_baseline_or_timeline": has_bt}
 
 
 def derive(rubric: dict, weights: dict | None = None) -> tuple[float, int]:
@@ -120,11 +150,11 @@ class SpecificityLLM:
     def _build_messages(self, text: str, stricter: bool = False) -> list[dict]:
         msgs = [{"role": "system", "content": SYSTEM}]
         for ex_text, ex_json in FEWSHOT:
-            msgs.append({"role": "user", "content": f"Cau: {ex_text}\n{SCHEMA_HINT}"})
+            msgs.append({"role": "user", "content": f"Đoạn: {ex_text}\n{SCHEMA_HINT}"})
             msgs.append({"role": "assistant", "content": json.dumps(ex_json, ensure_ascii=False)})
-        hint = SCHEMA_HINT + ("\nCHU Y: chi xuat JSON hop le, khong them chu nao khac."
+        hint = SCHEMA_HINT + ("\nCHÚ Ý: chỉ xuất JSON hợp lệ, không thêm chữ nào khác."
                               if stricter else "")
-        msgs.append({"role": "user", "content": f"Cau: {text}\n{hint}"})
+        msgs.append({"role": "user", "content": f"Đoạn: {text}\n{hint}"})
         return msgs
 
     def _complete(self, messages: list[dict]) -> str:
@@ -155,6 +185,7 @@ class SpecificityLLM:
         if rubric is None or "items" not in rubric:
             return {"p_specificity": 0.0, "is_specific": 0, "parse_ok": False,
                     "rubric": json.dumps({"raw": raw[:500]}, ensure_ascii=False)}
+        rubric = verify_rubric(rubric, text)  # huy figure bia / baseline khong co trong doan
         p, is_spec = derive(rubric, self.weights)
         return {"p_specificity": p, "is_specific": is_spec, "parse_ok": True,
                 "rubric": json.dumps(rubric, ensure_ascii=False)}
