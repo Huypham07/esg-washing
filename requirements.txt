@@ -20,6 +20,9 @@ seaborn>=0.12
 # PDF extraction (Docling supports OCR + no-OCR modes for the demo flow)
 docling>=2.0
 
+# Chunking báo cáo -> chunk cho specificity LLM (token Qwen, ngắt ở ranh giới câu)
+semantic-text-splitter
+
 # Statistics
 scipy>=1.11
 

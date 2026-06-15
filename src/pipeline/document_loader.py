@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import re
 import unicodedata
 from pathlib import Path
@@ -11,6 +12,10 @@ HYPHEN_BREAK_RE = re.compile(r"-\s*\n\s*")
 WHITESPACE_RE = re.compile(r"[ \t]+")
 MULTI_NEWLINE_RE = re.compile(r"\n{3,}")
 IMAGE_TAG_RE = re.compile(r"<image[^>]*>", re.IGNORECASE)
+
+# Map ký tự C1 (U+0080–U+009F) về dấu câu CP1252 đúng — mojibake hay gặp trong OCR cũ
+# (\x95->•, \x96->–, \x93/\x94->" "); ký tự không định nghĩa trong CP1252 -> bỏ.
+_CP1252_C1 = {b: (bytes([b]).decode("cp1252", "ignore") or None) for b in range(0x80, 0xA0)}
 
 def _build_converter(use_ocr: bool):
     from docling.datamodel.base_models import InputFormat
@@ -43,6 +48,8 @@ def _convert(pdf_path: Path, use_ocr: bool) -> tuple[str, int]:
     return text, page_count
 
 def clean_extracted_text(text: str) -> str:
+    text = html.unescape(text)            # &amp;->& , &lt;-><, &gt;->> (entity leak từ markdown)
+    text = text.translate(_CP1252_C1)     # sửa mojibake C1 (CP1252) -> dấu câu Unicode
     text = unicodedata.normalize("NFC", text)
     text = HYPHEN_BREAK_RE.sub("", text)
     text = IMAGE_TAG_RE.sub("", text)

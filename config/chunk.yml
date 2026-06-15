@@ -1,0 +1,15 @@
+# Cấu hình re-chunk: chunk TEXT OCR SẠCH có sẵn (zip) -> chunks cho specificity LLM (CTI chunk-level).
+# ⚠️ KHÔNG re-OCR docling: docling phiên bản hiện tại giải mã HỎNG font subset tiếng Việt
+# (in /uniXXXX thay diacritic) -> hỏng 55% câu. Text zip cũ (tác giả) SẠCH + đầy đủ hơn.
+# ⚠️ KHÔNG sinh sentences/mapping: CTI & grounded-CTI chấm THUẦN mức chunk -> không cần map câu->chunk.
+
+zip_path: data/extracted/raw_ocr_annual_report.zip   # text OCR markdown-ish, sạch /uni
+output_dir: data/corpus_chunks                        # chunks.parquet, _qa_report.md, reports/...
+
+scope:                                                # CHỈ 50 báo cáo nghiên cứu gốc (KHÔNG VIB, KHÔNG <2020)
+  banks: [agribank, bidv, bsc, mbbank, ocb, shb, techcombank, vietcombank, viettinbank, vpbank]
+  years: [2020, 2021, 2022, 2023, 2024]
+
+chunk:
+  max_tokens: 320                     # trần token/chunk; semantic-text-splitter ngắt ở ranh giới câu (Unicode)
+  tokenizer: Qwen/Qwen3-0.6B          # KHỚP LLM specificity (đếm token đúng cái model thật thấy)
