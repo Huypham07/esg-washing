@@ -1,126 +1,53 @@
-Download complete: 
- 543M/? [00:05<00:00, 160MB/s]
-Fetching 22 files: 100%
- 22/22 [00:05<00:00,  1.61it/s]
-Loading weights: 100%
- 201/201 [00:00<00:00, 1898.55it/s]
-2026-06-15 08:16:02 INFO  WordSegmenter:24 - Loading Word Segmentation model
-specificity-LLM: 100%
- 115/115 [27:00<00:00, 14.51s/chunk]
-config.json: 100%
- 726/726 [00:00<00:00, 81.2kB/s]
-tokenizer_config.json: 
- 9.73k/? [00:00<00:00, 1.02MB/s]
-vocab.json: 
- 2.78M/? [00:00<00:00, 36.0MB/s]
-merges.txt: 
- 1.67M/? [00:00<00:00, 60.8MB/s]
-tokenizer.json: 100%
- 11.4M/11.4M [00:00<00:00, 51.2MB/s]
-model.safetensors.index.json: 
- 25.6k/? [00:00<00:00, 2.18MB/s]
-Download complete: 100%
- 4.06G/4.06G [00:18<00:00, 420MB/s]
-Fetching 2 files: 100%
- 2/2 [00:18<00:00, 18.27s/it]
-Loading weights: 100%
- 311/311 [00:02<00:00, 162.86it/s]
-generation_config.json: 100%
- 239/239 [00:00<00:00, 24.6kB/s]
-ESG=97 (48.0%) | commitment=115 | specific=41
-modules.json: 100%
- 229/229 [00:00<00:00, 24.0kB/s]
-config_sentence_transformers.json: 100%
- 123/123 [00:00<00:00, 13.8kB/s]
-README.md: 
- 6.46k/? [00:00<00:00, 614kB/s]
-sentence_bert_config.json: 100%
- 53.0/53.0 [00:00<00:00, 5.02kB/s]
-config.json: 100%
- 777/777 [00:00<00:00, 71.9kB/s]
-model.safetensors: 100%
- 540M/540M [00:04<00:00, 217MB/s]
-Loading weights: 100%
- 199/199 [00:00<00:00, 2051.85it/s]
-tokenizer_config.json: 
- 1.17k/? [00:00<00:00, 95.4kB/s]
-vocab.txt: 
- 895k/? [00:00<00:00, 15.3MB/s]
-bpe.codes: 
- 1.14M/? [00:00<00:00, 51.1MB/s]
-added_tokens.json: 100%
- 22.0/22.0 [00:00<00:00, 2.56kB/s]
-special_tokens_map.json: 100%
- 167/167 [00:00<00:00, 15.9kB/s]
-config.json: 100%
- 270/270 [00:00<00:00, 26.4kB/s]
-config.json: 
- 1.07k/? [00:00<00:00, 97.2kB/s]
-tokenizer_config.json: 
- 1.26k/? [00:00<00:00, 114kB/s]
-spm.model: 100%
- 4.31M/4.31M [00:00<00:00, 21.6MB/s]
-tokenizer.json: 100%
- 16.3M/16.3M [00:00<00:00, 81.6MB/s]
-added_tokens.json: 100%
- 23.0/23.0 [00:00<00:00, 2.31kB/s]
-special_tokens_map.json: 100%
- 286/286 [00:00<00:00, 32.8kB/s]
-model.safetensors: 100%
- 558M/558M [00:04<00:00, 268MB/s]
-Loading weights: 100%
- 202/202 [00:00<00:00, 2167.07it/s]
-grounding (docs): 100%
- 1/1 [00:05<00:00,  5.66s/doc]
-Error displaying widget: model not found
-
 ### CTI / grounded-CTI per tru
 pillar  n_commit    cti  cti_lo  cti_hi  gcti@0.7  gcti@0.7_lo  gcti@0.7_hi  share
-   env        30 0.5333  0.3667   0.700    0.8000       0.6333       0.9333 0.2535
-   gov        40 0.8000  0.6500   0.925    0.9500       0.8750       1.0000 0.4648
-   soc        32 0.5938  0.4062   0.750    0.8438       0.6875       0.9688 0.2817
+   env        42 0.2619  0.1429  0.3810    0.8095       0.6905       0.9286 0.2611
+   gov        51 0.4902  0.3529  0.6275    0.9608       0.9020       1.0000 0.4722
+   soc        41 0.3415  0.1951  0.4878    0.8537       0.7561       0.9512 0.2667
 
 ### [Q1] 5 cam ket KHONG cu the (cheap talk thuan):
- - Theo đó, năm 2023 BIDV tiếp tục được các tổ chức, cộng đồng đánh giá cao với những giải thưởng uy tín: đứng…
- - BIDV xác định phương châm hành động của năm là "Tinh giản quy trình - Chuyển đổi hoạt động". Theo đó, BIDV sẽ…
- - Xác định Chuyển đổi số và chuyển đổi xanh là xu hướng chuyển dịch tất yếu của thế giới và của Việt Nam, hướng…
- - Với BIDV Open API, dịch vụ ngân hàng sẽ được tích hợp dễ dàng nhất vào các ứng dụng, phần mềm, nền tảng số…
- - Đặc biệt, các sản phẩm dịch vụ thanh toán quốc tế, tài trợ thương mại đã được số hóa, cho phép khách hàng…
+ - Nhận thức được xu thế tất yếu của phát triển bền vững trong dài hạn, với vai trò là một định chế tài chính…
+ - Kết thúc năm 2023, BIDV cũng đạt được nhiều bước tiến trong quản trị điều hành, phát triển thể chế, tạo tiền…
+ - ấn với việc xác lập hợp tác chiến lược với Edmond de Rothschild - định chế tài chính hàng đầu thế giới về đầu…
+ - hiệ̣u mạnh Việt Nam 2023 (Vietnam Economic Times). Năm 2024 là năm tăng tốc, bứt phá, có ý nghĩa đặc biệt…
+ - Tập trung các biện pháp mở rộng quy mô hoạt động gắn với kiểm soát chặt chẽ chất lượng tín dụng, nâng cao…
 
 ### [Q2] 5 cam ket CU THE co bang chung manh (support cao):
- - [sup=1.00] CLAIM: Lợi nhuận trước thuế hợp nhất đạt 27.589 tỷ đồng, tăng trưởng 20,4%, vượt kế hoạch ĐHĐCĐ…
-     └ EVIDENCE: Tổng dư nợ tín dụng và đầu tư đạt 2.191.362 tỷ đồng, tăng 12% so với năm 2022; trong đó…
+ - [sup=1.00] CLAIM: Hiệu quả kinh doanh tăng trưởng tích cực so với cùng kỳ năm trước, đạt và vượt kế hoạch…
+     └ EVIDENCE: Tỷ lệ bao phủ nợ xấu khối ngân hàng thương mại đến 31/12/2023 đạt 183%. Thu dịch vụ ròng…
+ - [sup=1.00] CLAIM: Năm 2023, hoạt động kinh doanh của BIDV đã đạt được những kết quả tích cực, tiếp tục duy…
+     └ EVIDENCE: Tổng thu nhập năm 2023 đạt 175.902 tỷ đồng, hoàn thành vượt kế hoạch NHNN giao, tăng…
+ - [sup=1.00] CLAIM: Trong đó, BIDV đã tập trung kiểm soát chặt chẽ dư nợ đối với các lĩnh vực hạn chế cấp tín…
+     └ EVIDENCE: Tổng nguồn vốn huy động đến 31/12/2023 đạt 2,1 triệu tỷ đồng; trong đó huy động vốn tổ…
  - [sup=1.00] CLAIM: Năm 2023 đối với BIDV có ý nghĩa quan trọng, là năm bản lề của Chiến lược phát triển kinh…
-     └ EVIDENCE: Tổng dư nợ tín dụng và đầu tư đạt 2.191.362 tỷ đồng, tăng 12% so với năm 2022; trong đó…
- - [sup=1.00] CLAIM: Thứ nhất, BIDV luôn ưu tiên tập trung vốn tín dụng tài trợ các dự án tín dụng xanh và đã…
-     └ EVIDENCE: Luôn nằm trong Top 5 ngân hàng có dư nợ tín dụng xanh lớn nhất hệ thống, đến 31/12/2023,…
+     └ EVIDENCE: Tăng trưởng tín dụng an toàn, hiệu quả gắn với kiểm soát và nâng cao chất lượng tín dụng,…
  - [sup=1.00] CLAIM: Triển khai 158 chương trình an sinh xã hộ̣i với tổng số tiền hỗ trợ gần 330 tỷ đồng, tậ̣p…
      └ EVIDENCE: Tiếp nối những hoạt động an sinh xã hội (ASXH) nhiều năm qua, công tác ASXH của BIDV năm…
- - [sup=1.00] CLAIM: Trong thành công chung đó phải kể đến việc NHNN điều hành chính sách tiền tệ chủ động,…
-     └ EVIDENCE: NHNN đã bốn lần giảm lãi suất điều hành với mức giảm 0,5-2% trong bối cảnh lãi suất trên…
 
 ### [Q3] 5 cam ket CU THE nhung KHONG co bang chung do (cheap talk an, support<0.5):
- - [sup=0.00] Đồng thời, nhằm đáp ứng mục tiêu chiến lược của Chính phủ trong việc số hóa và tối ưu quy trình…
- - [sup=0.00] BIDV cũng là ngân hàng đi đầu trong việc thực hiện các giải pháp tín dụng để góp phần thực hiện chủ…
- - [sup=0.00] Năm 2023 cũng ghi nhận thành công của BIDV trong hành trình chinh phục doanh nghiệp trung tâm là…
- - [sup=0.00] Để đạt được những thành tựu đó bên cạnh chính sách, chiến lược kinh doanh linh hoạt, nhạy bén, phải…
- - [sup=0.00] Sau gần 2 năm triển khai, BIDV đã chứng tỏ được đẳng cấp của dịch vụ khách hàng cao cấp với các…
+ - [sup=0.00] Đồng hành với hoạt động chuyển đổi số trong lĩnh vực tài chính ngân hàng, năm 2023 BIDV cũng đã tạo…
+ - [sup=0.00] Xác định Chuyển đổi số và chuyển đổi xanh là xu hướng chuyển dịch tất yếu của thế giới và của Việt…
+ - [sup=0.11] Sản phẩm BIDV iBank và BIDV iConnect đã trở thành những trụ cột chính trong hệ sinh thái số của…
+ - [sup=0.00] Việc phát triển hệ sinh thái số (digital ecosystem) cũng trở thành một trong những lĩnh vực được…
+ - [sup=0.00] BIDV OPEN AI hệ sinh thái mở giúp tích hợp các dịch vụ ngân hàng vào các ứng dụng, phần mềm, nền…
 
 ### KIEM MAT THONG TIN / SAI LECH
 {
   "bank": "bidv",
   "year": 2023,
-  "n_chunks": 202,
-  "n_non_esg_dropped": 105,
-  "non_esg_share": 0.52,
-  "n_commitment": 115,
-  "commit_no_evidence_pool": 91,
-  "commit_no_evidence_share": 0.791,
-  "tok_p95": 317,
-  "tok_max": 320,
-  "chunk_gt_256tok_truncation_risk": 149,
+  "n_chunks": 266,
+  "n_non_esg_dropped": 140,
+  "non_esg_share": 0.526,
+  "n_commitment": 147,
+  "commit_no_evidence_pool": 115,
+  "commit_no_evidence_share": 0.782,
+  "spec_level_counts": {
+    "0": 48,
+    "1": 50,
+    "2": 49
+  },
+  "tok_p95": 255,
+  "tok_max": 256,
+  "chunk_gt_256tok_truncation_risk": 0,
   "spec_parse_fail": 0,
   "any_nan_pillar": false
 }
-
--> outputs/demo/bidv_2023/ (classified, grounded, cti, summary.png, info_check.json)
