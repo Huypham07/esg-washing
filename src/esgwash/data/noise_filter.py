@@ -1,7 +1,7 @@
-"""Loc nhieu dich may (spec 01 #4): QE + Confident Learning.
+"""Lọc nhiễu dịch máy (spec 01 #4): QE + Confident Learning.
 
-QE chinh: Unbabel/wmt22-cometkiwi-da (gated - can accept license HF).
-Fallback: LaBSE cosine(EN, VI). CL: cleanlab tren out-of-fold predictions.
+QE chính: Unbabel/wmt22-cometkiwi-da (gated, cần accept license HF).
+Fallback: LaBSE cosine(EN, VI). CL: cleanlab trên out-of-fold predictions.
 """
 from __future__ import annotations
 

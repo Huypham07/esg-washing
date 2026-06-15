@@ -1,9 +1,8 @@
-"""Adapter cho model commitment cua cong su (thay M2-commitment cua ta tu 2026-06-14).
+"""Adapter cho model commitment
 
 dqa2412/esg-washing-optimized: PhoBERT-base-v2 + AutoModelForSequenceClassification,
-nhi phan (1=commitment/action, 0=khong), tokenize bang underthesea (KHAC pyvi cua ta).
-Interface .predict() khop voi cho inference.classify_sentences dung (p_commitment/is_commitment).
-ClaimModel cu van giu trong code (claim_model.py) nhung khong dung o luong inference nua.
+nhị phân (1=commitment/action), tách từ bằng underthesea. .predict() trả p_commitment/is_commitment.
+Baseline tự huấn luyện (commitment_model.CommitmentModel) là phương án đối chứng.
 """
 from __future__ import annotations
 
@@ -17,9 +16,9 @@ DEFAULT_REPO = "dqa2412/esg-washing-optimized"
 
 
 def _patched_snapshot(repo: str) -> str:
-    """Tai snapshot repo + va config.json: id2label/label2id co value kieu int
-    ({"0": 0}) bi huggingface_hub moi reject (yeu cau dict[*, str]). Ep ve str,
-    ghi lai tai cho. Tra ve duong dan local de from_pretrained doc."""
+    """Tải snapshot rồi vá config.json: id2label/label2id để value kiểu int ({"0": 0})
+    bị huggingface_hub mới từ chối (yêu cầu dict[*, str]). Ép về str, ghi lại tại chỗ,
+    trả về đường dẫn local cho from_pretrained."""
     import json
     from pathlib import Path
 

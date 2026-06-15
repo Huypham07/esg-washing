@@ -1,16 +1,11 @@
-"""Specificity scorer bang small instruct-LLM + rubric (thay M2-specificity, 2026-06-14).
+"""Specificity scorer bang small instruct-LLM + rubric.
 
-Ly do (xem thao luan): encoder hay bat shortcut "co chu so -> specific". Vi du cau BIDV
-day so (2021-2030, ISO, VIETGAP) nhung KHONG specific vi cac so do tro toi chien luoc
-quoc gia / dieu kien vay, khong phai dai luong dinh luong QUY VE chu the. LLM voi rubric
-co the phan ra "hanh dong/su kien -> so lieu" va suy luan dieu nay.
-
-Output co cau truc (phan tich nguoc duoc):
-  items: [{action_or_event, figure, is_quantified, attributable_to_actor}], has_baseline_or_timeline, reason
-Nhan suy ra bang LUAT TUONG MINH (khong de model tu do quyet, khong bia thang do):
-  is_specific = 1 <=> ton tai item vua is_quantified vua attributable_to_actor.
-  p_specificity = tong co trong so checklist (trong so trong config -> sensitivity sweep duoc).
-Retry khi parse JSON loi; het retry -> fallback is_specific=0 (bao thu, coi nhu cheap talk).
+Tranh shortcut "co chu so -> specific" cua encoder: LLM phan ra cau thanh cac item
+{action_or_event, figure, is_quantified, is_concrete_action, attributable_to_actor} + has_baseline_or_timeline,
+roi suy nhan bang luat tuong minh (derive):
+  spec_level 2 = dinh luong & quy ve chu the | 1 = hanh dong co ten & quy ve chu the | 0 = mo ho.
+  is_specific = (spec_level >= 1). CTI = ti le Muc 0.
+verify_rubric huy figure bia (so khong co trong text). Retry khi parse loi, het retry -> Muc 0.
 """
 from __future__ import annotations
 

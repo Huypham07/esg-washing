@@ -1,7 +1,7 @@
-"""Candidate evidence pool (spec 03 #1) - thu hep, khong lay ca corpus.
+"""Pool ứng viên bằng chứng (spec 03 #1) — thu hẹp, không lấy cả corpus.
 
-Don vi = CHUNK. Ung vien: cung doc_id, va (co so lieu | specific-fact
-is_specific=1 & is_commitment=0). Loai chinh chunk claim (xu ly o ground_claims).
+Đơn vị = chunk. Ứng viên: cùng doc_id và (có số liệu | specific-fact
+is_specific=1 & is_commitment=0). Loại chính chunk claim (xử lý ở ground_claims).
 """
 from __future__ import annotations
 

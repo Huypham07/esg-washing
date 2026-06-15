@@ -1,7 +1,7 @@
-"""Evidence-support score (spec 03 #4).
+"""Điểm evidence-support (spec 03 #4).
 
-support(claim) = max_{e in top-k} P_entail(e, claim)   (FEVER-style aggregation)
-grounded@theta voi theta in {0.5, 0.7, 0.9} - sweep, khong chon cung.
+support(claim) = max_{e in top-k} P_entail(e, claim)   (gộp kiểu FEVER)
+grounded@theta với theta in {0.5, 0.7, 0.9} — quét ngưỡng, không chọn cứng.
 """
 from __future__ import annotations
 

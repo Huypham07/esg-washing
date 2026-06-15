@@ -1,6 +1,6 @@
-"""VN human-eval set (spec 01 #5) - test set chinh cho transfer claim.
+"""Bộ VN human-eval (spec 01 #5) — test set chính để đánh giá transfer.
 
-Sampling ~300 cau stratified -> CSV cho nguoi gan; load lai nhan + Cohen kappa.
+Lấy mẫu ~300 câu phân tầng -> CSV để gán nhãn; nạp lại nhãn + tính Cohen kappa.
 """
 from __future__ import annotations
 

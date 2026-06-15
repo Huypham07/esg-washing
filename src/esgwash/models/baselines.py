@@ -1,5 +1,5 @@
-"""Baselines (spec 02 #3-4): TF-IDF + LogisticRegression per head;
-zero-shot XLM-R (train EN goc, infer VI) cho ma tran transfer E3/E5."""
+"""Baselines (spec 02 #3-4): TF-IDF + LogisticRegression mỗi đầu;
+zero-shot XLM-R (train EN gốc, infer VI) cho ma trận transfer."""
 from __future__ import annotations
 
 import numpy as np

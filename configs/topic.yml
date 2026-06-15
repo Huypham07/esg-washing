@@ -7,12 +7,13 @@ word_segment: true
 labels: [env, soc, gov]
 loss: masked_bce
 pos_weight: auto
-train:
-  lr: 2.0e-5
-  batch_size: 32
-  epochs: 5
-  warmup_ratio: 0.1
-  weight_decay: 0.01
+dropout: 0.05249460840378278     # tuned (Optuna, val macro-F1 0.8571, 20 trials)
+train:                           # tuned; chay --tune de tim lai, copy ket qua vao day
+  lr: 2.7396836004694616e-05
+  batch_size: 16
+  epochs: 10
+  warmup_ratio: 0.06467163677523774
+  weight_decay: 0.019448553647326953
   seeds: [42, 43, 44, 45, 46]
 threshold_tuning: per_label_f1   # tune tren dev, khong mac dinh 0.5
 tune:                            # Optuna TPE + MedianPruner (esgwash.models.tuning)

@@ -1,4 +1,4 @@
-"""Test logic specificity scorer (parse JSON + retry + derive luat) khong tai model."""
+"""Test logic specificity scorer 3 muc (parse + retry + derive) khong tai model."""
 import json
 import sys
 from pathlib import Path
@@ -11,25 +11,22 @@ from esgwash.models.specificity_llm import SpecificityLLM, _extract_json, derive
 
 
 def test_extract_json_strips_think_and_prose():
-    assert _extract_json("rac<think>suy nghi</think> oke {\"items\": []} duoi") == {"items": []}
+    assert _extract_json('rac<think>suy nghi</think> {"items": []} duoi') == {"items": []}
     assert _extract_json("khong co json") is None
-    assert _extract_json('{"items": [}') is None  # JSON loi -> None
+    assert _extract_json('{"items": [}') is None       # JSON loi, khong salvage duoc item
 
 
-def test_derive_rule():
-    # co dai luong dinh luong quy ve chu the -> is_specific=1, diem cao
-    r1 = {"items": [{"is_quantified": True, "attributable_to_actor": True}],
-          "has_baseline_or_timeline": True}
-    p, s = derive(r1)
-    assert s == 1 and p == 1.0
-    # so co nhung khong quy ve chu the (kieu BIDV) -> is_specific=0
-    r2 = {"items": [{"is_quantified": True, "attributable_to_actor": False}],
-          "has_baseline_or_timeline": False}
-    p, s = derive(r2)
-    assert s == 0 and p == 0.2          # chi any_quantified
-    # khong so lieu gi -> 0
-    p, s = derive({"items": [{"is_quantified": False, "attributable_to_actor": True}]})
-    assert s == 0 and p == 0.0
+def test_derive_3level():
+    # Muc 2: dinh luong & quy ve chu the
+    p, lvl = derive({"items": [{"is_quantified": True, "attributable_to_actor": True}]})
+    assert (p, lvl) == (1.0, 2)
+    # Muc 1: hanh dong co ten & quy ve chu the (khong so)
+    p, lvl = derive({"items": [{"is_concrete_action": True, "attributable_to_actor": True}]})
+    assert (p, lvl) == (0.5, 1)
+    # Muc 0: so co nhung KHONG quy ve chu the (kieu BIDV/NHNN)
+    p, lvl = derive({"items": [{"is_quantified": True, "attributable_to_actor": False}]})
+    assert (p, lvl) == (0.0, 0)
+    assert derive({"items": []}) == (0.0, 0)
 
 
 class _StubLLM(SpecificityLLM):
@@ -42,29 +39,42 @@ class _StubLLM(SpecificityLLM):
 
 
 def test_retry_then_success():
+    # lan 1 rac -> lan 2 JSON hop le (concrete_action: khong bi verify_rubric huy)
     llm = _StubLLM(["rac khong json",
-                    json.dumps({"items": [{"is_quantified": True,
+                    json.dumps({"items": [{"action_or_event": "trien khai B.One",
+                                           "is_concrete_action": True,
                                            "attributable_to_actor": True}],
                                 "has_baseline_or_timeline": False})])
-    out = llm.score_one("cau gi do")
-    assert out["parse_ok"] and out["is_specific"] == 1
+    out = llm.score_one("BIDV trien khai B.One")
+    assert out["parse_ok"] and out["is_specific"] == 1 and out["spec_level"] == 1
 
 
 def test_fallback_after_retries():
-    llm = _StubLLM(["x", "y", "z"])   # 1 + 2 retries deu hong
+    llm = _StubLLM(["x", "y", "z"])    # 1 + 2 retries deu hong
     out = llm.score_one("cau")
-    assert out["parse_ok"] is False and out["is_specific"] == 0 and out["p_specificity"] == 0.0
+    assert out["parse_ok"] is False and out["is_specific"] == 0 and out["spec_level"] == 0
+
+
+def test_verify_rubric_kills_fabricated_figure():
+    # item is_quantified nhung figure '30%' KHONG co trong text -> huy -> Muc 0
+    llm = _StubLLM([json.dumps({"items": [{"action_or_event": "giam phat thai",
+                                           "figure": "30%", "is_quantified": True,
+                                           "attributable_to_actor": True}],
+                                "has_baseline_or_timeline": False})])
+    out = llm.score_one("Ngan hang cam ket giam phat thai manh me")  # khong co so
+    assert out["spec_level"] == 0 and out["is_specific"] == 0
 
 
 def test_predict_columns():
     llm = _StubLLM([json.dumps({"items": [], "has_baseline_or_timeline": False})])
     df = llm.predict(["a"])
-    assert list(df.columns) == ["p_specificity", "is_specific", "parse_ok", "rubric"]
+    assert list(df.columns) == ["p_specificity", "spec_level", "is_specific",
+                                "parse_ok", "rubric", "raw"]
 
 
 def test_classify_only_scores_commitments():
-    """Specificity LLM chi cham tren cau is_commitment=1 (tiet kiem + dung CTI)."""
-    from esgwash.pipeline.inference import classify_sentences
+    """Specificity LLM chi cham tren chunk is_commitment=1 (tiet kiem + dung CTI)."""
+    from esgwash.run import classify_chunks
 
     class StubTopic:
         def predict(self, texts):
@@ -75,9 +85,7 @@ def test_classify_only_scores_commitments():
 
     class StubCommit:
         def predict(self, texts):
-            n = len(texts)
-            return pd.DataFrame({"p_commitment": [0.9, 0.1][:n] + [0.1] * (n - 2),
-                                 "is_commitment": [1, 0][:n] + [0] * (n - 2)})
+            return pd.DataFrame({"p_commitment": [0.9, 0.1], "is_commitment": [1, 0]})
 
     class StubSpec:
         def __init__(self):
@@ -86,12 +94,14 @@ def test_classify_only_scores_commitments():
         def predict(self, texts):
             self.calls.append(list(texts))
             n = len(texts)
-            return pd.DataFrame({"p_specificity": [1.0] * n, "is_specific": [1] * n,
-                                 "parse_ok": [True] * n, "rubric": ["{}"] * n})
+            return pd.DataFrame({"p_specificity": [1.0] * n, "spec_level": [2] * n,
+                                 "is_specific": [1] * n, "parse_ok": [True] * n,
+                                 "rubric": ["{}"] * n, "raw": ["{}"] * n})
 
-    sents = pd.DataFrame({"sentence": ["cam ket A", "cau thuong B"],
-                          "doc_id": ["d", "d"], "sent_id": [0, 1]})
+    chunks = pd.DataFrame({"content_text": ["cam ket A", "cau thuong B"],
+                           "doc_id": ["d", "d"], "chunk_index": [0, 1]})
     spec = StubSpec()
-    out = classify_sentences(sents, StubTopic(), StubCommit(), spec)
-    assert spec.calls == [["cam ket A"]]          # chi cau commitment
+    out = classify_chunks(chunks, StubTopic(), StubCommit(), spec)
+    assert spec.calls == [["cam ket A"]]               # chi chunk commitment
     assert out.loc[0, "is_specific"] == 1 and out.loc[1, "is_specific"] == 0
+    assert out.loc[0, "spec_level"] == 2

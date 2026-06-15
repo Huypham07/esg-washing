@@ -1,7 +1,7 @@
-"""Retrieval top-k per doc bang bkai vietnamese-bi-encoder (spec 03 #2).
+"""Retrieval top-k theo doc bằng bkai vietnamese-bi-encoder (spec 03 #2).
 
-Cosine top-k=5, san sim >= 0.5. Pool nho per-doc -> khong can FAISS.
-bkai dua tren PhoBERT -> word-segment input (dung chung VnCoreNLP singleton).
+Cosine top-k=5, sàn sim >= 0.5. Pool nhỏ theo doc nên không cần FAISS.
+bkai dựa trên PhoBERT nên cần tách từ đầu vào (dùng chung VnCoreNLP singleton).
 """
 from __future__ import annotations
 

@@ -1,8 +1,8 @@
-"""Vong train chung (spec 02 #3) cho moi model encoder nhieu dau sigmoid.
+"""Vong train chung cho model encoder nhieu dau sigmoid.
 
-MultiHeadClassifier + masked BCE dung chung cho M1 (env/soc/gov partial labels)
-va M2 (commitment/specificity + aux claim) - chi khac config heads/data.
-Seed control, pos_weight per head, threshold tuning tren val, luu artifact + config.
+MultiHeadClassifier + masked BCE dung chung cho topic (env/soc/gov partial labels) va
+commitment (1 dau), chi khac config heads/data. Seed control, pos_weight per head,
+threshold tuning tren val, luu artifact + config.
 """
 from __future__ import annotations
 

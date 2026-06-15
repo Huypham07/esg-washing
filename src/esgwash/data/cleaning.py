@@ -1,6 +1,6 @@
-"""Lam sach van ban OCR (spec 01 #1): NFC, sua loi OCR, loc cau rac, dedup.
+"""Làm sạch văn bản OCR (spec 01 #1): NFC, sửa lỗi OCR, lọc câu rác, khử trùng lặp.
 
-KHONG xoa so lieu/don vi - chung la tin hieu specificity & evidence pool.
+Không xoá số liệu/đơn vị vì chúng là tín hiệu cho specificity & evidence pool.
 """
 from __future__ import annotations
 

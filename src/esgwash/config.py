@@ -1,4 +1,4 @@
-"""Load + validate config YAML (single source of truth cho moi stage)."""
+"""Đọc + kiểm tra config YAML (nguồn cấu hình duy nhất cho mọi bước)."""
 from pathlib import Path
 
 import yaml

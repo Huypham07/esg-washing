@@ -1,7 +1,7 @@
-"""esgwash - do luong ESG-washing (talk-vs-walk) trong bao cao ngan hang VN.
+"""esgwash — đo lường ESG-washing (talk-vs-walk) trong báo cáo ngân hàng VN.
 
-Kien truc layered pipeline: data -> models -> grounding -> indices -> validation.
-Moi stage la ham thuan doc/ghi artifact parquet, dieu khien boi configs/*.yml.
+Kiến trúc layered pipeline: data -> models -> grounding -> indices -> validation.
+Mỗi bước là hàm thuần đọc/ghi artifact parquet, điều khiển bởi configs/*.yml.
 Specs: superpowers/specs/00..05.
 """
 

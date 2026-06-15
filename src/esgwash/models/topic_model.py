@@ -1,7 +1,7 @@
-"""M1 - PhoBERT 3 dau sigmoid, masked BCE (spec 02 #1).
+"""Phân loại trụ E/S/G: PhoBERT + 3 đầu sigmoid, masked BCE.
 
-Partial labels: loss chi tinh tren cot khac NaN (xem trainer.masked_bce_loss).
-Cau khong tru nao vuot nguong -> non_esg, loai khoi cac tang sau.
+Nhãn thiếu (partial labels): loss chỉ tính trên cột khác NaN (trainer.masked_bce_loss).
+Câu không vượt ngưỡng trụ nào -> non_esg, loại khỏi các tầng sau.
 """
 from __future__ import annotations
 

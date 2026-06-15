@@ -1,5 +1,5 @@
-"""Percentile bootstrap CI (spec 04 #4): resample cau commitment trong o,
-B=1000, CI 95%. Min-n: o |C| < 30 chi vao bang pooled (bank x pillar / bank x year)."""
+"""Percentile bootstrap CI (spec 04 #4): resample câu commitment trong ô,
+B=1000, CI 95%. Min-n: ô |C| < 30 chỉ vào bảng pooled (bank x pillar / bank x year)."""
 from __future__ import annotations
 
 import numpy as np

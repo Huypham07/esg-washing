@@ -1,7 +1,7 @@
-"""NLI claim-evidence (spec 03 #3): mDeBERTa-v3 XNLI (co tieng Viet).
+"""NLI claim-evidence (spec 03 #3): mDeBERTa-v3 XNLI (có tiếng Việt).
 
-premise = evidence (+ctx neu ngan), hypothesis = claim.
-GIU PHAN PHOI {entail, neutral, contradict} - khong argmax.
+premise = evidence (+ctx nếu ngắn), hypothesis = claim.
+Giữ phân phối {entail, neutral, contradict}, không argmax.
 """
 from __future__ import annotations
 

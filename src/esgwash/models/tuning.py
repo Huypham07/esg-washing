@@ -1,14 +1,14 @@
-"""Tune sieu tham so bang Optuna — TPE Bayesian + median pruning, khong grid search.
+"""Tune siêu tham số bằng Optuna — TPE Bayesian + median pruning, không grid search.
 
-Nguyen tac:
-- TPESampler multivariate: hoc phan phoi tham so tot tu cac trial truoc;
-  lr/weight_decay sample tren thang log (dung scale cua tham so).
-- MedianPruner: cat som trial co val macro-F1 per-epoch duoi median — tiet kiem
-  ngan sach cho vung tham so hua hen (qua epoch_callback cua MultiHeadTrainer.fit).
-- Study luu SQLite -> resumable (chay them trial khong mat lich su).
-- Tune voi 1 seed co dinh tren val; KHONG tune epochs nhu mot chieu rieng:
-  epochs = max_epochs co dinh, early-stop ngam qua best-epoch checkpoint trong fit.
-- Tach biet tune (val) / danh gia cuoi (test, multi-seed) — khong cham test khi tune.
+Nguyên tắc:
+- TPESampler multivariate: học phân phối tham số tốt từ các trial trước; lr/weight_decay
+  sample trên thang log (đúng scale của tham số).
+- MedianPruner: cắt sớm trial có val macro-F1 per-epoch dưới median (qua epoch_callback
+  của MultiHeadTrainer.fit), tiết kiệm ngân sách cho vùng tham số hứa hẹn.
+- Study lưu SQLite nên resumable (chạy thêm trial không mất lịch sử).
+- Tune với 1 seed cố định trên val; không tune epochs như một chiều riêng: epochs =
+  max_epochs cố định, early-stop ngầm qua best-epoch checkpoint trong fit.
+- Tách biệt tune (val) và đánh giá cuối (test, multi-seed) — không chạm test khi tune.
 """
 from __future__ import annotations
 

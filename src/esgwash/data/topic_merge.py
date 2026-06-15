@@ -1,7 +1,7 @@
-"""Merge 3 tap topic nhi phan -> bang masked multi-label (spec 01 #3).
+"""Gộp 3 tập topic nhị phân thành bảng masked multi-label (spec 01 #3).
 
-Cac tap chia se ~50-60% van ban (merge theo text_en de khong nhan doi);
-cot thieu nhan = NaN -> masked BCE. Khong bia nhan.
+Các tập chia sẻ ~50-60% văn bản (gộp theo text_en để không nhân đôi);
+cột thiếu nhãn = NaN -> masked BCE. Không bịa nhãn.
 """
 from __future__ import annotations
 
@@ -15,13 +15,13 @@ PILLARS = ("env", "soc", "gov")
 
 
 def _resolve_dups(df: pd.DataFrame, label: str) -> pd.DataFrame:
-    """Cung text_en xuat hien nhieu lan: nhan mau thuan -> bo; con lai giu dong dau."""
+    """Cùng text_en xuất hiện nhiều lần: nhãn mâu thuẫn thì bỏ, còn lại giữ dòng đầu."""
     conflict = df.groupby("text_en")[label].transform("nunique") > 1
     return df[~conflict].drop_duplicates("text_en")
 
 
 def build_masked_table(lang: str = "vi") -> pd.DataFrame:
-    """-> DataFrame[text, text_en, env, soc, gov, sources] - moi dong la 1 text duy nhat."""
+    """-> [text, text_en, env, soc, gov, sources]; mỗi dòng là một text duy nhất."""
     merged = None
     vi_texts: dict[str, str] = {}
     for p in PILLARS:
@@ -38,7 +38,7 @@ def build_masked_table(lang: str = "vi") -> pd.DataFrame:
 
 def split_stratified(df: pd.DataFrame, seed: int = 42,
                      ratios: tuple = (0.8, 0.1, 0.1)) -> pd.DataFrame:
-    """Split tren text duy nhat (khong leak), stratify theo pattern nhan kha dung."""
+    """Chia split trên text duy nhất (không leak), stratify theo pattern nhãn khả dụng."""
     pattern = df[list(PILLARS)].fillna(-1).astype(int).astype(str).agg("".join, axis=1)
     rare = pattern.value_counts()
     pattern = pattern.where(pattern.map(rare) >= 10, "rare")
@@ -56,11 +56,11 @@ def split_stratified(df: pd.DataFrame, seed: int = 42,
 
 def carve_val(df: pd.DataFrame, label_cols, seed: int = 42,
               val_frac: float = 0.1, mask=None) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Cat val tu train ngay luc train (data tren dia khong con cot split).
+    """Cắt val từ train ngay lúc train (data trên đĩa không còn cột split).
 
-    Stratify theo pattern nhan kha dung; `mask` gioi han pool lay val (vd claim:
-    chi climatebert de val cung phan phoi voi test). Train = phan con lai (gom ca
-    cac dong ngoai mask), val = phan cat ra. Khong leak vi moi dong la 1 text duy nhat.
+    Stratify theo pattern nhãn khả dụng; `mask` giới hạn pool lấy val (vd commitment
+    chỉ lấy climatebert để val cùng phân phối với test). Train = phần còn lại (gồm cả
+    các dòng ngoài mask), val = phần cắt ra. Không leak vì mỗi dòng là một text duy nhất.
     """
     pool = df.index if mask is None else df.index[mask]
     pattern = df.loc[pool, list(label_cols)].fillna(-1).astype(int).astype(str).agg("".join, axis=1)
@@ -74,8 +74,8 @@ def carve_val(df: pd.DataFrame, label_cols, seed: int = 42,
 
 
 def _append_env_claims(df: pd.DataFrame, lang: str = "vi") -> pd.DataFrame:
-    """Positive cua env_claims la E-positive chac chan -> them env=1
-    (train-only; soc/gov NaN de cross_label dien tiep)."""
+    """Positive của env_claims chắc chắn là E-positive -> thêm env=1
+    (chỉ train; soc/gov để NaN cho fill_cross_labels điền tiếp)."""
     ec = load_env_claims(lang)
     pos = ec[(ec["claim"] == 1) & (ec["split"] == "train")]
     pos = pos[~pos["text_en"].isin(df["text_en"])]
@@ -86,9 +86,8 @@ def _append_env_claims(df: pd.DataFrame, lang: str = "vi") -> pd.DataFrame:
 
 
 def build_topic_table(lang: str = "vi", seed: int = 42) -> pd.DataFrame:
-    """Bang masked hoan chinh cho stage prepare_gold:
-    merge 3 tap -> split -> nhap env_claims positives. (Buoc dien NaN bang ESGBERT
-    da archive vao unused/esgbert_labels.py — topic build da dong bang 2026-06-13.)"""
+    """Bảng masked: gộp 3 tập topic -> chia split -> nhập env_claims positives.
+    Ô NaN được điền bằng ESGBERT cross-inference ở bước riêng (fill_cross_labels)."""
     df = build_masked_table(lang)
     df = split_stratified(df, seed=seed)
     return _append_env_claims(df, lang=lang)
@@ -99,12 +98,11 @@ def fill_cross_labels(
     probs: pd.DataFrame,
     tau: float = 0.9,
 ) -> pd.DataFrame:
-    """Dien o NaN bang du doan ESGBERT confidence >= tau (positive lan negative).
+    """Điền ô NaN bằng dự đoán ESGBERT có confidence >= tau (cả positive lẫn negative).
 
-    CHI dien o pool train (split != 'test'); test giu NaN o tru khong co gold goc
-    -> evaluate() tu mask NaN nen test do tren GOLD thuan (quyet dinh user 2026-06-13).
-    val cat tu train luc train (carve_val) nen cung nam trong pool duoc dien (silver,
-    chap nhan duoc vi val chi de tune threshold/early-stop). Khong co cot split -> dien het.
+    Chỉ điền ở pool train (split != 'test'); test giữ NaN ở trụ không có gold gốc nên
+    test luôn đo trên gold thuần. val cắt từ train (carve_val) nên cũng được điền (silver,
+    chấp nhận vì val chỉ để tune threshold/early-stop). Không có cột split -> điền hết.
     """
     df = df.copy()
     fillable = df["split"] != "test" if "split" in df.columns else pd.Series(True, index=df.index)

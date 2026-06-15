@@ -1,0 +1,497 @@
+import re
+import unicodedata
+from pathlib import Path
+import pandas as pd
+from typing import Optional
+
+try:
+    from underthesea import sent_tokenize, pos_tag as _ut_pos_tag
+    USE_UNDERTHESEA = True
+except Exception:
+    USE_UNDERTHESEA = False
+    _ut_pos_tag = None
+
+INPUT_ROOT = Path("source_data/raw_ocr_annual_report")  # standalone only; chunk flow doc tu zip
+OUT_BLOCKS = Path("data/corpus/blocks.parquet")
+OUT_SENTS = Path("data/corpus/sentences.parquet")
+
+MD_HEADING_RE = re.compile(r"^(#{1,6})\s+(.*)$", re.MULTILINE)
+
+# Các viết tắt tiếng Việt kết thúc bằng dấu chấm - tránh sent_tokenize cắt sai.
+_VI_ABBREVS = re.compile(
+    r"\b(?:TP|HN|ĐN|PGS|GS|TS|ThS|BS|KS|CN|TH|TX|TT|NXB|Tr|tr|q|Q|No|Mr|Ms|Dr"
+    r"|v\.v|v\.v\.|i\.e|e\.g|etc|vs|St|Jr|Sr)\.",
+    re.IGNORECASE,
+)
+
+def normalize_text(s: str) -> str:
+    s = unicodedata.normalize("NFC", s)
+    s = s.replace(" ", " ")
+    s = s.replace("…", ".")
+    s = re.sub(r"[ \t]+", " ", s)
+    s = re.sub(r"\n{3,}", "\n\n", s)
+    return s.strip()
+
+def split_blocks(text: str) -> list[str]:
+    return [b.strip() for b in re.split(r"\n\s*\n", text) if b.strip()]
+
+def clean_heading(text: str) -> str:
+    t = text.strip()
+    t = re.sub(r"^#{1,6}\s+", "", t, flags=re.MULTILINE)
+    t = re.sub(r"\s*\n\s*", " ", t)
+    t = t.rstrip(":").strip()
+    return t
+
+def is_md_heading(block: str) -> bool:
+    first_line = block.strip().split('\n')[0]
+    return bool(re.match(r"^#{1,6}\s+", first_line))
+
+def is_meta_heading(t: str) -> bool:
+    return bool(re.match(r"^[A-Z]\d{2}[/\-][A-Z0-9\-]+$", t))
+
+def is_table_like(block: str) -> bool:
+    # Block dạng bảng: nhiều dòng có dấu | hoặc cột cách bằng khoảng trắng kép.
+    lines = [ln.strip() for ln in block.splitlines() if ln.strip()]
+    if len(lines) < 3:
+        return False
+    pipe_ratio = sum(("|" in ln) for ln in lines) / len(lines)
+    if pipe_ratio >= 0.5:
+        return True
+    colish = sum(bool(re.search(r"\S+\s{2,}\S+", ln)) for ln in lines) / len(lines)
+    return colish >= 0.6
+
+def is_bullet_like(block: str) -> bool:
+    lines = [ln.lstrip() for ln in block.splitlines() if ln.strip()]
+    if len(lines) < 2:
+        return False
+    bullet = sum(bool(re.match(r"^(\-|\•|\♦|\+)\s+", ln)) for ln in lines)
+    return bullet / len(lines) >= 0.5
+
+def _is_standalone_bullet(block: str) -> bool:
+    return bool(re.fullmatch(r"[•\-\+♦–—]\s*", block.strip()))
+
+def infer_block_type(block: str) -> str:
+    t = block.strip()
+
+    if is_md_heading(t) or (len(t) < 90 and t.isupper()):
+        h = clean_heading(t)
+        if is_meta_heading(h):
+            return "meta_heading"
+        return "heading_like"
+
+    if is_table_like(block):
+        return "table_like"
+
+    if is_bullet_like(block):
+        return "bullet_like"
+
+    # Heuristic KPI: block có chỉ số định lượng + đơn vị + số.
+    if re.search(r"%|tỷ|triệu|nghìn|tấn|kg|CO2|Scope|KPI", block, flags=re.IGNORECASE) and re.search(r"\d", block):
+        return "kpi_like"
+
+    return "paragraph"
+
+def _block_ends_incomplete(block: str) -> bool:
+    last = block.rstrip()
+    if not last:
+        return False
+    return last[-1] not in ".!?:;»"
+
+def _block_starts_as_continuation(block: str) -> bool:
+    first = block.lstrip()
+    if not first:
+        return False
+    if first[0].islower():
+        return True
+    cont_words = ("và ", "hoặc ", "nhưng ", "tuy nhiên ", "do đó ", "vì vậy ",
+                  "ngoài ra ", "đồng thời ", "bên cạnh đó ")
+    return any(first.lower().startswith(w) for w in cont_words)
+
+def repair_ocr_blocks(blocks: list[str]) -> list[str]:
+    cleaned = []
+    for b in blocks:
+        if _is_standalone_bullet(b):
+            continue
+        if re.fullmatch(r"\s*<!--\s*image\s*-->\s*", b, re.IGNORECASE):
+            continue
+        cleaned.append(b)
+
+    merged = []
+    i = 0
+    while i < len(cleaned):
+        block = cleaned[i]
+        while (i + 1 < len(cleaned)
+               and _block_ends_incomplete(block)
+               and _block_starts_as_continuation(cleaned[i + 1])
+               and infer_block_type(cleaned[i + 1]) == "paragraph"):
+            i += 1
+            block = block.rstrip() + " " + cleaned[i].lstrip()
+        merged.append(block)
+        i += 1
+
+    return merged
+
+def sent_split(block: str, block_type: str = "paragraph") -> list[str]:
+    # Bảng và heading
+    if block_type in ("table_like", "heading_like", "meta_heading"):
+        return []
+
+    # Mỗi bullet là một claim độc lập.
+    if block_type == "bullet_like":
+        results = []
+        for ln in block.splitlines():
+            ln = re.sub(r"^[\-\•\♦\+]\s+", "", ln.strip()).strip()
+            if ln:
+                results.append(ln)
+        return results
+
+    if USE_UNDERTHESEA:
+        try:
+            raw_sents = sent_tokenize(block)
+            sents = [s.strip() for s in raw_sents if s and s.strip()]
+            if sents:
+                merged: list[str] = []
+                for s in sents:
+                    # Ghép "version number"
+                    if merged and re.match(r"^\d+[\s,]", s) and re.search(r"\d\.$", merged[-1]):
+                        merged[-1] = merged[-1].rstrip() + s
+                    # Ghép mảnh nhỏ (<25 ký tự, không có dấu kết câu) vào câu trước.
+                    elif merged and len(s) < 25 and not re.search(r"[.!?]$", s):
+                        merged[-1] = merged[-1].rstrip() + " " + s
+                    else:
+                        merged.append(s)
+                return merged
+        except Exception:
+            pass
+        
+    parts = re.split(r"(?<=[.!?])\s+(?=[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐƠƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸ])", block.strip())
+    if len(parts) == 1:
+        parts = re.split(r"(?<=[.!?])\s+", block.strip())
+    return [p.strip() for p in parts if p.strip()]
+
+def is_heading(block: str) -> bool:
+    t = block.strip()
+    if len(t) > 120:
+        return False
+    return t.isupper() or (t.endswith(":") and len(t) < 100)
+
+NOISE_PATTERNS = [
+    re.compile(r"<!\-\-\s*image\s*\-\->", re.IGNORECASE),
+    re.compile(r"^\s*(trang|page)\s*\d+\s*$", re.IGNORECASE),
+    re.compile(r"^[•\-\*\+]{1,3}\s*$"),
+    re.compile(r"^[\d\.\s]+$"),
+    re.compile(r"^(\.{3,}|…+|\-{3,}|_{3,}|\*{3,})$"),
+    re.compile(r"^\d{1,3}$"),
+]
+
+# Động từ tiếng Việt hay xuất hiện trong câu ESG: dùng để loại câu không có động từ
+_VI_VERBS_RE = re.compile(
+    r"\b(là|đã|đang|sẽ|được|có|không|đạt|giảm|tăng|thực hiện|triển khai|"
+    r"xây dựng|phát triển|quản lý|đảm bảo|hỗ trợ|cung cấp|áp dụng|"
+    r"cam kết|ban hành|tuân thủ|tiếp nhận|tư vấn|xử lý|cho|làm|đưa|mở|"
+    r"nâng|đổi|cải|tổ chức|phối hợp|kết hợp|sử dụng|đánh giá|chiếm|"
+    r"đóng góp|thu hút|duy trì|hoàn thành|vượt|ghi nhận)\b",
+    re.IGNORECASE,
+)
+
+# Section có nội dung kế toán/pháp lý/giải thưởng — không phải tuyên bố ESG.
+_NOISE_SECTION_KEYWORDS = (
+    "giải thưởng",
+    "danh hiệu",
+    "phụ lục",
+    "từ viết tắt",
+    "chú giải",
+    "bảng chú thích",
+    "rủi ro lãi suất",
+    "rủi ro thanh khoản",
+    "rủi ro tín dụng",
+    "nghĩa vụ nợ tiềm ẩn",
+    "giao dịch với các bên liên quan",
+    "thuyết minh báo cáo tài chính",
+    "chính sách kế toán",
+    "giải thích thuật ngữ",
+    "phân loại công cụ tài chính",
+    "chú thích",
+)
+
+# Pattern câu chắc chắn Non-ESG, ghi đè kết quả model.
+_DEFINITIVE_NON_ESG = [
+    (re.compile(r"(kiểm soát|không kiểm soát).{0,40}(công ty mẹ|công ty con|bên liên quan)", re.I), "related_party_def"),
+    (re.compile(r"(trên cương vị|trên cương vị là|với vai trò là).{0,60}(bà|ông|anh|chị)\b", re.I), "biography"),
+    (re.compile(r"\b(bà|ông)\s+[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐƠƯ][a-zàáâãèéêìíòóôõùúăđơư]+ đã.{0,40}(tổ chức|chỉ đạo|xây dựng|đảm nhận)", re.I), "biography"),
+    (re.compile(r"rủi ro (thị trường|lãi suất|ngoại hối|giá cổ phiếu|hàng hóa) bao gồm", re.I), "fin_risk_def"),
+    (re.compile(r"hạn mức giá trị rủi ro ước tính", re.I), "var_def"),
+    (re.compile(r"(xung đột địa chính trị|căng thẳng ở trung đông|chuỗi cung ứng toàn cầu).{0,60}(đe dọa|gián đoạn|cản trở)", re.I), "geopolitical_context"),
+    (re.compile(r"biến đổi khí hậu.{0,60}(cản trở|kìm hãm|gây khó khăn|ảnh hưởng tiêu cực).{0,60}(kinh tế|phục hồi)", re.I), "climate_as_ext_risk"),
+]
+
+
+def is_noise_sentence(s: str, section_title: str = "") -> bool:
+    stripped = s.strip()
+
+    if len(stripped) < 15:
+        return True
+
+    if section_title:
+        sec_lower = section_title.lower()
+        if any(kw in sec_lower for kw in _NOISE_SECTION_KEYWORDS):
+            return True
+
+    # Tiêu đề / tên giải thưởng viết hoa
+    main_text = re.sub(r"\s*\([^)]*\)", "", stripped).strip(" -–—.")
+    if main_text and main_text.isupper() and len(main_text) > 10:
+        return True
+
+    # Câu mở đầu danh sách (kết thúc bằng dấu hai chấm) không phải claim
+    if stripped.endswith(":"):
+        return True
+
+    # Mục từ điển / chú giải dạng "SBG - Sustainability Bond Guidelines: ..."
+    if re.match(r"^[A-Z]{2,8}\s*[–—\-]\s+[A-Z]", stripped):
+        return True
+
+    # Mục lục: "08 Thông điệp của Chủ tịch", "18 Thông tin chung", ...
+    if re.match(r"^\d{1,3}\s+[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐƠƯ]", stripped):
+        return True
+
+    # Hàng bảng markdown.
+    if stripped.startswith("|") or stripped.endswith("|"):
+        return True
+    if re.match(r"^[\|\-\s:=]+$", stripped):
+        return True
+
+    for pat in NOISE_PATTERNS:
+        if pat.search(stripped):
+            return True
+
+    alpha_ratio = sum(c.isalpha() for c in stripped) / max(len(stripped), 1)
+    if alpha_ratio < 0.3:
+        return True
+
+    # Câu chứa URL
+    if re.search(r"https?://\S+|www\.\S+", stripped):
+        return True
+
+    # Fragment ngắn bắt đầu bằng gạch đầu dòng, không có động từ.
+    if re.match(r"^[\-–—•]\s*", stripped):
+        content = re.sub(r"^[\-–—•\s]+", "", stripped).strip()
+        if len(content) < 40 and not _VI_VERBS_RE.search(content):
+            return True
+
+    if len(stripped) < 50 and not _VI_VERBS_RE.search(stripped):
+        return True
+
+    # Câu trung bình không có động từ -> dùng POS tag để xác nhận.
+    if USE_UNDERTHESEA and 50 <= len(stripped) < 120 and not _VI_VERBS_RE.search(stripped):
+        try:
+            tags = _ut_pos_tag(stripped)
+            has_verb = any(tag.startswith("V") for _, tag in tags)
+            if not has_verb:
+                return True
+        except Exception:
+            pass
+
+    for pat, _ in _DEFINITIVE_NON_ESG:
+        if pat.search(stripped):
+            return True
+
+    return False
+
+def _iter_txt_files(input_path: Path) -> list[Path]:
+    if input_path.is_file():
+        if input_path.suffix.lower() != ".txt":
+            raise ValueError(f"Input file must be .txt: {input_path}")
+        return [input_path]
+
+    if not input_path.exists():
+        raise FileNotFoundError(f"Input path not found: {input_path}")
+
+    files = sorted(input_path.rglob("*.txt"))
+    if not files:
+        raise FileNotFoundError(f"No .txt files found under: {input_path}")
+    return files
+
+def _extract_bank_year(
+    txt_path: Path,
+) -> tuple[str, int]:
+    bank = txt_path.parent.name
+    match = re.search(r"(19|20)\d{2}", txt_path.stem)
+    if match:
+        return bank, int(match.group(0))
+
+    return bank, 0
+
+def build_single_document(
+    text: str,
+    bank: str = "demo",
+    year: int = 2024,
+    doc_id: Optional[str] = None,
+    filter_noise: bool = True,
+) -> pd.DataFrame:
+    text = normalize_text(text)
+    if doc_id is None:
+        doc_id = f"{bank}_{year}_demo"
+
+    blocks = repair_ocr_blocks(split_blocks(text))
+
+    _PROSE = {"paragraph", "kpi_like", "bullet_like"}
+    block_metas: list[tuple[str, str]] = []
+    for block in blocks:
+        btype = infer_block_type(block)
+        btxt = clean_heading(block) if btype in ("heading_like", "meta_heading") else block
+        block_metas.append((btype, btxt))
+
+    current_section_title = "UNKNOWN"
+    current_section_id = f"{doc_id}_sec0"
+    sec_counter = 0
+    sent_rows: list[dict] = []
+
+    for i, (btype, block_text_clean) in enumerate(block_metas):
+        if btype == "heading_like":
+            sec_counter += 1
+            current_section_title = block_text_clean
+            current_section_id = f"{doc_id}_sec{sec_counter}"
+
+        block_id = f"{doc_id}_b{i}"
+
+        # Tìm block prose gần nhất trước/sau (bỏ qua heading, bảng) làm context
+        block_prev_text = ""
+        for pi in range(i - 1, -1, -1):
+            if block_metas[pi][0] in _PROSE:
+                block_prev_text = block_metas[pi][1]
+                break
+
+        block_next_text = ""
+        for ni in range(i + 1, len(block_metas)):
+            if block_metas[ni][0] in _PROSE:
+                block_next_text = block_metas[ni][1]
+                break
+
+        sents = sent_split(block_text_clean, block_type=btype)
+        if filter_noise:
+            sents = [s for s in sents if len(s) >= 10]
+            sents = [s for s in sents if not is_noise_sentence(s, section_title=current_section_title)]
+        else:
+            sents = [s for s in sents if len(s.strip()) >= 2]
+
+        for j, sent in enumerate(sents):
+            prev_s = sents[j - 1] if j > 0 else ""
+            next_s = sents[j + 1] if j + 1 < len(sents) else ""
+            sent_rows.append({
+                "doc_id": doc_id,
+                "bank": bank,
+                "year": int(year),
+                "section_id": current_section_id,
+                "block_id": block_id,
+                "sent_id": f"{doc_id}_s{i}_{j}",
+                "sent_idx_in_block": j,
+                "sentence": sent,
+                "ctx_prev": prev_s,
+                "ctx_next": next_s,
+                "block_text": block_text_clean,
+                "block_prev_text": block_prev_text,
+                "block_next_text": block_next_text,
+                "block_type": btype,
+                "section_title": current_section_title,
+            })
+
+    df = pd.DataFrame(sent_rows)
+    # Loại câu trùng lặp trong cùng tài liệu
+    df = df.drop_duplicates(subset=["sentence"]).reset_index(drop=True)
+    return df
+
+def build(
+    input_path: str | Path | None = None,
+    output_blocks: str | Path | None = None,
+    output_sentences: str | Path | None = None
+):
+    input_root = Path(input_path) if input_path else INPUT_ROOT
+    out_blocks = Path(output_blocks) if output_blocks else OUT_BLOCKS
+    out_sents = Path(output_sentences) if output_sentences else OUT_SENTS
+
+    block_rows = []
+    sent_rows = []
+
+    txt_files = _iter_txt_files(input_root)
+
+    for txt_path in txt_files:
+        bank_name, year_value = _extract_bank_year(txt_path)
+
+        raw = txt_path.read_text(encoding="utf-8", errors="ignore")
+        text = normalize_text(raw)
+        doc_id = f"{bank_name}_{year_value}_{txt_path.stem}"
+
+        blocks = repair_ocr_blocks(split_blocks(text))
+
+        current_section_title = "UNKNOWN"
+        current_section_id = f"{doc_id}_sec0"
+        sec_counter = 0
+
+        for i, block in enumerate(blocks):
+            btype = infer_block_type(block)
+
+            if btype == "heading_like":
+                sec_counter += 1
+                current_section_title = clean_heading(block)
+                current_section_id = f"{doc_id}_sec{sec_counter}"
+
+            block_id = f"{doc_id}_b{i}"
+
+            block_text_clean = block
+            if btype in ("heading_like", "meta_heading"):
+                block_text_clean = clean_heading(block)
+
+            block_rows.append({
+                "doc_id": doc_id,
+                "bank": bank_name,
+                "year": year_value,
+                "section_id": current_section_id,
+                "section_title": current_section_title,
+                "block_id": block_id,
+                "block_type": btype,
+                "block_text": block_text_clean,
+                "order_in_doc": i,
+                "source_path": str(txt_path),
+            })
+
+            sents = sent_split(block_text_clean, block_type=btype)
+            sents = [s for s in sents if len(s) >= 10]
+            sents = [s for s in sents if not is_noise_sentence(s, section_title=current_section_title)]
+
+            for j, sent in enumerate(sents):
+                prev_s = sents[j - 1] if j > 0 else ""
+                next_s = sents[j + 1] if j + 1 < len(sents) else ""
+                sent_rows.append({
+                    "doc_id": doc_id,
+                    "bank": bank_name,
+                    "year": year_value,
+                    "section_id": current_section_id,
+                    "block_id": block_id,
+                    "sent_id": f"{doc_id}_s{i}_{j}",
+                    "sent_idx_in_block": j,
+                    "sentence": sent,
+                    "ctx_prev": prev_s,
+                    "ctx_next": next_s,
+                    "block_text": block_text_clean,
+                    "block_type": btype,
+                    "section_title": current_section_title,
+                })
+
+    df_blocks = pd.DataFrame(block_rows)
+    df_sents = pd.DataFrame(sent_rows)
+
+    out_blocks.parent.mkdir(parents=True, exist_ok=True)
+    df_blocks.to_parquet(out_blocks, index=False)
+    df_sents.to_parquet(out_sents, index=False)
+
+    print(f"Blocks: {out_blocks} ({len(df_blocks):,} rows)")
+    print(f"Sentences: {out_sents} ({len(df_sents):,} rows)")
+
+    print(f"\nBlock types distribution:")
+    print(df_blocks["block_type"].value_counts().to_string())
+
+    print(f"\nDocs processed: {df_blocks['doc_id'].nunique()}")
+    print(f"Banks: {sorted(df_blocks['bank'].astype(str).unique())}")
+
+if __name__ == "__main__":
+    build()

@@ -1,5 +1,4 @@
-# Commitment model cua cong su (thay M2-commitment cua ta, 2026-06-14)
+# Commitment model cua cong su (dung o luong inference)
 model: dqa2412/esg-washing-optimized   # PhoBERT-base-v2 seq-classification, nhi phan, tokenize underthesea
 threshold: 0.5
 max_length: 256
-# Macro-F1 0.789 (5-seed, theo model card). ClaimModel cu van giu trong code, khong dung o inference.

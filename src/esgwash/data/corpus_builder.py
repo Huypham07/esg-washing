@@ -1,6 +1,6 @@
-"""P1 - build corpus tu raw OCR zip (spec 01 #1).
+"""P1 — dựng corpus từ raw OCR zip (spec 01 #1).
 
-Input : data/extracted/raw_ocr_annual_report.zip (txt markdown-ish tu docling, per bank/year)
+Input : source_data/raw_ocr_annual_report.zip (txt từ docling, theo bank/year)
 Output: blocks.parquet + sentences.parquet
 Schema sentences: doc_id, bank, year, section_id, block_id, sent_id, sentence,
                   ctx_prev, ctx_next, block_type, section_title

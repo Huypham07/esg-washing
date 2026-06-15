@@ -1,7 +1,7 @@
-"""Selective disclosure (spec 04 #3): share(p) = n_p / (n_E+n_S+n_G) per (bank, year);
-do lech so voi mat bang nganh cung nam. Descriptive - khong gop vao CTI.
+"""Selective disclosure (spec 04 #3): share(p) = n_p / (n_E+n_S+n_G) theo (bank, year);
+đo lệch so với mặt bằng ngành cùng năm. Mô tả, không gộp vào CTI.
 
-Input `pred_long`: long-format 1 dong / (cau ESG x pillar cau thuoc ve), cot bank, year, pillar.
+Input `pred_long`: mỗi dòng = (câu ESG × trụ nó thuộc về), cột bank, year, pillar.
 """
 from __future__ import annotations
 

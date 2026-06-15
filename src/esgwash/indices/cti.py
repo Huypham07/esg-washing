@@ -2,9 +2,9 @@
 
 CTI(b,y,p)  = |{commitment & ~specific}| / |{commitment}|
 gCTI(b,y,p) = |{commitment & (~specific | (specific & support<theta))}| / |{commitment}|
-Chi la ti le output classifier - khong trong so tu dat.
+Chỉ là tỉ lệ output của classifier, không tự đặt trọng số.
 
-Input `claims_long`: long-format 1 dong / (cau commitment x pillar cau thuoc ve), cot
+Input `claims_long`: mỗi dòng = (câu commitment × trụ nó thuộc về), cột
 bank, year, pillar, is_commitment, is_specific, [support].
 """
 from __future__ import annotations
