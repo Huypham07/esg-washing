@@ -65,8 +65,11 @@ def main(argv=None):
     long = to_long(clf)
     n_esg = clf[[f"is_{p}" for p in PILLARS]].sum(axis=1).gt(0).sum()
     n_commit = int(clf["is_commitment"].sum())
+    cmm = clf[clf["is_commitment"] == 1]
+    lv = cmm["spec_level"].value_counts().to_dict()
     print(f"ESG={int(n_esg)} ({n_esg/len(clf)*100:.1f}%) | commitment={n_commit} "
-          f"| specific={int(clf['is_specific'].sum())}")
+          f"| spec_level: mơ_hồ(0)={lv.get(0,0)} cụ_thể(1)={lv.get(1,0)} định_lượng(2)={lv.get(2,0)} "
+          f"| specific(≥1)={int(clf['is_specific'].sum())}")
 
     # P3 ground — pool bang chung = TOAN BO bao cao (du --limit chi classify subset)
     retr = EvidenceRetriever(gcfg)
@@ -117,6 +120,8 @@ def main(argv=None):
         "n_commitment": n_commit,
         "commit_no_evidence_pool": no_pool,
         "commit_no_evidence_share": round(no_pool / max(n_commit, 1), 3),
+        "spec_level_counts": {int(k): int(v) for k, v in
+                              cm["spec_level"].value_counts().sort_index().items()},
         "tok_p95": int(clf["token_count"].quantile(0.95)), "tok_max": int(clf["token_count"].max()),
         "chunk_gt_256tok_truncation_risk": int((clf["token_count"] > 256).sum()),
         "spec_parse_fail": n_spec_fail,

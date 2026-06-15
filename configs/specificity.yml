@@ -2,10 +2,12 @@
 model: Qwen/Qwen3-1.7B    # 1.7B (2026-06-15): 0.6B copy few-shot + sai attributable_to_actor; cung ho Qwen3 nen giu nguyen prompt/enable_thinking. Chay tren Kaggle GPU.
 max_new_tokens: 512    # 256 hay bi cat cut JSON tren chunk nhieu item -> parse fail; 512 an toan hon
 enable_thinking: false    # Qwen3: tat de output JSON gon; bat neu muon suy luan ky hon (cham hon)
-retries: 2                # so lan thu lai khi parse JSON loi (sau do fallback is_specific=0)
-score_weights:            # p_specificity = tong checklist co trong so (vao sensitivity sweep spec 05 V3)
-  quantified_attributable: 0.6   # co dai luong dinh luong QUY VE chu the (dieu kien cua is_specific)
-  baseline_or_timeline: 0.2      # co baseline/moc thoi gian
-  any_quantified: 0.2            # co bat ky dai luong dinh luong nao
-# is_specific = 1 <=> ton tai item vua is_quantified vua attributable_to_actor (luat tuong minh).
-# spec_rubric (JSON) duoc luu kem moi cau de phan tich nguoc.
+retries: 2                # so lan thu lai khi parse JSON loi (sau do fallback spec_level=0)
+# Specificity 3 MUC (2026-06-15) — thay nhi phan numeric-only:
+#   2 = DINH LUONG : item is_quantified & attributable_to_actor (so do duoc quy ve chu the)
+#   1 = CU THE     : item is_concrete_action & attributable_to_actor (hanh dong/cong cu CO TEN,
+#                    kiem chung duoc) nhung khong co so
+#   0 = MO HO      : chi khau hieu/tinh tu, khong kiem chung duoc
+# is_specific = (spec_level >= 1). CTI = ti le Muc 0 (cheap talk that su).
+# spec_rubric + spec_raw luu kem moi chunk de phan tich nguoc / re-parse.
+# (score_weights cu da bo: nhan suy ra bang luat 3-muc, khong con cham diem co trong so.)

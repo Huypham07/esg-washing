@@ -34,7 +34,7 @@ notebooks/.ipynb_checkpoints/
 
 
 # Demo run outputs
-outputs/demo/
+#outputs/demo/
 outputs/demo_smoketest/
 thesis
 # Generated pipeline artifacts

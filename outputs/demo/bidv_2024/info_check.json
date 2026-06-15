@@ -1,0 +1,15 @@
+{
+  "bank": "bidv",
+  "year": 2024,
+  "n_chunks": 227,
+  "n_non_esg_dropped": 122,
+  "non_esg_share": 0.537,
+  "n_commitment": 120,
+  "commit_no_evidence_pool": 97,
+  "commit_no_evidence_share": 0.808,
+  "tok_p95": 316,
+  "tok_max": 320,
+  "chunk_gt_256tok_truncation_risk": 173,
+  "spec_parse_fail": 0,
+  "any_nan_pillar": false
+}

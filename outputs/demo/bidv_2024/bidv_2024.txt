@@ -1,34 +1,140 @@
+### bidv 2024: 227 chunk (token/chunk p50=283 max=320)
+Download complete: 100%
+ 542M/542M [00:08<00:00, 79.3MB/s]
+Fetching 10 files: 100%
+ 10/10 [00:06<00:00,  1.07it/s]
+config.json: 100%
+ 557/557 [00:00<00:00, 62.7kB/s]
+vocab.txt: 100%
+ 895k/895k [00:00<00:00, 18.8MB/s]
+bpe.codes: 100%
+ 1.14M/1.14M [00:00<00:00, 34.9MB/s]
+tokenizer.json: 100%
+ 3.13M/3.13M [00:00<00:00, 82.9MB/s]
+pytorch_model.bin: 100%
+ 543M/543M [00:03<00:00, 251MB/s]
+Loading weights: 100%
+ 199/199 [00:00<00:00, 6801.22it/s]
+[transformers] RobertaModel LOAD REPORT from: vinai/phobert-base
+Key                       | Status     |  |
+--------------------------+------------+--+-
+lm_head.dense.bias        | UNEXPECTED |  |
+lm_head.decoder.weight    | UNEXPECTED |  |
+lm_head.dense.weight      | UNEXPECTED |  |
+lm_head.layer_norm.bias   | UNEXPECTED |  |
+lm_head.bias              | UNEXPECTED |  |
+lm_head.layer_norm.weight | UNEXPECTED |  |
+lm_head.decoder.bias      | UNEXPECTED |  |
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+model.safetensors: 100%
+ 543M/543M [00:06<00:00, 78.9MB/s]
+Download complete: 100%
+ 543M/543M [00:23<00:00, 105MB/s]
+Fetching 22 files: 100%
+ 22/22 [00:06<00:00,  1.20it/s]
+Loading weights: 100%
+ 201/201 [00:00<00:00, 5259.04it/s]
+specificity-LLM: 100%
+ 120/120 [27:43<00:00, 12.77s/chunk]
+config.json: 100%
+ 726/726 [00:00<00:00, 27.9kB/s]
+tokenizer_config.json: 100%
+ 9.73k/9.73k [00:00<00:00, 901kB/s]
+vocab.json: 100%
+ 2.78M/2.78M [00:00<00:00, 52.2MB/s]
+merges.txt: 100%
+ 1.67M/1.67M [00:00<00:00, 49.5MB/s]
+tokenizer.json: 100%
+ 11.4M/11.4M [00:00<00:00, 16.4MB/s]
+model.safetensors.index.json: 100%
+ 25.6k/25.6k [00:00<00:00, 2.25MB/s]
+Download complete: 100%
+ 4.06G/4.06G [00:27<00:00, 176MB/s]
+Fetching 2 files: 100%
+ 2/2 [00:27<00:00, 27.44s/it]
+Loading weights: 100%
+ 311/311 [00:14<00:00, 24.85it/s]
+generation_config.json: 100%
+ 239/239 [00:00<00:00, 16.2kB/s]
+ESG=105 (46.3%) | commitment=120 | specific=49
+modules.json: 100%
+ 229/229 [00:00<00:00, 23.0kB/s]
+config_sentence_transformers.json: 100%
+ 123/123 [00:00<00:00, 9.87kB/s]
+README.md: 100%
+ 6.46k/6.46k [00:00<00:00, 454kB/s]
+sentence_bert_config.json: 100%
+ 53.0/53.0 [00:00<00:00, 5.82kB/s]
+config.json: 100%
+ 777/777 [00:00<00:00, 68.7kB/s]
+model.safetensors: 100%
+ 540M/540M [00:05<00:00, 115MB/s]
+Loading weights: 100%
+ 199/199 [00:00<00:00, 4215.34it/s]
+tokenizer_config.json: 100%
+ 1.17k/1.17k [00:00<00:00, 126kB/s]
+vocab.txt: 100%
+ 895k/895k [00:00<00:00, 20.5MB/s]
+bpe.codes: 100%
+ 1.14M/1.14M [00:00<00:00, 44.4MB/s]
+added_tokens.json: 100%
+ 22.0/22.0 [00:00<00:00, 2.20kB/s]
+special_tokens_map.json: 100%
+ 167/167 [00:00<00:00, 18.0kB/s]
+config.json: 100%
+ 270/270 [00:00<00:00, 22.3kB/s]
+config.json: 100%
+ 1.07k/1.07k [00:00<00:00, 114kB/s]
+tokenizer_config.json: 100%
+ 1.26k/1.26k [00:00<00:00, 106kB/s]
+spm.model: 100%
+ 4.31M/4.31M [00:00<00:00, 10.7MB/s]
+tokenizer.json: 100%
+ 16.3M/16.3M [00:00<00:00, 54.7MB/s]
+added_tokens.json: 100%
+ 23.0/23.0 [00:00<00:00, 2.25kB/s]
+special_tokens_map.json: 100%
+ 286/286 [00:00<00:00, 31.5kB/s]
+model.safetensors: 100%
+ 558M/558M [00:02<00:00, 274MB/s]
+Loading weights: 100%
+ 202/202 [00:00<00:00, 4755.10it/s]
+grounding (docs): 100%
+ 1/1 [00:05<00:00,  5.45s/doc]
+
 ### CTI / grounded-CTI per tru
 pillar  n_commit    cti  cti_lo  cti_hi  gcti@0.7  gcti@0.7_lo  gcti@0.7_hi  share
-   env        31 0.7419  0.5806  0.8710    0.9032       0.8065       1.0000 0.2516
-   gov        41 0.8780  0.7805  0.9756    0.9268       0.8293       1.0000 0.5161
-   soc        30 0.8333  0.7000  0.9667    0.8667       0.7333       0.9667 0.2323
+   env        31 0.4839  0.2903  0.6774    0.8710       0.7419       0.9677 0.2516
+   gov        41 0.7073  0.5610  0.8293    0.9024       0.8049       0.9762 0.5161
+   soc        30 0.6000  0.4333  0.7675    0.8667       0.7333       0.9667 0.2323
 
 ### [Q1] 5 cam ket KHONG cu the (cheap talk thuan):
- - Năm 2024 là năm có ý nghĩa đặc biệt quan trọng đối với BIDV, là năm toàn hệ thống "tăng tốc, bứt phá" nhằm…
- - Lợi nhuận trước thuế hợp nhất đạt 31.985 tỷ đồng, tăng trưởng 15,9%, vượt kế hoạch ĐHĐCĐ giao; (ii) Năng lực…
- - Tiền đề này sẽ giúp BIDV tiếp tục đa dạng hóa cơ cấu cổ đông, bổ sung nguồn lực vào các lĩnh vực trọng yếu,…
- - Đồng thời, BIDV thực hiện các giải pháp kiểm soát chi phí, tối ưu cơ cấu tài sản nợ - có nhằm nâng cao hiệu…
  - Đồng thời, ngân hàng nâng cấp hệ thống giao dịch và trải nghiệm khách hàng cao cấp, định hình vị thế "Top of…
+ - BIDV tiếp tục hoàn thiện thể chế, cập nhật kịp thời các cơ chế, chính sách theo quy định pháp luật mới nhằm…
+ - Năm 2025 là năm có ý nghĩa đặc biệt quan trọng đối với đất nước, đánh dấu thời điểm hoàn thành các mục tiêu,…
+ - Theo đó, toàn hệ thống sẽ tập trung vào các trọng tâm sau: (i) Tăng cường trách nhiệm cá nhân và tập thể…
+ - Ngân hàng có giao dịch tài trợ xanh tốt nhất năm 2024 Ngân hàng đầu tư, tài trợ sáng tạo cho bình đẳng giới…
 
 ### [Q2] 5 cam ket CU THE co bang chung manh (support cao):
- - [sup=1.00] CLAIM: Quyết liệt triển khai các phương án tăng vốn điều lệ, vốn tự có nhằm nâng cao năng lực…
-     └ EVIDENCE: Lợi nhuận trước thuế hợp nhất đạt 31.985 tỷ đồng, tăng trưởng 15,9%, vượt kế hoạch ĐHĐCĐ…
- - [sup=1.00] CLAIM: Quy trình đánh giá và lựa chọn dự án: Mô tả quy trình nội bộ của tổ chức phát hành cho…
-     └ EVIDENCE: Nhờ đợt phát hành, BIDV không chỉ là tổ chức tín dụng phát hành trái phiếu ESG theo tiêu…
- - [sup=1.00] CLAIM: Trong năm 2024, đội ngũ nhân lực CNTT&NHS tại BIDV đã tự phát triển 153 phần mềm, chiếm…
-     └ EVIDENCE: Xây dựng thành công hai chương trình ứng dụng mới, phục vụ đắc lực cho hoạt động kinh…
  - [sup=1.00] CLAIM: BIDV cũng tiếp tục đẩy mạnh phát triển các sản phẩm và dịch vụ tài chính, hỗ trợ vốn tín…
      └ EVIDENCE: Quy trình đánh giá và lựa chọn dự án: Mô tả quy trình nội bộ của tổ chức phát hành cho…
- - [sup=1.00] CLAIM: Năm 2024, BIDV tiếp tục thực hiện các chương trình ASXH trọng điểm, bao gồm: Trồng mới…
-     └ EVIDENCE: Tiếp nối thành công của Trái phiếu xanh, năm 2024 ghi dấu mốc quan trọng khi BIDV lần đầu…
+ - [sup=1.00] CLAIM: Quy trình đánh giá và lựa chọn dự án: Mô tả quy trình nội bộ của tổ chức phát hành cho…
+     └ EVIDENCE: Nhờ đợt phát hành, BIDV không chỉ là tổ chức tín dụng phát hành trái phiếu ESG theo tiêu…
+ - [sup=1.00] CLAIM: Quyết liệt triển khai các phương án tăng vốn điều lệ, vốn tự có nhằm nâng cao năng lực…
+     └ EVIDENCE: Ký kết thỏa thuận hợp tác chiến lược và công bố KEB Hana Bank (Hàn Quốc) là cổ đông chiến…
+ - [sup=1.00] CLAIM: Lợi nhuận trước thuế hợp nhất đạt 31.985 tỷ đồng, tăng trưởng 15,9%, vượt kế hoạch ĐHĐCĐ…
+     └ EVIDENCE: Tổng dư nợ tín dụng và đầu tư(2) đạt 2.592.993 tỷ đồng, trong đó dư nợ tín dụng đạt…
+ - [sup=1.00] CLAIM: Lợi nhuận trước thuế khối NHTM năm 2024 đạt 30.609 tỷ đồng, tăng 14,6% so với năm 2023,…
+     └ EVIDENCE: Chi phí quản lý kinh doanh kiểm soát phù hợp với điều kiện kinh doanh: năm 2024 chi phí…
 
 ### [Q3] 5 cam ket CU THE nhung KHONG co bang chung do (cheap talk an, support<0.5):
- - [sup=0.00] Số lượng giao dịch dịch vụ công được triển khai tăng trưởng 175% so với năm 2023, trong đó dịch vụ…
- - [sup=0.07] Với vị thế ngân hàng hàng đầu trong hoạt động nguồn vốn ủy thác nước ngoài tại Việt Nam, BIDV tiên…
- - [sup=0.00] Bên cạnh đó, BIDV duy trì danh mục sản phẩm tài trợ thương mại toàn diện, phù hợp với nhu cầu đa…
- - [sup=0.00] Riêng đối với lĩnh vực xanh, BIDV đã triển khai Gói tín dụng 10.000 tỷ đồng cho vay hỗ trợ khách…
- - [sup=0.00] Nghiên cứu và ban hành mới Quy chế quy hoạch, bổ nhiệm các chức danh tại BIDV. Tiếp tục nghiên cứu,…
+ - [sup=0.00] Tiền đề này sẽ giúp BIDV tiếp tục đa dạng hóa cơ cấu cổ đông, bổ sung nguồn lực vào các lĩnh vực…
+ - [sup=0.00] Ngân hàng triển khai các nền tảng số tiên tiến, tích hợp dữ liệu và phân tích AI trong hoạt động…
+ - [sup=0.00] Hệ thống BIDV Open API - tích hợp dịch vụ ngân hàng trên các nền tảng quản lý bán hàng, quản lý…
+ - [sup=0.04] Với vị thế ngân hàng hàng đầu trong hoạt động nguồn vốn ủy thác nước ngoài tại Việt Nam, BIDV tiên…
+ - [sup=0.01] Bên cạnh đó, BIDV duy trì danh mục sản phẩm tài trợ thương mại toàn diện, phù hợp với nhu cầu đa…
 
 ### KIEM MAT THONG TIN / SAI LECH
 {
@@ -38,11 +144,13 @@ pillar  n_commit    cti  cti_lo  cti_hi  gcti@0.7  gcti@0.7_lo  gcti@0.7_hi  sha
   "n_non_esg_dropped": 122,
   "non_esg_share": 0.537,
   "n_commitment": 120,
-  "commit_no_evidence_pool": 110,
-  "commit_no_evidence_share": 0.917,
+  "commit_no_evidence_pool": 97,
+  "commit_no_evidence_share": 0.808,
   "tok_p95": 316,
   "tok_max": 320,
   "chunk_gt_256tok_truncation_risk": 173,
-  "spec_parse_fail": 85,
+  "spec_parse_fail": 0,
   "any_nan_pillar": false
 }
+
+-> outputs/demo/bidv_2024/ (classified, grounded, cti, summary.png, info_check.json)
