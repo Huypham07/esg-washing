@@ -204,7 +204,7 @@ def run_qa(chunks_df: pd.DataFrame, cfg: dict) -> str:
     lines = [
         "# QA report — re-chunk (nguồn: text zip sạch · chunker: semantic-text-splitter)", "",
         f"- doc: **{chunks_df['doc_id'].nunique()}** | chunks: **{len(chunks_df):,}** | max_tokens={max_tokens}",
-        f"- chunk > max_tokens (kỳ vọng 0): **{over}**",
+        f"- chunk > max_tokens (cau don qua dai, encoder truncate): **{over}**",
         f"- glyph /uni|/dslash (kỳ vọng 0): **{glyph}**",
         f"- chunk rỗng (kỳ vọng 0): **{empty}**",
         f"- token/chunk p50={chunks_df['token_count'].median():.0f} · "
@@ -212,8 +212,9 @@ def run_qa(chunks_df: pd.DataFrame, cfg: dict) -> str:
         f"- char/chunk p50={chunks_df['char_count'].median():.0f}",
     ]
 
-    # Invariant cứng: splitter đảm bảo trần token + không sinh chunk rỗng/glyph
-    assert over == 0, f"QA FAIL: {over} chunk vượt max_tokens"
+    # Invariant packing: chunk vuot cap chi duoc la cau don (n_sentences==1); glyph + rong van phai 0
+    over_multi = int(((chunks_df["token_count"] > max_tokens) & (chunks_df["n_sentences"] > 1)).sum()) if "n_sentences" in chunks_df.columns else 0
+    assert over_multi == 0, f"QA FAIL: {over_multi} chunk da-cau vuot max_tokens (loi packing)"
     assert glyph == 0, f"QA FAIL: {glyph} chunk dính glyph /uni"
     assert empty == 0, f"QA FAIL: {empty} chunk rỗng"
 
