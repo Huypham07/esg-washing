@@ -105,17 +105,19 @@ Trên mỗi **đơn vị cam kết** (commitment unit), LLM-rubric phân rã th�
 `is_specific = (mức ≥ 1)` chỉ dùng nội bộ; **CTI không dùng `is_specific`** mà dùng trực tiếp
 phân bố mức (xem §3.2).
 
-### 3.2 Ba chỉ số trên mỗi ô (bank `b`, year `y`, trụ `p`)
-Denominator `N` = số **đơn vị cam kết có gắn trụ `p`** (cổng topic):
+### 3.2 Ba chỉ số trên mỗi ô (bank `b`, year `y`)
+Denominator `N` = số **unique chunk cam kết có ít nhất 1 trụ ESG dương** (cổng topic).
+Không tách theo trụ để tránh double-count (chunk đa trụ sẽ bị đếm nhiều lần nếu group by pillar):
 
 ```
-CTI(b,y,p) = #{commitment ở Mức 0} / N      # cheap talk / mơ hồ   (trục washing)
-NAR(b,y,p) = #{commitment ở Mức 1} / N      # named-action rate    (vùng xám)
-QDR(b,y,p) = #{commitment ở Mức 2} / N      # quantified-disclosure rate (substance)
+CTI(b,y) = #{commitment ở Mức 0} / N      # cheap talk / mơ hồ   (trục washing)
+NAR(b,y) = #{commitment ở Mức 1} / N      # named-action rate    (vùng xám)
+QDR(b,y) = #{commitment ở Mức 2} / N      # quantified-disclosure rate (substance)
 ```
 
 - CTI + NAR + QDR = 1 theo định nghĩa.
-- Mỗi chỉ số kèm **bootstrap CI 95%** (đã có `indices/bootstrap.py`).
+- Mỗi chỉ số kèm **bootstrap CI 95%** (đã có `indices/bootstrap.py`); CI drop khỏi output cho đến khi có đủ full corpus.
+- Phân tích per-pillar vẫn khả thi từ `classified.parquet`; selective disclosure lưu riêng ở `pillar_shares.parquet`.
 - **Bỏ** `CTI_strict`, `grounded-CTI`, và toàn bộ band [loose, strict].
 
 ### 3.3 Selective disclosure (cherry-picking)
@@ -145,28 +147,19 @@ Corpus (semantic units, ≤256 tok)
 ### 4.1 Thay đổi so với hiện tại
 | # | Hạng mục | Hiện tại | Sửa thành |
 |---|---|---|---|
-| 1 | Đơn vị phân tích | chunk 256-token cắt cứng | **semantic unit**: tách theo **ranh giới ý** (topic shift giữa câu liền kề) — một block nói 2 vấn đề → 2 đơn vị; 256-token chỉ là **trần an toàn** |
+| 1 | Đơn vị phân tích | chunk 256-token cắt cứng | **semantic unit** dùng `semantic-text-splitter`: gói câu đến ≤256 token theo ranh giới câu, không cắt ngang; 13 812 chunks, p50=228 tok |
 | 2 | Specificity → index | `is_specific` nhị phân + band | CTI = P(Mức 0); NAR = P(Mức 1); QDR = P(Mức 2) |
 | 3 | Grounding / NLI / gCTI / evidence pool | đang chạy | **gỡ khỏi luồng chính** (archive code, không xoá) |
 | 4 | Denominator CTI | commitment (gồm 42–49% non-ESG) | commitment **gate bằng topic** (chỉ câu gắn trụ) |
 | 5 | Validation | có module, chưa chạy hệ thống | chạy đủ + báo cáo |
 
-### 4.2 Semantic chunking (chi tiết)
-**Tiêu chí chính = ranh giới ý (semantic boundary), không phải gom-cho-đủ-256.** Một
-block/section có thể nói **nhiều vấn đề khác nhau → tách thành nhiều đơn vị**; 256-token chỉ
-là *trần an toàn* để bảo vệ encoder.
+### 4.2 Chunking (chi tiết)
+Dùng `semantic-text-splitter` (Rust-based): gói câu liên tiếp sao cho chunk ≤ 256 token tính
+bằng tokenizer Qwen3-0.6B; không cắt ngang câu; ưu tiên lấp đầy trần token.
 
-- Đầu vào: `data/processed/sentences.parquet` (đã có, cùng `blocks.parquet` giữ ranh giới
-  block/section). Chỉ gom câu **trong cùng block** (không gộp xuyên block).
-- **Phát hiện ranh giới ý** giữa các câu liền kề: tính độ tương đồng embedding câu kề nhau
-  (dùng `vietnamese-bi-encoder` đã có), cắt khi độ tương đồng tụt dưới ngưỡng (kiểu
-  TextTiling/semantic-split). Mỗi đoạn cùng-ý = một đơn vị.
-- **Trần an toàn 256 token:** nếu một đoạn cùng-ý vẫn vượt 256 token → cắt thêm tại ranh giới
-  câu gần nhất. Không bao giờ cắt ngang câu → PhoBERT không truncate.
-- Tham số (config): ngưỡng tương đồng cắt ý, trần token (mặc định 256).
-- Giữ `bank, year, doc_id, unit_index, content_text, token_count` + danh sách câu thành phần.
-- Ghi kèm thống kê: số đơn vị/block (kỳ vọng > 1 ở block đa-ý), phân bố token/đơn vị,
-  %đơn vị > 256 (kỳ vọng ≈ 0). Spot-check tay vài block đa-ý để xác nhận tách đúng.
+- **Kết quả thực tế:** 13 812 chunks / 50 báo cáo; token p50=228, p90=252, max=256; 0 chunk rỗng, 0 glyph lỗi.
+- Config: `configs/chunk.yml` — `max_tokens: 256`, `tokenizer: Qwen/Qwen3-0.6B`.
+- QA report: `experiments/chunking/_qa_report.md`.
 
 ### 4.3 Cổng topic cho denominator
 - Một đơn vị vào denominator CTI của trụ `p` **chỉ khi** `is_commitment=1` **và** `is_p=1`.
@@ -215,10 +208,8 @@ dưới sensitivity; (v) agreement audit↔pipeline ở mức chấp nhận đư
 - **Archive (không xoá):** `grounding/` (retriever, nli, support, evidence_pool), nhánh
   grounding trong `run.py`, `configs/grounding.yml` → chuyển sang `legacy/` hoặc gắn cờ
   `--enable-grounding` mặc định tắt, kèm README giải thích vì sao loại khỏi luồng chính.
-- **Cập nhật `docs/de-cuong-nghien-cuu.md`** cho khớp thiết kế mới (specificity = LLM-rubric
-  3 mức chứ không phải PhoBERT nhị phân; CTI = P(Mức 0); bỏ grounding/gCTI; semantic unit).
-  Làm **sau** khi triển khai + đánh giá hiệu quả (theo yêu cầu: "cập nhật docs chuẩn" ở cuối).
-- **Cập nhật `README.md`** (đang còn nói EWRI/neuro-symbolic — đã lỗi thời hoàn toàn).
+- **Cập nhật `docs/de-cuong-nghien-cuu.md`** — ✅ done (2026-06-16).
+- **Cập nhật `README.md`** — ✅ done (2026-06-16).
 
 ---
 
