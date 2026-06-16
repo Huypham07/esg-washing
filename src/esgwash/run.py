@@ -203,10 +203,17 @@ def main(argv=None):
     ap.add_argument("--all", action="store_true", help="chay toan bo analysis_scope (corpus.yml)")
     ap.add_argument("--limit", type=int, default=0, help="0=full; >0 = N chunk dau (smoke test)")
     args = ap.parse_args(argv)
-    models = load_models()
+    models = load_models()  # nap 1 lan, tai dung cho moi (bank, year) -> tranh OOM do reload
     for bank, year in _scope_pairs(args.bank, args.year, args.all):
         if not load_chunks(bank=bank, year=year).empty:
             run_bank_year(bank, year, models, limit=args.limit)
+            _free_gpu()  # giai phong phan manh giua cac bank khi chay --all
+
+
+def _free_gpu() -> None:
+    import torch
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
 
 
 if __name__ == "__main__":

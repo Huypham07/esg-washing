@@ -193,9 +193,11 @@ class SpecificityLLM:
 
         from esgwash.models.trainer import get_device
         self._device = get_device()
+        # fp16 tren GPU de giam ~mot nua bo nho (1.7B fp32 ~6.8GB -> ~3.4GB); CPU giu fp32.
+        dtype = torch.float16 if self._device.type == "cuda" else torch.float32
         self._tok = AutoTokenizer.from_pretrained(self.model_name)
         self._model = AutoModelForCausalLM.from_pretrained(
-            self.model_name, dtype=torch.float32).to(self._device).eval()
+            self.model_name, dtype=dtype).to(self._device).eval()
 
     def _build_messages(self, text: str, stricter: bool = False) -> list[dict]:
         msgs = [{"role": "system", "content": SYSTEM}]
