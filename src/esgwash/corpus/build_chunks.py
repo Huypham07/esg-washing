@@ -1,12 +1,10 @@
-"""Orchestrator re-chunk 50 báo cáo -> chunks cho specificity LLM (CTI / grounded-CTI chunk-level).
+"""Orchestrator re-chunk 50 báo cáo -> chunks (đơn vị semantic cho topic/commitment + specificity).
 
-Luồng: TEXT OCR SẠCH trong zip (tác giả làm sẵn) -> clean_extracted_text
--> semantic-text-splitter (tokenizer Qwen, trần max_tokens, ngắt ở ranh giới câu Unicode) -> chunks.parquet.
+Luồng: TEXT OCR SẠCH trong zip (tác giả làm sẵn) -> clean_extracted_text -> tách câu + lọc nhiễu
+-> embed câu (bi-encoder) -> semantic_units (cắt ranh giới ý + gói ≤max_tokens) -> chunks.parquet.
 
 ⚠️ KHÔNG re-OCR docling: docling hiện tại giải mã hỏng font subset tiếng Việt (in /uniXXXX
    thay diacritic) -> hỏng 55% câu. Text zip cũ SẠCH + đầy đủ hơn.
-⚠️ KHÔNG sinh sentences/mapping: CTI & grounded-CTI chấm THUẦN mức chunk nên không cần map
-   câu->chunk. Corpus câu cho classifier (E/S/G/commitment) đã có riêng ở data/corpus/sentences_clean.parquet.
 
 Chạy:
   python -m esgwash.corpus.build_chunks                 # build full 50 + QA
@@ -202,7 +200,7 @@ def run_qa(chunks_df: pd.DataFrame, cfg: dict) -> str:
     empty = int((chunks_df["content_text"].str.strip().str.len() == 0).sum())
 
     lines = [
-        "# QA report — re-chunk (nguồn: text zip sạch · chunker: semantic-text-splitter)", "",
+        "# QA report — re-chunk (nguồn: text zip sạch · chunker: bi-encoder semantic split)", "",
         f"- doc: **{chunks_df['doc_id'].nunique()}** | chunks: **{len(chunks_df):,}** | max_tokens={max_tokens}",
         f"- chunk > max_tokens (cau don qua dai, encoder truncate): **{over}**",
         f"- glyph /uni|/dslash (kỳ vọng 0): **{glyph}**",
