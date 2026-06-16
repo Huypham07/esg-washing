@@ -25,6 +25,8 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
+from esgwash.corpus.semantic_split import semantic_units
+
 if hasattr(sys.stdout, "reconfigure"):  # guard: stdout Jupyter có thể không có reconfigure
     sys.stdout.reconfigure(encoding="utf-8")  # tránh crash print tiếng Việt trên cp1252 (Windows)
 
@@ -33,7 +35,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 # Key bắt buộc trong configs/chunk.yml (validate sớm để lỗi rõ ràng thay vì KeyError sâu)
 _REQUIRED_KEYS = ("zip_path", "output_dir", "scope", "chunk")
-_REQUIRED_CHUNK_KEYS = ("max_tokens", "tokenizer")
+_REQUIRED_CHUNK_KEYS = ("max_tokens", "tokenizer", "semantic")
 _REQUIRED_SCOPE_KEYS = ("banks", "years")
 
 # Bắt (bank, year) từ path trong zip: .../<bank>/<...><year>...
@@ -93,21 +95,15 @@ def iter_zip_docs(cfg: dict, limit: int = 0):
         yield doc_id, bank, year, raw
 
 
-def make_splitter(cfg: dict):
-    """Dựng semantic-text-splitter từ tokenizer Qwen + hàm đếm token (cho cột token_count).
+def make_tokenizer(cfg: dict):
+    """Load tokenizer Qwen de dem token (cho cot token_count va tran max_tokens).
 
-    Trần = max_tokens token; splitter ngắt ưu tiên ở ranh giới CÂU (Unicode), chỉ cắt khi 1 câu
-    đơn > max_tokens. Lib Rust cần `tokenizers.Tokenizer` (= tok.backend_tokenizer); AutoTokenizer
-    wrapper thiếu `.to_str` nên KHÔNG truyền trực tiếp được.
+    Dung AutoTokenizer vi bi-encoder co tokenizer rieng; chi can dem so token
+    Qwen cho output chunk (khong can splitter Rust nua).
     """
-    from semantic_text_splitter import TextSplitter
     from transformers import AutoTokenizer
 
-    tok = AutoTokenizer.from_pretrained(cfg["chunk"]["tokenizer"])
-    splitter = TextSplitter.from_huggingface_tokenizer(
-        tok.backend_tokenizer, int(cfg["chunk"]["max_tokens"])
-    )
-    return splitter, tok
+    return AutoTokenizer.from_pretrained(cfg["chunk"]["tokenizer"])
 
 
 # Tiền tố bullet để strip khi explode (đồng bộ prepare_clean_corpus._BULLET_PREFIX)
@@ -135,16 +131,18 @@ def _filter_noise_sentences(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def build_chunks(cfg: dict, limit: int = 0) -> pd.DataFrame:
-    """zip -> chunks_df. LỌC NHIỄU (câu) trước, rồi semantic-text-splitter GÓI thành chunk.
+    """zip -> chunks_df. LUong: loc nhieu cau -> embed bi-encoder -> tach theo cosine -> goi tran token.
 
-    clean_extracted_text -> build_single_document (tách câu) -> _filter_noise_sentences (bỏ bảng/boilerplate)
-    -> nối câu đã lọc bằng '\\n' -> semantic-text-splitter (gói ≤max_tokens, ưu tiên ngắt giữa các câu).
-    Cols: chunk_id, doc_id, bank, year, chunk_index, content_text, char_count, token_count.
+    clean_extracted_text -> build_single_document (tach cau) -> _filter_noise_sentences (bo bang/boilerplate)
+    -> bi-encoder embed -> semantic_units (cat ranh gioi y bang cosine ke nhau < threshold, goi <= max_tokens).
+    Cols: chunk_id, doc_id, bank, year, chunk_index, content_text, char_count, token_count, n_sentences.
     """
     from esgwash.corpus.document_loader import clean_extracted_text
     from esgwash.corpus.build_corpus import build_single_document
+    from esgwash.corpus.sentence_embedder import SentenceEmbedder
 
-    splitter, tok = make_splitter(cfg)
+    tok = make_tokenizer(cfg)
+    embedder = SentenceEmbedder(cfg["chunk"]["semantic"]["embedder"])
     rows: list[dict] = []
 
     docs = list(iter_zip_docs(cfg, limit=limit))
@@ -158,16 +156,22 @@ def build_chunks(cfg: dict, limit: int = 0) -> pd.DataFrame:
         if df.empty:
             print(f"  {doc_id}: 0 câu sau lọc (bỏ)")
             continue
-        # Nối câu ĐÃ LỌC bằng '\n' -> splitter coi mỗi câu là 1 dòng, ưu tiên ngắt giữa các câu
-        text = "\n".join(df["sentence"].astype(str))
-        chunks = splitter.chunks(text)
-        for i, ch in enumerate(chunks):
+        sents = df["sentence"].astype(str).tolist()
+        emb = embedder.embed(sents)
+        toks = [len(tok.encode(s, add_special_tokens=False)) for s in sents]
+        max_tokens = int(cfg["chunk"]["max_tokens"])
+        thr = float(cfg["chunk"]["semantic"]["threshold"])
+        units = semantic_units(sents, emb, toks, threshold=thr, max_tokens=max_tokens)
+        for i, unit_sents in enumerate(units):
+            ch = " ".join(unit_sents)
             rows.append({
-                "chunk_id": f"{doc_id}__c{i:04d}", "doc_id": doc_id, "bank": bank, "year": year,
-                "chunk_index": i, "content_text": ch, "char_count": len(ch),
+                "chunk_id": f"{doc_id}__c{i:04d}", "doc_id": doc_id, "bank": bank,
+                "year": year, "chunk_index": i, "content_text": ch,
+                "char_count": len(ch),
                 "token_count": len(tok.encode(ch, add_special_tokens=False)),
+                "n_sentences": len(unit_sents),
             })
-        print(f"  {doc_id}: {len(chunks):,} chunks")
+        print(f"  {doc_id}: {len(units):,} units")
 
     return pd.DataFrame(rows)
 
