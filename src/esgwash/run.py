@@ -11,7 +11,10 @@ Chay (toan bo nang, ke ca specificity LLM, nam trong 1 lenh - chay tren Kaggle G
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import pandas as pd
 

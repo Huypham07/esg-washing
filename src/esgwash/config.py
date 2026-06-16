@@ -1,7 +1,10 @@
 """Đọc + kiểm tra config YAML (nguồn cấu hình duy nhất cho mọi bước)."""
+import sys
 from pathlib import Path
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 CONFIG_DIR = Path("configs")
 

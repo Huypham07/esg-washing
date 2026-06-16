@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import pandas as pd
@@ -21,6 +22,8 @@ from esgwash.models.commitment_model import CommitmentModel
 from esgwash.models.topic_model import TopicModel
 from esgwash.models.trainer import multi_seed
 from esgwash.models.tuning import apply_best_params, save_best_params, tune
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 DATA = Path("data")
 METRICS = Path("experiments/metrics")
