@@ -224,7 +224,7 @@ dưới sensitivity; (v) agreement audit↔pipeline ở mức chấp nhận đư
 
 ## 8. Ràng buộc kỹ thuật (code hygiene) — bắt buộc
 
-- **Comment giải thích *vì sao*, không phải nhật ký sửa đổi.** Cấm comment kiểu "sửa chỗ này",
+- **Comment chuẩn kiến trúc clean code, ngắn gọn, vừa phải, không phải nhật ký sửa đổi.** Cấm comment kiểu "sửa chỗ này",
   "đổi từ X sang Y", "thêm mới", "fix bug"; mật độ comment theo đúng phong cách code hiện có.
 - **Không đẻ file thừa.** Không tạo script một-lần, file demo, file trung gian phức tạp ngoài
   output dữ liệu cần thiết. Diagnostic/audit nếu cần thì gọn, đặt trong `experiments/` và xoá
