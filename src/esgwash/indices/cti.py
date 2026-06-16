@@ -1,14 +1,14 @@
 """CTI / NAR / QDR tu thang specificity 3 muc (spec 2026-06-16).
 
-Tren moi o (bank, year, pillar), denominator = cam ket co gan tru ESG do:
-  CTI = ti le spec_level 0 (mo ho / cheap talk)   -> truc washing
-  NAR = ti le spec_level 1 (hanh dong co ten)      -> vung xam
-  QDR = ti le spec_level 2 (dinh luong, quy ve chu the) -> substance
-CTI+NAR+QDR = 1. Chi la ti le output classifier, khong tu dat trong so.
-Bo hoan toan grounded-CTI (xem legacy/README.md).
+Tren moi o (bank, year), denominator = tap hop UNIQUE cam ket co it nhat 1 tru ESG duong:
+  CTI = ti le spec_level 0 (mo ho / cheap talk)          -> truc washing
+  NAR = ti le spec_level 1 (hanh dong co ten, chua dinh luong)
+  QDR = ti le spec_level 2 (dinh luong, quy ve chu the)  -> substance
+CTI+NAR+QDR = 1. Khong tach theo tru de tranh double-count; phan tich pillar luu rieng
+o pillar_shares.parquet. Bo hoan toan grounded-CTI (xem legacy/README.md).
 
-Input `claims_long`: moi dong = (cam ket x tru no thuoc ve), cot
-bank, year, pillar, is_commitment, spec_level.
+Input `classified`: DataFrame toan bo chunk da classify, cot
+bank, year, is_env, is_soc, is_gov, is_commitment, spec_level.
 """
 from __future__ import annotations
 
@@ -16,8 +16,17 @@ import pandas as pd
 
 from esgwash.indices.bootstrap import bootstrap_ci
 
-CELL = ["bank", "year", "pillar"]
+CELL = ["bank", "year"]
 _LEVEL_COL = {"cti": 0, "nar": 1, "qdr": 2}
+_ESG_PILLARS = ("is_env", "is_soc", "is_gov")
+
+INDEX_LEGEND: dict[str, str] = {
+    "cti":        "Cheap Talk Index — share of ESG commitment chunks rated vague (spec_level=0); higher = more washing.",
+    "nar":        "Named Action Rate — share citing a named action/tool (spec_level=1) but unquantified.",
+    "qdr":        "Quantified Disclosure Rate — share with a figure attributable to the bank (spec_level=2).",
+    "n_commit":   "Unique ESG commitment chunks in (bank, year); denominator for CTI/NAR/QDR.",
+    "spec_level": "0=vague, 1=named action, 2=quantified. CTI+NAR+QDR=1.",
+}
 
 
 def _share_of_level(level: int):
@@ -26,14 +35,15 @@ def _share_of_level(level: int):
     return stat
 
 
-def compute_specificity_shares(claims_long: pd.DataFrame, n_resamples: int = 1000,
+def compute_specificity_shares(classified: pd.DataFrame, n_resamples: int = 1000,
                                ci: float = 0.95, seed: int = 42) -> pd.DataFrame:
-    """Bang share 3 muc + bootstrap CI cho moi o (bank, year, pillar)."""
-    commit = claims_long[claims_long["is_commitment"] == 1]
+    """CTI/NAR/QDR per (bank, year) tren unique ESG commitment chunks (khong double-count theo tru)."""
+    esg_mask = classified[list(_ESG_PILLARS)].max(axis=1).astype(bool)
+    commit = classified[(classified["is_commitment"] == 1) & esg_mask]
     rows = []
-    for (b, y, p), g in commit.groupby(CELL):
+    for (b, y), g in commit.groupby(CELL):
         lv = g["spec_level"].to_numpy(dtype=float)
-        rec = {"bank": b, "year": y, "pillar": p, "n_commit": len(g)}
+        rec = {"bank": b, "year": y, "n_commit": len(g)}
         for name, level in _LEVEL_COL.items():
             point, lo, hi = bootstrap_ci(lv, _share_of_level(level), n_resamples, ci, seed)
             rec[name] = round(point, 4)
@@ -43,7 +53,6 @@ def compute_specificity_shares(claims_long: pd.DataFrame, n_resamples: int = 100
     return pd.DataFrame(rows)
 
 
-def build_index_table(claims_long: pd.DataFrame, n_resamples: int = 1000,
+def build_index_table(classified: pd.DataFrame, n_resamples: int = 1000,
                       ci: float = 0.95, seed: int = 42) -> pd.DataFrame:
-    """Alias on dinh ten cho orchestrator; co the merge them cot mo ta sau."""
-    return compute_specificity_shares(claims_long, n_resamples, ci, seed)
+    return compute_specificity_shares(classified, n_resamples, ci, seed)

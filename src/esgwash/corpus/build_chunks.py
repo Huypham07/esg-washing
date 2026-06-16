@@ -1,10 +1,12 @@
-"""Orchestrator re-chunk 50 báo cáo -> chunks (đơn vị semantic cho topic/commitment + specificity).
+"""Orchestrator re-chunk 50 báo cáo -> chunks cho specificity LLM (CTI / grounded-CTI chunk-level).
 
-Luồng: TEXT OCR SẠCH trong zip (tác giả làm sẵn) -> clean_extracted_text -> tách câu + lọc nhiễu
--> embed câu (bi-encoder) -> semantic_units (cắt ranh giới ý + gói ≤max_tokens) -> chunks.parquet.
+Luồng: TEXT OCR SẠCH trong zip (tác giả làm sẵn) -> clean_extracted_text
+-> semantic-text-splitter (tokenizer Qwen, trần max_tokens, ngắt ở ranh giới câu Unicode) -> chunks.parquet.
 
 ⚠️ KHÔNG re-OCR docling: docling hiện tại giải mã hỏng font subset tiếng Việt (in /uniXXXX
    thay diacritic) -> hỏng 55% câu. Text zip cũ SẠCH + đầy đủ hơn.
+⚠️ KHÔNG sinh sentences/mapping: CTI & grounded-CTI chấm THUẦN mức chunk nên không cần map
+   câu->chunk. Corpus câu cho classifier (E/S/G/commitment) đã có riêng ở data/corpus/sentences_clean.parquet.
 
 Chạy:
   python -m esgwash.corpus.build_chunks                 # build full 50 + QA
@@ -23,8 +25,6 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from esgwash.corpus.semantic_split import semantic_units
-
 if hasattr(sys.stdout, "reconfigure"):  # guard: stdout Jupyter có thể không có reconfigure
     sys.stdout.reconfigure(encoding="utf-8")  # tránh crash print tiếng Việt trên cp1252 (Windows)
 
@@ -33,7 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 # Key bắt buộc trong configs/chunk.yml (validate sớm để lỗi rõ ràng thay vì KeyError sâu)
 _REQUIRED_KEYS = ("zip_path", "output_dir", "scope", "chunk")
-_REQUIRED_CHUNK_KEYS = ("max_tokens", "tokenizer", "semantic")
+_REQUIRED_CHUNK_KEYS = ("max_tokens", "tokenizer")
 _REQUIRED_SCOPE_KEYS = ("banks", "years")
 
 # Bắt (bank, year) từ path trong zip: .../<bank>/<...><year>...
@@ -93,15 +93,21 @@ def iter_zip_docs(cfg: dict, limit: int = 0):
         yield doc_id, bank, year, raw
 
 
-def make_tokenizer(cfg: dict):
-    """Load tokenizer Qwen de dem token (cho cot token_count va tran max_tokens).
+def make_splitter(cfg: dict):
+    """Dựng semantic-text-splitter từ tokenizer Qwen + hàm đếm token (cho cột token_count).
 
-    Dung AutoTokenizer vi bi-encoder co tokenizer rieng; chi can dem so token
-    Qwen cho output chunk (khong can splitter Rust nua).
+    Trần = max_tokens token; splitter ngắt ưu tiên ở ranh giới CÂU (Unicode), chỉ cắt khi 1 câu
+    đơn > max_tokens. Lib Rust cần `tokenizers.Tokenizer` (= tok.backend_tokenizer); AutoTokenizer
+    wrapper thiếu `.to_str` nên KHÔNG truyền trực tiếp được.
     """
+    from semantic_text_splitter import TextSplitter
     from transformers import AutoTokenizer
 
-    return AutoTokenizer.from_pretrained(cfg["chunk"]["tokenizer"])
+    tok = AutoTokenizer.from_pretrained(cfg["chunk"]["tokenizer"])
+    splitter = TextSplitter.from_huggingface_tokenizer(
+        tok.backend_tokenizer, int(cfg["chunk"]["max_tokens"])
+    )
+    return splitter, tok
 
 
 # Tiền tố bullet để strip khi explode (đồng bộ prepare_clean_corpus._BULLET_PREFIX)
@@ -129,18 +135,16 @@ def _filter_noise_sentences(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def build_chunks(cfg: dict, limit: int = 0) -> pd.DataFrame:
-    """zip -> chunks_df. LUong: loc nhieu cau -> embed bi-encoder -> tach theo cosine -> goi tran token.
+    """zip -> chunks_df. LỌC NHIỄU (câu) trước, rồi semantic-text-splitter GÓI thành chunk.
 
-    clean_extracted_text -> build_single_document (tach cau) -> _filter_noise_sentences (bo bang/boilerplate)
-    -> bi-encoder embed -> semantic_units (cat ranh gioi y bang cosine ke nhau < threshold, goi <= max_tokens).
-    Cols: chunk_id, doc_id, bank, year, chunk_index, content_text, char_count, token_count, n_sentences.
+    clean_extracted_text -> build_single_document (tách câu) -> _filter_noise_sentences (bỏ bảng/boilerplate)
+    -> nối câu đã lọc bằng '\\n' -> semantic-text-splitter (gói ≤max_tokens, ưu tiên ngắt giữa các câu).
+    Cols: chunk_id, doc_id, bank, year, chunk_index, content_text, char_count, token_count.
     """
     from esgwash.corpus.document_loader import clean_extracted_text
     from esgwash.corpus.build_corpus import build_single_document
-    from esgwash.corpus.sentence_embedder import SentenceEmbedder
 
-    tok = make_tokenizer(cfg)
-    embedder = SentenceEmbedder(cfg["chunk"]["semantic"]["embedder"])
+    splitter, tok = make_splitter(cfg)
     rows: list[dict] = []
 
     docs = list(iter_zip_docs(cfg, limit=limit))
@@ -154,22 +158,16 @@ def build_chunks(cfg: dict, limit: int = 0) -> pd.DataFrame:
         if df.empty:
             print(f"  {doc_id}: 0 câu sau lọc (bỏ)")
             continue
-        sents = df["sentence"].astype(str).tolist()
-        emb = embedder.embed(sents)
-        toks = [len(tok.encode(s, add_special_tokens=False)) for s in sents]
-        max_tokens = int(cfg["chunk"]["max_tokens"])
-        thr = float(cfg["chunk"]["semantic"]["threshold"])
-        units = semantic_units(sents, emb, toks, threshold=thr, max_tokens=max_tokens)
-        for i, unit_sents in enumerate(units):
-            ch = " ".join(unit_sents)
+        # Nối câu ĐÃ LỌC bằng '\n' -> splitter coi mỗi câu là 1 dòng, ưu tiên ngắt giữa các câu
+        text = "\n".join(df["sentence"].astype(str))
+        chunks = splitter.chunks(text)
+        for i, ch in enumerate(chunks):
             rows.append({
-                "chunk_id": f"{doc_id}__c{i:04d}", "doc_id": doc_id, "bank": bank,
-                "year": year, "chunk_index": i, "content_text": ch,
-                "char_count": len(ch),
+                "chunk_id": f"{doc_id}__c{i:04d}", "doc_id": doc_id, "bank": bank, "year": year,
+                "chunk_index": i, "content_text": ch, "char_count": len(ch),
                 "token_count": len(tok.encode(ch, add_special_tokens=False)),
-                "n_sentences": len(unit_sents),
             })
-        print(f"  {doc_id}: {len(units):,} units")
+        print(f"  {doc_id}: {len(chunks):,} chunks")
 
     return pd.DataFrame(rows)
 
@@ -195,18 +193,14 @@ def run_qa(chunks_df: pd.DataFrame, cfg: dict) -> str:
     rep.mkdir(parents=True, exist_ok=True)
     max_tokens = int(cfg["chunk"]["max_tokens"])
 
-    # Pack dem token tung cau cong lai, nhung token_count do tren text DA NOI -> tokenization
-    # khong cong don tuyen tinh nen chunk da-cau co the nhinh hon cap vai token (vo hai,
-    # encoder truncate). Vuot qua TOL = loi packing that su.
-    pack_tol = int(cfg["chunk"].get("pack_tolerance", 16))
     over = int((chunks_df["token_count"] > max_tokens).sum())
     glyph = int(chunks_df["content_text"].str.contains(r"/uni[0-9A-Fa-f]{4}|/dslash", regex=True).sum())
     empty = int((chunks_df["content_text"].str.strip().str.len() == 0).sum())
 
     lines = [
-        "# QA report — re-chunk (nguồn: text zip sạch · chunker: bi-encoder semantic split)", "",
+        "# QA report — re-chunk (nguồn: text zip sạch · chunker: semantic-text-splitter)", "",
         f"- doc: **{chunks_df['doc_id'].nunique()}** | chunks: **{len(chunks_df):,}** | max_tokens={max_tokens}",
-        f"- chunk > max_tokens (cau don qua dai / bien noi cau, encoder truncate): **{over}**",
+        f"- chunk > max_tokens (kỳ vọng 0): **{over}**",
         f"- glyph /uni|/dslash (kỳ vọng 0): **{glyph}**",
         f"- chunk rỗng (kỳ vọng 0): **{empty}**",
         f"- token/chunk p50={chunks_df['token_count'].median():.0f} · "
@@ -214,10 +208,8 @@ def run_qa(chunks_df: pd.DataFrame, cfg: dict) -> str:
         f"- char/chunk p50={chunks_df['char_count'].median():.0f}",
     ]
 
-    # Invariant packing: chunk da-cau khong duoc vuot cap qua TOL token; glyph + rong van phai 0
-    bad = int(((chunks_df["token_count"] > max_tokens + pack_tol) & (chunks_df["n_sentences"] > 1)).sum()) \
-        if "n_sentences" in chunks_df.columns else 0
-    assert bad == 0, f"QA FAIL: {bad} chunk da-cau vuot max_tokens+{pack_tol} (loi packing)"
+    # Invariant cứng: splitter đảm bảo trần token + không sinh chunk rỗng/glyph
+    assert over == 0, f"QA FAIL: {over} chunk vượt max_tokens"
     assert glyph == 0, f"QA FAIL: {glyph} chunk dính glyph /uni"
     assert empty == 0, f"QA FAIL: {empty} chunk rỗng"
 

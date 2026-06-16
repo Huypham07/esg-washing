@@ -128,16 +128,25 @@ def to_long(classified: pd.DataFrame) -> pd.DataFrame:
 # --- Chay end-to-end cho tung (bank, year) -> outputs/cti/<bank>/<year>/ ---
 
 
-def _scope_pairs(bank: str, year: int, do_all: bool) -> list[tuple[str, int]]:
-    """1 cap (bank, year), hoac toan bo analysis_scope (corpus.yml) khi do_all."""
-    if not do_all:
-        return [(bank, year)]
+def _scope_pairs(banks: list[str], year: int | None, do_all: bool) -> list[tuple[str, int]]:
+    """Danh sach (bank, year) can chay.
+
+    --all              : toan bo analysis_scope (corpus.yml)
+    --bank A B         : A va B, moi ban toan bo year
+    --bank A --year Y  : chi (A, Y)
+    """
     from esgwash.config import load_config
     scope = load_config("corpus").get("analysis_scope", {})
     chunks = load_chunks()
-    banks = scope.get("banks", sorted(chunks["bank"].unique()))
-    years = [int(y) for y in scope.get("years", sorted(chunks["year"].unique()))]
-    return [(b, y) for b in banks for y in years]
+    all_years = [int(y) for y in scope.get("years", sorted(chunks["year"].unique()))]
+
+    if do_all:
+        all_banks = scope.get("banks", sorted(chunks["bank"].unique()))
+        return [(b, y) for b in all_banks for y in all_years]
+
+    if year is not None:
+        return [(b, year) for b in banks]
+    return [(b, y) for b in banks for y in all_years]
 
 
 def run_bank_year(bank: str, year: int, models: dict, limit: int = 0) -> Path:
@@ -159,15 +168,21 @@ def run_bank_year(bank: str, year: int, models: dict, limit: int = 0) -> Path:
     clf = classify_chunks(sub, models["topic"], models["commitment"], models["specificity"])
     clf.to_parquet(out_dir / "classified.parquet", index=False)
 
-    long = to_long(clf)
-    idx = build_index_table(long, n_resamples=int(boot.get("n_resamples", 1000)),
+    idx = build_index_table(clf, n_resamples=int(boot.get("n_resamples", 1000)),
                             ci=float(boot.get("ci", 0.95)))
-    shares = pillar_shares(long)
-    idx = idx.merge(shares[["bank", "year", "pillar", "share", "share_dev"]],
-                    on=["bank", "year", "pillar"], how="left")
+    ci_cols = [c for c in idx.columns if c.endswith("_lo") or c.endswith("_hi")]
+    idx.drop(columns=ci_cols, inplace=True)
     idx.to_parquet(out_dir / "cti.parquet", index=False)
-    print(idx[["pillar", "n_commit", "cti", "cti_lo", "cti_hi", "nar", "qdr", "share"]]
-          .to_string(index=False))
+
+    long = to_long(clf)
+    shares = pillar_shares(long)
+    shares[["bank", "year", "pillar", "n", "share"]].to_parquet(
+        out_dir / "pillar_shares.parquet", index=False)
+
+    from esgwash.indices.cti import INDEX_LEGEND
+    (out_dir / "legend.json").write_text(
+        json.dumps(INDEX_LEGEND, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(idx[["bank", "year", "n_commit", "cti", "nar", "qdr"]].to_string(index=False))
 
     _write_info_check(clf, out_dir, bank, year)
     print(f"-> {out_dir}/")
@@ -198,8 +213,10 @@ def main(argv=None):
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description="Pipeline ESG-washing end-to-end (CTI/NAR/QDR)")
-    ap.add_argument("--bank", default="bidv")
-    ap.add_argument("--year", type=int, default=2023)
+    ap.add_argument("--bank", nargs="+", default=["bidv"],
+                    help="1 hoac nhieu bank (vd --bank bidv mbbank); ket hop --year de chi dinh nam")
+    ap.add_argument("--year", type=int, default=None,
+                    help="Nam cu the; bo trong = chay toan bo year cua tung bank")
     ap.add_argument("--all", action="store_true", help="chay toan bo analysis_scope (corpus.yml)")
     ap.add_argument("--limit", type=int, default=0, help="0=full; >0 = N chunk dau (smoke test)")
     args = ap.parse_args(argv)
