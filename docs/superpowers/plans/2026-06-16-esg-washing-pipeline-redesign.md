@@ -2,17 +2,17 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Tái thiết kế pipeline đo ESG-washing: bỏ grounding/NLI/gCTI (vòng tròn), đổi index sang CTI/NAR/QDR từ thang specificity 3 mức, tách đơn vị phân tích theo ranh giới ý (≤256 token), và tách bước specificity-LLM thành pha chạy riêng trên Kaggle.
+**Goal:** Tái thiết kế pipeline đo ESG-washing: bỏ grounding/NLI/gCTI (vòng tròn), đổi index sang CTI/NAR/QDR từ thang specificity 3 mức, tách đơn vị phân tích theo ranh giới ý (≤256 token).
 
-**Architecture:** Pipeline 3 pha tách rời: **(A) classify** (local — semantic chunk → topic → commitment, gate denominator), **(B) specificity** (Kaggle GPU — LLM-rubric, user tự chạy rồi trả file kết quả), **(C) index** (local — merge spec + CTI/NAR/QDR + selective disclosure + validation). Mọi chỉ số chỉ là tỉ lệ output classifier, kèm bootstrap CI.
+**Architecture:** Pipeline **end-to-end** một lệnh: semantic chunk → Topic E/S/G → Commitment (gate denominator) → Specificity (LLM-rubric 3 mức) → CTI/NAR/QDR + selective disclosure + bootstrap CI → validation. Bước nặng (specificity LLM/GPU) nằm trong luồng; user chạy cả repo trên Kaggle rồi mang `outputs/` về. Mọi chỉ số chỉ là tỉ lệ output classifier.
 
-**Tech Stack:** Python, pandas, PhoBERT (transformers), `vietnamese-bi-encoder` (sentence-transformers) cho tách ngữ nghĩa, Qwen3 (specificity, chạy Kaggle), pytest.
+**Tech Stack:** Python, pandas, PhoBERT (transformers), `vietnamese-bi-encoder` (sentence-transformers) cho tách ngữ nghĩa, Qwen3 (specificity), pytest.
 
 **Spec:** `docs/superpowers/specs/2026-06-16-esg-washing-pipeline-redesign-design.md`
 
 **Ràng buộc code hygiene (toàn plan):** comment giải thích *vì sao*, cấm comment nhật ký sửa đổi; không đẻ file script/trung gian thừa; sửa tại chỗ theo pattern sẵn có; xoá code chết (grounding → `legacy/`); YAGNI. Tiếng Việt không dấu trong comment/docstring giữ đúng phong cách file hiện hữu.
 
-**Lưu ý vận hành:** Pha B (specificity) **người dùng tự chạy trên Kaggle** bằng `python -m esgwash.run --phase specificity ...` rồi copy file kết quả về `outputs/specificity/spec_results.parquet`. Các task dưới đây chuẩn bị I/O cho pha đó, KHÔNG chạy LLM cục bộ.
+**Lưu ý vận hành:** Pipeline end-to-end; **không** tách pha truyền file. "Chạy trên Kaggle" = user ném cả repo lên Kaggle, chạy `python -m esgwash.run --all` (gồm specificity GPU) ra `outputs/`, mang về kiểm tra. Xem memory `feedback-kaggle-end-to-end`.
 
 ---
 
@@ -30,8 +30,8 @@
 | `legacy/grounding/` + `legacy/README.md` | archive grounding (nli/support/evidence_pool/retriever) | Move |
 | `legacy/grounding.yml` | archive config | Move |
 | `tests/test_evidence_pool.py` | đi theo grounding | Move → `legacy/tests/` |
-| `src/esgwash/run.py` | orchestrator 3 pha; bỏ grounding; gate denominator; spec I/O | Modify |
-| `tests/test_run_pipeline.py` | unit test gate + merge specificity | Create |
+| `src/esgwash/run.py` | orchestrator **end-to-end** (classify→specificity→index); bỏ grounding; gate denominator | Modify |
+| `tests/test_run_pipeline.py` | unit test gate (to_long) | Create |
 | `src/esgwash/validation/runner.py` | gọi known-group/synthetic/sensitivity/digit-shortcut + audit harness | Create |
 | `configs/index.yml` | bỏ `theta_main`/grounding | Modify |
 
@@ -454,275 +454,38 @@ git add -A legacy/ && git commit -m "refactor: archive grounding sang legacy/ (c
 
 ---
 
-## Task 5: Pha A — classify (topic + commitment) + gate denominator, bỏ grounding trong run.py
+## Task 5: run.py end-to-end — classify → specificity → index (bỏ grounding, gate denominator)
+
+> **Thiết kế end-to-end** (KHÔNG tách pha truyền file): một lệnh chạy trọn classify →
+> specificity (LLM) → index. Bước nặng (specificity GPU) vẫn nằm trong luồng; user chạy cả
+> repo trên Kaggle rồi mang `outputs/` về. Xem memory `feedback-kaggle-end-to-end`.
 
 **Files:**
 - Modify: `src/esgwash/run.py`
 - Test: `tests/test_run_pipeline.py`
 
-Refactor `run.py` thành orchestrator 3 pha. Pha này: load topic + commitment (KHÔNG load specificity/retriever/NLI), classify chunks, ghi `classified_pre.parquet`, và export tập commitment cần specificity. `to_long` giữ nguyên (gate denominator = is_commitment & is_pillar có sẵn qua to_long + is_commitment). Thêm hàm thuần `gate_long` để test.
+Nội dung:
+- Gỡ mọi import + hàm grounding (`NUMERIC_PATTERN`, `support_score`, `ground_claims`,
+  `attach_support`, `split_chunk_sentences`, `_quantified_items`), gỡ import `numpy`/`re`/
+  `_digit_runs` không còn dùng.
+- `classify_chunks(chunks, topic, commitment, specificity)`: giữ specificity inline (chấm
+  `spec_level` 0/1/2 trên chunk commitment); sinh cột `spec_*`.
+- `to_long`: gate denominator = chunk có gắn trụ ESG (loại chunk không trụ).
+- `run_bank_year`: classify → `build_index_table` (CTI/NAR/QDR) → `pillar_shares` →
+  ghi `classified.parquet` + `cti.parquet` + `info_check.json`. Bỏ summary.png (vẽ hình thuộc
+  `experiments/analyse.py`).
+- `_scope_pairs(bank, year, do_all)`: 1 cặp hoặc toàn bộ `analysis_scope` (corpus.yml).
+- `main`: `--bank/--year/--all/--limit`; `load_models` = topic+commitment+specificity.
+- `configs/index.yml`: bỏ `theta_main` (xử lý ở Task 9 dọn dẹp nếu chưa).
+- Test `tests/test_run_pipeline.py`: gate `to_long` (chunk không trụ bị loại; spec_level đi
+  kèm vào bảng long). Thuần, không model.
 
-- [ ] **Step 1: Viết test thất bại cho gate + export**
+Done when: `python -c "import esgwash.run"` sạch; `pytest tests/test_run_pipeline.py` pass;
+grep không còn tham chiếu grounding/old-index trong run.py.
 
-```python
-# tests/test_run_pipeline.py
-"""Unit test gate denominator + export/merge specificity (ham thuan, khong model)."""
-import pandas as pd
-
-from esgwash.run import to_long, export_for_specificity, merge_specificity
-
-
-def _classified():
-    return pd.DataFrame({
-        "doc_id": ["d", "d", "d"], "chunk_index": [0, 1, 2],
-        "bank": ["b"] * 3, "year": [2023] * 3,
-        "content_text": ["t0", "t1", "t2"],
-        "is_env": [1, 0, 1], "is_soc": [0, 0, 0], "is_gov": [0, 1, 0],
-        "is_commitment": [1, 1, 0], "p_commitment": [0.9, 0.8, 0.1],
-    })
-
-
-def test_to_long_keeps_only_pillar_positive_rows():
-    long = to_long(_classified())
-    # chunk0->env, chunk1->gov, chunk2->env ; moi (chunk,pillar) duong la 1 dong
-    assert set(zip(long["chunk_index"], long["pillar"])) == {(0, "env"), (1, "gov"), (2, "env")}
-
-
-def test_export_for_specificity_only_commitment():
-    exp = export_for_specificity(_classified())
-    assert list(exp["chunk_index"]) == [0, 1]      # chunk2 khong phai commitment
-    assert set(["doc_id", "chunk_index", "content_text"]) <= set(exp.columns)
-
-
-def test_merge_specificity_attaches_level_defaults_zero():
-    clf = _classified()
-    spec = pd.DataFrame({"doc_id": ["d"], "chunk_index": [0],
-                         "spec_level": [2], "is_specific": [1]})
-    merged = merge_specificity(clf, spec)
-    assert merged.loc[merged["chunk_index"] == 0, "spec_level"].iloc[0] == 2
-    # chunk1 la commitment nhung thieu trong spec -> default 0 (an toan, vao CTI)
-    assert merged.loc[merged["chunk_index"] == 1, "spec_level"].iloc[0] == 0
-```
-
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
-
-Run: `python -m pytest tests/test_run_pipeline.py -v`
-Expected: FAIL (`ImportError: export_for_specificity`).
-
-- [ ] **Step 3: Sửa `run.py`**
-
-Trong `src/esgwash/run.py`:
-
-(a) Xoá import grounding: bỏ `from esgwash.grounding.evidence_pool import NUMERIC_PATTERN`, `from esgwash.grounding.support import grounded_flags, support_score`. Xoá các hàm `split_chunk_sentences`, `_quantified_items`, `ground_claims`, `attach_support` (code chết sau khi bỏ grounding).
-
-(b) Sửa `classify_chunks`: bỏ tham số/cột specificity (pha A không chấm spec). Giữ topic + commitment + `pillar_top`. Xoá các cột `p_specific/spec_*` ở pha này.
-
-(c) Thêm 2 hàm thuần:
-
-```python
-def export_for_specificity(classified: pd.DataFrame) -> pd.DataFrame:
-    """Tap cam ket can cham specificity (chay rieng tren Kaggle).
-    Giu khoa doc_id+chunk_index + van ban; khong keo theo cot topic."""
-    cols = ["doc_id", "chunk_index", "bank", "year", "content_text"]
-    return classified.loc[classified["is_commitment"] == 1, cols].reset_index(drop=True)
-
-
-def merge_specificity(classified: pd.DataFrame, spec: pd.DataFrame) -> pd.DataFrame:
-    """Gan ket qua specificity (tu Kaggle) vao classified theo doc_id+chunk_index.
-    Cam ket thieu trong spec -> spec_level=0 (mac dinh an toan: tinh la cheap talk)."""
-    keep = ["doc_id", "chunk_index", "spec_level", "is_specific", "p_specific",
-            "spec_rubric", "spec_raw", "spec_parse_ok"]
-    have = [c for c in keep if c in spec.columns]
-    out = classified.merge(spec[have], on=["doc_id", "chunk_index"], how="left")
-    out["spec_level"] = out["spec_level"].fillna(0).astype(int)
-    if "is_specific" in out:
-        out["is_specific"] = out["is_specific"].fillna(0).astype(int)
-    return out
-```
-
-(d) Sửa `load_models` → `load_classify_models`: chỉ `{"topic", "commitment"}` (bỏ specificity/retriever/NLI/gcfg).
-
-- [ ] **Step 4: Chạy test để xác nhận PASS**
-
-Run: `python -m pytest tests/test_run_pipeline.py -v`
-Expected: PASS (3 test).
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add src/esgwash/run.py tests/test_run_pipeline.py
-git commit -m "refactor(run): pha classify + gate denominator + spec I/O, bo grounding"
-```
-
----
-
-## Task 6: Pha B — specificity CLI (Kaggle) trên file export
-
-**Files:**
-- Modify: `src/esgwash/run.py` (orchestrator `main` + hàm `run_specificity_phase`)
-
-Cung cấp lệnh `python -m esgwash.run --phase specificity --input <commit.parquet> --output <spec.parquet>` để **người dùng chạy trên Kaggle**. Dùng `SpecificityLLM` sẵn có; ghi ra `doc_id, chunk_index, spec_level, is_specific, p_specific, spec_rubric, spec_raw, spec_parse_ok`.
-
-- [ ] **Step 1: Thêm `run_specificity_phase`**
-
-```python
-def run_specificity_phase(input_path: str, output_path: str, cfg: dict | None = None) -> Path:
-    """Cham specificity LLM tren tap commitment da export (CHAY TREN KAGGLE GPU).
-    Doc input (doc_id, chunk_index, content_text) -> ghi cot spec_*."""
-    from esgwash.config import load_config
-    spec_model = load_specificity_model(cfg or load_config("specificity"))
-    df = pd.read_parquet(input_path)
-    res = spec_model.predict(df["content_text"].astype(str).tolist())
-    out = pd.concat([df[["doc_id", "chunk_index"]].reset_index(drop=True),
-                     res.reset_index(drop=True)], axis=1)
-    out = out.rename(columns={"p_specificity": "p_specific", "rubric": "spec_rubric",
-                              "raw": "spec_raw", "parse_ok": "spec_parse_ok"})
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    out.to_parquet(output_path, index=False)
-    print(f"specificity -> {output_path} ({len(out)} cam ket)")
-    return Path(output_path)
-```
-
-- [ ] **Step 2: Sửa `main` thành 3 pha**
-
-```python
-def main(argv=None):
-    import argparse, sys
-    if hasattr(sys.stdout, "reconfigure"):
-        sys.stdout.reconfigure(encoding="utf-8")
-    ap = argparse.ArgumentParser(description="Pipeline ESG-washing 3 pha")
-    ap.add_argument("--phase", choices=["classify", "specificity", "index"], required=True)
-    ap.add_argument("--bank", default="bidv")
-    ap.add_argument("--year", type=int, default=2023)
-    ap.add_argument("--all", action="store_true")
-    ap.add_argument("--limit", type=int, default=0)
-    ap.add_argument("--input", help="pha specificity/index: file commitment / spec_results")
-    ap.add_argument("--output", help="pha specificity: file spec_results")
-    args = ap.parse_args(argv)
-    if args.phase == "specificity":
-        run_specificity_phase(args.input, args.output)
-    elif args.phase == "classify":
-        run_classify(args.bank, args.year, args.all, args.limit)
-    else:
-        run_index(args.bank, args.year, args.all, args.input)
-```
-
-(`run_classify` và `run_index` định nghĩa ở Task 7; ở bước này tạm để `run_index`/`run_classify` raise `NotImplementedError` nếu chưa có để file import được.)
-
-- [ ] **Step 3: Smoke import**
-
-Run: `python -c "import esgwash.run"`
-Expected: không lỗi import.
-
-- [ ] **Step 4: Commit**
-
-```bash
-git add src/esgwash/run.py
-git commit -m "feat(run): pha specificity CLI cho Kaggle tren file export"
-```
-
----
-
-## Task 7: Pha A & C đầy đủ — classify per (bank,year) + index CTI/NAR/QDR
-
-**Files:**
-- Modify: `src/esgwash/run.py` (`run_classify`, `run_index`, `run_all`)
-- Modify: `configs/index.yml`
-
-Hoàn thiện orchestration: `run_classify` ghi `classified_pre.parquet` + `commit_for_spec.parquet`; `run_index` đọc spec_results, merge, tính bảng index + disclosure + summary. Bỏ `theta_main` khỏi config.
-
-- [ ] **Step 1: Dọn `configs/index.yml`**
-
-```yaml
-# P4 - chi so (spec 2026-06-16): CTI/NAR/QDR, khong grounding
-bootstrap:
-  n_resamples: 1000
-  ci: 0.95
-min_commitments_per_cell: 30   # duoi nguong -> chi vao bang pooled
-output: outputs/index/cti.parquet
-```
-
-- [ ] **Step 2: Viết `run_classify`**
-
-```python
-def run_classify(bank: str, year: int, do_all: bool = False, limit: int = 0) -> None:
-    """Pha A: semantic chunk -> topic + commitment -> classified_pre + commit_for_spec."""
-    models = load_classify_models()
-    pairs = _scope_pairs(bank, year, do_all)
-    for b, y in pairs:
-        sub = load_chunks(bank=b, year=y)
-        if sub.empty:
-            continue
-        if limit:
-            sub = sub.head(limit)
-        clf = classify_chunks(sub, models["topic"], models["commitment"])
-        out_dir = CTI_ROOT / b / str(y)
-        out_dir.mkdir(parents=True, exist_ok=True)
-        clf.to_parquet(out_dir / "classified_pre.parquet", index=False)
-        export_for_specificity(clf).to_parquet(out_dir / "commit_for_spec.parquet", index=False)
-        n_commit = int(clf["is_commitment"].sum())
-        print(f"{b} {y}: {len(clf)} units | commitment={n_commit} -> {out_dir}/")
-```
-
-Thêm helper:
-
-```python
-def _scope_pairs(bank: str, year: int, do_all: bool):
-    if not do_all:
-        return [(bank, year)]
-    from esgwash.config import load_config
-    scope = load_config("corpus").get("analysis_scope", {})
-    chunks = load_chunks()
-    banks = scope.get("banks", sorted(chunks["bank"].unique()))
-    years = [int(y) for y in scope.get("years", sorted(chunks["year"].unique()))]
-    return [(b, y) for b in banks for y in years]
-```
-
-- [ ] **Step 3: Viết `run_index`**
-
-```python
-def run_index(bank: str, year: int, do_all: bool = False,
-              spec_path: str = "outputs/specificity/spec_results.parquet") -> None:
-    """Pha C: merge spec (tu Kaggle) -> CTI/NAR/QDR + selective disclosure + summary."""
-    from esgwash.config import load_config
-    from esgwash.indices.cti import build_index_table
-    from esgwash.indices.disclosure import pillar_shares
-    spec = pd.read_parquet(spec_path)
-    icfg = load_config("index").get("bootstrap", {})
-    for b, y in _scope_pairs(bank, year, do_all):
-        out_dir = CTI_ROOT / b / str(y)
-        pre = out_dir / "classified_pre.parquet"
-        if not pre.exists():
-            continue
-        clf = merge_specificity(pd.read_parquet(pre), spec)
-        clf.to_parquet(out_dir / "classified.parquet", index=False)
-        long = to_long(clf)
-        idx = build_index_table(long, n_resamples=int(icfg.get("n_resamples", 1000)),
-                                ci=float(icfg.get("ci", 0.95)))
-        shares = pillar_shares(long)
-        idx = idx.merge(shares[["bank", "year", "pillar", "share", "share_dev"]],
-                        on=["bank", "year", "pillar"], how="left")
-        idx.to_parquet(out_dir / "cti.parquet", index=False)
-        print(f"{b} {y}:")
-        print(idx[["pillar", "n_commit", "cti", "cti_lo", "cti_hi",
-                   "nar", "qdr", "share"]].to_string(index=False))
-```
-
-Xoá `run_bank_year` cũ (grounding) và `run_all` cũ; nếu cần `--all` thì `_scope_pairs(..., do_all=True)` đã lo. Xoá import matplotlib/plt nếu summary.png tách sang analyse (giữ run.py gọn — vẽ hình thuộc `experiments/analyse.py`).
-
-- [ ] **Step 4: Smoke pha classify 1 bank (limit nhỏ)**
-
-Run: `python -m esgwash.run --phase classify --bank bidv --year 2023 --limit 20`
-Expected: tạo `outputs/cti/bidv/2023/classified_pre.parquet` + `commit_for_spec.parquet`; in số commitment.
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add src/esgwash/run.py configs/index.yml
-git commit -m "feat(run): pha classify + index CTI/NAR/QDR per (bank,year)"
-```
-
----
+> Ghi chú lịch sử: bản plan gốc tách Task 5/6/7 thành 3 pha export/import file cho Kaggle.
+> User làm rõ muốn **end-to-end** (Kaggle = chạy cả repo lấy kết quả cuối), nên gộp lại
+> thành Task 5 này; bỏ `export_for_specificity`/`merge_specificity`/`--phase`.
 
 ## Task 8: Validation runner + manual audit harness
 
