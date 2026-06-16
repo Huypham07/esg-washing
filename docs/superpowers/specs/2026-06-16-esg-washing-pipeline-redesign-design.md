@@ -145,20 +145,28 @@ Corpus (semantic units, ≤256 tok)
 ### 4.1 Thay đổi so với hiện tại
 | # | Hạng mục | Hiện tại | Sửa thành |
 |---|---|---|---|
-| 1 | Đơn vị phân tích | chunk 256-token cắt cứng | **semantic unit**: gom câu liền kề cùng section, flush khi thêm câu vượt ~256 token, **luôn snap ranh giới câu** |
+| 1 | Đơn vị phân tích | chunk 256-token cắt cứng | **semantic unit**: tách theo **ranh giới ý** (topic shift giữa câu liền kề) — một block nói 2 vấn đề → 2 đơn vị; 256-token chỉ là **trần an toàn** |
 | 2 | Specificity → index | `is_specific` nhị phân + band | CTI = P(Mức 0); NAR = P(Mức 1); QDR = P(Mức 2) |
 | 3 | Grounding / NLI / gCTI / evidence pool | đang chạy | **gỡ khỏi luồng chính** (archive code, không xoá) |
 | 4 | Denominator CTI | commitment (gồm 42–49% non-ESG) | commitment **gate bằng topic** (chỉ câu gắn trụ) |
 | 5 | Validation | có module, chưa chạy hệ thống | chạy đủ + báo cáo |
 
 ### 4.2 Semantic chunking (chi tiết)
+**Tiêu chí chính = ranh giới ý (semantic boundary), không phải gom-cho-đủ-256.** Một
+block/section có thể nói **nhiều vấn đề khác nhau → tách thành nhiều đơn vị**; 256-token chỉ
+là *trần an toàn* để bảo vệ encoder.
+
 - Đầu vào: `data/processed/sentences.parquet` (đã có, cùng `blocks.parquet` giữ ranh giới
-  block/section).
-- Gom câu liền kề **trong cùng block/section**; tích lũy token (đếm bằng tokenizer PhoBERT);
-  **flush đơn vị khi câu kế tiếp sẽ làm vượt ngưỡng (mặc định 256, đặt cấu hình)**.
-- Không bao giờ cắt ngang câu → PhoBERT không truncate; specificity-LLM nhận đơn vị mạch lạc.
+  block/section). Chỉ gom câu **trong cùng block** (không gộp xuyên block).
+- **Phát hiện ranh giới ý** giữa các câu liền kề: tính độ tương đồng embedding câu kề nhau
+  (dùng `vietnamese-bi-encoder` đã có), cắt khi độ tương đồng tụt dưới ngưỡng (kiểu
+  TextTiling/semantic-split). Mỗi đoạn cùng-ý = một đơn vị.
+- **Trần an toàn 256 token:** nếu một đoạn cùng-ý vẫn vượt 256 token → cắt thêm tại ranh giới
+  câu gần nhất. Không bao giờ cắt ngang câu → PhoBERT không truncate.
+- Tham số (config): ngưỡng tương đồng cắt ý, trần token (mặc định 256).
 - Giữ `bank, year, doc_id, unit_index, content_text, token_count` + danh sách câu thành phần.
-- Ghi kèm thống kê: phân bố token/đơn vị, %đơn vị > 256 (kỳ vọng ≈ 0).
+- Ghi kèm thống kê: số đơn vị/block (kỳ vọng > 1 ở block đa-ý), phân bố token/đơn vị,
+  %đơn vị > 256 (kỳ vọng ≈ 0). Spot-check tay vài block đa-ý để xác nhận tách đúng.
 
 ### 4.3 Cổng topic cho denominator
 - Một đơn vị vào denominator CTI của trụ `p` **chỉ khi** `is_commitment=1` **và** `is_p=1`.
@@ -214,7 +222,19 @@ dưới sensitivity; (v) agreement audit↔pipeline ở mức chấp nhận đư
 
 ---
 
-## 8. Out of scope (lần này)
+## 8. Ràng buộc kỹ thuật (code hygiene) — bắt buộc
+
+- **Comment giải thích *vì sao*, không phải nhật ký sửa đổi.** Cấm comment kiểu "sửa chỗ này",
+  "đổi từ X sang Y", "thêm mới", "fix bug"; mật độ comment theo đúng phong cách code hiện có.
+- **Không đẻ file thừa.** Không tạo script một-lần, file demo, file trung gian phức tạp ngoài
+  output dữ liệu cần thiết. Diagnostic/audit nếu cần thì gọn, đặt trong `experiments/` và xoá
+  nếu chỉ dùng tạm.
+- **Sửa tại chỗ, theo pattern sẵn có.** Refactor index/chunking trong module hiện hữu thay vì
+  thêm lớp bọc song song; xoá code chết khi thay (grounding chuyển `legacy/` có chủ đích, phần
+  còn lại gỡ hẳn).
+- **Không tạo abstraction đầu cơ.** Chỉ viết cái spec này cần; YAGNI.
+
+## 9. Out of scope (lần này)
 
 - Train lại commitment thành 3-way pledge/action (đã cân nhắc reframe pledge→action nhưng
   chọn hướng specificity-band cho gọn & trung thực).
