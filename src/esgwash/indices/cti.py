@@ -50,7 +50,8 @@ def compute_specificity_shares(classified: pd.DataFrame, n_resamples: int = 1000
             rec[f"{name}_lo"] = round(lo, 4)
             rec[f"{name}_hi"] = round(hi, 4)
         rows.append(rec)
-    return pd.DataFrame(rows)
+    cols = ["bank", "year", "n_commit"] + [c for name in _LEVEL_COL for c in (name, f"{name}_lo", f"{name}_hi")]
+    return pd.DataFrame(rows, columns=cols) if rows else pd.DataFrame(columns=cols)
 
 
 def build_index_table(classified: pd.DataFrame, n_resamples: int = 1000,

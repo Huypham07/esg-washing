@@ -1,0 +1,14 @@
+{
+  "bank": "viettinbank",
+  "year": 2024,
+  "n_chunks": 684,
+  "non_esg_share": 0.639,
+  "n_commitment": 304,
+  "spec_level_counts": {
+    "0": 109,
+    "1": 97,
+    "2": 98
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

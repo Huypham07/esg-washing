@@ -1,0 +1,14 @@
+{
+  "bank": "bidv",
+  "year": 2022,
+  "n_chunks": 342,
+  "non_esg_share": 0.497,
+  "n_commitment": 194,
+  "spec_level_counts": {
+    "0": 63,
+    "1": 75,
+    "2": 56
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

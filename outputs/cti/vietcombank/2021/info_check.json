@@ -1,0 +1,14 @@
+{
+  "bank": "vietcombank",
+  "year": 2021,
+  "n_chunks": 112,
+  "non_esg_share": 0.848,
+  "n_commitment": 34,
+  "spec_level_counts": {
+    "0": 4,
+    "1": 13,
+    "2": 17
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

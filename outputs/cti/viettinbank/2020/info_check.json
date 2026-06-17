@@ -1,0 +1,14 @@
+{
+  "bank": "viettinbank",
+  "year": 2020,
+  "n_chunks": 337,
+  "non_esg_share": 0.685,
+  "n_commitment": 120,
+  "spec_level_counts": {
+    "0": 54,
+    "1": 40,
+    "2": 26
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

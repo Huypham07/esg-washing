@@ -182,7 +182,10 @@ def run_bank_year(bank: str, year: int, models: dict, limit: int = 0) -> Path:
     from esgwash.indices.cti import INDEX_LEGEND
     (out_dir / "legend.json").write_text(
         json.dumps(INDEX_LEGEND, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(idx[["bank", "year", "n_commit", "cti", "nar", "qdr"]].to_string(index=False))
+    if not idx.empty:
+        print(idx[["bank", "year", "n_commit", "cti", "nar", "qdr"]].to_string(index=False))
+    else:
+        print(f"  [no ESG commitment chunks found for {bank} {year}]")
 
     _write_info_check(clf, out_dir, bank, year)
     print(f"-> {out_dir}/")

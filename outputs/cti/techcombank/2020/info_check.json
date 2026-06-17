@@ -1,0 +1,14 @@
+{
+  "bank": "techcombank",
+  "year": 2020,
+  "n_chunks": 278,
+  "non_esg_share": 0.748,
+  "n_commitment": 131,
+  "spec_level_counts": {
+    "0": 48,
+    "1": 16,
+    "2": 67
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

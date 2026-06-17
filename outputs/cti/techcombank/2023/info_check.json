@@ -1,0 +1,14 @@
+{
+  "bank": "techcombank",
+  "year": 2023,
+  "n_chunks": 392,
+  "non_esg_share": 0.691,
+  "n_commitment": 219,
+  "spec_level_counts": {
+    "0": 69,
+    "1": 57,
+    "2": 93
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

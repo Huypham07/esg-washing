@@ -1,0 +1,14 @@
+{
+  "bank": "agribank",
+  "year": 2024,
+  "n_chunks": 197,
+  "non_esg_share": 0.381,
+  "n_commitment": 137,
+  "spec_level_counts": {
+    "0": 46,
+    "1": 49,
+    "2": 42
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}
