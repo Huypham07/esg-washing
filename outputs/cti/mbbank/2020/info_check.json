@@ -1,0 +1,14 @@
+{
+  "bank": "mbbank",
+  "year": 2020,
+  "n_chunks": 188,
+  "non_esg_share": 0.574,
+  "n_commitment": 96,
+  "spec_level_counts": {
+    "0": 41,
+    "1": 23,
+    "2": 32
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

@@ -1,0 +1,14 @@
+{
+  "bank": "vpbank",
+  "year": 2024,
+  "n_chunks": 372,
+  "non_esg_share": 0.556,
+  "n_commitment": 216,
+  "spec_level_counts": {
+    "0": 59,
+    "1": 59,
+    "2": 98
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}
