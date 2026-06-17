@@ -33,13 +33,20 @@ def compute_cti(claims_long: pd.DataFrame, n_resamples: int = 1000,
     return pd.DataFrame(rows)
 
 
-def compute_grounded_cti(claims_long: pd.DataFrame, theta: float,
+def compute_grounded_cti(claims_long: pd.DataFrame, theta: float, theta_l1: float | None = None,
                          n_resamples: int = 1000, ci: float = 0.95,
                          seed: int = 42) -> pd.DataFrame:
-    """gCTI: cam ket "re" neu khong cu the, HOAC cu the nhung support<theta."""
+    """gCTI: cam ket "re" neu khong cu the, HOAC cu the nhung support<theta.
+
+    theta_l1: nguong rieng cho Muc 1 (spec_level==1); None = dung chung theta (hanh vi cu).
+    Khi co theta_l1: cheap = (Muc0) | (Muc1 & support<theta_l1) | (Muc2 & support<theta)."""
     commit = claims_long[claims_long["is_commitment"] == 1].copy()
     support = commit.get("support", pd.Series(0.0, index=commit.index)).fillna(0.0)
-    cheap = (commit["is_specific"] == 0) | ((commit["is_specific"] == 1) & (support < theta))
+    if theta_l1 is not None and "spec_level" in commit.columns:
+        sl = commit["spec_level"]
+        cheap = (sl == 0) | ((sl == 1) & (support < theta_l1)) | ((sl == 2) & (support < theta))
+    else:
+        cheap = (commit["is_specific"] == 0) | ((commit["is_specific"] == 1) & (support < theta))
     commit["_cheap"] = cheap.astype(float)
     g_col = f"gcti@{theta}"
     rows = []
@@ -51,12 +58,13 @@ def compute_grounded_cti(claims_long: pd.DataFrame, theta: float,
     return pd.DataFrame(rows)
 
 
-def build_cti_table(claims_long: pd.DataFrame, thetas=(0.5, 0.7, 0.9),
+def build_cti_table(claims_long: pd.DataFrame, thetas=(0.5, 0.7, 0.9), theta_l1: float | None = None,
                     n_resamples: int = 1000, ci: float = 0.95,
                     seed: int = 42) -> pd.DataFrame:
-    """Bang cti.parquet: CTI + gCTI@cac theta, merge theo o (bank,year,pillar)."""
+    """Bang cti.parquet: CTI + gCTI@cac theta (L2), theta_l1 rieng cho Muc 1; merge theo o."""
     out = compute_cti(claims_long, n_resamples, ci, seed)
     for th in thetas:
-        g = compute_grounded_cti(claims_long, th, n_resamples, ci, seed).drop(columns=["n_commit"])
+        g = compute_grounded_cti(claims_long, th, theta_l1, n_resamples, ci, seed
+                                 ).drop(columns=["n_commit"])
         out = out.merge(g, on=CELL, how="left")
     return out

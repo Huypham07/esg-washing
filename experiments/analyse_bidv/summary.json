@@ -18,6 +18,28 @@
         "cti_loose": 0.3882,
         "cti_strict": 0.7294
       },
+      "gcti_l1": {
+        "theta_l1": 0.4,
+        "theta_l2": 0.7,
+        "by_floor": {
+          "floor0.50": {
+            "esg": 0.5765,
+            "per_pillar": {
+              "env": 0.4286,
+              "soc": 0.4634,
+              "gov": 0.7059
+            }
+          },
+          "floor0.25": {
+            "esg": 0.4941,
+            "per_pillar": {
+              "env": 0.3571,
+              "soc": 0.439,
+              "gov": 0.6471
+            }
+          }
+        }
+      },
       "per_pillar": [
         {
           "pillar": "env",
@@ -70,6 +92,28 @@
         "lvl2": 29,
         "cti_loose": 0.3929,
         "cti_strict": 0.6548
+      },
+      "gcti_l1": {
+        "theta_l1": 0.4,
+        "theta_l2": 0.7,
+        "by_floor": {
+          "floor0.50": {
+            "esg": 0.5833,
+            "per_pillar": {
+              "env": 0.4359,
+              "soc": 0.5476,
+              "gov": 0.74
+            }
+          },
+          "floor0.25": {
+            "esg": 0.5238,
+            "per_pillar": {
+              "env": 0.3846,
+              "soc": 0.4524,
+              "gov": 0.68
+            }
+          }
+        }
       },
       "per_pillar": [
         {

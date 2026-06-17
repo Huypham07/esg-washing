@@ -80,6 +80,37 @@ def overall_esg(clf: pd.DataFrame) -> dict:
             "cti_strict": round((l0 + l1) / n, 4) if n else None}
 
 
+# gCTI-L1: grounding-aware, nam GIUA dai [loose, strict]. Band theo l1_sim_floor cua cac run L1.
+L1_ROOTS = {"floor0.50": "outputs/cti_b2", "floor0.25": "outputs/cti_b2_floor"}
+
+
+def load_l1_support(root: str, bank: str, year: int):
+    """Series support theo chunk_index tu run L1 (claims_grounded). None neu chua co."""
+    p = Path(root) / bank / str(year) / "claims_grounded.parquet"
+    return pd.read_parquet(p).set_index("chunk_index")["support"] if p.exists() else None
+
+
+def gcti_l1(clf: pd.DataFrame, sup, theta_l1: float) -> dict | None:
+    """gCTI-L1: refine RIÊNG Mức 1 bằng grounding (Mức 2 giữ substantive như loose/strict).
+    cheap = Muc0 | (Muc1 & sup<θL1) -> NẰM GIỮA [CTI_loose, CTI_strict]. Aggregate ESG + per-tru.
+    (Full gCTI ground cả Mức 2 -> xem cti.parquet/compare_arms.)"""
+    if sup is None:
+        return None
+    cm = clf[clf["is_commitment"] == 1].copy()
+    cm["_sup"] = cm["chunk_index"].map(sup).fillna(0.0)
+
+    def _rate(sub):
+        if not len(sub):
+            return None
+        sl, s = sub["spec_level"].to_numpy(), sub["_sup"].to_numpy()
+        cheap = (sl == 0) | ((sl == 1) & (s < theta_l1))
+        return round(float(cheap.mean()), 4)
+
+    esg = cm[cm[[f"is_{p}" for p in PILLARS]].sum(axis=1) > 0]
+    long = to_long(cm)
+    return {"esg": _rate(esg), "per_pillar": {p: _rate(long[long["pillar"] == p]) for p in PILLARS}}
+
+
 def basic_stats(clf: pd.DataFrame) -> dict:
     n = len(clf)
     n_esg = int(clf[[f"is_{p}" for p in PILLARS]].sum(axis=1).gt(0).sum())
@@ -128,7 +159,7 @@ def examples(clf: pd.DataFrame, year: int) -> dict:
     return out
 
 
-def fig_cti_band(tables: dict):
+def fig_cti_band(tables: dict, gl1: dict | None = None):
     fig, axes = plt.subplots(1, len(tables), figsize=(6 * len(tables), 4.2), squeeze=False)
     for ax, (yr, t) in zip(axes[0], tables.items()):
         x = np.arange(len(PILLARS))
@@ -137,8 +168,18 @@ def fig_cti_band(tables: dict):
         for i, r in t.iterrows():
             ax.text(i - 0.2, r["cti_loose"] + .02, f"{r['cti_loose']:.2f}", ha="center", fontsize=8)
             ax.text(i + 0.2, r["cti_strict"] + .02, f"{r['cti_strict']:.2f}", ha="center", fontsize=8)
+        if gl1 and yr in gl1:  # gCTI-L1 (P3-L1): điểm data-driven + band l1_floor, NẰM GIỮA loose/strict
+            for i, p in enumerate(PILLARS):
+                vals = [v for v in gl1[yr].get(p, []) if v is not None]
+                if not vals:
+                    continue
+                lo, hi = min(vals), max(vals)
+                ax.errorbar(i, (lo + hi) / 2, yerr=[[(hi - lo) / 2], [(hi - lo) / 2]], fmt="D",
+                            color="black", capsize=5, markersize=7, zorder=5,
+                            label="gCTI-L1 (band l1_floor)" if i == 0 else None)
+                ax.text(i, hi + .03, f"{lo:.2f}–{hi:.2f}", ha="center", fontsize=7, color="black")
         ax.set_xticks(x); ax.set_xticklabels([p.upper() for p in PILLARS])
-        ax.set_ylim(0, 1); ax.set_title(f"CTI band — {yr}"); ax.set_ylabel("tỉ lệ cheap talk")
+        ax.set_ylim(0, 1); ax.set_title(f"CTI band + gCTI-L1 — {yr}"); ax.set_ylabel("tỉ lệ cheap talk")
         ax.legend(fontsize=8)
     fig.tight_layout(); fig.savefig(OUT / "cti_band.png", dpi=120); plt.close(fig)
 
@@ -189,6 +230,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--bank", default="bidv")
     ap.add_argument("--years", nargs="+", type=int, default=[2023, 2024])
+    ap.add_argument("--theta-l1", type=float, default=0.4)
+    ap.add_argument("--theta-l2", type=float, default=0.7)
     args = ap.parse_args(argv)
     OUT.mkdir(parents=True, exist_ok=True)
 
@@ -198,13 +241,21 @@ def main(argv=None):
 
     for d in data:
         yr = d["year"]
+        gl1 = {lbl: gcti_l1(d["clf"], load_l1_support(root, args.bank, yr), args.theta_l1)
+               for lbl, root in L1_ROOTS.items()}
         summary["years"][yr] = {
             "basic": basic_stats(d["clf"]),
             "overall_esg": overall_esg(d["clf"]),
+            "gcti_l1": {"theta_l1": args.theta_l1, "theta_l2": args.theta_l2, "by_floor": gl1},
             "per_pillar": tables[yr].to_dict(orient="records"),
         }
 
-    fig_cti_band(tables); fig_spec_level(tables); fig_disclosure(tables)
+    gl1_tables = {}
+    for d in data:
+        yr = d["year"]
+        bf = summary["years"][yr].get("gcti_l1", {}).get("by_floor", {})
+        gl1_tables[yr] = {p: [bf[lbl]["per_pillar"][p] for lbl in bf if bf[lbl]] for p in PILLARS}
+    fig_cti_band(tables, gl1_tables); fig_spec_level(tables); fig_disclosure(tables)
     (OUT / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # ---- report.md ----
@@ -226,6 +277,19 @@ def main(argv=None):
               "",
               "### CTI & selective disclosure theo trụ", "",
               md_table(tables[yr]), ""]
+        gl = summary["years"][yr].get("gcti_l1", {})
+        R += [f"### gCTI-L1 (refine Mức 1 bằng grounding, θ_L1={gl.get('theta_l1')})",
+              "> L1 grounding chấm TỪNG hành động Mức 1 (có được corroborate trong báo cáo không) → thay vì "
+              "đoán \"tất cả Mức 1 thực chất\" (loose) hay \"tất cả cheap\" (strict), gCTI-L1 là **điểm NẰM "
+              "GIỮA dải [CTI_loose, CTI_strict]**. Band theo `l1_sim_floor`. (Mức 2 giữ substantive ở đây; "
+              "full gCTI ground cả Mức 2 ở cti.parquet/compare_arms.) Proxy nhiễu — xem report P3-L1.", ""]
+        for lbl, v in (gl.get("by_floor") or {}).items():
+            if v:
+                pp = v["per_pillar"]
+                R += [f"- **{lbl}** → gCTI-L1 (ESG) = **{v['esg']}**  ·  env={pp['env']} soc={pp['soc']} gov={pp['gov']}"]
+            else:
+                R += [f"- **{lbl}** → (chưa có run L1 ở `{L1_ROOTS[lbl]}`)"]
+        R += [""]
         ex = examples(d["clf"], yr)
         R += ["### Ví dụ phân loại ĐÚNG (minh hoạ)"]
         R += [md_examples("Mức 2 — định lượng quy về BIDV", ex["correct_lvl2"])]

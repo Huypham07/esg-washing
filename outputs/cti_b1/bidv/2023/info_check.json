@@ -1,0 +1,20 @@
+{
+  "bank": "bidv",
+  "year": 2023,
+  "n_chunks": 266,
+  "n_non_esg_dropped": 140,
+  "non_esg_share": 0.526,
+  "n_commitment": 147,
+  "commit_no_evidence_pool": 115,
+  "commit_no_evidence_share": 0.782,
+  "spec_level_counts": {
+    "0": 48,
+    "1": 50,
+    "2": 49
+  },
+  "tok_p95": 255,
+  "tok_max": 256,
+  "chunk_gt_256tok_truncation_risk": 0,
+  "spec_parse_fail": 0,
+  "any_nan_pillar": false
+}

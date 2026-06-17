@@ -19,6 +19,12 @@
 | gov | 51 | 25 | 18 | 8 | 0.4902 | 0.8431 | 85 | 0.4722 |
 
 
+### gCTI-L1 (refine Mức 1 bằng grounding, θ_L1=0.4)
+> L1 grounding chấm TỪNG hành động Mức 1 (có được corroborate trong báo cáo không) → thay vì đoán "tất cả Mức 1 thực chất" (loose) hay "tất cả cheap" (strict), gCTI-L1 là **điểm NẰM GIỮA dải [CTI_loose, CTI_strict]**. Band theo `l1_sim_floor`. (Mức 2 giữ substantive ở đây; full gCTI ground cả Mức 2 ở cti.parquet/compare_arms.) Proxy nhiễu — xem report P3-L1.
+
+- **floor0.50** → gCTI-L1 (ESG) = **0.5765**  ·  env=0.4286 soc=0.4634 gov=0.7059
+- **floor0.25** → gCTI-L1 (ESG) = **0.4941**  ·  env=0.3571 soc=0.439 gov=0.6471
+
 ### Ví dụ phân loại ĐÚNG (minh hoạ)
 
 **Mức 2 — định lượng quy về BIDV**
@@ -110,6 +116,12 @@
 | soc | 42 | 15 | 10 | 17 | 0.3571 | 0.5952 | 49 | 0.2552 |
 | gov | 50 | 25 | 15 | 10 | 0.5 | 0.8 | 95 | 0.4948 |
 
+
+### gCTI-L1 (refine Mức 1 bằng grounding, θ_L1=0.4)
+> L1 grounding chấm TỪNG hành động Mức 1 (có được corroborate trong báo cáo không) → thay vì đoán "tất cả Mức 1 thực chất" (loose) hay "tất cả cheap" (strict), gCTI-L1 là **điểm NẰM GIỮA dải [CTI_loose, CTI_strict]**. Band theo `l1_sim_floor`. (Mức 2 giữ substantive ở đây; full gCTI ground cả Mức 2 ở cti.parquet/compare_arms.) Proxy nhiễu — xem report P3-L1.
+
+- **floor0.50** → gCTI-L1 (ESG) = **0.5833**  ·  env=0.4359 soc=0.5476 gov=0.74
+- **floor0.25** → gCTI-L1 (ESG) = **0.5238**  ·  env=0.3846 soc=0.4524 gov=0.68
 
 ### Ví dụ phân loại ĐÚNG (minh hoạ)
 

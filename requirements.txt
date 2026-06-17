@@ -46,3 +46,4 @@ accelerate
 sentencepiece
 
 semantic-text-splitter
+rank-bm25                   # BM25 retrieval cho grounding L1 (3b, spec 03 mo rong)

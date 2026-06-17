@@ -26,3 +26,29 @@ def candidate_mask(doc_chunks: pd.DataFrame, config: dict | None = None) -> pd.S
     if pool_cfg.get("specific_fact", True) and {"is_specific", "is_commitment"} <= set(doc_chunks):
         m |= (doc_chunks["is_specific"] == 1) & (doc_chunks["is_commitment"] == 0)
     return m
+
+
+# --- Neo cho pool Mức 1 (hành động có tên — pool KHÔNG lọc số) ---
+_WORD_RE = re.compile(r"\w+", re.UNICODE)
+_VI_STOP = {"và", "của", "các", "có", "được", "cho", "trong", "với", "đã", "đang", "sẽ", "là",
+            "những", "một", "này", "đó", "theo", "để", "khi", "từ", "tại", "về", "như", "hoặc",
+            "cũng", "còn", "trên", "dưới", "đến", "bằng", "nhằm", "việc", "công", "ngân", "hàng"}
+
+
+def action_anchors(action: str, min_len: int = 4, top: int = 8) -> list[str]:
+    """Neo overlap cho pool L1: content word (lowercase, len>=min_len, bỏ stopword); giữ thứ tự + unique."""
+    seen: set[str] = set()
+    out: list[str] = []
+    for t in _WORD_RE.findall(str(action).lower()):
+        if len(t) >= min_len and t not in _VI_STOP and t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out[:top]
+
+
+def anchor_overlap(sentence: str, anchors: list[str]) -> bool:
+    """Câu chia sẻ >=1 neo (substring lowercase) — thu hẹp pool L1 quanh hành động được nhắc lại."""
+    if not anchors:
+        return False
+    s = str(sentence).lower()
+    return any(a in s for a in anchors)

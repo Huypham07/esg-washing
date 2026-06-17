@@ -23,12 +23,15 @@ class EvidenceRetriever:
         seg = word_segment_batch([str(t) for t in texts])
         return self.model.encode(seg, normalize_embeddings=True, show_progress_bar=False)
 
-    def topk(self, claim_vec: np.ndarray, pool_mat: np.ndarray, k: int | None = None):
-        """-> (idx top-k vuot san, sim tuong ung). Cosine = dot vi da normalize."""
+    def topk(self, claim_vec: np.ndarray, pool_mat: np.ndarray, k: int | None = None,
+             floor: float | None = None):
+        """-> (idx top-k vuot san, sim tuong ung). Cosine = dot vi da normalize.
+        floor: override san sim (L1 dung floor thap hon L2 vi action<->corroboration khong gan-trung)."""
         k = k or self.k
+        f = self.floor if floor is None else floor
         if len(pool_mat) == 0:
             return np.array([], dtype=int), np.array([])
         sims = pool_mat @ claim_vec
         order = np.argsort(-sims)[:k]
-        keep = order[sims[order] >= self.floor]
+        keep = order[sims[order] >= f]
         return keep, sims[keep]

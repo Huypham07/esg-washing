@@ -12,8 +12,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from esgwash.grounding.evidence_pool import NUMERIC_PATTERN
-from esgwash.grounding.support import grounded_flags, support_score
+from esgwash.grounding.evidence_pool import NUMERIC_PATTERN, action_anchors, anchor_overlap
+from esgwash.grounding.support import grounded_flags, support_score, support_score_l1
 from esgwash.models.commitment_model import CommitmentModel
 from esgwash.models.specificity_llm import _digit_runs
 from esgwash.models.topic_model import TopicModel
@@ -141,8 +141,38 @@ def _quantified_items(rubric_json) -> list[dict]:
     return out
 
 
+def _action_items(rubric_json) -> list[dict]:
+    """Item hành động Mức 1: is_concrete_action & attributable_to_actor & KHÔNG is_quantified
+    (định lượng -> Mức 2 path). -> [{claim, anchors}]; claim = action_or_event (mệnh đề hành động)."""
+    if not rubric_json or str(rubric_json) in ("<NA>", "nan", "None"):
+        return []
+    try:
+        rub = json.loads(rubric_json)
+    except (json.JSONDecodeError, TypeError):
+        return []
+    out = []
+    for it in (rub.get("items") or []):
+        if not (it.get("is_concrete_action") and it.get("attributable_to_actor")):
+            continue
+        if it.get("is_quantified"):
+            continue
+        action = str(it.get("action_or_event") or "").strip()
+        if action:
+            out.append({"claim": action, "anchors": action_anchors(action)})
+    return out
+
+
+_L1_HYP_DEFAULT = "Theo báo cáo, ngân hàng đã thực sự thực hiện {action}."
+
+
+def _l1_tok(text: str) -> list[str]:
+    """Token hoá đơn giản (lowercase + tách khoảng trắng = âm tiết VN) cho BM25 retrieval L1."""
+    return str(text).lower().split()
+
+
 def ground_claims(classified: pd.DataFrame, retriever, nli, cfg: dict,
-                  evidence_df: pd.DataFrame | None = None) -> pd.DataFrame:
+                  evidence_df: pd.DataFrame | None = None,
+                  ground_l1: bool = False) -> pd.DataFrame:
     """Grounding mức item: claim = từng item định lượng (specificity phân rã), evidence = câu
     (tách chunk theo '\\n') ở bất kỳ đâu trong doc, kể cả cùng chunk, chỉ loại câu gốc chứa
     figure của item để tránh tự suy ra. support(chunk) = max P_entail trên các item; mỗi dòng =
@@ -153,6 +183,11 @@ def ground_claims(classified: pd.DataFrame, retriever, nli, cfg: dict,
     thetas = cfg.get("support_thresholds", [0.5, 0.7, 0.9])
     top_k = int(cfg.get("top_k", 5))
     use_numeric = cfg.get("pool", {}).get("numeric_regex", True)
+    l1_hyp = cfg.get("l1_hypothesis", _L1_HYP_DEFAULT)
+    l1_lam = float(cfg.get("l1_lambda", 0.5))
+    l1_retrieval = cfg.get("l1_retrieval", "overlap")
+    l1_bm25_topn = int(cfg.get("l1_bm25_topn", 20))
+    l1_sim_floor = float(cfg.get("l1_sim_floor", 0.25))  # san riêng L1, thấp hơn L2 (sim_floor 0.5)
     ev_source = evidence_df if evidence_df is not None else classified
     rows = []
 
@@ -182,11 +217,69 @@ def ground_claims(classified: pd.DataFrame, retriever, nli, cfg: dict,
         ev_src = np.array(ev_src, dtype=int)
         ev_mat = retriever.embed(ev_txt) if ev_txt else np.empty((0, 1))
 
+        # Pool L1 (Mức 1): MỌI câu, KHÔNG lọc số (audit pitfall) — chỉ dựng khi bật ground_l1
+        l1_src, l1_txt, l1_mat, l1_bm25 = np.array([], dtype=int), [], np.empty((0, 1)), None
+        if ground_l1:
+            _ls, _lt = [], []
+            for _, r in ev_doc.iterrows():
+                for s in split_chunk_sentences(r["content_text"]):
+                    _ls.append(int(r["chunk_index"]))
+                    _lt.append(s)
+            l1_src, l1_txt = np.array(_ls, dtype=int), _lt
+            l1_mat = retriever.embed(l1_txt) if l1_txt else np.empty((0, 1))
+            if l1_retrieval == "bm25" and l1_txt:
+                from rank_bm25 import BM25Okapi
+                l1_bm25 = BM25Okapi([_l1_tok(t) for t in l1_txt])
+
         for _, c in tqdm(list(commit.iterrows()), desc=f"  {doc_id} claims",
                          unit="claim", leave=False):
             items = _quantified_items(c.get("spec_rubric"))
             if not items or len(ev_txt) == 0:
-                rows.append(_row(c, 0.0, len(items), 0, [], []))
+                # Không claim định lượng / pool số rỗng. Thử grounding Mức 1 (audit C1/C3) nếu bật.
+                actions = _action_items(c.get("spec_rubric")) if ground_l1 else []
+                if (ground_l1 and int(c.get("spec_level", 0) or 0) == 1
+                        and actions and len(l1_txt) > 0):
+                    best_sup, best_ids, trace = 0.0, [], []
+                    for a in actions:
+                        # C3: loại UNCONDITIONAL câu cùng chunk. 3a=anchor overlap | 3b=BM25 top-N.
+                        not_same = l1_src != int(c["chunk_index"])
+                        if l1_retrieval == "bm25" and l1_bm25 is not None:
+                            sc = l1_bm25.get_scores(_l1_tok(a["claim"]))
+                            order = np.argsort(-sc)
+                            cand = np.array([j for j in order
+                                             if not_same[j] and sc[j] > 0][:l1_bm25_topn], dtype=int)
+                        else:
+                            cand = np.array(
+                                [j for j in range(len(l1_txt))
+                                 if not_same[j] and anchor_overlap(l1_txt[j], a["anchors"])], dtype=int)
+                        if len(cand) == 0:
+                            trace.append({"claim": a["claim"], "support": 0.0,
+                                          "evidence": [], "level": 1})
+                            continue
+                        claim_vec = retriever.embed([a["claim"]])[0]
+                        keep, sims = retriever.topk(claim_vec, l1_mat[cand], k=top_k, floor=l1_sim_floor)
+                        chosen = cand[keep]
+                        if len(chosen) == 0:
+                            trace.append({"claim": a["claim"], "support": 0.0,
+                                          "evidence": [], "level": 1})
+                            continue
+                        hyp = l1_hyp.format(action=a["claim"])
+                        probs = nli.score_pairs([(l1_txt[j], hyp) for j in chosen])
+                        ent, con = nli.entail(probs), nli.contra(probs)
+                        sup_a = support_score_l1(ent, con, l1_lam)
+                        ev_list = [{"src_chunk": int(l1_src[j]), "text": l1_txt[j][:200],
+                                    "sim": round(float(s), 3), "entail": round(float(e), 3),
+                                    "contra": round(float(cc), 3)}
+                                   for j, s, e, cc in zip(chosen, sims, ent, con)]
+                        trace.append({"claim": a["claim"], "support": round(float(sup_a), 4),
+                                      "evidence": ev_list, "level": 1})
+                        if sup_a > best_sup:
+                            best_sup = sup_a
+                            best_ids = [int(l1_src[j]) for j in chosen]
+                    n_ev = sum(len(t["evidence"]) for t in trace)
+                    rows.append(_row(c, best_sup, len(actions), n_ev, best_ids, trace))
+                else:
+                    rows.append(_row(c, 0.0, len(items), 0, [], []))
                 continue
             best_sup, best_ids, trace = 0.0, [], []
             for it in items:
@@ -236,19 +329,28 @@ def attach_support(claims_long: pd.DataFrame, grounded: pd.DataFrame) -> pd.Data
 CTI_ROOT = Path("outputs/cti")
 
 
-def load_models() -> dict:
-    """Nạp 5 model dùng chung cho mọi (bank, year): topic, commitment, specificity, retriever, NLI."""
+def load_models(nli_model: str | None = None, need_classify: bool = True) -> dict:
+    """Nạp model dùng chung: retriever + NLI (+ topic/commitment/specificity nếu need_classify).
+
+    nli_model: override nli_model trong grounding.yml (B1/B2 dùng FEVER 2mil7); None = config (B0).
+    need_classify=False (khi --reuse-classified): bỏ qua model P2 để chạy grounding nhanh."""
     from esgwash.config import load_config
     from esgwash.grounding.nli import NLIScorer
     from esgwash.grounding.retriever import EvidenceRetriever
     gcfg = load_config("grounding")
-    return {"topic": load_trained_model("topic"),
-            "commitment": load_commitment_model(load_config("commitment")),
-            "specificity": load_specificity_model(load_config("specificity")),
-            "retriever": EvidenceRetriever(gcfg), "nli": NLIScorer(gcfg), "gcfg": gcfg}
+    if nli_model:
+        gcfg = {**gcfg, "nli_model": nli_model}
+    models = {"retriever": EvidenceRetriever(gcfg), "nli": NLIScorer(gcfg), "gcfg": gcfg}
+    if need_classify:
+        models["topic"] = load_trained_model("topic")
+        models["commitment"] = load_commitment_model(load_config("commitment"))
+        models["specificity"] = load_specificity_model(load_config("specificity"))
+    return models
 
 
-def run_bank_year(bank: str, year: int, models: dict, limit: int = 0) -> Path:
+def run_bank_year(bank: str, year: int, models: dict, limit: int = 0,
+                  out_root: str | Path = CTI_ROOT, ground_l1: bool = False,
+                  reuse_classified: str | Path | None = None) -> Path:
     """Classify -> ground -> index cho 1 (bank, year); ghi kết quả vào outputs/cti/<bank>/<year>/."""
     import matplotlib
     matplotlib.use("Agg")
@@ -259,17 +361,20 @@ def run_bank_year(bank: str, year: int, models: dict, limit: int = 0) -> Path:
 
     gcfg = models["gcfg"]
     thetas = tuple(gcfg.get("support_thresholds", [0.5, 0.7, 0.9]))
-    out_dir = CTI_ROOT / bank / str(year)
+    out_dir = Path(out_root) / bank / str(year)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     full = load_chunks(bank=bank, year=year)
     if full.empty:
         raise SystemExit(f"Không có chunk cho {bank} {year} trong data/chunks.parquet")
-    sub = full.head(limit).copy() if limit else full
-    print(f"### {bank} {year}: {len(sub)} chunk "
-          f"(token/chunk p50={sub['token_count'].median():.0f} max={sub['token_count'].max()})")
-
-    clf = classify_chunks(sub, models["topic"], models["commitment"], models["specificity"])
+    if reuse_classified:  # TÁI DÙNG classify (P2 đồng nhất giữa các arm) — bỏ qua Qwen3, nhanh
+        clf = pd.read_parquet(Path(reuse_classified) / bank / str(year) / "classified.parquet")
+        print(f"### {bank} {year}: reuse classified ({len(clf)} chunk) <- {reuse_classified}/")
+    else:
+        sub = full.head(limit).copy() if limit else full
+        print(f"### {bank} {year}: {len(sub)} chunk "
+              f"(token/chunk p50={sub['token_count'].median():.0f} max={sub['token_count'].max()})")
+        clf = classify_chunks(sub, models["topic"], models["commitment"], models["specificity"])
     clf.to_parquet(out_dir / "classified.parquet", index=False)
 
     long = to_long(clf)
@@ -281,11 +386,12 @@ def run_bank_year(bank: str, year: int, models: dict, limit: int = 0) -> Path:
 
     # Khi classify subset (limit), pool bằng chứng vẫn lấy từ toàn báo cáo
     evidence_pool = full if limit else clf
-    grounded = ground_claims(clf, models["retriever"], models["nli"], gcfg, evidence_df=evidence_pool)
+    grounded = ground_claims(clf, models["retriever"], models["nli"], gcfg,
+                             evidence_df=evidence_pool, ground_l1=ground_l1)
     grounded.to_parquet(out_dir / "claims_grounded.parquet", index=False)
 
     long_s = attach_support(long, grounded)
-    cti = build_cti_table(long_s, thetas=thetas, n_resamples=1000)
+    cti = build_cti_table(long_s, thetas=thetas, theta_l1=gcfg.get("theta_l1"), n_resamples=1000)
     shares = pillar_shares(long)
     cti = cti.merge(shares[["bank", "year", "pillar", "share"]],
                     on=["bank", "year", "pillar"], how="left")
@@ -332,17 +438,20 @@ def run_bank_year(bank: str, year: int, models: dict, limit: int = 0) -> Path:
     return out_dir
 
 
-def run_all(limit: int = 0) -> None:
+def run_all(limit: int = 0, nli_model: str | None = None,
+            out_root: str | Path = CTI_ROOT, ground_l1: bool = False,
+            reuse_classified: str | Path | None = None, need_classify: bool = True) -> None:
     """Chạy mọi (bank, year) trong analysis_scope (corpus.yml); nạp model một lần."""
     from esgwash.config import load_config
-    models = load_models()
+    models = load_models(nli_model=nli_model, need_classify=need_classify)
     scope = load_config("corpus").get("analysis_scope", {})
     chunks = load_chunks()
     pairs = [(b, int(y)) for b in scope.get("banks", chunks["bank"].unique())
              for y in scope.get("years", chunks["year"].unique())]
     for bank, year in pairs:
         if not load_chunks(bank=bank, year=year).empty:
-            run_bank_year(bank, year, models, limit=limit)
+            run_bank_year(bank, year, models, limit=limit, out_root=out_root,
+                          ground_l1=ground_l1, reuse_classified=reuse_classified)
 
 
 def main(argv=None):
@@ -355,11 +464,25 @@ def main(argv=None):
     ap.add_argument("--year", type=int, default=2023)
     ap.add_argument("--all", action="store_true", help="chạy toàn bộ scope trong corpus.yml")
     ap.add_argument("--limit", type=int, default=0, help="0=full; >0 = N chunk đầu (smoke test)")
+    ap.add_argument("--nli-model", default=None,
+                    help="override NLI model (B1/B2: FEVER 2mil7); để trống = config (B0)")
+    ap.add_argument("--out-root", default="outputs/cti",
+                    help="thư mục gốc output (đặt riêng mỗi arm vd outputs/cti_b1 — tránh đè B0 đã commit)")
+    ap.add_argument("--ground-l1", action="store_true",
+                    help="B2: bật grounding Mức 1 (hành động có tên, pool phi-số + AIS hypothesis)")
+    ap.add_argument("--reuse-classified", default=None,
+                    help="ROOT chứa <bank>/<year>/classified.parquet để TÁI DÙNG (bỏ classify; B1/B2 nhanh+sạch)")
     args = ap.parse_args(argv)
+    need_classify = args.reuse_classified is None
     if args.all:
-        run_all(limit=args.limit)
+        run_all(limit=args.limit, nli_model=args.nli_model, out_root=args.out_root,
+                ground_l1=args.ground_l1, reuse_classified=args.reuse_classified,
+                need_classify=need_classify)
     else:
-        run_bank_year(args.bank, args.year, load_models(), limit=args.limit)
+        run_bank_year(args.bank, args.year,
+                      load_models(nli_model=args.nli_model, need_classify=need_classify),
+                      limit=args.limit, out_root=args.out_root, ground_l1=args.ground_l1,
+                      reuse_classified=args.reuse_classified)
 
 
 if __name__ == "__main__":

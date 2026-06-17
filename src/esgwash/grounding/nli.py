@@ -23,6 +23,7 @@ class NLIScorer:
         # vi tri label entailment trong id2label (mDeBERTa: 0=entail,1=neutral,2=contra)
         id2label = {int(k): v.lower() for k, v in self.model.config.id2label.items()}
         self.entail_idx = next(i for i, lab in id2label.items() if "entail" in lab)
+        self.contra_idx = next((i for i, lab in id2label.items() if "contra" in lab), None)
         self.labels = [id2label[i] for i in sorted(id2label)]
 
     @torch.no_grad()
@@ -43,3 +44,9 @@ class NLIScorer:
     def entail(self, probs: np.ndarray) -> np.ndarray:
         """Cot xac suat entailment."""
         return probs[:, self.entail_idx]
+
+    def contra(self, probs: np.ndarray) -> np.ndarray:
+        """Cot xac suat contradiction (guard L1); 0 neu model khong co nhan contra."""
+        if self.contra_idx is None:
+            return np.zeros(len(probs))
+        return probs[:, self.contra_idx]

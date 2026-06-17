@@ -4,6 +4,13 @@ nli_model: MoritzLaurer/mDeBERTa-v3-base-mnli-xnli
 top_k: 5
 sim_floor: 0.5
 support_thresholds: [0.5, 0.7, 0.9]   # sensitivity sweep, bang chinh dung 0.7
+# Muc 1 grounding (B2, --ground-l1): hypothesis AIS + phat contradiction. theta_L1 calibrate tu B2 that.
+l1_hypothesis: "Theo báo cáo, ngân hàng đã thực sự thực hiện {action}."
+l1_lambda: 0.5
+l1_retrieval: overlap       # 3a (KEEPER). Thu 3b bm25 (run bx85xmpww) KHONG cai thien, hoi te hon -> revert.
+l1_bm25_topn: 20            # (chi dung khi l1_retrieval=bm25; giu lam option)
+l1_sim_floor: 0.5           # san rerank rieng L1 (ban THAN TRONG; 0.35 noi gan over-recall, 0.25 nhieu)
+theta_l1: 0.4               # nguong gCTI rieng Muc 1 (tu phan bo support B2; KHAC theta_L2=0.7 da chung minh)
 pool:                                   # spec 03 #1
   numeric_regex: true
   block_types: [table, list]
