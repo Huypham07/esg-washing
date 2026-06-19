@@ -39,3 +39,23 @@ def test_quantile_ribbons_per_year():
     rb = ie.quantile_ribbons(_toy_panel(), "cti")
     assert 2022 in rb.index and "median" in rb.columns
     assert abs(rb.loc[2022, "median"] - 0.35) < 1e-9
+
+
+def test_eda_indices_main_writes_pngs(tmp_path):
+    import importlib.util, sys
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location(
+        "eda_indices", Path(__file__).resolve().parents[1] / "experiments" / "eda_indices.py")
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["eda_indices"] = mod
+    spec.loader.exec_module(mod)
+    panel = _toy_panel()
+    shares = pd.DataFrame({
+        "bank": ["a", "a", "a", "b", "b", "b"], "year": [2023] * 6,
+        "pillar": ["env", "soc", "gov"] * 2,
+        "share": [0.2, 0.5, 0.3, 0.4, 0.4, 0.2],
+        "share_dev": [-0.1, 0.05, 0.05, 0.1, -0.05, -0.05]})
+    paths = mod.main(out_dir=str(tmp_path), panel=panel, shares=shares)
+    assert len(paths) == 5
+    for p in paths:
+        assert p.exists() and p.stat().st_size > 0
