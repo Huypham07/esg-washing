@@ -2,7 +2,16 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax.
 
-**Goal:** Add two independent, unsupervised embedding-based washing signals — Substance Backing Score (SBS) and Boilerplate Reuse Index (BRI) — computed over commitment chunks, and test RQ4 convergent validity against the rubric-based CTI.
+**Goal:** Add unsupervised embedding-based washing signal(s) over commitment chunks and test RQ4 against the rubric-based CTI.
+
+> **UPDATE 2026-06-19 (post-implementation, empirical):** SBS (Substance Backing Score) was
+> implemented and tested but **dropped** after running on full data — raw cosine is saturated by
+> sentence-embedding anisotropy (mean 0.64, std 0.056) and stays null vs every index even after
+> mean-centering; topical similarity ≠ evidential backing. **Mean-centering** of embeddings is now
+> standard. **BRI (Boilerplate Reuse Index)** is the kept signal. Reframed RQ4 result (n=45):
+> Spearman(CTI, BRI) = **−0.353 (p=0.018)**, Spearman(NAR, BRI) = **+0.300 (p=0.045)** — boilerplate
+> = shared NAMED programs (specific, low cheap-talk), not vague cheap-talk. Final code reflects this
+> (commit c8a2414); Tasks 1–2 below describe the original SBS+BRI build for history.
 
 **Architecture:** Pure compute (cosine geometry, SBS/BRI aggregation) lives in `src/esgwash/indices/alignment.py`, unit-tested on toy embeddings (no model download). A driver `experiments/embedding_signals.py` loads `outputs/cti/*/*/classified.parquet`, embeds commitment chunks ONCE with the existing `SentenceEmbedder` (bkai vietnamese-bi-encoder, normalized embeddings → cosine = dot product), computes per-(bank,year) SBS/BRI, merges with panel.csv, and reports Spearman correlations for RQ4. Embedding is the only GPU/heavy step and happens in one pass (Kaggle end-to-end).
 
