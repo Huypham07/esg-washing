@@ -1,4 +1,7 @@
-"""Embed commitment chunks, compute SBS/BRI per (bank,year), test RQ4 vs CTI."""
+"""Embed commitment chunks, compute BRI per (bank,year), test RQ4 vs CTI/NAR.
+
+Embeddings are mean-centered corpus-wide before cosine (anisotropy fix). SBS was
+dropped (raw topical cosine saturated; null vs every index) — see Phase 1 plan."""
 from __future__ import annotations
 
 import glob
