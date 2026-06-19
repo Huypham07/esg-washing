@@ -24,6 +24,9 @@ docling>=2.0
 # Statistics
 scipy>=1.11
 
+# Explainability (SHAP on chunk-level spec_level model — RQ5)
+shap>=0.44
+
 # Hyperparameter tuning
 optuna>=3.0
 
