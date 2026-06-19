@@ -48,6 +48,21 @@ def style_axes(ax, title=None, subtitle=None, title_pad=28):
     return ax
 
 
+def symmetric_delta_norm(values, fallback: float = 0.9):
+    """A TwoSlopeNorm centred at 0, scaled to the data's own magnitude.
+
+    The fixed DELTA_NORM (+/-0.9) washes out small deltas (CTI YoY ~+/-0.15,
+    share deviation ~+/-0.2). This sets vmax to the 95th percentile of |value|
+    (resists outliers) so the red/teal diverging colours actually show.
+    """
+    a = np.abs(np.asarray(list(values), dtype=float))
+    a = a[np.isfinite(a)]
+    v = float(np.quantile(a, 0.95)) if a.size else 0.0
+    if v <= 0:
+        v = fallback
+    return mcolors.TwoSlopeNorm(vmin=-v, vcenter=0.0, vmax=v)
+
+
 def shannon_entropy_bits(probs) -> float:
     """-Σ p log2 p over positive entries; accepts counts or probabilities."""
     p = np.asarray(list(probs), dtype=float)
