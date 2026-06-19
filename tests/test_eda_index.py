@@ -53,8 +53,7 @@ def test_eda_indices_main_writes_pngs(tmp_path):
     shares = pd.DataFrame({
         "bank": ["a", "a", "a", "b", "b", "b"], "year": [2023] * 6,
         "pillar": ["env", "soc", "gov"] * 2,
-        "share": [0.2, 0.5, 0.3, 0.4, 0.4, 0.2],
-        "share_dev": [-0.1, 0.05, 0.05, 0.1, -0.05, -0.05]})
+        "share": [0.2, 0.5, 0.3, 0.4, 0.4, 0.2]})
     paths = mod.main(out_dir=str(tmp_path), panel=panel, shares=shares)
     assert len(paths) == 5
     for p in paths:

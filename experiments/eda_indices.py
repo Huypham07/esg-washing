@@ -113,7 +113,17 @@ def fig_washing_pca(panel, out_dir):
     return _save(fig, out_dir, "index_washing_pca.png")
 
 
+def _ensure_share_dev(shares):
+    """Add share_dev (share minus same-year-same-pillar industry mean) if missing.
+    Real pillar_shares.parquet stores only [bank, year, pillar, n, share]."""
+    if shares.empty or "share_dev" in shares.columns:
+        return shares
+    industry = shares.groupby(["year", "pillar"])["share"].transform("mean")
+    return shares.assign(share_dev=(shares["share"] - industry))
+
+
 def fig_selective_disclosure(shares, out_dir):
+    shares = _ensure_share_dev(shares)
     grid = shares.pivot_table(index=["bank", "year"], columns="pillar", values="share_dev")
     fig, ax = plt.subplots(figsize=(8, max(4, 0.4 * len(grid))), facecolor=PALETTE["paper"])
     im = ax.imshow(grid.to_numpy(), aspect="auto", cmap=DELTA_CMAP, norm=DELTA_NORM)
