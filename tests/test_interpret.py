@@ -36,3 +36,16 @@ def test_fit_head_skips_nan_rows():
     df.loc[0, "env"] = np.nan       # one NaN label must be dropped, no crash
     pipe = it.fit_head(df, "env", "text")
     assert pipe.predict(["green energy emissions"]).shape == (1,)
+
+
+def test_transfer_table_has_three_configs():
+    import importlib.util, sys
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location(
+        "baseline_interpret", Path(__file__).resolve().parents[1] / "experiments" / "baseline_interpret.py")
+    mod = importlib.util.module_from_spec(spec); sys.modules["baseline_interpret"] = mod
+    spec.loader.exec_module(mod)
+    df = _toy()
+    out = mod.transfer_table(df, df, ["env"])
+    assert list(out["config"]) == ["VI->VI", "EN->VI", "EN->EN"]
+    assert out["macro_f1"].between(0, 1).all()
