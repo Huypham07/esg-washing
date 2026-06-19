@@ -12,6 +12,7 @@
 \usepackage{amsmath}
 \usepackage{multirow}
 \usepackage{booktabs}
+\usepackage{float}
 \graphicspath{{figures/}}
 
 \begin{document}
@@ -84,7 +85,7 @@ Một bộ phân loại nhị phân (CommitmentHF, nền PhoBERT) xác định �
 \subsection{Chấm độ cụ thể ba mức}
 Trên mỗi đơn vị cam kết, một mô hình ngôn ngữ lớn (Qwen3-1.7B) đóng vai \emph{bộ chấm theo rubric}: phân rã cam kết thành các \emph{item} hành động, rồi suy ra mức cụ thể theo Bảng~\ref{tab:rubric}. Rubric \emph{nhận biết quy-về-chủ-thể}: chỉ tính Mức~2 khi con số là đại lượng đo được quy về chính ngân hàng; các con số của NHNN/toàn ngành/quốc gia hay tiêu chuẩn (ISO, Basel) không được tính. Một bước \texttt{verify\_rubric} kiểm tra đầu ra để chống hiện tượng mô hình ``bịa số'' không có trong văn bản.
 
-\begin{table}[!t]
+\begin{table}[H]
 \centering
 \caption{Thang độ cụ thể ba mức của cam kết ESG (ví dụ mang tính minh hoạ).}
 \label{tab:rubric}
@@ -140,7 +141,7 @@ Khung đo được áp dụng cho 9 ngân hàng thương mại Việt Nam (Agrib
 \subsection{Đánh giá bộ phân loại}
 Hiệu năng của bộ phân loại trụ ESG và bộ phân loại cam kết được đánh giá trên một Gold Set gồm các câu ESG do người gán nhãn, trích từ báo cáo ngân hàng Việt Nam; cận trên hiệu năng được ước lượng trên gold tiếng Anh theo thiết kế translate-train. Riêng bước chấm độ cụ thể được đánh giá bằng \emph{audit thủ công}: lấy mẫu cân bằng theo trụ, người gán tay mức 0/1/2 rồi đo độ đồng thuận với pipeline.
 
-\begin{table}[!t]
+\begin{table}[H]
 \centering
 \caption{Hiệu năng bộ phân loại trên Gold Set (đang hoàn thiện đánh giá); đường cơ sở TF-IDF+LR phục vụ so sánh ngôn ngữ.}
 \label{tab:classifier}
@@ -167,7 +168,7 @@ Trên toàn panel (45 quan sát), trung bình $\mathrm{CTI}=0{,}372$ (CI~95\%~$[
 
 Bảng~\ref{tab:by_bank} cho thấy khác biệt rõ giữa các ngân hàng: CTI dao động từ $0{,}293$ (Agribank) đến $0{,}460$ (MB Bank). MB Bank có CTI cao nhất (0{,}460) nhưng tương ứng QDR thấp (0{,}295), gợi ý công bố bị pha loãng. Vietcombank có QDR cao nhất ($0{,}445$) nhưng số cam kết trung bình mỗi báo cáo thấp nhất ($\bar{N}\approx 30$), nên các ô đầu kỳ có khoảng tin cậy rộng và cần diễn giải thận trọng. OCB dẫn đầu về NAR (0{,}444), phản ánh xu hướng mô tả hành động cụ thể nhưng chưa định lượng.
 
-\begin{table}[!t]
+\begin{table}[H]
 \centering
 \caption{CTI/NAR/QDR trung bình theo ngân hàng (2020--2024), khoảng tin cậy 95\% xấp xỉ của CTI, và số cam kết ESG trung bình mỗi báo cáo ($\bar{N}$). Ngân hàng sắp xếp theo CTI tăng dần.}
 \label{tab:by_bank}
@@ -190,7 +191,7 @@ Toàn panel  & 0{,}372 & [0{,}345;\,0{,}400] & 0{,}309 & 0{,}319 & 67{,}8 \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[!t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.90\textwidth]{fig_rq1_cartography.png}
 \caption{Bản đồ rủi ro CTI--QDR của 9 ngân hàng (trung bình 2020--2024). Trục hoành là tỉ lệ nói suông (CTI), trục tung là tỉ lệ định lượng (QDR). Phần tư góc dưới-phải (CTI thấp, QDR cao) là vùng công bố thực chất; góc trên-trái (CTI cao, QDR thấp) là vùng washing cao. Kích thước bong bóng tỉ lệ với $\bar{N}$.}
@@ -202,7 +203,7 @@ Tỉ trọng công bố theo trụ lệch rõ và nhất quán: trung bình $\ma
 
 Toàn bộ 9 ngân hàng trong mẫu đều công bố trụ Môi trường ít nhất (Bảng~\ref{tab:disclosure}). Đây là bằng chứng định lượng cho hành vi \emph{né chủ đề khó}: ngân hàng dồn ngôn ngữ vào Quản trị và Xã hội --- nơi dễ kể câu chuyện tích cực --- và giảm nhẹ trụ Môi trường, vốn đòi hỏi số liệu phát thải/tín dụng xanh khó kiểm chứng. Trường hợp nổi bật: Techcombank có share(E) thấp nhất ($0{,}179$) và VietinBank có share(G) cao nhất ($0{,}484$).
 
-\begin{table}[!t]
+\begin{table}[H]
 \centering
 \caption{Tỉ trọng công bố trung bình theo trụ trên mỗi ngân hàng. Trụ Môi trường thấp nhất ở toàn bộ ngân hàng. Sắp xếp theo share(E) tăng dần.}
 \label{tab:disclosure}
@@ -225,7 +226,7 @@ Trung bình  & 0{,}241 & 0{,}349 & 0{,}410 \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[!t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_rq2_selective_disclosure.png}
 \caption{Bản đồ nhiệt tỉ trọng công bố theo trụ mỗi (ngân hàng, năm). Màu xanh đậm = share cao. Toàn bộ ngân hàng và năm cho thấy trụ Môi trường (E) nhạt nhất, Quản trị (G) đậm nhất --- xác nhận hành vi né trụ khó có tính hệ thống.}
@@ -237,7 +238,7 @@ Phân tích theo năm (Bảng~\ref{tab:by_year}) cho thấy một nghịch lý. 
 
 Tương quan thành phần củng cố diễn giải này: số cam kết càng lớn thì CTI càng cao (Spearman $\rho=0{,}372$, $p=0{,}012$), nghĩa là việc mở rộng khối lượng công bố đi kèm \emph{pha loãng} nội dung thực chất.
 
-\begin{table}[!t]
+\begin{table}[H]
 \centering
 \caption{CTI/NAR/QDR trung bình theo năm (qua 9 ngân hàng) và số cam kết ESG trung bình mỗi báo cáo ($\bar{N}$).}
 \label{tab:by_year}
@@ -254,7 +255,7 @@ Năm & CTI & NAR & QDR & $\bar{N}$ \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[!t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.90\textwidth]{fig_rq3_trajectories.png}
 \caption{Quỹ đạo CTI của 9 ngân hàng theo năm 2020--2024. Không có xu hướng cải thiện rõ ràng: đường trung bình toàn panel (nét đứt) dao động quanh 0{,}37--0{,}40 mà không giảm. Mỗi đường màu là một ngân hàng; dải bóng là khoảng tin cậy 95\% bootstrap.}
@@ -278,7 +279,7 @@ Bảng~\ref{tab:saydo} cho thấy khoảng cách say--do khác biệt rõ rệt 
 
 Phát hiện này bổ sung chiều mới cho RQ2: không chỉ Môi trường bị \emph{né} (ít câu hơn), mà Quản trị bị \emph{bơm} bằng cam kết mơ hồ --- loại cam kết về chính sách tuân thủ, cam kết đạo đức, hay kế hoạch nâng cấp quản trị vốn khó định lượng. Kết hợp, ngân hàng thiên về nói nhiều về những thứ dễ cam kết suông (Quản trị) và né những thứ đòi con số khó giải thích (Môi trường).
 
-\begin{table}[!t]
+\begin{table}[H]
 \centering
 \caption{Khoảng cách say--do trung bình ($\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$) theo trụ qua 45 quan sát. Giá trị dương = nói suông nhiều hơn định lượng trong trụ đó.}
 \label{tab:saydo}
@@ -293,7 +294,7 @@ Quản trị (G)   & $+0{,}327$ & cheap-talk pillar --- nói suông vượt tr�
 \end{tabular}
 \end{table}
 
-\begin{figure}[!t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.88\textwidth]{fig_rq5_saydo.png}
 \caption{Khoảng cách say--do ($\Delta_p = \mathrm{CTI}_p - \mathrm{QDR}_p$) theo trụ qua 45 quan sát panel. Mỗi điểm là một ô (ngân hàng, năm). Quản trị (G, cam) có phân bố lệch phải mạnh ($\Delta_{\mathrm{gov}}=+0{,}327$); Môi trường (E, xanh lục) và Xã hội (S, xanh dương) tập trung quanh 0.}
@@ -303,7 +304,7 @@ Quản trị (G)   & $+0{,}327$ & cheap-talk pillar --- nói suông vượt tr�
 \paragraph{Phân loại hành động định lượng.}
 Để hiểu \emph{ngân hàng định lượng về điều gì}, chúng tôi trích xuất và phân loại các ``figure'' (đại lượng đo được) từ rubric Qwen3 (chỉ tính các item Mức~2 đã qua verify). Kết quả (Bảng~\ref{tab:figtypes}) cho thấy tín dụng xanh (green\_credit, $n=202$) là loại định lượng phổ biến nhất, theo sau là hành động xã hội ($n=156$) và đào tạo ($n=141$). Đặc biệt nổi bật: \emph{lượng phát thải} chỉ được định lượng 13 lần trên toàn bộ 45 ô (ngân hàng, năm) --- ít hơn 15 lần so với tín dụng xanh. Ngân hàng Việt Nam \emph{định lượng tài chính xanh} (tín dụng xanh, trái phiếu xanh) rất tốt nhưng gần như không công bố số liệu phát thải của chính mình, đây là khoảng trống lớn về minh bạch ESG.
 
-\begin{table}[!t]
+\begin{table}[H]
 \centering
 \caption{Phân loại hành động định lượng được trích từ rubric Qwen3 trên 45 ô (ngân hàng, năm). Chỉ tính các item Mức~2 đã qua verify.}
 \label{tab:figtypes}
@@ -321,7 +322,7 @@ Phát thải/carbon (emissions)    & 13  \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[!t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.72\textwidth]{fig_rq5_figtypes.png}
 \caption{Số lượng hành động định lượng trích từ rubric phân theo loại (45 ô). Tín dụng xanh ($n=202$) vượt trội; phát thải carbon ($n=13$) gần như vắng mặt --- khoảng trống minh bạch lớn nhất của ngân hàng Việt Nam.}
@@ -331,7 +332,7 @@ Phát thải/carbon (emissions)    & 13  \\
 \paragraph{SHAP chunk-level.}
 Bộ phân loại Random Forest dự đoán mức cụ thể (0/1/2) từ 12 đặc trưng cấu trúc đạt macro-F1(CV)$=0{,}548$ ($n=3049$ đơn vị, 3-class, chance$\approx 0{,}33$). Phân tích SHAP cho thấy hai đặc trưng chữ số (\texttt{n\_digit\_runs}, \texttt{pct\_digit\_chars}) là quan trọng nhất, phản ánh sự thật hiển nhiên rằng các câu chứa số thường đạt Mức~2. Đáng chú ý hơn, \texttt{p\_gov} (xác suất thuộc Quản trị từ topic classifier) đứng thứ ba: các đơn vị được phân loại cao về Quản trị có \emph{xu hướng mơ hồ hơn} --- phù hợp với say--do gap lớn ở trụ Quản trị. \texttt{p\_commitment} (xác suất là cam kết) đứng thứ tư, cho thấy bộ phân loại commitment và rubric specificity đo hai chiều bổ sung nhau, không dư thừa.
 
-\begin{figure}[!t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.82\textwidth]{fig_rq5_shap.png}
 \caption{SHAP feature importance của Random Forest dự đoán mức cụ thể (0/1/2) từ 12 đặc trưng cấu trúc. Hai đặc trưng chữ số (\texttt{n\_digit\_runs}, \texttt{pct\_digit\_chars}) dẫn đầu; \texttt{p\_gov} đứng thứ ba (cam kết Quản trị có xu hướng mơ hồ hơn); \texttt{rel\_position} phản ánh vị trí câu trong tài liệu.}
@@ -339,7 +340,7 @@ Bộ phân loại Random Forest dự đoán mức cụ thể (0/1/2) từ 12 đ�
 \end{figure}
 
 \subsection{Chuyển giao từ vựng và động lực translate-train}
-\begin{table}[!t]
+\begin{table}[H]
 \centering
 \caption{Macro-F1 của đường cơ sở TF-IDF+LR theo cấu hình ngôn ngữ. EN$\to$VI = train tiếng Anh, test tiếng Việt.}
 \label{tab:transfer}
