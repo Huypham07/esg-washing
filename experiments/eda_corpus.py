@@ -76,8 +76,9 @@ def fig_labels(clf, out_dir: Path) -> Path:
                f"Entropy = {spec['entropy_bits']:.2f} bits, "
                f"effective states = {spec['effective_states']:.2f}.")
     lv = spec["counts"]
+    colmap = {0: SCORE_CMAP(0.1), 1: SCORE_CMAP(0.55), 2: SCORE_CMAP(0.95)}
     ax2.bar([str(k) for k in lv], list(lv.values()),
-            color=[SCORE_CMAP(0.1), SCORE_CMAP(0.55), SCORE_CMAP(0.95)][:len(lv)],
+            color=[colmap[k] for k in lv],
             edgecolor=PALETTE["paper"])
     ax2.set_xlabel("spec_level (0 vague / 1 named / 2 quantified)")
     ax2.set_ylabel("Commitment chunks")

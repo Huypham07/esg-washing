@@ -11,7 +11,7 @@ def washing_feature_matrix(panel: pd.DataFrame,
     rows = [f"{b} {y}" for b, y in zip(panel["bank"], panel["year"])]
     M = panel[cols].to_numpy(dtype=float)
     mu = M.mean(axis=0)
-    sd = M.std(axis=0)
+    sd = M.std(axis=0)  # ddof=0; PCA evr is a ratio so the (n-1)/n vs n scaling cancels
     sd[sd == 0] = 1.0
     X = (M - mu) / sd
     return X, rows, cols
