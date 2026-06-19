@@ -13,8 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from esgwash.eda import corpus_eda as ce
-from esgwash.eda.style import (PALETTE, SCORE_CMAP, apply_rcparams,
-                               shannon_entropy_bits, style_axes)
+from esgwash.eda.style import (PALETTE, SCORE_CMAP, apply_rcparams, style_axes)
 
 
 def _save(fig, out_dir: Path, name: str) -> Path:
@@ -93,7 +92,7 @@ def fig_noise_retention(clf, out_dir: Path) -> Path:
     style_axes(ax, "Retained chunks per report",
                "Prose chunks kept after table/boilerplate noise filtering.")
     ax.bar(by["cell"], by["chunks"], color=PALETTE["accent2"], edgecolor=PALETTE["paper"])
-    ax.set_xticklabels(by["cell"], rotation=60, ha="right", fontsize=7)
+    ax.set_xticks(range(len(by["cell"])), by["cell"], rotation=60, ha="right", fontsize=7)
     ax.set_ylabel("Chunks")
     return _save(fig, out_dir, "corpus_noise_retention.png")
 
