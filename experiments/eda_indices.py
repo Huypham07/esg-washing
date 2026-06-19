@@ -71,6 +71,8 @@ def fig_cti_trajectories(panel, out_dir):
     fig, ax = plt.subplots(figsize=(11, 6), facecolor=PALETTE["paper"])
     style_axes(ax, "CTI trajectories",
                "Segment colour = year-over-year change (red rising / teal falling).")
+    if not tr:
+        return _save(fig, out_dir, "index_cti_trajectories.png")
     for bank, d in tr.items():
         yrs, vals, deltas = d["years"], d["values"], d["deltas"]
         pts = np.array([yrs, vals]).T.reshape(-1, 1, 2)
@@ -99,10 +101,11 @@ def fig_washing_pca(panel, out_dir):
     for (x, y), lab in zip(scores, rows):
         ax.text(x, y, f" {lab}", fontsize=7, color=PALETTE["ink"])
     for i, f in enumerate(feats):
-        ax.annotate(f, xy=(loadings[i, 0] * 3, loadings[i, 1] * 3),
-                    color=PALETTE["accent2"], fontsize=9,
-                    arrowprops=dict(arrowstyle="->", color=PALETTE["accent2"]),
-                    xytext=(0, 0), textcoords="offset points")
+        ax.annotate("", xy=(loadings[i, 0] * 3, loadings[i, 1] * 3),
+                    xytext=(0, 0), textcoords="data",
+                    arrowprops=dict(arrowstyle="->", color=PALETTE["accent2"]))
+        ax.text(loadings[i, 0] * 3, loadings[i, 1] * 3, f,
+                color=PALETTE["accent2"], fontsize=9)
     ax.axhline(0, color=PALETTE["grid"], linewidth=0.8)
     ax.axvline(0, color=PALETTE["grid"], linewidth=0.8)
     ax.set_xlabel("PC1")
@@ -122,7 +125,7 @@ def fig_selective_disclosure(shares, out_dir):
     return _save(fig, out_dir, "index_selective_disclosure.png")
 
 
-def main(out_dir: str = "experiments/figures", panel=None, shares=None) -> list:
+def main(out_dir: str = "experiments/figures", panel=None, shares=None) -> list[Path]:
     apply_rcparams()
     if panel is None:
         panel = _load_panel()
