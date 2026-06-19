@@ -64,7 +64,7 @@ def clean_extracted_text(text: str) -> str:
 def load_pdf_with_docling(
     pdf_path: str | Path,
     mode: str = "auto",
-    min_chars_per_page: int = 200,
+    min_chars_per_page: int = 50,
 ) -> dict:
     pdf_path = Path(pdf_path)
     if not pdf_path.exists():
