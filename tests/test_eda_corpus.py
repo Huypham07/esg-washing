@@ -36,3 +36,19 @@ def test_coverage_matrix_counts():
     assert cov.loc["a", 2023] == 3
     comm = ce.coverage_matrix(_toy_clf(), value="commitment")
     assert comm.loc["a", 2023] == 2
+
+
+def test_eda_corpus_main_writes_pngs(tmp_path):
+    import importlib.util, sys
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location(
+        "eda_corpus", Path(__file__).resolve().parents[1] / "experiments" / "eda_corpus.py")
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["eda_corpus"] = mod
+    spec.loader.exec_module(mod)
+    clf = _toy_clf().assign(chunk_id=["a0", "a1", "a2", "b0"],
+                            char_count=[50, 100, 150, 200])
+    paths = mod.main(out_dir=str(tmp_path), clf=clf)
+    assert len(paths) == 4
+    for p in paths:
+        assert p.exists() and p.stat().st_size > 0
