@@ -66,3 +66,36 @@ def test_bri_single_bank_is_nan():
     banks = np.array(["a", "a"])
     bri, per = al.boilerplate_reuse_index(emb, banks)
     assert np.isnan(bri)
+
+
+def test_compute_with_fake_embedder():
+    import importlib.util, sys
+    from pathlib import Path
+    import pandas as pd
+    spec = importlib.util.spec_from_file_location(
+        "embedding_signals", Path(__file__).resolve().parents[1] / "experiments" / "embedding_signals.py")
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["embedding_signals"] = mod
+    spec.loader.exec_module(mod)
+
+    # 2 banks, 1 year; bank a: vague + quantified aligned; bank b: vague alone
+    clf = pd.DataFrame({
+        "bank": ["a", "a", "b"], "year": [2023, 2023, 2023],
+        "content_text": ["green pledge", "green 5000bn", "vague aspiration"],
+        "is_env": [1, 1, 1], "is_soc": [0, 0, 0], "is_gov": [0, 0, 0],
+        "is_commitment": [1, 1, 1], "spec_level": [0, 2, 0],
+    })
+
+    class FakeEmb:
+        def embed(self, texts):
+            import numpy as np
+            m = {"green pledge": [1, 0], "green 5000bn": [1, 0.01],
+                 "vague aspiration": [0, 1]}
+            v = np.array([m[t] for t in texts], dtype=float)
+            return v / np.linalg.norm(v, axis=1, keepdims=True)
+
+    out = mod.compute(clf, FakeEmb())
+    a = out[out["bank"] == "a"].iloc[0]
+    b = out[out["bank"] == "b"].iloc[0]
+    assert a["sbs"] > 0.99          # a's vague backed by its quantified
+    assert b["sbs"] == 0.0          # b has no quantified chunk
