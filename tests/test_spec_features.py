@@ -33,3 +33,21 @@ def test_rel_position():
     # doc max chunk_index = 4 -> positions 0/4=0.0 and 4/4=1.0
     assert X.iloc[0]["rel_position"] == 0.0
     assert X.iloc[1]["rel_position"] == 1.0
+
+
+def test_train_eval_runs_on_toy():
+    import importlib.util, sys, numpy as np
+    from pathlib import Path
+    import pandas as pd
+    spec = importlib.util.spec_from_file_location(
+        "saydo_shap", Path(__file__).resolve().parents[1] / "experiments" / "saydo_shap.py")
+    mod = importlib.util.module_from_spec(spec); sys.modules["saydo_shap"] = mod
+    spec.loader.exec_module(mod)
+    rng = np.random.default_rng(0)
+    n = 60
+    X = pd.DataFrame({c: rng.random(n) for c in __import__(
+        "esgwash.models.spec_features", fromlist=["FEATURE_COLS"]).FEATURE_COLS})
+    y = pd.Series(([0, 1, 2] * (n // 3)))
+    out = mod.train_eval(X, y)
+    assert "macro_f1_cv" in out and 0.0 <= out["macro_f1_cv"] <= 1.0
+    assert out["n"] == n
