@@ -42,3 +42,18 @@ def test_rq4_correlations_shape():
 def test_say_do_by_pillar_means():
     out = pm.say_do_by_pillar(_say_do())
     assert abs(out["gov"] - 0.2) < 1e-9 and abs(out["env"] - 0.05) < 1e-9
+
+
+def test_build_master_smoke(tmp_path):
+    import importlib.util, sys
+    from pathlib import Path
+    d = tmp_path
+    _panel().to_csv(d / "panel.csv", index=False)
+    _bri().to_csv(d / "embedding_signals.csv", index=False)
+    _say_do().to_csv(d / "say_do.csv", index=False)
+    spec = importlib.util.spec_from_file_location(
+        "build_findings", Path(__file__).resolve().parents[1] / "experiments" / "build_findings.py")
+    mod = importlib.util.module_from_spec(spec); sys.modules["build_findings"] = mod
+    spec.loader.exec_module(mod)
+    m = mod.build_master(panel_dir=str(d))
+    assert "bri" in m.columns and "say_do_gov" in m.columns and len(m) == 2
