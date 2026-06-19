@@ -42,13 +42,12 @@ def main(out_dir: str = "experiments/panel") -> pd.DataFrame:
 
     panel = pd.read_csv(out / "panel.csv").merge(sig, on=["bank", "year"], how="left")
     panel.to_csv(out / "panel_with_signals.csv", index=False)
-    valid = panel.dropna(subset=["sbs", "cti"])
-    rho_s, p_s = spearmanr(valid["cti"], 1 - valid["sbs"])
     vb = panel.dropna(subset=["bri", "cti"])
-    rho_b, p_b = spearmanr(vb["cti"], vb["bri"])
-    print(f"RQ4 convergent validity (n={len(valid)}):")
-    print(f"  Spearman(CTI, 1-SBS) = {rho_s:.3f} (p={p_s:.2e})")
-    print(f"  Spearman(CTI, BRI)   = {rho_b:.3f} (p={p_b:.2e})")
+    rho_c, p_c = spearmanr(vb["cti"], vb["bri"])
+    rho_n, p_n = spearmanr(vb["nar"], vb["bri"])
+    print(f"RQ4 (n={len(vb)}): boilerplate vs rubric")
+    print(f"  Spearman(CTI, BRI) = {rho_c:.3f} (p={p_c:.2e})")
+    print(f"  Spearman(NAR, BRI) = {rho_n:.3f} (p={p_n:.2e})")
     print(f"-> {out/'embedding_signals.csv'}")
     return panel
 

@@ -1,12 +1,15 @@
-"""Embedding washing signals (RQ4). Assumes L2-normalized embeddings so
-cosine == dot product. Pure geometry: cosine + max + mean, no learned weights.
+"""Embedding washing signal (RQ4): Boilerplate Reuse Index (BRI).
 
-SBS (Substance Backing Score): per (bank,year), how well VAGUE commitments
-(spec_level=0) are backed by a nearby QUANTIFIED commitment (spec_level=2).
-Low SBS = vague claims float free of evidence -> corroborates high CTI.
+Assumes L2-normalized embeddings (cosine == dot product). Pure geometry:
+cosine + max + mean, no learned weights.
 
-BRI (Boilerplate Reuse Index): how similar each commitment is to commitments
-of OTHER banks. High BRI = recycled generic language = cheap-talk signal.
+BRI: per (bank,year), how similar each commitment chunk is to commitments of
+OTHER banks in the same year. High BRI = recycled cross-bank language.
+
+Mean-centering removes sentence-embedding anisotropy that otherwise compresses
+all cosines into a high, uninformative band; it is applied corpus-wide before
+any cosine. (SBS / claim-evidence backing was dropped: raw topical cosine does
+not capture evidential backing — empirically null on full data.)
 """
 from __future__ import annotations
 
@@ -25,21 +28,20 @@ def pairwise_max_cosine(A: np.ndarray, B: np.ndarray) -> np.ndarray:
     return sims.max(axis=1)
 
 
-def substance_backing_score(emb: np.ndarray, spec_level: np.ndarray):
+def center_normalize(emb: np.ndarray) -> np.ndarray:
+    """Remove the corpus mean (anisotropy fix) then re-normalize to unit length."""
     emb = np.asarray(emb, dtype=float)
-    spec_level = np.asarray(spec_level)
-    vague = emb[spec_level == 0]
-    quant = emb[spec_level == 2]
-    if vague.shape[0] == 0:
-        return float("nan"), np.zeros(0)
-    if quant.shape[0] == 0:
-        per = np.zeros(vague.shape[0])
-        return 0.0, per
-    per = pairwise_max_cosine(vague, quant)
-    return float(per.mean()), per
+    if emb.shape[0] == 0:
+        return emb
+    c = emb - emb.mean(axis=0)
+    n = np.linalg.norm(c, axis=1, keepdims=True)
+    n[n == 0] = 1.0
+    return c / n
 
 
 def boilerplate_reuse_index(emb: np.ndarray, banks: np.ndarray):
+    """Per chunk: max cosine to chunks of OTHER banks. BRI = mean over chunks.
+    Single-bank input -> (nan, zeros)."""
     emb = np.asarray(emb, dtype=float)
     banks = np.asarray(banks)
     n = emb.shape[0]
@@ -53,11 +55,12 @@ def boilerplate_reuse_index(emb: np.ndarray, banks: np.ndarray):
 
 
 def signals_per_panel(df: pd.DataFrame, emb: np.ndarray) -> pd.DataFrame:
-    """df = ESG-commitment chunks (cols bank, year, spec_level) aligned row-wise
-    with emb. BRI uses same-year cross-bank comparison. -> bank, year, sbs, bri.
-
-    Precondition: emb must be row-aligned to df in positional order (emb[i] is df row i)."""
-    df = df.reset_index(drop=True)  # labels must equal positional emb rows
+    """df = ESG-commitment chunks (cols bank, year) aligned row-wise with emb
+    in positional order (emb[i] is df row i). emb is mean-centered corpus-wide
+    before cosine. BRI uses same-year cross-bank comparison. -> bank, year, bri.
+    """
+    df = df.reset_index(drop=True)      # labels must equal positional emb rows
+    emb = center_normalize(emb)
     rows = []
     for year, g_year in df.groupby("year"):
         idx_year = g_year.index.to_numpy()
@@ -67,7 +70,6 @@ def signals_per_panel(df: pd.DataFrame, emb: np.ndarray) -> pd.DataFrame:
         bri_series = pd.Series(bri_per, index=idx_year)
         for bank, g in g_year.groupby("bank"):
             idx = g.index.to_numpy()
-            sbs, _ = substance_backing_score(emb[idx], g["spec_level"].to_numpy())
-            rows.append({"bank": bank, "year": year, "sbs": sbs,
+            rows.append({"bank": bank, "year": year,
                          "bri": float(bri_series.loc[idx].mean())})
     return pd.DataFrame(rows)
