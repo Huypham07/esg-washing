@@ -12,6 +12,7 @@
 \usepackage{amsmath}
 \usepackage{multirow}
 \usepackage{booktabs}
+\graphicspath{{figures/}}
 
 \begin{document}
 %
@@ -189,6 +190,13 @@ Toàn panel  & 0{,}372 & [0{,}345;\,0{,}400] & 0{,}309 & 0{,}319 & 67{,}8 \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.90\textwidth]{fig_rq1_cartography.png}
+\caption{Bản đồ rủi ro CTI--QDR của 9 ngân hàng (trung bình 2020--2024). Trục hoành là tỉ lệ nói suông (CTI), trục tung là tỉ lệ định lượng (QDR). Phần tư góc dưới-phải (CTI thấp, QDR cao) là vùng công bố thực chất; góc trên-trái (CTI cao, QDR thấp) là vùng washing cao. Kích thước bong bóng tỉ lệ với $\bar{N}$.}
+\label{fig:cartography}
+\end{figure}
+
 \subsection{RQ2 --- Công bố chọn lọc: trụ Môi trường bị né}
 Tỉ trọng công bố theo trụ lệch rõ và nhất quán: trung bình $\mathrm{share}(E)=0{,}241$, thấp hơn đáng kể so với $\mathrm{share}(S)=0{,}349$ và $\mathrm{share}(G)=0{,}410$. Kiểm định Friedman trên 45 khối (ngân hàng, năm) bác bỏ mạnh giả thuyết ba trụ được công bố ngang nhau ($\chi^2=50{,}1$, $p=1{,}3\times 10^{-11}$). Hậu kiểm Wilcoxon ghép cặp xác nhận trụ Môi trường thấp hơn cả trụ Quản trị ($p=3{,}3\times 10^{-9}$, trung vị lệch $-0{,}161$) lẫn trụ Xã hội ($p=1{,}4\times 10^{-9}$), trong khi khác biệt giữa Xã hội và Quản trị có ý nghĩa yếu hơn ($p=0{,}0014$).
 
@@ -217,6 +225,13 @@ Trung bình  & 0{,}241 & 0{,}349 & 0{,}410 \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_rq2_selective_disclosure.png}
+\caption{Bản đồ nhiệt tỉ trọng công bố theo trụ mỗi (ngân hàng, năm). Màu xanh đậm = share cao. Toàn bộ ngân hàng và năm cho thấy trụ Môi trường (E) nhạt nhất, Quản trị (G) đậm nhất --- xác nhận hành vi né trụ khó có tính hệ thống.}
+\label{fig:selective_disclosure}
+\end{figure}
+
 \subsection{RQ3 --- Khoảng cách thực chất theo thời gian}
 Phân tích theo năm (Bảng~\ref{tab:by_year}) cho thấy một nghịch lý. Khối lượng cam kết ESG tăng mạnh và có ý nghĩa thống kê theo thời gian (Spearman $\rho=0{,}609$, $p=9{,}1\times 10^{-6}$): trung bình mỗi báo cáo tăng từ $\approx 43$ cam kết năm 2020 lên $\approx 101$ năm 2024. Tuy nhiên, \emph{cơ cấu} độ cụ thể gần như đứng yên: cả CTI ($\rho=0{,}031$, $p=0{,}84$) lẫn QDR ($\rho=-0{,}073$, $p=0{,}63$) đều không có xu hướng thời gian có ý nghĩa. Nói cách khác, các ngân hàng \emph{nói nhiều hơn về ESG} nhưng \emph{không cụ thể hơn}: phần tăng thêm chủ yếu là cam kết mơ hồ.
 
@@ -238,6 +253,13 @@ Năm & CTI & NAR & QDR & $\bar{N}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.90\textwidth]{fig_rq3_trajectories.png}
+\caption{Quỹ đạo CTI của 9 ngân hàng theo năm 2020--2024. Không có xu hướng cải thiện rõ ràng: đường trung bình toàn panel (nét đứt) dao động quanh 0{,}37--0{,}40 mà không giảm. Mỗi đường màu là một ngân hàng; dải bóng là khoảng tin cậy 95\% bootstrap.}
+\label{fig:trajectories}
+\end{figure}
 
 \subsection{Kiểm định độ ổn định xếp hạng}
 Để kiểm tra liệu CTI có dùng để \emph{xếp hạng} ngân hàng một cách đáng tin hay không, chúng tôi lấy lại mẫu bootstrap ($B=2000$) các cam kết trong từng (ngân hàng, năm), tính lại CTI cấp ngân hàng và đo Kendall $\tau$ của thứ hạng so với gốc. Thứ hạng ổn định ở mức khá: $\tau$ trung bình $=0{,}73$ (phân vị 5\% $=0{,}50$), và ngân hàng rủi ro cao nhất (MB Bank, CTI$=0{,}451$) được giữ ở đỉnh trong 67{,}3\% lần lấy mẫu. Kiểm định bỏ-một-năm cho $\tau$ tối thiểu $=0{,}67$ (khi bỏ năm 2022), cho thấy thứ hạng không bị chi phối bởi bất kỳ năm đơn lẻ nào. Xếp hạng rủi ro từ thấp đến cao: Agribank, OCB, Vietcombank (ít rủi ro nhất), BIDV, Techcombank, VPBank, SHB, VietinBank, MB Bank (rủi ro nhất).
@@ -271,6 +293,13 @@ Quản trị (G)   & $+0{,}327$ & cheap-talk pillar --- nói suông vượt tr�
 \end{tabular}
 \end{table}
 
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.88\textwidth]{fig_rq5_saydo.png}
+\caption{Khoảng cách say--do ($\Delta_p = \mathrm{CTI}_p - \mathrm{QDR}_p$) theo trụ qua 45 quan sát panel. Mỗi điểm là một ô (ngân hàng, năm). Quản trị (G, cam) có phân bố lệch phải mạnh ($\Delta_{\mathrm{gov}}=+0{,}327$); Môi trường (E, xanh lục) và Xã hội (S, xanh dương) tập trung quanh 0.}
+\label{fig:saydo}
+\end{figure}
+
 \paragraph{Phân loại hành động định lượng.}
 Để hiểu \emph{ngân hàng định lượng về điều gì}, chúng tôi trích xuất và phân loại các ``figure'' (đại lượng đo được) từ rubric Qwen3 (chỉ tính các item Mức~2 đã qua verify). Kết quả (Bảng~\ref{tab:figtypes}) cho thấy tín dụng xanh (green\_credit, $n=202$) là loại định lượng phổ biến nhất, theo sau là hành động xã hội ($n=156$) và đào tạo ($n=141$). Đặc biệt nổi bật: \emph{lượng phát thải} chỉ được định lượng 13 lần trên toàn bộ 45 ô (ngân hàng, năm) --- ít hơn 15 lần so với tín dụng xanh. Ngân hàng Việt Nam \emph{định lượng tài chính xanh} (tín dụng xanh, trái phiếu xanh) rất tốt nhưng gần như không công bố số liệu phát thải của chính mình, đây là khoảng trống lớn về minh bạch ESG.
 
@@ -292,8 +321,22 @@ Phát thải/carbon (emissions)    & 13  \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.72\textwidth]{fig_rq5_figtypes.png}
+\caption{Số lượng hành động định lượng trích từ rubric phân theo loại (45 ô). Tín dụng xanh ($n=202$) vượt trội; phát thải carbon ($n=13$) gần như vắng mặt --- khoảng trống minh bạch lớn nhất của ngân hàng Việt Nam.}
+\label{fig:figtypes}
+\end{figure}
+
 \paragraph{SHAP chunk-level.}
 Bộ phân loại Random Forest dự đoán mức cụ thể (0/1/2) từ 12 đặc trưng cấu trúc đạt macro-F1(CV)$=0{,}548$ ($n=3049$ đơn vị, 3-class, chance$\approx 0{,}33$). Phân tích SHAP cho thấy hai đặc trưng chữ số (\texttt{n\_digit\_runs}, \texttt{pct\_digit\_chars}) là quan trọng nhất, phản ánh sự thật hiển nhiên rằng các câu chứa số thường đạt Mức~2. Đáng chú ý hơn, \texttt{p\_gov} (xác suất thuộc Quản trị từ topic classifier) đứng thứ ba: các đơn vị được phân loại cao về Quản trị có \emph{xu hướng mơ hồ hơn} --- phù hợp với say--do gap lớn ở trụ Quản trị. \texttt{p\_commitment} (xác suất là cam kết) đứng thứ tư, cho thấy bộ phân loại commitment và rubric specificity đo hai chiều bổ sung nhau, không dư thừa.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.82\textwidth]{fig_rq5_shap.png}
+\caption{SHAP feature importance của Random Forest dự đoán mức cụ thể (0/1/2) từ 12 đặc trưng cấu trúc. Hai đặc trưng chữ số (\texttt{n\_digit\_runs}, \texttt{pct\_digit\_chars}) dẫn đầu; \texttt{p\_gov} đứng thứ ba (cam kết Quản trị có xu hướng mơ hồ hơn); \texttt{rel\_position} phản ánh vị trí câu trong tài liệu.}
+\label{fig:shap}
+\end{figure}
 
 \subsection{Chuyển giao từ vựng và động lực translate-train}
 \begin{table}[!t]
