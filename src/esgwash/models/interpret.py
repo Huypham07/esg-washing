@@ -16,7 +16,7 @@ from sklearn.pipeline import make_pipeline
 
 
 def fit_head(train_df: pd.DataFrame, head: str, text_col: str = "text", seed: int = 42):
-    tr = train_df.dropna(subset=[head])
+    tr = train_df.dropna(subset=[head, text_col])
     pipe = make_pipeline(
         TfidfVectorizer(ngram_range=(1, 2), max_features=50_000, sublinear_tf=True),
         LogisticRegression(max_iter=2000, class_weight="balanced", random_state=seed))
@@ -39,8 +39,8 @@ def cross_lingual_macro_f1(train_df: pd.DataFrame, test_df: pd.DataFrame, heads,
                            train_col: str, test_col: str, seed: int = 42) -> float:
     f1s = []
     for h in heads:
-        tr = train_df.dropna(subset=[h])
-        te = test_df.dropna(subset=[h])
+        tr = train_df.dropna(subset=[h, train_col])
+        te = test_df.dropna(subset=[h, test_col])
         if tr.empty or te.empty:
             continue
         pipe = fit_head(tr, h, train_col, seed)
