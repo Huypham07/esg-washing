@@ -1,0 +1,43 @@
+Problem Statement
+Human influence on the natural environment has been a widely discussed issue for decades. Our collective activity has an undeniable impact on ecosystems, and although ecological and sustainable practices are increasingly introduced across production, industry, and services, organizations still vary greatly in how responsibly they operate. Many companies publicly communicate their environmental initiatives through websites and media channels. Some genuinely implement sustainable practices, while others present misleading or exaggerated claims — a phenomenon widely known as greenwashing.
+As public awareness of ecological issues grows, individuals increasingly want to make responsible consumption choices. Buying goods is inevitable, but choosing who to buy from can meaningfully influence both environmental outcomes and personal well-being. Unfortunately, distinguishing companies that truly reduce their environmental footprint from those that merely claim to do so is challenging, especially for non-experts.
+My project aims to support consumers by providing a tool that analyzes the content of a selected company website and evaluates it for potential greenwashing. The system offers a greenwashing score, a verdict, and a concise, user-friendly explanation to help people make informed and responsible choices.
+
+Why agents?
+Greenwashing detection involves multiple complex tasks: extracting content from websites, understanding natural language, evaluating claims in ecological context, and producing a coherent assessment. These steps require autonomy, reasoning, and the ability to break down a larger task into smaller components.
+Agent-based systems are well-suited for this type of problem because they can combine specialized capabilities — such as text extraction and semantic analysis — into a coordinated workflow. Each agent focuses on a specific part of the pipeline. This modularity and autonomy make agents an effective solution for analyzing environmental communication at scale.
+
+Overall architecture
+The solution represents an early-stage prototype of the broader vision for a full-featured Greenwasher Detector. The system consists of two agents and one tool:
+
+1) GreenwashingDetectionTool (Main Agent).
+A large language model–based agent responsible for:
+
+assessing the likelihood of greenwashing in environmental text,
+generating structured output in JSON format,
+orchestrating the workflow by calling a dedicated extraction agent.
+It receives a website URL, requests processed content from the extraction tool (extraction agent), and evaluates the greenwashing probability.
+2) EnvironmentalContentExtractorTool (Extraction Agent).
+A secondary LLM agent used as a tool by the main agent. It:
+
+uses the scrap_page function to visit and parse the website,
+extracts only environmentally relevant information,
+filters out irrelevant content to focus on sustainability-related statements.
+3) scrap_page Tool.
+A simple Python function that scrapes the provided URL and extracts visible text from HTML. It serves as the foundation for more advanced data acquisition in future iterations.
+
+Tools and technologies
+The prototype was developed entirely in Python using the experimental Kaggle environment. Key technologies include:
+
+google.adk and google.genai for agent creation and orchestration,
+basic scraping utilities for content extraction,
+JSON-based structured output for explainability.
+If I had more time, this is what I'd do
+The current solution is a minimal prototype, and several enhancements could significantly improve its quality and usefulness:
+
+Improve scraping capabilities. Extend the scraper to handle dynamic content, multi-page websites, PDFs (e.g., sustainability reports), iframes, and JavaScript-rendered sections.
+Incorporate multiple data sources. A single website rarely provides the full ecological profile of a company. To create a more comprehensive - assessment, the system could aggregate data from: news articles, independent environmental reports, social media, NGO statements, certificates and compliance databases.
+Add cross-checking and fact verification. Evaluate whether environmental claims made by a company align with external evidence, third-party audits, or regulatory filings.
+Introduce a scoring methodology. Develop a transparent scoring rubric combining: claim specificity, presence of measurable targets, supporting evidence, third-party certifications, historical controversies.
+Build a user dashboard. Provide a clear, interactive interface with: visual explanations of greenwashing indicators, company history, risk categories, recommendations for alternatives.
+Fine-tune a model on sustainability-related datasets. Train a specialized classifier or LLM-based evaluator on environmental communication corpora, ESG reports, and documented greenwashing cases.

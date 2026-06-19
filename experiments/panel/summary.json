@@ -1,0 +1,227 @@
+{
+  "descriptive": {
+    "n_panels": 45,
+    "n_banks": 9,
+    "years": [
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "cti_overall": {
+      "mean": 0.372,
+      "sd": 0.0919,
+      "ci95": [
+        0.3452,
+        0.3995
+      ]
+    },
+    "nar_overall": {
+      "mean": 0.3094,
+      "sd": 0.0896,
+      "ci95": [
+        0.284,
+        0.3342
+      ]
+    },
+    "qdr_overall": {
+      "mean": 0.3186,
+      "sd": 0.0943,
+      "ci95": [
+        0.293,
+        0.3479
+      ]
+    },
+    "by_year": [
+      {
+        "year": 2020,
+        "cti": 0.3781,
+        "nar": 0.2974,
+        "qdr": 0.3245,
+        "n_commit": 43.1111
+      },
+      {
+        "year": 2021,
+        "cti": 0.3352,
+        "nar": 0.2909,
+        "qdr": 0.3738,
+        "n_commit": 49.2222
+      },
+      {
+        "year": 2022,
+        "cti": 0.4013,
+        "nar": 0.3261,
+        "qdr": 0.2726,
+        "n_commit": 65.2222
+      },
+      {
+        "year": 2023,
+        "cti": 0.3811,
+        "nar": 0.3206,
+        "qdr": 0.2983,
+        "n_commit": 80.0
+      },
+      {
+        "year": 2024,
+        "cti": 0.3644,
+        "nar": 0.3119,
+        "qdr": 0.3237,
+        "n_commit": 101.2222
+      }
+    ],
+    "by_bank": [
+      {
+        "bank": "agribank",
+        "cti": 0.2927,
+        "nar": 0.3489,
+        "qdr": 0.3584,
+        "n_commit": 48.2
+      },
+      {
+        "bank": "bidv",
+        "cti": 0.373,
+        "nar": 0.326,
+        "qdr": 0.301,
+        "n_commit": 89.0
+      },
+      {
+        "bank": "mbbank",
+        "cti": 0.4598,
+        "nar": 0.2452,
+        "qdr": 0.2951,
+        "n_commit": 85.6
+      },
+      {
+        "bank": "ocb",
+        "cti": 0.296,
+        "nar": 0.4444,
+        "qdr": 0.2596,
+        "n_commit": 42.0
+      },
+      {
+        "bank": "shb",
+        "cti": 0.4157,
+        "nar": 0.2828,
+        "qdr": 0.3015,
+        "n_commit": 86.0
+      },
+      {
+        "bank": "techcombank",
+        "cti": 0.397,
+        "nar": 0.2751,
+        "qdr": 0.3279,
+        "n_commit": 76.6
+      },
+      {
+        "bank": "vietcombank",
+        "cti": 0.2891,
+        "nar": 0.2664,
+        "qdr": 0.4445,
+        "n_commit": 30.2
+      },
+      {
+        "bank": "viettinbank",
+        "cti": 0.4306,
+        "nar": 0.3258,
+        "qdr": 0.2436,
+        "n_commit": 82.4
+      },
+      {
+        "bank": "vpbank",
+        "cti": 0.3942,
+        "nar": 0.27,
+        "qdr": 0.3358,
+        "n_commit": 69.8
+      }
+    ]
+  },
+  "selective_disclosure": {
+    "n_blocks": 45,
+    "pillar_mean_share": {
+      "env": 0.241,
+      "soc": 0.3486,
+      "gov": 0.4104
+    },
+    "friedman": {
+      "chi2": 50.0678,
+      "p": 1.343e-11
+    },
+    "wilcoxon": {
+      "env_vs_gov": {
+        "stat": 55.0,
+        "p": 3.26e-09,
+        "median_diff": -0.1613
+      },
+      "env_vs_soc": {
+        "stat": 48.0,
+        "p": 1.401e-09,
+        "median_diff": -0.0947
+      },
+      "soc_vs_gov": {
+        "stat": 196.0,
+        "p": 0.0014,
+        "median_diff": -0.0743
+      }
+    }
+  },
+  "temporal_trend": {
+    "cti": {
+      "spearman_rho": 0.0309,
+      "p": 0.8405
+    },
+    "nar": {
+      "spearman_rho": 0.052,
+      "p": 0.7343
+    },
+    "qdr": {
+      "spearman_rho": -0.0732,
+      "p": 0.6327
+    },
+    "n_commit": {
+      "spearman_rho": 0.6087,
+      "p": 9.135e-06
+    }
+  },
+  "component_corr": {
+    "cti_vs_qdr": {
+      "spearman_rho": -0.4342,
+      "p": 0.002884
+    },
+    "cti_vs_n_commit": {
+      "spearman_rho": 0.3717,
+      "p": 0.01193
+    },
+    "qdr_vs_n_commit": {
+      "spearman_rho": -0.2685,
+      "p": 0.0745
+    }
+  },
+  "ranking_stability": {
+    "n_banks": 9,
+    "base_ranking": {
+      "mbbank": 0.4509,
+      "viettinbank": 0.4345,
+      "shb": 0.4,
+      "vpbank": 0.384,
+      "bidv": 0.3753,
+      "techcombank": 0.3681,
+      "vietcombank": 0.3576,
+      "agribank": 0.3195,
+      "ocb": 0.3048
+    },
+    "kendall_tau_mean": 0.7284,
+    "kendall_tau_p05": 0.5,
+    "top1_retention": 0.6725
+  },
+  "leave_one_year_out": {
+    "per_dropped_year": {
+      "2020": 0.8889,
+      "2021": 0.8889,
+      "2022": 0.6667,
+      "2023": 0.8333,
+      "2024": 0.7778
+    },
+    "tau_min": 0.6667
+  }
+}
