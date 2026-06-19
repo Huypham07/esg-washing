@@ -14,7 +14,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
 from sklearn.model_selection import StratifiedKFold
 
@@ -33,12 +33,12 @@ def train_eval(X, y, seed: int = 42) -> dict:
     y = pd.Series(y).reset_index(drop=True)
     X = pd.DataFrame(X).reset_index(drop=True)
     k = int(min(3, y.value_counts().min()))
-    model = GradientBoostingClassifier(random_state=seed)
+    model = RandomForestClassifier(n_estimators=300, random_state=seed, class_weight="balanced", n_jobs=-1)
     if k >= 2:
         skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=seed)
         f1s = []
         for tr, te in skf.split(X, y):
-            m = GradientBoostingClassifier(random_state=seed).fit(X.iloc[tr], y.iloc[tr])
+            m = RandomForestClassifier(n_estimators=300, random_state=seed, class_weight="balanced", n_jobs=-1).fit(X.iloc[tr], y.iloc[tr])
             f1s.append(f1_score(y.iloc[te], m.predict(X.iloc[te]), average="macro"))
         cv = float(np.mean(f1s))
     else:
