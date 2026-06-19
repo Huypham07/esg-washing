@@ -54,7 +54,10 @@ def boilerplate_reuse_index(emb: np.ndarray, banks: np.ndarray):
 
 def signals_per_panel(df: pd.DataFrame, emb: np.ndarray) -> pd.DataFrame:
     """df = ESG-commitment chunks (cols bank, year, spec_level) aligned row-wise
-    with emb. BRI uses same-year cross-bank comparison. -> bank, year, sbs, bri."""
+    with emb. BRI uses same-year cross-bank comparison. -> bank, year, sbs, bri.
+
+    Precondition: emb must be row-aligned to df in positional order (emb[i] is df row i)."""
+    df = df.reset_index(drop=True)  # labels must equal positional emb rows
     rows = []
     for year, g_year in df.groupby("year"):
         idx_year = g_year.index.to_numpy()
