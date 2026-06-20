@@ -65,8 +65,9 @@ def fig_shap(model, X, out_dir: Path) -> Path:
 
 
 def fig_say_do(classified, out_dir: Path) -> Path:
+    from esgwash.eda.anon import anonymize
     sd = pillar_say_do(classified)
-    grid = sd.pivot_table(index=["bank", "year"], columns="pillar", values="say_do")
+    grid = anonymize(sd).pivot_table(index=["bank", "year"], columns="pillar", values="say_do")
     fig, ax = plt.subplots(figsize=(8, max(4, 0.4 * len(grid))), facecolor=PALETTE["paper"])
     im = ax.imshow(grid.to_numpy(), aspect="auto", cmap=DELTA_CMAP,
                    norm=symmetric_delta_norm(grid.to_numpy().ravel()))

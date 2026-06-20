@@ -155,10 +155,13 @@ def fig_selective_disclosure(shares, out_dir):
 
 def main(out_dir: str = "experiments/figures", panel=None, shares=None) -> list[Path]:
     apply_rcparams()
+    from esgwash.eda.anon import anonymize
     if panel is None:
         panel = _load_panel()
     if shares is None:
         shares = _load_shares()
+    panel = anonymize(panel)
+    shares = anonymize(shares)
     out = Path(out_dir)
     return [fig_ribbons(panel, out), fig_cti_cartography(panel, out),
             fig_cti_trajectories(panel, out), fig_washing_pca(panel, out),

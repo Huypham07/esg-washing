@@ -100,8 +100,10 @@ def fig_noise_retention(clf, out_dir: Path) -> Path:
 
 def main(out_dir: str = "experiments/figures", clf=None) -> list:
     apply_rcparams()
+    from esgwash.eda.anon import anonymize
     if clf is None:
         clf = ce.load_classified()
+    clf = anonymize(clf)
     out = Path(out_dir)
     return [fig_token_lattice(clf, out), fig_coverage(clf, out),
             fig_labels(clf, out), fig_noise_retention(clf, out)]

@@ -49,10 +49,17 @@ BRI (embedding) · Say-do gap · SHAP
 
 **Corpus:** 9 ngân hàng × 5 năm (2020–2024) = **45 quan sát panel**
 
-| Ngân hàng | Viết tắt |
-|-----------|----------|
-| Agribank, BIDV, MB Bank, OCB, SHB | Ngân hàng thương mại lớn + tầm trung |
-| Techcombank, Vietcombank, VietinBank, VPBank | Ngân hàng cổ phần lớn |
+### Bảng giải mã tên ngân hàng (decoder)
+
+> Trong **paper** và **các figure**, tên ngân hàng được **mã hoá** (chữ đầu + chữ cuối của tên) để ẩn danh. Tài liệu nội bộ này giữ tên thật; dùng bảng dưới để đối chiếu khi đọc figure.
+
+| Mã | Ngân hàng | Mã | Ngân hàng |
+|----|-----------|----|-----------|
+| **AK** | Agribank | **TM** | Techcombank |
+| **BV** | BIDV | **VMK** | Vietcombank |
+| **MK** | MB Bank | **VNK** | VietinBank |
+| **OB** | OCB | **VK** | VPBank |
+| **SB** | SHB | | |
 
 ---
 
@@ -71,7 +78,7 @@ BRI (embedding) · Say-do gap · SHAP
 *Đọc figure:* Mỗi ô là một ngân hàng. Biểu đồ violin cho thấy phân bố số token trong một chunk. Hầu hết chunks có độ dài trung vị ~228 token, tập trung sát trần 256 — nghĩa là splitter hoạt động tốt, lấp đầy context mà không tràn. Các điểm ngoại lai (outlier) gần 0 là các đoạn văn rất ngắn (tiêu đề, bullet đơn lẻ).
 
 **Số liệu chính:**
-- Tổng: **13.812 chunks** trên toàn bộ corpus
+- Tổng: **14.139 chunks** trên toàn bộ corpus
 - Trung vị: 228 token | p90: 252 token | Max: 256 token
 - Không có chunk rỗng
 
@@ -153,11 +160,11 @@ $$\text{QDR}(b,y) = \frac{\text{số cam kết Mức 2}}{N} \quad \text{(Quantif
 
 | Chỉ số | Trung bình | CI 95% |
 |--------|-----------|--------|
-| CTI | **0,372** | [0,345 ; 0,400] |
-| NAR | 0,309 | [0,284 ; 0,334] |
-| QDR | 0,319 | [0,293 ; 0,348] |
+| CTI | **0,383** | [0,360 ; 0,408] |
+| NAR | 0,313 | [0,288 ; 0,337] |
+| QDR | 0,304 | [0,282 ; 0,327] |
 
-→ **Hơn 37% cam kết ESG là nói suông.** Chỉ 32% đạt mức định lượng.
+→ **Gần 38% cam kết ESG là nói suông.** Chỉ ~30% đạt mức định lượng.
 
 ### Bản đồ rủi ro (CTI vs QDR) từng ngân hàng
 
@@ -171,9 +178,9 @@ $$\text{QDR}(b,y) = \frac{\text{số cam kết Mức 2}}{N} \quad \text{(Quantif
 - **Kích thước bong bóng:** tỉ lệ với số cam kết trung bình N̄
 
 Nhận xét:
-- **Vietcombank** (QDR cao, CTI thấp) = công bố thực chất nhất nhưng N̄ rất nhỏ (~30 cam kết/báo cáo) → cần diễn giải thận trọng
 - **MB Bank** (CTI ~0,46) = rủi ro washing cao nhất
-- **Agribank, OCB** = an toàn hơn (CTI thấp, nhưng NAR cao = mô tả hành động chứ chưa có số)
+- **Agribank, OCB** = an toàn hơn (CTI thấp ~0,29, nhưng NAR cao = mô tả hành động chứ chưa có số)
+- **Vietcombank** = ở giữa bảng (CTI ~0,39); lưu ý 3 báo cáo VCB (2020/2021/2024) ban đầu bị nhầm với báo cáo công ty con VCBS, đã sửa lại bằng báo cáo ngân hàng đúng
 
 ### Dải phân vị CTI theo năm (quantile ribbons)
 
@@ -197,16 +204,16 @@ $$\text{share}(p) = \frac{n_p}{n_E + n_S + n_G}, \quad p \in \{E, S, G\}$$
 
 | Trụ | Share trung bình |
 |-----|----------------|
-| Môi trường (E) | **0,241** ← thấp nhất |
-| Xã hội (S) | 0,349 |
-| Quản trị (G) | **0,410** ← cao nhất |
+| Môi trường (E) | **0,240** ← thấp nhất |
+| Xã hội (S) | 0,357 |
+| Quản trị (G) | **0,403** ← cao nhất |
 
-**Kiểm định Friedman:** χ² = 50,1, **p = 1,3 × 10⁻¹¹** → bác bỏ mạnh giả thuyết ba trụ ngang nhau.
+**Kiểm định Friedman:** χ² = 53,6, **p = 2,3 × 10⁻¹²** → bác bỏ mạnh giả thuyết ba trụ ngang nhau.
 
 **Wilcoxon ghép cặp:**
-- E vs G: p = 3,3 × 10⁻⁹ (E thấp hơn G rõ rệt)
-- E vs S: p = 1,4 × 10⁻⁹
-- S vs G: p = 0,0014
+- E vs G: p = 2,0 × 10⁻⁹ (E thấp hơn G rõ rệt, trung vị lệch −0,160)
+- E vs S: E thấp hơn S rõ rệt
+- S vs G: khác biệt yếu hơn
 
 ### Heatmap công bố chọn lọc
 
@@ -231,20 +238,20 @@ Trường hợp đặc biệt:
 
 | Năm | CTI | NAR | QDR | N̄ cam kết |
 |-----|-----|-----|-----|-----------|
-| 2020 | 0,378 | 0,297 | 0,325 | 43,1 |
-| 2021 | 0,335 | 0,291 | 0,374 | 49,2 |
+| 2020 | 0,402 | 0,299 | 0,299 | 48,2 |
+| 2021 | 0,363 | 0,310 | 0,326 | 52,8 |
 | 2022 | 0,401 | 0,326 | 0,273 | 65,2 |
 | 2023 | 0,381 | 0,321 | 0,298 | 80,0 |
-| 2024 | 0,364 | 0,312 | 0,324 | 101,2 |
+| 2024 | 0,369 | 0,309 | 0,322 | 107,6 |
 
 **Spearman correlation:**
-- N̄ ~ năm: ρ = **+0,609** (p < 0,001) → số lượng tăng mạnh
-- CTI ~ năm: ρ = **+0,031** (p = 0,84) → không có xu hướng
-- QDR ~ năm: ρ = **−0,073** (p = 0,63) → không cải thiện
+- N̄ ~ năm: ρ = **+0,668** (p < 0,001) → số lượng tăng mạnh
+- CTI ~ năm: ρ = **−0,087** (p = 0,57) → không có xu hướng
+- QDR ~ năm: ρ = **+0,068** (p = 0,66) → không cải thiện
 
-→ **Ngân hàng nói nhiều hơn nhưng không cụ thể hơn.** Từ 43 cam kết/báo cáo (2020) lên 101 (2024), nhưng CTI vẫn ~37%.
+→ **Ngân hàng nói nhiều hơn nhưng không cụ thể hơn.** Từ 48 cam kết/báo cáo (2020) lên 108 (2024), nhưng CTI vẫn ~38%.
 
-**Thêm nữa:** tương quan CTI ~ N̄ = **+0,372** (p = 0,012) → càng có nhiều cam kết thì tỉ lệ nói suông càng tăng (pha loãng nội dung thực chất).
+**Thêm nữa:** CTI và QDR tách nhau (Spearman CTI–QDR = −0,43) → càng mở rộng khối lượng công bố thì tỉ trọng định lượng càng bị pha loãng. Lưu ý: xu hướng theo năm **dị biệt theo từng bank** (một số cải thiện, một số xấu đi) nên triệt tiêu khi gộp panel.
 
 ### Quỹ đạo CTI từng ngân hàng 2020–2024
 
@@ -278,8 +285,8 @@ Nhận xét:
 
 | Kiểm định | Kết quả |
 |-----------|---------|
-| Spearman(CTI, BRI) | **ρ = −0,353** (p = 0,018, n=45) |
-| Spearman(NAR, BRI) | **ρ = +0,300** (p = 0,045, n=45) |
+| Spearman(CTI, BRI) | **ρ = −0,429** (p = 0,003, n=45) |
+| Spearman(NAR, BRI) | **ρ = +0,370** (p = 0,012, n=45) |
 
 **Đọc ý nghĩa:**
 - **CTI cao → BRI thấp:** Ngân hàng nói suông dùng ngôn ngữ *mơ hồ riêng* (khẩu hiệu mỗi người viết khác nhau), **không** phải boilerplate ngành
@@ -317,9 +324,9 @@ $$\Delta_p(b,y) = \text{CTI}_p(b,y) - \text{QDR}_p(b,y)$$
 
 | Trụ | Δ trung bình | Ý nghĩa |
 |-----|-------------|---------|
-| Môi trường (E) | **+0,026** | Gần cân bằng |
-| Xã hội (S) | **−0,010** | Gần cân bằng (định lượng nhỉnh hơn chút) |
-| Quản trị (G) | **+0,327** | **Nói suông vượt xa định lượng** |
+| Môi trường (E) | **+0,055** | Gần cân bằng |
+| Xã hội (S) | **+0,022** | Gần cân bằng |
+| Quản trị (G) | **+0,331** | **Nói suông vượt xa định lượng** |
 
 **Giải thích:** Quản trị là trụ *cheap-talk nội trụ* nặng nhất. Tức là khi ngân hàng **có** viết về Quản trị, 1/3 là nói suông mà không định lượng. Ví dụ điển hình: *"Ngân hàng cam kết tuân thủ đầy đủ các quy định quản trị"* — nghe có vẻ cam kết nhưng không có con số nào.
 
@@ -333,14 +340,14 @@ Ngược lại, Môi trường và Xã hội: **khi ngân hàng có cam kết �
 
 | Loại | Count | Ý nghĩa |
 |------|-------|---------|
-| Tín dụng xanh | **202** | Ngân hàng rất tích cực báo cáo dư nợ tín dụng xanh |
-| Xã hội | 156 | Các con số về hỗ trợ cộng đồng, an sinh |
-| Đào tạo | 141 | Số giờ đào tạo, số nhân viên đào tạo |
+| Tín dụng xanh | **208** | Ngân hàng rất tích cực báo cáo dư nợ tín dụng xanh |
+| Xã hội | 176 | Các con số về hỗ trợ cộng đồng, an sinh |
+| Đào tạo | 146 | Số giờ đào tạo, số nhân viên đào tạo |
 | Cây xanh | 27 | Số cây trồng |
-| Năng lượng | 23 | Tiêu thụ điện, tiết kiệm năng lượng |
+| Năng lượng | 26 | Tiêu thụ điện, tiết kiệm năng lượng |
 | **Phát thải** | **13** | ← **Cực kỳ thấp** |
 
-**Kết luận quan trọng:** Ngân hàng Việt Nam **giỏi định lượng tài chính xanh** (tín dụng xanh, trái phiếu xanh) nhưng **gần như không báo cáo phát thải carbon của chính mình** (13 lần trong 5 năm × 9 ngân hàng). Đây là khoảng trống minh bạch lớn nhất.
+**Kết luận quan trọng:** Ngân hàng Việt Nam **giỏi định lượng tài chính xanh** (tín dụng xanh, trái phiếu xanh) nhưng **gần như không báo cáo phát thải carbon của chính mình** (chỉ 13 lần trên 45 ô bank-năm). Đây là khoảng trống minh bạch lớn nhất.
 
 ### SHAP — điều gì quyết định một cam kết có số hay không?
 
@@ -352,7 +359,7 @@ Ngược lại, Môi trường và Xã hội: **khi ngân hàng có cam kết �
 - `p_env`, `p_soc`, `p_gov`, `p_commitment` — xác suất từ các classifier
 - `rel_position` — vị trí tương đối trong tài liệu (0=đầu, 1=cuối)
 
-**Kết quả:** macro-F1 = **0,548** (3-class, chance = 0,33). Mô hình học được tín hiệu thực.
+**Kết quả:** macro-F1 = **0,546** (3-class, chance = 0,33, n=3184). Mô hình học được tín hiệu thực.
 
 ![SHAP feature importance](paper/figures/fig_rq5_shap.png)
 
@@ -360,9 +367,9 @@ Ngược lại, Môi trường và Xã hội: **khi ngân hàng có cam kết �
 
 | Đặc trưng | Tầm quan trọng | Giải thích |
 |-----------|----------------|-----------|
-| `n_digit_runs` | Cao nhất | Số lần xuất hiện chuỗi chữ số liên tiếp → có số = dấu hiệu Mức 2 |
-| `pct_digit_chars` | Thứ 2 | % ký tự là chữ số → cam kết nhiều số = cụ thể hơn |
-| `p_gov` | **Thứ 3** | Xác suất thuộc Quản trị → **cam kết Quản trị có xu hướng MƠ HỒ hơn** (phù hợp say-do gap cao ở G) |
+| `pct_digit_chars` | Cao nhất | % ký tự là chữ số → cam kết nhiều số = cụ thể hơn |
+| `p_gov` | **Thứ 2** | Xác suất thuộc Quản trị → **cam kết Quản trị có xu hướng MƠ HỒ hơn** (phù hợp say-do gap cao ở G) |
+| `n_digit_runs` | Thứ 3 | Số lần xuất hiện chuỗi chữ số liên tiếp → có số = dấu hiệu Mức 2 |
 | `p_commitment` | Thứ 4 | Xác suất là cam kết → bổ sung cho rubric, không dư thừa |
 | `rel_position` | Thứ 5 | Cam kết ở cuối tài liệu (phần hành động/kế hoạch) cụ thể hơn |
 
@@ -412,11 +419,11 @@ Nhãn tiếng Anh → dịch sang tiếng Việt → huấn luyện PhoBERT
 
 | RQ | Câu hỏi | Kết quả chính | Ý nghĩa |
 |----|---------|---------------|---------|
-| **RQ1** | Nói suông phổ biến đến đâu? | CTI = 37,2% | Hơn 1/3 cam kết ESG là khẩu hiệu |
-| **RQ2** | Ngân hàng có né trụ khó? | Friedman p = 1,3×10⁻¹¹; E=24% vs G=41% | **Có** — né Môi trường, dồn vào Quản trị |
-| **RQ3** | Chất lượng có cải thiện theo năm? | CTI~năm ρ=0,031 (không đáng kể) | **Không** — nhiều hơn nhưng không tốt hơn |
-| **RQ4** | Rubric CTI có đáng tin không? | Spearman(CTI,BRI)=−0,353 p=0,018 | **Có** — hội tụ với tín hiệu embedding độc lập |
-| **RQ5** | Trụ nào nói suông nhất? | Δ_gov=+0,327; phát thải chỉ 13/45 ô | **Quản trị** cheap-talk; phát thải = khoảng trống lớn |
+| **RQ1** | Nói suông phổ biến đến đâu? | CTI = 38,3% | Gần 40% cam kết ESG là khẩu hiệu |
+| **RQ2** | Ngân hàng có né trụ khó? | Friedman p = 2,3×10⁻¹²; E=24% vs G=40% | **Có** — né Môi trường, dồn vào Quản trị |
+| **RQ3** | Chất lượng có cải thiện theo năm? | CTI~năm ρ=−0,087 (không đáng kể) | **Không** — nhiều hơn nhưng không tốt hơn |
+| **RQ4** | Rubric CTI có đáng tin không? | Spearman(CTI,BRI)=−0,429 p=0,003 | **Có** — hội tụ với tín hiệu embedding độc lập |
+| **RQ5** | Trụ nào nói suông nhất? | Δ_gov=+0,331; phát thải chỉ 13/45 ô | **Quản trị** cheap-talk; phát thải = khoảng trống lớn |
 
 ### Xếp hạng rủi ro 9 ngân hàng (trung bình 2020–2024)
 
@@ -427,12 +434,12 @@ Nhãn tiếng Anh → dịch sang tiếng Việt → huấn luyện PhoBERT
 | 🟠 3 | **SHB** | 0,416 | Giảm năm 2024 |
 | 🟠 4 | **Techcombank** | 0,397 | QDR khá (0,328) |
 | 🟡 5 | **VPBank** | 0,394 | Biến động lớn |
-| 🟡 6 | **BIDV** | 0,373 | Gần mức trung bình |
-| 🟢 7 | **Agribank** | 0,293 | An toàn, NAR cao |
-| 🟢 8 | **Vietcombank** | 0,289 | QDR cao nhất (0,445) nhưng N nhỏ |
-| 🟢 9 (thấp nhất) | **OCB** | 0,296 | NAR cao (0,444) — mô tả hành động rõ |
+| 🟡 6 | **Vietcombank** | 0,391 | Giữa bảng (sau khi sửa file đúng) |
+| 🟡 7 | **BIDV** | 0,373 | Gần mức trung bình |
+| 🟢 8 | **OCB** | 0,296 | NAR cao (0,444) — mô tả hành động rõ |
+| 🟢 9 (thấp nhất) | **Agribank** | 0,293 | An toàn, NAR cao |
 
-**Ổn định xếp hạng:** Bootstrap Kendall τ = 0,73 (p5 = 0,50), tau_min (bỏ một năm) = 0,67 → thứ hạng đáng tin ở mức vừa phải.
+**Ổn định xếp hạng:** Bootstrap Kendall τ = 0,72, tau_min (bỏ một năm) = 0,72 → thứ hạng đáng tin ở mức vừa phải.
 
 ### Khuyến nghị thực tế
 
