@@ -1,7 +1,3 @@
-% LLNCS — bản thảo tiếng Việt (main_vi).
-% Khung phương pháp: CTI/NAR/QDR (specificity) + BRI (embedding) + Say-do gap + Cross-lingual.
-% Biên dịch: XeLaTeX/LuaLaTeX (fontspec) cho dấu phụ tiếng Việt;
-% hoặc pdfLaTeX với inputenc utf8 + fontenc T1 và font hỗ trợ tiếng Việt.
 \documentclass[runningheads]{llncs}
 %
 \usepackage[utf8]{inputenc}
@@ -17,18 +13,24 @@
 
 \begin{document}
 %
-\title{Đo lường rủi ro ESG-washing qua độ cụ thể của cam kết: Nghiên cứu panel trên báo cáo thường niên ngân hàng thương mại Việt Nam}
+\title{Analyzing ESG-washing Risk: A case study in Vietnamese Banking Annual Reports}
 %
-\titlerunning{Đo lường ESG-washing trong báo cáo ngân hàng Việt Nam}
+\titlerunning{ESG-washing Risk in Vietnamese Banks}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
 %
-\author{Huu Huy Pham \and Viet Anh Nguyen\thanks{Tác giả liên hệ: vietanh@vnu.edu.vn}}
+\author{Quoc Anh Dang, Huu Huy Pham, Viet Anh Nguyen\thanks{Corresponding author: vietanh@vnu.edu.vn}}
 %
-\authorrunning{H. H. Pham and V. A. Nguyen}
+\authorrunning{Q. A. Dang et al.}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
 %
-\institute{Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội, Việt Nam\\
-\email{22028237@vnu.edu.vn}, \email{vietanh@vnu.edu.vn}}
+\institute{VNU University of Engineering and Technology, Hanoi, Vietnam
+% \\
+\email{22028064@vnu.edu.vn}, \email{22028237@vnu.edu.vn}, \email{vietanh@vnu.edu.vn}
+}
 %
-\maketitle
+\maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
 Công bố thông tin ESG đã trở thành cấu phần trung tâm trong báo cáo của ngành ngân hàng, nhưng sự bùng nổ của ngôn ngữ ESG cũng làm gia tăng lo ngại về \emph{ESG-washing} --- xu hướng nhấn mạnh các cam kết nghe hay nhưng thiếu nội dung thực chất. Nghiên cứu này đề xuất đo ESG-washing trực tiếp qua \emph{độ cụ thể của cam kết} (commitment specificity): mỗi cam kết ESG được một mô hình ngôn ngữ lớn chấm theo thang ba mức (mơ hồ / hành động có tên / định lượng quy về chủ thể), từ đó tổng hợp thành ba chỉ số bổ sung nhau trên mỗi (ngân hàng, năm): Tỉ lệ nói suông (CTI), Tỉ lệ hành động có tên (NAR) và Tỉ lệ công bố định lượng (QDR). Khung đo được áp dụng cho 9 ngân hàng thương mại Việt Nam trong giai đoạn 2020--2024 (45 quan sát panel). Kết quả cho thấy: (i) trung bình 38{,}3\% cam kết ESG là nói suông; (ii) trụ Môi trường bị công bố thiếu một cách có ý nghĩa thống kê so với hai trụ còn lại (Friedman $\chi^2=53{,}6$, $p=2{,}3\times 10^{-12}$), phản ánh hành vi né chủ đề khó; (iii) khối lượng cam kết tăng mạnh theo thời gian trong khi tỉ trọng nội dung thực chất không cải thiện --- tức ``nói nhiều hơn nhưng không cụ thể hơn''; (iv) chỉ số tái dùng ngôn ngữ chung BRI từ embedding hội tụ với CTI (Spearman $\rho=-0{,}429$, $p=0{,}003$), xác nhận tính giá trị hội tụ của khung; (v) khoảng cách say--do nội trụ cho thấy Quản trị là trụ nói suông nhất ($\Delta_{\mathrm{gov}}=+0{,}331$), trong khi một bộ phân loại Random Forest đạt macro-F1$=0{,}546$ khi dự đoán mức cụ thể từ đặc trưng cấu trúc. Xếp hạng rủi ro giữa các ngân hàng ổn định dưới kiểm định bootstrap (Kendall $\tau=0{,}72$).
@@ -336,24 +338,6 @@ Bộ phân loại Random Forest dự đoán mức cụ thể (0/1/2) từ 12 đ�
 \caption{SHAP feature importance của Random Forest dự đoán mức cụ thể (0/1/2) từ 12 đặc trưng cấu trúc. Hai đặc trưng chữ số (\texttt{n\_digit\_runs}, \texttt{pct\_digit\_chars}) dẫn đầu; \texttt{p\_gov} đứng thứ ba (cam kết Quản trị có xu hướng mơ hồ hơn); \texttt{rel\_position} phản ánh vị trí câu trong tài liệu.}
 \label{fig:shap}
 \end{figure}
-
-\subsection{Chuyển giao từ vựng và động lực translate-train}
-\begin{table}[H]
-\centering
-\caption{Macro-F1 của đường cơ sở TF-IDF+LR theo cấu hình ngôn ngữ. EN$\to$VI = train tiếng Anh, test tiếng Việt.}
-\label{tab:transfer}
-\begin{tabular}{llcc}
-\toprule
-Cấu hình & Ý nghĩa & Topic (E/S/G) & Cam kết \\
-\midrule
-VI$\to$VI & In-language         & 0{,}832 & 0{,}664 \\
-EN$\to$VI & Cross-lingual       & 0{,}220 & 0{,}470 \\
-EN$\to$EN & English only        & 0{,}787 & 0{,}641 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Bảng~\ref{tab:transfer} cho thấy đặc trưng từ vựng TF-IDF \emph{sụp đổ} khi chuyển từ tiếng Anh sang tiếng Việt: macro-F1 phân loại chủ đề giảm từ 0{,}832 (VI$\to$VI) xuống còn 0{,}220 (EN$\to$VI) --- mất hơn 61 điểm phần trăm. Với tác vụ phân loại cam kết, sụp đổ nhẹ hơn nhưng vẫn đáng kể (0{,}664 xuống 0{,}470). Điều này xác nhận rằng \emph{đặc trưng từ vựng không chuyển giao được giữa hai ngôn ngữ}, và việc dùng encoder đa ngôn ngữ (XLM-R) hoặc chiến lược translate-train với PhoBERT (như trong nghiên cứu này) là cần thiết để duy trì hiệu năng cao trên văn bản tiếng Việt.
 
 \subsection{Thảo luận}
 Năm phát hiện bổ sung nhau thành một bức tranh nhất quán về ESG-washing trong ngành ngân hàng Việt Nam: nói suông phổ biến (RQ1), trụ Môi trường bị né một cách hệ thống (RQ2), sự bành trướng cam kết không đi kèm cải thiện thực chất (RQ3), tín hiệu embedding xác nhận tính giá trị hội tụ của rubric (RQ4), và Quản trị là trụ cheap-talk nội trụ nặng nhất (RQ5). Quan trọng hơn, các kết luận này được rút ra mà không cần dữ liệu bên thứ ba và không dựa vào cấu trúc grounding vòng tròn.
