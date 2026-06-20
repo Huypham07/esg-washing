@@ -53,36 +53,25 @@ Văn liệu quản trị mô tả greenwashing như sự kết hợp giữa côn
 Về NLP, Florstedt và cộng sự \cite{florstedt2025detecting} kết hợp cảm xúc (VADER), độ cụ thể (ClimateBERT \cite{webersinke2021climatebert}) và truy hồi bằng chứng nội văn bản (Sentence-BERT \cite{reimers2019sentence}), song thiết kế cho tiếng Anh và lệ thuộc bằng chứng cùng tài liệu. Lipenkova và cộng sự \cite{lipenkova2023detecting} đối chiếu nguồn tin ngoài; Lagasio \cite{lagasio2024esg} dựng ESGSI từ TF--IDF/LDA/cảm xúc nhưng thiên đặc trưng phong cách; Bingler và cộng sự \cite{bingler2022cheap} chỉ ra ``cheap talk'' trong công bố khí hậu nhưng giới hạn tiếng Anh và trụ khí hậu. Tóm lại, văn liệu tồn tại ba khoảng trống: thiên tiếng Anh/trụ Môi trường; phụ thuộc dữ liệu bên thứ ba; và rủi ro \emph{đo lường vòng tròn}. Nghiên cứu này lấp cả ba.
 
 \section{Phương pháp}
-Pipeline end-to-end gồm bốn bước nối tiếp --- tách chunk, phân loại trụ, phân loại cam kết, chấm độ cụ thể --- rồi tổng hợp chỉ số và các tín hiệu bổ sung (Hình~\ref{fig:pipeline}).
+Pipeline gồm bốn giai đoạn nối tiếp, kèm một nhánh tín hiệu bổ sung dùng để kiểm chứng (Hình~\ref{fig:pipeline}).
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-  font=\footnotesize, node distance=4.2mm,
-  stage/.style={rectangle, rounded corners, draw=black!70, align=center,
-                text width=8.4cm, minimum height=6.5mm, fill=blue!4},
-  model/.style={stage, fill=orange!12},
-  outp/.style={stage, fill=green!12},
-  supp/.style={stage, fill=black!7},
-  arr/.style={-{Stealth[length=2mm]}, thick, draw=black!70}
+  font=\small, >={Stealth[length=2.4mm]},
+  box/.style={rectangle, rounded corners=5pt, draw=black!50, line width=0.6pt,
+              align=center, text width=2.35cm, minimum height=1.35cm},
+  arr/.style={->, line width=0.9pt, draw=black!55}
 ]
-\node[stage] (in) {Báo cáo thường niên (PDF) --- 9 ngân hàng $\times$ 5 năm (2020--2024)};
-\node[stage, below=of in] (ocr) {Tiền xử lý: OCR + làm sạch (loại đầu/chân trang, bảng số, nhiễu)};
-\node[stage, below=of ocr] (chunk) {Semantic chunking $\le 256$ token theo ranh giới câu $\rightarrow$ 14.139 đơn vị};
-\node[model, below=of chunk] (topic) {\textbf{Phân loại trụ E/S/G} --- PhoBERT (translate-train)};
-\node[model, below=of topic] (commit) {\textbf{Phân loại cam kết} + cổng topic --- PhoBERT};
-\node[model, below=of commit] (spec) {\textbf{Chấm độ cụ thể} 0/1/2 --- Qwen3-1.7B + \texttt{verify\_rubric}};
-\node[outp, below=of spec] (idx) {\textbf{Chỉ số CTI / NAR / QDR} theo (ngân hàng, năm) + bootstrap CI};
-\node[supp, below=of idx] (sg) {Tín hiệu bổ sung \& kiểm định: BRI (embedding) $\cdot$ say--do gap $\cdot$ SHAP $\cdot$ Friedman/Wilcoxon};
-\draw[arr] (in) -- (ocr);
-\draw[arr] (ocr) -- (chunk);
-\draw[arr] (chunk) -- (topic);
-\draw[arr] (topic) -- (commit);
-\draw[arr] (commit) -- (spec);
-\draw[arr] (spec) -- (idx);
-\draw[arr] (idx) -- (sg);
+\node[box, fill=blue!7]   (a) {\textbf{Báo cáo}\\[1pt]{\scriptsize PDF · 9 NH $\times$ 5 năm}};
+\node[box, fill=blue!7, right=6mm of a]  (b) {\textbf{Chunk hoá}\\[1pt]{\scriptsize ngữ nghĩa $\le$256 tok}};
+\node[box, fill=orange!18, right=6mm of b] (c) {\textbf{Phân loại}\\\textbf{\& chấm điểm}\\[1pt]{\scriptsize PhoBERT + Qwen3}};
+\node[box, fill=green!18, right=6mm of c]  (d) {\textbf{Chỉ số}\\\textbf{ESG-washing}\\[1pt]{\scriptsize CTI · NAR · QDR}};
+\node[box, fill=black!7, below=6mm of d, text width=3.6cm, minimum height=1.0cm] (e)
+     {\textbf{Tín hiệu kiểm chứng}\\[1pt]{\scriptsize BRI · say--do · SHAP}};
+\draw[arr] (a)--(b);  \draw[arr] (b)--(c);  \draw[arr] (c)--(d);  \draw[arr] (d)--(e);
 \end{tikzpicture}
-\caption{Pipeline ESG-washing end-to-end. Khối cam = mô hình học máy; khối xanh lá = đầu ra chỉ số; khối xám = tín hiệu bổ sung và kiểm định thống kê. Cam kết chỉ vào mẫu số chỉ số khi vừa là cam kết vừa có ít nhất một trụ E/S/G dương (cổng topic).}
+\caption{Pipeline ESG-washing ở mức tổng quát: dữ liệu $\rightarrow$ chunk ngữ nghĩa $\rightarrow$ phân loại trụ/cam kết và chấm độ cụ thể (PhoBERT + LLM) $\rightarrow$ hệ chỉ số CTI/NAR/QDR; nhánh dưới là các tín hiệu độc lập dùng kiểm chứng.}
 \label{fig:pipeline}
 \end{figure}
 
