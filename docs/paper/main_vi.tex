@@ -9,6 +9,8 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
 \graphicspath{{figures/}}
 
 \begin{document}
@@ -51,6 +53,39 @@ Văn liệu quản trị mô tả greenwashing như sự kết hợp giữa côn
 Về NLP, Florstedt và cộng sự \cite{florstedt2025detecting} kết hợp cảm xúc (VADER), độ cụ thể (ClimateBERT \cite{webersinke2021climatebert}) và truy hồi bằng chứng nội văn bản (Sentence-BERT \cite{reimers2019sentence}), song thiết kế cho tiếng Anh và lệ thuộc bằng chứng cùng tài liệu. Lipenkova và cộng sự \cite{lipenkova2023detecting} đối chiếu nguồn tin ngoài; Lagasio \cite{lagasio2024esg} dựng ESGSI từ TF--IDF/LDA/cảm xúc nhưng thiên đặc trưng phong cách; Bingler và cộng sự \cite{bingler2022cheap} chỉ ra ``cheap talk'' trong công bố khí hậu nhưng giới hạn tiếng Anh và trụ khí hậu. Tóm lại, văn liệu tồn tại ba khoảng trống: thiên tiếng Anh/trụ Môi trường; phụ thuộc dữ liệu bên thứ ba; và rủi ro \emph{đo lường vòng tròn}. Nghiên cứu này lấp cả ba.
 
 \section{Phương pháp}
+Pipeline end-to-end gồm bốn bước nối tiếp --- tách chunk, phân loại trụ, phân loại cam kết, chấm độ cụ thể --- rồi tổng hợp chỉ số và các tín hiệu bổ sung (Hình~\ref{fig:pipeline}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  font=\footnotesize, node distance=4.2mm,
+  stage/.style={rectangle, rounded corners, draw=black!70, align=center,
+                text width=8.4cm, minimum height=6.5mm, fill=blue!4},
+  model/.style={stage, fill=orange!12},
+  outp/.style={stage, fill=green!12},
+  supp/.style={stage, fill=black!7},
+  arr/.style={-{Stealth[length=2mm]}, thick, draw=black!70}
+]
+\node[stage] (in) {Báo cáo thường niên (PDF) --- 9 ngân hàng $\times$ 5 năm (2020--2024)};
+\node[stage, below=of in] (ocr) {Tiền xử lý: OCR + làm sạch (loại đầu/chân trang, bảng số, nhiễu)};
+\node[stage, below=of ocr] (chunk) {Semantic chunking $\le 256$ token theo ranh giới câu $\rightarrow$ 14.139 đơn vị};
+\node[model, below=of chunk] (topic) {\textbf{Phân loại trụ E/S/G} --- PhoBERT (translate-train)};
+\node[model, below=of topic] (commit) {\textbf{Phân loại cam kết} + cổng topic --- PhoBERT};
+\node[model, below=of commit] (spec) {\textbf{Chấm độ cụ thể} 0/1/2 --- Qwen3-1.7B + \texttt{verify\_rubric}};
+\node[outp, below=of spec] (idx) {\textbf{Chỉ số CTI / NAR / QDR} theo (ngân hàng, năm) + bootstrap CI};
+\node[supp, below=of idx] (sg) {Tín hiệu bổ sung \& kiểm định: BRI (embedding) $\cdot$ say--do gap $\cdot$ SHAP $\cdot$ Friedman/Wilcoxon};
+\draw[arr] (in) -- (ocr);
+\draw[arr] (ocr) -- (chunk);
+\draw[arr] (chunk) -- (topic);
+\draw[arr] (topic) -- (commit);
+\draw[arr] (commit) -- (spec);
+\draw[arr] (spec) -- (idx);
+\draw[arr] (idx) -- (sg);
+\end{tikzpicture}
+\caption{Pipeline ESG-washing end-to-end. Khối cam = mô hình học máy; khối xanh lá = đầu ra chỉ số; khối xám = tín hiệu bổ sung và kiểm định thống kê. Cam kết chỉ vào mẫu số chỉ số khi vừa là cam kết vừa có ít nhất một trụ E/S/G dương (cổng topic).}
+\label{fig:pipeline}
+\end{figure}
+
 \textbf{Khung và corpus.} Chúng tôi đo decoupling giữa \emph{talk} (câu cam kết ESG) và \emph{substance} (cam kết đó \emph{cụ thể} đến đâu) ngay trong văn bản. Corpus gồm báo cáo thường niên tiếng Việt của chín ngân hàng thương mại Việt Nam (2020--2024), trích bằng OCR và làm sạch; mọi bước thao tác trực tiếp trên tiếng Việt.\footnote{Tệp PDF gốc tải từ chuyên mục Quan hệ cổ đông của từng ngân hàng; corpus, dữ liệu translate-train và mã nguồn công khai để tái lập.} Thay vì cắt cứng theo cửa sổ token, chúng tôi dùng \emph{semantic-text-splitter} gói các câu liên tiếp đến $\le 256$ token theo ranh giới câu, thu được 14\,139 đơn vị (trung vị 228 token).
 
 \textbf{Phân loại trụ và cam kết.} Mỗi đơn vị được gán đa nhãn E/S/G và nhãn cam kết bằng hai bộ phân loại tinh chỉnh từ PhoBERT \cite{nguyen2020phobert} (mô hình tiền huấn luyện chuyên tiếng Việt), theo chiến lược \emph{translate-train} (dịch nhãn ESG tiếng Anh sang tiếng Việt rồi tinh chỉnh). Một đơn vị chỉ vào mẫu số khi \emph{vừa} là cam kết \emph{vừa} có ít nhất một trụ ESG dương (cổng topic), bảo đảm mẫu số sạch.
