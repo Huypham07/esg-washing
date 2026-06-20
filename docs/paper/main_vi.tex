@@ -57,21 +57,24 @@ Pipeline gồm bốn giai đoạn nối tiếp, kèm một nhánh tín hiệu b�
 
 \begin{figure}[H]
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
-  font=\small, >={Stealth[length=2.4mm]},
+  font=\small, >={Stealth[length=2.6mm]},
   box/.style={rectangle, rounded corners=5pt, draw=black!50, line width=0.6pt,
-              align=center, text width=2.35cm, minimum height=1.35cm},
-  arr/.style={->, line width=0.9pt, draw=black!55}
+              align=center, text width=2.7cm, minimum height=1.5cm},
+  tech/.style={font=\scriptsize\itshape, text=black!60},
+  arr/.style={->, line width=1pt, draw=black!55}
 ]
-\node[box, fill=blue!7]   (a) {\textbf{Báo cáo}\\[1pt]{\scriptsize PDF · 9 NH $\times$ 5 năm}};
-\node[box, fill=blue!7, right=6mm of a]  (b) {\textbf{Chunk hoá}\\[1pt]{\scriptsize ngữ nghĩa $\le$256 tok}};
-\node[box, fill=orange!18, right=6mm of b] (c) {\textbf{Phân loại}\\\textbf{\& chấm điểm}\\[1pt]{\scriptsize PhoBERT + Qwen3}};
-\node[box, fill=green!18, right=6mm of c]  (d) {\textbf{Chỉ số}\\\textbf{ESG-washing}\\[1pt]{\scriptsize CTI · NAR · QDR}};
-\node[box, fill=black!7, below=6mm of d, text width=3.6cm, minimum height=1.0cm] (e)
-     {\textbf{Tín hiệu kiểm chứng}\\[1pt]{\scriptsize BRI · say--do · SHAP}};
-\draw[arr] (a)--(b);  \draw[arr] (b)--(c);  \draw[arr] (c)--(d);  \draw[arr] (d)--(e);
-\end{tikzpicture}
-\caption{Pipeline ESG-washing ở mức tổng quát: dữ liệu $\rightarrow$ chunk ngữ nghĩa $\rightarrow$ phân loại trụ/cam kết và chấm độ cụ thể (PhoBERT + LLM) $\rightarrow$ hệ chỉ số CTI/NAR/QDR; nhánh dưới là các tín hiệu độc lập dùng kiểm chứng.}
+\node[box, fill=blue!7]   (a) {\textbf{Annual reports}\\[2pt]{\tech PDF}};
+\node[box, fill=blue!7, right=6mm of a]  (b) {\textbf{Semantic}\\\textbf{chunking}\\[2pt]{\tech $\le$256 tokens}};
+\node[box, fill=orange!18, right=6mm of b] (c) {\textbf{ESG}\\\textbf{classifiers}\\[2pt]{\tech PhoBERT\\(topic + commitment)}};
+\node[box, fill=orange!18, right=6mm of c] (d) {\textbf{Specificity}\\\textbf{rubric}\\[2pt]{\tech Qwen3-1.7B LLM}};
+\node[box, fill=green!18, right=6mm of d]  (e) {\textbf{Washing}\\\textbf{indices}\\[2pt]{\tech CTI · NAR · QDR}};
+\node[box, fill=black!7, below=7mm of e, text width=4.2cm, minimum height=1.0cm] (f)
+     {\textbf{Validation signals}\\[2pt]{\tech BRI (SBERT) · say-do · SHAP}};
+\draw[arr] (a)--(b);  \draw[arr] (b)--(c);  \draw[arr] (c)--(d);  \draw[arr] (d)--(e);  \draw[arr] (e)--(f);
+\end{tikzpicture}}
+\caption{Pipeline ESG-washing ở mức tổng quát: dữ liệu $\rightarrow$ chunk ngữ nghĩa $\rightarrow$ phân loại trụ/cam kết (PhoBERT) và chấm độ cụ thể (Qwen3 LLM) $\rightarrow$ hệ chỉ số CTI/NAR/QDR; nhánh dưới là các tín hiệu độc lập dùng kiểm chứng.}
 \label{fig:pipeline}
 \end{figure}
 
