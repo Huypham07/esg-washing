@@ -2,7 +2,6 @@
 %
 \usepackage[utf8]{inputenc}
 \usepackage[T5]{fontenc}
-\usepackage[vietnamese]{babel}
 \usepackage{graphicx}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
 \usepackage{amsmath}
@@ -11,6 +10,7 @@
 \usepackage{float}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds}
+\newcommand{\tech}{\scriptsize\itshape\color{black!60}}
 \graphicspath{{figures/}}
 
 \begin{document}
@@ -35,24 +35,25 @@
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-Sự bùng nổ của ngôn ngữ ESG trong báo cáo ngân hàng làm gia tăng lo ngại về \emph{ESG-washing} --- nhấn mạnh các cam kết nghe hay nhưng thiếu nội dung thực chất. Khác với các hướng phụ thuộc xếp hạng bên thứ ba (khan hiếm ở thị trường mới nổi) hay đối chiếu bằng chứng nội văn bản (vòng tròn), chúng tôi đo ESG-washing trực tiếp qua \emph{độ cụ thể của cam kết}: mỗi cam kết ESG được một mô hình ngôn ngữ lớn chấm ba mức (mơ hồ / hành động có tên / định lượng quy về chủ thể), tổng hợp thành ba chỉ số bổ sung trên mỗi (ngân hàng, năm) --- CTI (nói suông), NAR (hành động có tên), QDR (định lượng). Áp dụng cho 9 ngân hàng thương mại Việt Nam (2020--2024, 45 quan sát panel), kết quả cho thấy: trung bình 38{,}3\% cam kết là nói suông; trụ Môi trường bị công bố thiếu có ý nghĩa thống kê (Friedman $p=2{,}3\times10^{-12}$); khối lượng cam kết tăng mạnh nhưng tỉ trọng thực chất không cải thiện; một chỉ số embedding độc lập (BRI) hội tụ với CTI (Spearman $\rho=-0{,}429$); và Quản trị là trụ nói suông nhất ($\Delta_{\mathrm{gov}}=+0{,}33$). Khung đo trung thực, đủ ba trụ E/S/G, không cần dữ liệu ngoài, phù hợp thị trường thiếu dữ liệu.
+Sự bùng nổ của ngôn ngữ ESG trong báo cáo ngân hàng làm gia tăng lo ngại về \emph{ESG-washing} --- nhấn mạnh các cam kết nghe hay nhưng thiếu nội dung thực chất. Chúng tôi đo ESG-washing trực tiếp qua \emph{độ cụ thể của cam kết} dựa trên nội tại báo cáo: Các cam kết về ESG trong báo cáo thường niên sẽ được mô hình phân loại giữ lại, đi qua một mô hình ngôn ngữ để xác định là hành động mơ hồ, hành động có tên, hay là những định lượng cụ thể. Sau khi có được những đặc trưng cho các cam kết, các chỉ số CTI (Cheap Talk Index), NAR (Name Action Rate) và QDR (Quantified Disclosure Rate) được tổng hợp và cho ra đánh giá chi tiết về báo cáo. Áp dụng cho 9 ngân hàng thương mại Việt Nam giai đoạn 2020--2024, kết quả cho thấy: trung bình 38{,}3\% cam kết được cho là nói suông;
 
-\keywords{ESG-washing \and Báo cáo thường niên \and Ngân hàng \and Xử lý ngôn ngữ tự nhiên \and Độ cụ thể của cam kết}
+
+\keywords{ESG-washing \and Báo cáo thường niên \and Ngân hàng \and }
 \end{abstract}
 %
-\section{Giới thiệu}
-Công bố thông tin ESG (Môi trường -- Xã hội -- Quản trị) đã thành cấu phần cốt lõi trong báo cáo ngành ngân hàng, ngày càng được cơ quan quản lý, nhà đầu tư và công chúng giám sát \cite{buchetti2025literature,lagasio2024esg}. Nhưng sự gia tăng diễn ngôn ESG cũng khuếch đại rủi ro \emph{ESG-washing} --- nhấn mạnh các tuyên bố thuận lợi mà thiếu bằng chứng kiểm chứng được \cite{florstedt2025detecting,delmas2011drivers}. Về lý thuyết, đây là một dạng \emph{decoupling} giữa \emph{lời nói} và \emph{việc làm}: tổ chức phát tín hiệu hợp kỳ vọng xã hội nhưng không thực thi tương ứng \cite{bromley2012smoke,marquis2016scrutiny}, làm xói mòn niềm tin và méo phân bổ vốn \cite{lagasio2024esg,kathan2025you}.
+\section{Introduction}
+Công bố thông tin ESG (Môi trường -- Xã hội -- Quản trị) đã thành cấu phần cốt lõi trong báo cáo ngành ngân hàng, ngày càng được cơ quan quản lý, nhà đầu tư và công chúng giám sát. Nhưng sự gia tăng diễn ngôn ESG cũng khuếch đại rủi ro \emph{ESG-washing} --- tuyên bố tích cực về phát triển bền vững mà thiếu bằng chứng kiểm chứng được \cite{florstedt2025detecting,delmas2011drivers}. Về lý thuyết, đây là một dạng \emph{mất cân xứng} giữa \emph{lời nói} và \emph{việc làm}: Doanh nghiệp, tổ chức phát đi các tuyên bố tích cực nhưng lại không thực thi tương ứng \cite{bromley2012smoke,marquis2016scrutiny}, làm xói mòn niềm tin khách hàng cũng như các nhà đầu tư\cite{lagasio2024esg,kathan2025you}.
 
-Các hướng phát hiện hiện nay chia hai dòng: (i) \emph{chênh lệch xếp hạng} giữa công bố và điểm ESG bên thứ ba \cite{su16062571,ghitti2024agency,kathan2025you}; (ii) \emph{phân tích văn bản/NLP} trên đặc trưng ngôn ngữ \cite{lagasio2024esg,lipenkova2023detecting,bingler2022cheap}. Cả hai đều khó áp dụng ở thị trường mới nổi như Việt Nam: dữ liệu bên thứ ba gần như không có, còn công cụ NLP chủ yếu cho tiếng Anh và trụ Môi trường. Một số nghiên cứu đối chiếu mỗi tuyên bố với \emph{bằng chứng nội văn bản} cùng báo cáo \cite{florstedt2025detecting}; chúng tôi cho rằng cách này \emph{vòng tròn} --- cả tuyên bố lẫn ``bằng chứng'' đều do ngân hàng viết, chỉ xác nhận báo cáo nhất quán với chính nó. Do Việt Nam không có walk-data, chúng tôi không giả vờ đo ``walk'' mà đo một đại lượng rút thẳng từ văn bản: cam kết \emph{cụ thể} đến đâu, dựa trực tiếp vào lý thuyết \emph{cheap talk} \cite{farrell1996cheap} --- phát ngôn không tốn chi phí, không ràng buộc thì ít giá trị thông tin.
+Các hướng phát hiện ESG-washing hiện nay chia hai dòng: (i) \emph{so sánh chênh lệch} giữa công bố trong báo cáo và các dữ liệu được cung cấp từ các bên thứ ba hoặc trên các nền tảng mạng xã hội khác \cite{su16062571,ghitti2024agency,kathan2025you}; (ii) \emph{phân tích văn bản/NLP} trên đặc trưng ngôn ngữ \cite{lagasio2024esg,lipenkova2023detecting,bingler2022cheap}. Cả hai đều khó áp dụng ở thị trường Việt Nam: dữ liệu bên thứ ba gần như không có, còn công cụ NLP chủ yếu cho tiếng Anh và trụ Môi trường. Gần đây, một số nghiên cứu khắc phục việc thiếu dữ liệu ngoài bằng cách tự đối chiếu mỗi tuyên bố với những câu ``bằng chứng'' khác trong cùng báo cáo \cite{florstedt2025detecting}. Tuy nhiên, vì cả tuyên bố lẫn bằng chứng đều do chính ngân hàng viết ra, cách làm này chỉ kiểm tra báo cáo có \emph{tự nhất quán} hay không, chứ không cho biết ngân hàng có thực sự hành động hay không. Trong bối cảnh Việt Nam thiếu dữ liệu kiểm chứng độc lập, thay vì cố đo ``việc làm'', chúng tôi đo một đại lượng có thể rút trực tiếp và khách quan từ văn bản: \emph{mức độ cụ thể của cam kết}. Cách tiếp cận này dựa trên lý thuyết \emph{cheap talk} \cite{farrell1996cheap}: một tuyên bố càng mơ hồ thì càng dễ đưa ra và càng ít giá trị thông tin, trong khi một cam kết kèm số liệu cụ thể buộc tổ chức phải chịu trách nhiệm và do đó là tín hiệu đáng tin hơn.
 
-\textbf{Đóng góp.} (1) Khung đo ESG-washing đầu tiên đủ ba trụ E/S/G cho ngân hàng Việt Nam, không phụ thuộc dữ liệu ngoài, thay grounding vòng tròn bằng thang \emph{specificity} ba mức nhận biết quy-về-chủ-thể và chống ``bịa số''. (2) Bằng chứng panel kèm kiểm định thống kê (bootstrap CI, Friedman/Wilcoxon, ổn định xếp hạng). (3) Xác nhận tính giá trị hội tụ qua chỉ số embedding độc lập (BRI), cùng phân tích khoảng cách say--do theo trụ và SHAP để làm rõ \emph{cơ chế} sinh cheap-talk. Toàn bộ pipeline và dữ liệu translate-train được công khai.
+\textbf{Đóng góp.} Nghiên cứu có ba đóng góp chính. \textbf{(1) Khung đo} ESG-washing cho báo cáo ngân hàng Việt Nam, đủ ba trụ E/S/G và không phụ thuộc dữ liệu bên ngoài: mỗi cam kết được chấm theo \emph{mức độ cụ thể} (mơ hồ / hành động có tên / định lượng), từ đó tổng hợp thành ba chỉ số CTI/NAR/QDR. \textbf{(2) Bằng chứng thực nghiệm} đầu tiên về ESG-washing trong ngành ngân hàng Việt Nam: áp dụng cho 9 ngân hàng giai đoạn 2020--2024 (45 quan sát), chúng tôi chỉ ra nói suông phổ biến, trụ Môi trường bị né một cách hệ thống, và khối lượng cam kết tăng nhưng chất lượng không cải thiện --- kèm các kiểm định thống kê khẳng định mức độ tin cậy. \textbf{(3) Bộ công cụ tái lập}: toàn bộ pipeline, mô hình và dữ liệu được công khai để các nghiên cứu sau có thể kế thừa và mở rộng.
 
-\section{Các nghiên cứu liên quan}
+\section{Related Works}
 Văn liệu quản trị mô tả greenwashing như sự kết hợp giữa công bố tích cực và hiệu quả môi trường--xã hội kém \cite{delmas2011drivers,lyon2015means}; doanh nghiệp phản ứng áp lực giám sát bằng \emph{công bố chọn lọc} \cite{marquis2016scrutiny}, dùng công bố môi trường để tạo \emph{tính chính danh} \cite{cho2007role}, tạo ra decoupling giữa chính sách tuyên bố và thực thi \cite{bromley2012smoke}. Những khung này định hướng hai câu hỏi đo lường của chúng tôi: cam kết có \emph{cụ thể} không, và ngân hàng có \emph{né trụ khó} không.
 
 Về NLP, Florstedt và cộng sự \cite{florstedt2025detecting} kết hợp cảm xúc (VADER), độ cụ thể (ClimateBERT \cite{webersinke2021climatebert}) và truy hồi bằng chứng nội văn bản (Sentence-BERT \cite{reimers2019sentence}), song thiết kế cho tiếng Anh và lệ thuộc bằng chứng cùng tài liệu. Lipenkova và cộng sự \cite{lipenkova2023detecting} đối chiếu nguồn tin ngoài; Lagasio \cite{lagasio2024esg} dựng ESGSI từ TF--IDF/LDA/cảm xúc nhưng thiên đặc trưng phong cách; Bingler và cộng sự \cite{bingler2022cheap} chỉ ra ``cheap talk'' trong công bố khí hậu nhưng giới hạn tiếng Anh và trụ khí hậu. Tóm lại, văn liệu tồn tại ba khoảng trống: thiên tiếng Anh/trụ Môi trường; phụ thuộc dữ liệu bên thứ ba; và rủi ro \emph{đo lường vòng tròn}. Nghiên cứu này lấp cả ba.
 
-\section{Phương pháp}
+\section{Methodology}
 Pipeline gồm bốn giai đoạn nối tiếp, kèm một nhánh tín hiệu bổ sung dùng để kiểm chứng (Hình~\ref{fig:pipeline}).
 
 \begin{figure}[H]
@@ -67,7 +68,7 @@ Pipeline gồm bốn giai đoạn nối tiếp, kèm một nhánh tín hiệu b�
                minimum height=1.6cm, fill=teal!15},
   proc/.style={base, fill=blue!8},
   model/.style={base, fill=orange!20},
-  out/.style={base, fill=green!22, line width=1.1pt, draw=green!45!black},
+  result/.style={base, fill=green!22, line width=1.1pt, draw=green!45!black},
   val/.style={base, fill=black!5, dashed, text width=4.4cm, minimum height=1.0cm},
   tech/.style={font=\scriptsize\itshape, text=black!60},
   arr/.style={->, line width=1.1pt, draw=black!60}
@@ -76,7 +77,7 @@ Pipeline gồm bốn giai đoạn nối tiếp, kèm một nhánh tín hiệu b�
 \node[proc, right=9mm of a]  (b) {\textbf{Semantic}\\\textbf{chunking}};
 \node[model, right=11mm of b] (c) {\textbf{ESG}\\\textbf{classifiers}\\[2pt]{\tech PhoBERT}};
 \node[model, right=9mm of c] (d) {\textbf{Specificity}\\\textbf{rubric}\\[2pt]{\tech Qwen3-1.7B}};
-\node[out, right=11mm of d]  (e) {\textbf{Washing}\\\textbf{indices}\\[2pt]{\tech CTI · NAR · QDR}};
+\node[result, right=11mm of d]  (e) {\textbf{Washing}\\\textbf{indices}\\[2pt]{\tech CTI · NAR · QDR}};
 \node[val, below=10mm of e] (f)
      {\textbf{Validation signals}\\[2pt]{\tech BRI (SBERT) · say-do · SHAP}};
 \draw[arr] (a)--(b);  \draw[arr] (b)--(c);  \draw[arr] (c)--(d);  \draw[arr] (d)--(e);
@@ -121,7 +122,7 @@ CTI là trục \emph{nói suông} (washing), QDR là trục \emph{thực chất}
 
 \textbf{Tín hiệu bổ sung.} (i) \emph{BRI} (Boilerplate Reuse Index): với mỗi cam kết, cosine lớn nhất tới các cam kết của \emph{ngân hàng khác} cùng năm trên embedding câu đã \emph{trung tâm hoá} (khử anisotropy --- cosine thô bão hoà ở mean 0{,}64). Nếu rubric đo đúng độ cụ thể, BRI (ngôn ngữ chung) phải tương quan \emph{âm} với CTI và \emph{dương} với NAR. (ii) \emph{Say--do gap} nội trụ: $\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$ tính riêng trên đơn vị thuộc trụ $p$. (iii) \emph{Drivers}: một Random Forest dự đoán mức cụ thể từ 12 đặc trưng cấu trúc (không gồm mã ngân hàng/năm, tránh rò rỉ), diễn giải bằng SHAP. (iv) \emph{Chuyển giao ngôn ngữ}: đường cơ sở TF-IDF+LR so ba cấu hình VI/EN để định lượng giá trị của translate-train (Bảng~\ref{tab:transfer}).
 
-\section{Kết quả và thảo luận}
+\section{Results and Discussion}
 Khung đo áp dụng cho 9 ngân hàng $\times$ 5 năm (45 quan sát panel). Để tránh quy kết rủi ro cho từng định chế, tên ngân hàng được \emph{mã hoá} bằng mã hai--ba ký tự (AK, BV, MK, OB, SB, TM, VMK, VNK, VK), dùng nhất quán trong mọi bảng và hình.\footnote{Mã suy ra cố định từ tên ngân hàng; nghiên cứu hướng tới mẫu hình toàn ngành, không nhằm xếp hạng/đánh giá danh tính. Bảng giải mã giữ riêng, cung cấp khi có yêu cầu hợp lệ.} Hiệu năng bộ phân loại được đánh giá trên Gold Set người-gán; bộ chấm độ cụ thể được audit thủ công (đang hoàn thiện).
 
 \textbf{RQ1 --- Nói suông phổ biến.} Trung bình $\mathrm{CTI}=0{,}383$ (CI~$[0{,}360;0{,}408]$), $\mathrm{NAR}=0{,}313$, $\mathrm{QDR}=0{,}304$: gần 40\% cam kết là nói suông, chỉ $\sim$30\% đạt định lượng. CTI dao động từ 0{,}293 (AK) đến 0{,}460 (MK) (Bảng~\ref{tab:by_bank}, Hình~\ref{fig:cartography}); MK nói suông nhiều nhất kèm QDR thấp (pha loãng), còn AK và OB an toàn hơn (OB dẫn đầu NAR --- mô tả hành động nhưng chưa định lượng).
@@ -195,7 +196,7 @@ EN$\to$EN & 0{,}787 & 0{,}641 \\
 
 \textbf{Thảo luận.} Năm phát hiện hội tụ thành bức tranh nhất quán về ESG-washing trong ngân hàng Việt Nam, rút ra \emph{mà không cần} dữ liệu bên thứ ba hay grounding vòng tròn. Tín hiệu nội văn bản vẫn mang thông tin nhờ lý thuyết cheap talk \cite{farrell1996cheap}: cam kết mơ hồ gần như không tốn chi phí và không thể bị bác bỏ, còn cam kết định lượng quy về chủ thể là phát ngôn \emph{có thể chứng minh sai}, tạo ràng buộc uy tín; phân bố độ cụ thể vì thế phản ánh mức sẵn sàng chịu trách nhiệm. Hàm ý thực tiễn: (1) yêu cầu định lượng phát thải (khoảng trống lớn nhất); (2) đặt sàn tỉ trọng trụ Môi trường để ngăn cherry-picking; (3) dùng CTI làm chỉ báo sàng lọc sớm cho giám sát định kỳ.
 
-\section{Kết luận}
+\section{Conclusion}
 Nghiên cứu đề xuất khung NLP đa tín hiệu đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi BRI từ embedding và say--do gap với SHAP, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\%; trụ Môi trường bị né mạnh ($p=2{,}3\times10^{-12}$); khối lượng tăng mà chất lượng không cải thiện; BRI xác nhận giá trị hội tụ ($\rho=-0{,}429$); Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng. Hạn chế: độ cụ thể là proxy nội văn bản (không có walk-data ngoài); nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G; N=45 còn nhỏ. Hướng phát triển: mở rộng panel, hoàn tất audit thủ công, so sánh encoder PhoBERT--XLM-R, và bổ sung kiểm định nhiễu.
 
 \begin{credits}
