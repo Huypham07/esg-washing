@@ -10,7 +10,7 @@
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds}
 \graphicspath{{figures/}}
 
 \begin{document}
@@ -59,20 +59,32 @@ Pipeline gồm bốn giai đoạn nối tiếp, kèm một nhánh tín hiệu b�
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
-  font=\small, >={Stealth[length=2.6mm]},
-  box/.style={rectangle, rounded corners=5pt, draw=black!50, line width=0.6pt,
-              align=center, text width=2.7cm, minimum height=1.5cm},
+  font=\small, >={Stealth[length=2.8mm]},
+  base/.style={rounded corners=6pt, draw=black!55, line width=0.6pt, align=center,
+               text width=2.5cm, minimum height=1.5cm},
+  data/.style={cylinder, shape border rotate=90, aspect=0.22, draw=black!55,
+               line width=0.6pt, align=center, text width=1.9cm,
+               minimum height=1.6cm, fill=teal!15},
+  proc/.style={base, fill=blue!8},
+  model/.style={base, fill=orange!20},
+  out/.style={base, fill=green!22, line width=1.1pt, draw=green!45!black},
+  val/.style={base, fill=black!5, dashed, text width=4.4cm, minimum height=1.0cm},
   tech/.style={font=\scriptsize\itshape, text=black!60},
-  arr/.style={->, line width=1pt, draw=black!55}
+  arr/.style={->, line width=1.1pt, draw=black!60}
 ]
-\node[box, fill=blue!7]   (a) {\textbf{Annual reports}\\[2pt]{\tech PDF}};
-\node[box, fill=blue!7, right=6mm of a]  (b) {\textbf{Semantic}\\\textbf{chunking}\\[2pt]{\tech $\le$256 tokens}};
-\node[box, fill=orange!18, right=6mm of b] (c) {\textbf{ESG}\\\textbf{classifiers}\\[2pt]{\tech PhoBERT\\(topic + commitment)}};
-\node[box, fill=orange!18, right=6mm of c] (d) {\textbf{Specificity}\\\textbf{rubric}\\[2pt]{\tech Qwen3-1.7B LLM}};
-\node[box, fill=green!18, right=6mm of d]  (e) {\textbf{Washing}\\\textbf{indices}\\[2pt]{\tech CTI · NAR · QDR}};
-\node[box, fill=black!7, below=7mm of e, text width=4.2cm, minimum height=1.0cm] (f)
+\node[data] (a) {\textbf{Annual}\\\textbf{reports}};
+\node[proc, right=9mm of a]  (b) {\textbf{Semantic}\\\textbf{chunking}};
+\node[model, right=11mm of b] (c) {\textbf{ESG}\\\textbf{classifiers}\\[2pt]{\tech PhoBERT}};
+\node[model, right=9mm of c] (d) {\textbf{Specificity}\\\textbf{rubric}\\[2pt]{\tech Qwen3-1.7B}};
+\node[out, right=11mm of d]  (e) {\textbf{Washing}\\\textbf{indices}\\[2pt]{\tech CTI · NAR · QDR}};
+\node[val, below=10mm of e] (f)
      {\textbf{Validation signals}\\[2pt]{\tech BRI (SBERT) · say-do · SHAP}};
-\draw[arr] (a)--(b);  \draw[arr] (b)--(c);  \draw[arr] (c)--(d);  \draw[arr] (d)--(e);  \draw[arr] (e)--(f);
+\draw[arr] (a)--(b);  \draw[arr] (b)--(c);  \draw[arr] (c)--(d);  \draw[arr] (d)--(e);
+\draw[arr, dashed] (e)--(f);
+\begin{scope}[on background layer]
+  \node[draw=orange!55, dashed, rounded corners=8pt, fit=(c)(d), inner sep=4.5mm,
+        label={[font=\scriptsize\bfseries, text=orange!55!black]above:Models (NLP + LLM)}] {};
+\end{scope}
 \end{tikzpicture}}
 \caption{Pipeline ESG-washing ở mức tổng quát: dữ liệu $\rightarrow$ chunk ngữ nghĩa $\rightarrow$ phân loại trụ/cam kết (PhoBERT) và chấm độ cụ thể (Qwen3 LLM) $\rightarrow$ hệ chỉ số CTI/NAR/QDR; nhánh dưới là các tín hiệu độc lập dùng kiểm chứng.}
 \label{fig:pipeline}
