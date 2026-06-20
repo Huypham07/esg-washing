@@ -58,7 +58,7 @@ Lagasio \cite{lagasio2024esg} đề xuất chỉ số ESGSI dựa trên TF--IDF,
 Tổng hợp lại, các nghiên cứu trên cho thấy tiềm năng ngày càng lớn của phân tích ngôn ngữ và ứng dụng các mô hình học máy/học sâu cho bài toán ESG-washing, nhưng còn một số khoảng trống: Phần lớn công cụ được thiết kế cho kho ngữ liệu tiếng Anh và tập trung vào trụ Môi trường, ít khả năng áp dụng cho ngôn ngữ ít tài nguyên như tiếng Việt và đủ cả ba trụ E/S/G; Nhiều phương pháp phụ thuộc xếp hạng ESG hoặc nguồn tin bên thứ ba --- vốn không sẵn có hoặc kém tin cậy ở thị trường đang phát triển; Các hướng dựa vào bằng chứng nội văn bản chịu rủi ro khi cả tuyên bố lẫn bằng chứng đều do chính doanh nghiệp viết. Nghiên cứu này tập trung khắc phục cả ba khoảng trống bằng một khung đầy đủ E/S/G cho tiếng Việt, không cần dữ liệu bên ngoài, và một hướng tiếp cận phân tích washing khác biệt.
 
 \section{Methodology}
-Pipeline gồm bốn giai đoạn nối tiếp, kèm một nhánh tín hiệu bổ sung dùng để kiểm chứng (Hình~\ref{fig:pipeline}).
+Phương pháp gồm bốn giai đoạn nối tiếp tạo ra hệ chỉ số CTI/NAR/QDR (Hình~\ref{fig:pipeline}); các bước kiểm chứng độc lập được trình bày riêng ở phần Kết quả (Mục~\ref{sec:results}).
 
 \begin{figure}[H]
 \centering
@@ -73,7 +73,6 @@ Pipeline gồm bốn giai đoạn nối tiếp, kèm một nhánh tín hiệu b�
   proc/.style={base, fill=blue!8},
   model/.style={base, fill=orange!20},
   result/.style={base, fill=green!22, line width=1.1pt, draw=green!45!black},
-  val/.style={base, fill=black!5, dashed, text width=4.4cm, minimum height=1.0cm},
   tech/.style={font=\scriptsize\itshape, text=black!60},
   arr/.style={->, line width=1.1pt, draw=black!60}
 ]
@@ -82,16 +81,13 @@ Pipeline gồm bốn giai đoạn nối tiếp, kèm một nhánh tín hiệu b�
 \node[model, right=11mm of b] (c) {\textbf{ESG}\\\textbf{classifiers}\\[2pt]{\tech PhoBERT}};
 \node[model, right=9mm of c] (d) {\textbf{Specificity}\\\textbf{rubric}\\[2pt]{\tech Qwen3-1.7B}};
 \node[result, right=11mm of d]  (e) {\textbf{Washing}\\\textbf{indices}\\[2pt]{\tech CTI · NAR · QDR}};
-\node[val, below=10mm of e] (f)
-     {\textbf{Validation signals}\\[2pt]{\tech BRI (SBERT) · say-do · SHAP}};
 \draw[arr] (a)--(b);  \draw[arr] (b)--(c);  \draw[arr] (c)--(d);  \draw[arr] (d)--(e);
-\draw[arr, dashed] (e)--(f);
 \begin{scope}[on background layer]
   \node[draw=orange!55, dashed, rounded corners=8pt, fit=(c)(d), inner sep=4.5mm,
         label={[font=\scriptsize\bfseries, text=orange!55!black]above:Models (NLP + LLM)}] {};
 \end{scope}
 \end{tikzpicture}}
-\caption{Pipeline ESG-washing ở mức tổng quát: dữ liệu $\rightarrow$ chunk ngữ nghĩa $\rightarrow$ phân loại trụ/cam kết (PhoBERT) và chấm độ cụ thể (Qwen3 LLM) $\rightarrow$ hệ chỉ số CTI/NAR/QDR; nhánh dưới là các tín hiệu độc lập dùng kiểm chứng.}
+\caption{Pipeline phương pháp ở mức tổng quát: dữ liệu $\rightarrow$ chunk ngữ nghĩa $\rightarrow$ phân loại trụ/cam kết (PhoBERT) và chấm độ cụ thể (Qwen3 LLM) $\rightarrow$ hệ chỉ số CTI/NAR/QDR.}
 \label{fig:pipeline}
 \end{figure}
 
