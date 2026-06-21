@@ -105,10 +105,10 @@ Ngoài ra, ESG-washing được đánh giá trên 45 báo cáo thường niên c
 \subsection{Topic and Commitment Classifier}
 Để cô lập đúng đối tượng cần đo là các cam kết ESG, pipeline phải trả lời hai câu hỏi trên từng đơn vị: nó thuộc trụ ESG nào, và nó có phải một cam kết hay không. Chúng tôi tiến hành xây dựng hai bộ phân loại riêng, cùng tinh chỉnh từ \textbf{PhoBERT} \cite{nguyen2020phobert} --- mô hình ngôn ngữ được tiền huấn luyện chuyên cho tiếng Việt. \textbf{Topic Classifier} phân loại đa lớp E/S/G qua ba đầu ra sigmoid độc lập. \textbf{Commitment Classifier} phân loại chunk có phải là một cam kết hay không. Cả hai được tinh chỉnh siêu tham số bằng Optuna.
 
-Nhiều câu mang sắc thái ``cam kết'' nhưng không thuộc ESG (ví dụ cam kết tăng trưởng lợi nhuận); ngược lại, nhiều câu thuộc ESG chỉ mang tính mô tả chứ không phải cam kết. Vì vậy chunk chỉ được giữ khi đồng thời là cam kết và thuộc ít nhất một trụ E/S/G. Chúng tôi gọi đây là \emph(ESG-commitment gate); nó bảo đảm ESG-washing được phân tích qua CTI/NAR/QDR chỉ tính trên đúng tập cam kết ESG.
+Nhiều câu mang sắc thái ``cam kết'' nhưng không thuộc ESG (ví dụ cam kết tăng trưởng lợi nhuận); ngược lại, nhiều câu thuộc ESG chỉ mang tính mô tả chứ không phải cam kết. Vì vậy chunk chỉ được giữ khi đồng thời là cam kết và thuộc ít nhất một trụ E/S/G. Chúng tôi gọi đây là \emph{ESG-commitment gate}; nó bảo đảm ESG-washing được phân tích qua CTI/NAR/QDR chỉ tính trên đúng tập cam kết ESG.
 
 \subsection{Specificity rubric}
-Phân biệt ba mức cụ thể của một cam kết đòi hỏi suy luận theo ngữ cảnh, chúng tôi thực hiện các bước: (i) phân rã một câu cam kết thành các hành động thành phần, (ii) phán đoán mỗi hành động đã được định lượng hay chưa, và (iii) nhận diện chủ thể của thông tin định lượng. Những phán đoán này khó học ổn định từ vài nghìn nhãn, nên thay vì huấn luyện thêm một bộ phân loại, chúng tôi sử dụng một mô hình ngôn ngữ suy luận dựa trên một bộ tiêu chí đánh giá. Chúng tôi sử dụng mô hình \textbf{Qwen3-1.7B} nhận từng chunk cam kết, phân rã thành các hành động thành phần, đánh dấu mỗi hành động trên ba tiêu chí --- \emph{có phải hành động cụ thể}, \emph{có kèm số liệu định lượng}, và \emph{số liệu có quy về chính ngân hàng} --- rồi gán cho cả chunk \emph{mức cao nhất} mà các hành động của nó đạt được (Bảng~\ref{tab:rubric}).
+Bước này chỉ chấm trên các chunk \emph{đã} qua cổng cam kết ESG, nên cả ba mức đều là cam kết thực sự --- khác nhau ở \emph{độ cụ thể}, không phải ở việc có cam kết hay không. Mức~0 vì thế là một cam kết \emph{mơ hồ} (cheap talk) chứ không phải ``không phải cam kết''. Phân biệt ba mức cụ thể của một cam kết đòi hỏi suy luận theo ngữ cảnh, chúng tôi thực hiện các bước: (i) phân rã một câu cam kết thành các hành động thành phần, (ii) phán đoán mỗi hành động đã được định lượng hay chưa, và (iii) nhận diện chủ thể của thông tin định lượng. Những phán đoán này khó học ổn định từ vài nghìn nhãn, nên thay vì huấn luyện thêm một bộ phân loại, chúng tôi sử dụng một mô hình ngôn ngữ suy luận dựa trên một bộ tiêu chí đánh giá. Chúng tôi sử dụng mô hình \textbf{Qwen3-1.7B} nhận từng chunk cam kết, phân rã thành các hành động thành phần, đánh dấu mỗi hành động trên ba tiêu chí --- \emph{có phải hành động cụ thể}, \emph{có kèm số liệu định lượng}, và \emph{số liệu có quy về chính ngân hàng} --- rồi gán cho cả chunk \emph{mức cao nhất} mà các hành động của nó đạt được (Bảng~\ref{tab:rubric}).
 
 \begin{table}[H]
 \centering
@@ -118,7 +118,7 @@ Phân biệt ba mức cụ thể của một cam kết đòi hỏi suy luận th
 \toprule
 Mức & Tên & Điều kiện gán (xét trên các hành động trong chunk) & Ví dụ chunk \\
 \midrule
-0 & Mơ hồ & không hành động nào cụ thể, chỉ khẩu hiệu/tính từ không kiểm chứng được & ``Hướng tới một tương lai xanh và bền vững.'' \\
+0 & Mơ hồ & là cam kết nhưng không nêu hành động cụ thể, chỉ khẩu hiệu/tính từ không kiểm chứng được & ``Ngân hàng cam kết hướng tới một tương lai xanh và bền vững.'' \\
 1 & Hành động có tên & có $\ge 1$ hành động/chương trình cụ thể quy về ngân hàng, nhưng chưa định lượng & ``Ngân hàng triển khai hệ thống quản lý môi trường nội bộ.'' \\
 2 & Định lượng & có $\ge 1$ số liệu đo được quy về chính ngân hàng & ``Dư nợ tín dụng xanh của ngân hàng đạt 74.177 tỷ đồng.'' \\
 \bottomrule
