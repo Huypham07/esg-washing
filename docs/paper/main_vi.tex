@@ -108,22 +108,24 @@ Ngoài ra, ESG-washing được đánh giá trên 45 báo cáo thường niên c
 Nhiều câu mang sắc thái ``cam kết'' nhưng không thuộc ESG (ví dụ cam kết tăng trưởng lợi nhuận); ngược lại, nhiều câu thuộc ESG chỉ mang tính mô tả chứ không phải cam kết. Vì vậy chunk chỉ được giữ khi đồng thời là cam kết và thuộc ít nhất một trụ E/S/G. Chúng tôi gọi đây là \emph(ESG-commitment gate); nó bảo đảm ESG-washing được phân tích qua CTI/NAR/QDR chỉ tính trên đúng tập cam kết ESG.
 
 \subsection{Specificity rubric}
-Phân biệt ba mức cụ thể của một cam kết đòi hỏi suy luận theo ngữ cảnh, chúng tôi thực hiện các bước: (i) phân rã một câu cam kết thành các hành động thành phần, (ii) phán đoán mỗi hành động đã được định lượng hay chưa, và (iii) nhận diện chủ thể của thông tin định lượng. Những phán đoán này khó học ổn định từ vài nghìn nhãn, nên thay vì huấn luyện thêm một bộ phân loại, chúng tôi sử dụng một mô hình ngôn ngữ suy luận dựa trên một bộ tiêu chí đánh giá. Chúng tôi sử dụng mô hình \textbf{Qwen3-1.7B} nhận từng chunk cam kết và phân vào một trong ba mức theo Bảng~\ref{tab:rubric}.
+Phân biệt ba mức cụ thể của một cam kết đòi hỏi suy luận theo ngữ cảnh, chúng tôi thực hiện các bước: (i) phân rã một câu cam kết thành các hành động thành phần, (ii) phán đoán mỗi hành động đã được định lượng hay chưa, và (iii) nhận diện chủ thể của thông tin định lượng. Những phán đoán này khó học ổn định từ vài nghìn nhãn, nên thay vì huấn luyện thêm một bộ phân loại, chúng tôi sử dụng một mô hình ngôn ngữ suy luận dựa trên một bộ tiêu chí đánh giá. Chúng tôi sử dụng mô hình \textbf{Qwen3-1.7B} nhận từng chunk cam kết, phân rã thành các hành động thành phần, đánh dấu mỗi hành động trên ba tiêu chí --- \emph{có phải hành động cụ thể}, \emph{có kèm số liệu định lượng}, và \emph{số liệu có quy về chính ngân hàng} --- rồi gán cho cả chunk \emph{mức cao nhất} mà các hành động của nó đạt được (Bảng~\ref{tab:rubric}).
 
 \begin{table}[H]
 \centering
-\caption{Thang độ cụ thể ba mức của cam kết ESG.}
+\caption{Thang độ cụ thể ba mức. Mỗi chunk nhận \emph{mức cao nhất} mà các hành động trong nó đạt được.}
 \label{tab:rubric}
-\begin{tabular}{cp{2.4cm}p{3.9cm}p{3.2cm}}
+\begin{tabular}{cp{2.2cm}p{4.4cm}p{3.0cm}}
 \toprule
-Mức độ & Ý nghĩa & Định nghĩa & Ví dụ \\
+Mức & Tên & Điều kiện gán (xét trên các hành động trong chunk) & Ví dụ chunk \\
 \midrule
-0 & Mơ hồ & khẩu hiệu/tính từ, không kiểm chứng được & ``hướng tới tương lai xanh, bền vững'' \\
-1 & Hành động có tên & hành động/chương trình có tên, quy về chủ thể, chưa định lượng & ``triển khai hệ thống quản lý carbon nội bộ'' \\
-2 & Định lượng & đại lượng đo được, quy về chính ngân hàng & ``dư nợ tín dụng xanh đạt 74.177 tỷ đồng'' \\
+0 & Mơ hồ & không hành động nào cụ thể, chỉ khẩu hiệu/tính từ không kiểm chứng được & ``Hướng tới một tương lai xanh và bền vững.'' \\
+1 & Hành động có tên & có $\ge 1$ hành động/chương trình cụ thể quy về ngân hàng, nhưng chưa định lượng & ``Ngân hàng triển khai hệ thống quản lý môi trường nội bộ.'' \\
+2 & Định lượng & có $\ge 1$ số liệu đo được quy về chính ngân hàng & ``Dư nợ tín dụng xanh của ngân hàng đạt 74.177 tỷ đồng.'' \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+Chẳng hạn, một chunk vừa chứa ``hướng tới tương lai xanh'' (Mức~0), ``triển khai chương trình tín dụng xanh'' (Mức~1) lẫn ``dư nợ tín dụng xanh đạt 74.177 tỷ đồng'' (Mức~2) sẽ được gán \textbf{Mức~2}, vì đã có một hành động định lượng quy về chính ngân hàng.
 
 \subsection{Hệ chỉ số CTI / NAR / QDR}
 Với mỗi ô (ngân hàng $b$, năm $y$), gọi $N$ là số đơn vị cam kết ESG đã qua cổng topic. Ba chỉ số bổ sung nhau được định nghĩa từ phân bố mức cụ thể:
