@@ -175,19 +175,16 @@ Toàn panel & 0{,}383 & [0{,}360;\,0{,}408] & 0{,}313 & 0{,}304 & 70{,}9 \\
 \end{tabular}
 \end{table}
 
-\textbf{RQ2 --- ESG-washing thể hiện trên các trụ như thế nào?}\\ Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}240 < \mathrm{share}(S)=0{,}357 < \mathrm{share}(G)=0{,}403$, và \emph{cả 9/9 ngân hàng đều công bố Môi trường ít nhất} (Hình~\ref{fig:rq2}a). Kiểm định Friedman bác bỏ mạnh giả thuyết ba trụ được công bố ngang nhau ($\chi^2=53{,}6$, $p=2{,}3\times10^{-12}$), khẳng định đây là hành vi né chủ đề khó có tính hệ thống.
-
-Khoảng cách say--do tổng thể chỉ $\mathrm{CTI}-\mathrm{QDR}=+0{,}08$, nhưng phân rã theo trụ cho thấy gần như toàn bộ đến từ Quản trị ($\Delta_{\mathrm{gov}}=+0{,}33$), trong khi Môi trường ($+0{,}06$) và Xã hội ($+0{,}02$) gần cân bằng (Hình~\ref{fig:rq2}b): ngân hàng nói nhiều về quản trị (chính sách, tuân thủ, đạo đức) nhưng hiếm khi định lượng.
-
-Trong các đại lượng được định lượng, tín dụng xanh áp đảo ($n=208$) còn \emph{lượng phát thải chỉ xuất hiện 13 lần} trên 45 ô (Hình~\ref{fig:rq2}c) --- ngân hàng định lượng tài chính xanh rất tốt nhưng gần như không công bố số phát thải của chính mình. Ở cấp đơn vị, một bộ Random Forest dự đoán mức cụ thể đạt macro-F1$=0{,}546$ và SHAP xếp xác suất thuộc Quản trị (\texttt{p\_gov}) vào nhóm đặc trưng quan trọng nhất --- nhất quán với khoảng cách say--do lớn ở trụ này. Tổng hợp, ngân hàng \emph{né} trụ Môi trường, \emph{bơm} trụ Quản trị bằng ngôn từ mơ hồ, và tránh con số khó nhất là phát thải.
+\textbf{RQ2 --- ESG-washing thể hiện trên các trụ như thế nào?}\\
+Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}240 < \mathrm{share}(S)=0{,}357 < \mathrm{share}(G)=0{,}403$, và \emph{cả 9/9 ngân hàng đều công bố Môi trường ít nhất} (Hình~\ref{fig:rq2}a). Có thể đây là hành vi né chủ đề khó.
 
 \begin{figure}[H]
 \centering
-\begin{minipage}[c]{0.40\textwidth}\centering
+\begin{minipage}[c]{0.46\textwidth}\centering
 \includegraphics[width=\linewidth]{fig_rq2_selective_disclosure.png}\\[1pt]
 {\footnotesize (a) Tỉ trọng công bố theo trụ}
-\end{minipage}\hfill
-\begin{minipage}[c]{0.45\textwidth}\centering
+\end{minipage}\hfil
+\begin{minipage}[c]{0.46\textwidth}
 \includegraphics[width=0.72\linewidth]{fig_rq5_saydo.png}\\[1pt]
 {\footnotesize (b) Khoảng cách say--do theo trụ}\\[4pt]
 \includegraphics[width=\linewidth]{fig_rq5_figtypes.png}\\[1pt]
@@ -196,6 +193,11 @@ Trong các đại lượng được định lượng, tín dụng xanh áp đả
 \caption{Bằng chứng ESG-washing chọn lọc theo trụ. (a) Heatmap tỉ trọng công bố theo (ngân hàng, năm): trụ Môi trường nhạt nhất ở mọi ngân hàng. (b) Khoảng cách say--do $\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$: Quản trị lệch phải mạnh, Môi trường/Xã hội quanh 0. (c) Đại lượng định lượng theo loại: tín dụng xanh ($n=208$) áp đảo, phát thải ($n=13$) gần như vắng mặt.}
 \label{fig:rq2}
 \end{figure}
+
+
+Khoảng cách say--do tổng thể chỉ $\mathrm{CTI}-\mathrm{QDR}=+0{,}08$, nhưng phân rã theo trụ cho thấy gần như toàn bộ đến từ Quản trị ($\Delta_{\mathrm{gov}}=+0{,}33$), trong khi Môi trường ($+0{,}06$) và Xã hội ($+0{,}02$) gần cân bằng (Hình~\ref{fig:rq2}b): ngân hàng nói nhiều về quản trị (chính sách, tuân thủ, đạo đức) nhưng hiếm khi định lượng.
+
+Trong các đại lượng được định lượng, tín dụng xanh áp đảo ($n=208$) còn \emph{lượng phát thải chỉ xuất hiện 13 lần} trên 45 ô (Hình~\ref{fig:rq2}c) --- ngân hàng định lượng tài chính xanh rất tốt nhưng gần như không công bố số phát thải của chính mình. Ở cấp đơn vị, một bộ Random Forest dự đoán mức cụ thể đạt macro-F1$=0{,}546$ và SHAP xếp xác suất thuộc Quản trị (\texttt{p\_gov}) vào nhóm đặc trưng quan trọng nhất --- nhất quán với khoảng cách say--do lớn ở trụ này. Tổng hợp, ngân hàng \emph{né} trụ Môi trường, \emph{bơm} trụ Quản trị bằng ngôn từ mơ hồ, và tránh con số khó nhất là phát thải.
 
 
 \textbf{RQ3 --- Công bố ESG ngày càng nhiều, vậy ESG-washing có giảm theo thời gian?} Khối lượng cam kết tăng mạnh theo thời gian (Spearman $\rho=0{,}668$, $p=5{,}5\times10^{-7}$; từ $\approx48$ cam kết mỗi báo cáo năm 2020 lên $\approx108$ năm 2024), nhưng \emph{cơ cấu độ cụ thể gần như bất động}: cả CTI ($\rho=-0{,}087$) lẫn QDR ($\rho=0{,}068$) đều không có xu hướng theo thời gian có ý nghĩa --- ngân hàng \emph{nói nhiều hơn mà không cụ thể hơn}. Xu hướng còn dị biệt giữa các ngân hàng nên triệt tiêu khi gộp panel: không có quỹ đạo cải thiện chung cho ngành (thứ hạng CTI ổn định vừa phải, bootstrap Kendall $\tau=0{,}72$).
