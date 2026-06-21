@@ -77,32 +77,43 @@ Phương pháp gồm bốn giai đoạn nối tiếp tạo ra hệ chỉ số CT
   arr/.style={->, line width=1.1pt, draw=black!60}
 ]
 \node[data] (a) {\textbf{Annual}\\\textbf{reports}};
-\node[proc, right=9mm of a]  (b) {\textbf{Semantic}\\\textbf{chunking}};
-\node[model, right=11mm of b] (c) {\textbf{ESG}\\\textbf{classifiers}\\[2pt]{\tech PhoBERT}};
-\node[model, right=9mm of c] (d) {\textbf{Specificity}\\\textbf{rubric}\\[2pt]{\tech Qwen3-1.7B}};
-\node[result, right=11mm of d]  (e) {\textbf{Washing}\\\textbf{indices}\\[2pt]{\tech CTI · NAR · QDR}};
-\draw[arr] (a)--(b);  \draw[arr] (b)--(c);  \draw[arr] (c)--(d);  \draw[arr] (d)--(e);
+\node[proc, right=9mm of a] (b) {\textbf{Semantic}\\\textbf{chunking}};
+\node[model, right=12mm of b, yshift=9mm] (c1) {\textbf{Topic classifier}\\(E/S/G)\\[2pt]{\tech PhoBERT}};
+\node[model, right=12mm of b, yshift=-9mm] (c2) {\textbf{Commitment}\\\textbf{classifier}\\[2pt]{\tech PhoBERT}};
+\node[proc, right=12mm of c1, yshift=-9mm] (g) {\textbf{ESG-commit}\\\textbf{gate}};
+\node[model, right=10mm of g] (d) {\textbf{Specificity}\\\textbf{rubric}\\[2pt]{\tech Qwen3-1.7B}};
+\node[result, right=10mm of d] (e) {\textbf{Washing}\\\textbf{indices}\\[2pt]{\tech CTI · NAR · QDR}};
+\draw[arr] (a)--(b);
+\draw[arr] (b)--(c1);  \draw[arr] (b)--(c2);
+\draw[arr] (c1)--(g);  \draw[arr] (c2)--(g);
+\draw[arr] (g)--(d);   \draw[arr] (d)--(e);
 \begin{scope}[on background layer]
-  \node[draw=orange!55, dashed, rounded corners=8pt, fit=(c)(d), inner sep=4.5mm,
-        label={[font=\scriptsize\bfseries, text=orange!55!black]above:Models (NLP + LLM)}] {};
+  \node[draw=orange!55, dashed, rounded corners=8pt, fit=(c1)(c2), inner sep=4mm,
+        label={[font=\scriptsize\bfseries, text=orange!55!black]above:PhoBERT classifiers}] {};
 \end{scope}
 \end{tikzpicture}}
-\caption{Pipeline phương pháp ở mức tổng quát: dữ liệu $\rightarrow$ chunk ngữ nghĩa $\rightarrow$ phân loại trụ/cam kết (PhoBERT) và chấm độ cụ thể (Qwen3 LLM) $\rightarrow$ hệ chỉ số CTI/NAR/QDR.}
+\caption{Pipeline phương pháp ở mức tổng quát: dữ liệu $\rightarrow$ chunk ngữ nghĩa $\rightarrow$ hai bộ phân loại PhoBERT (trụ E/S/G và cam kết) $\rightarrow$ cổng cam kết ESG $\rightarrow$ chấm độ cụ thể (Qwen3 LLM) $\rightarrow$ hệ chỉ số CTI/NAR/QDR.}
 \label{fig:pipeline}
 \end{figure}
 
-\subsection{Dữ liệu và tiền xử lý}
-Bài toán của chúng tôi là đo \emph{decoupling} giữa \emph{lời nói} (các câu cam kết ESG) và \emph{nội dung thực chất} (cam kết đó cụ thể đến đâu) ngay bên trong văn bản. Ngữ liệu gồm \textbf{45 báo cáo thường niên} của \textbf{9 ngân hàng thương mại Việt Nam}, mỗi ngân hàng một báo cáo cho mỗi năm trong giai đoạn 2020--2024.\footnote{Các báo cáo được tải công khai từ chuyên mục Quan hệ cổ đông trên website chính thức của từng ngân hàng. Danh tính ngân hàng được mã hoá ở phần kết quả (Mục~\ref{sec:results}); ngữ liệu, dữ liệu translate-train và mã nguồn được công khai để tái lập.} \textbf{Toàn bộ báo cáo bằng tiếng Việt}, và \emph{mọi bước} tách câu, phân loại và chấm điểm phía sau đều thao tác \emph{trực tiếp trên tiếng Việt}, không qua dịch máy sang tiếng Anh. Văn bản được trích từ PDF bằng OCR rồi làm sạch (loại tiêu đề/chân trang lặp lại, bảng số rời rạc và ký tự nhiễu).
+\subsection{Dữ liệu}
+Nghiên cứu sử dụng hai loại dữ liệu: dữ liệu \emph{huấn luyện} cho các bộ phân loại, và \emph{ngữ liệu phân tích} là tập báo cáo cần đánh giá.
 
-Thay vì cắt cứng theo cửa sổ token cố định (dễ cắt ngang câu, làm mất thực thể và số liệu), chúng tôi gói các câu liên tiếp thành các \emph{đơn vị ngữ nghĩa} dài tối đa 256 token theo ranh giới câu.\footnote{Sử dụng thư viện \emph{semantic-text-splitter} với bộ tách token của Qwen3; ngưỡng 256 token được chọn trùng với độ dài đầu vào tối đa của PhoBERT nhằm tránh cắt cụt khi phân loại.} Toàn bộ ngữ liệu thu được 14\,139 đơn vị (độ dài trung vị 228 token), là cấp phân tích cơ sở cho mọi bước sau.
+\textbf{Dữ liệu huấn luyện (translate-train).} Vì chưa có tập gán nhãn ESG quy mô lớn bằng tiếng Việt, chúng tôi xây dựng dữ liệu huấn luyện theo chiến lược \emph{translate-train}: thu thập các tập dữ liệu ESG công khai bằng tiếng Anh (và một phần tiếng Pháp, Nhật), dịch máy sang tiếng Việt, rồi tinh chỉnh mô hình trên bản tiếng Việt.\footnote{Phân loại trụ tổng hợp từ các bộ nhãn chủ đề ESG và phát ngôn môi trường (\emph{environmental-claims}); phân loại cam kết tổng hợp từ ClimateBERT \cite{webersinke2021climatebert}, bộ Action-500 và bộ ML-Promise (tiếng Anh/Pháp/Nhật). Mỗi câu giữ song song bản gốc và bản dịch tiếng Việt; toàn bộ dữ liệu và mã nguồn được công khai để tái lập.} Tập \emph{phân loại trụ} gồm 3\,774 câu huấn luyện và 361 câu kiểm tra với nhãn đa lớp E/S/G; tập \emph{phân loại cam kết} gồm 2\,700 câu huấn luyện và 320 câu kiểm tra với nhãn nhị phân. Việc giữ song song bản gốc tiếng Anh và bản dịch tiếng Việt còn cho phép so sánh khả năng chuyển giao ngôn ngữ (Mục~\ref{sec:results}).
 
-\subsection{Phân loại trụ ESG và nhận diện cam kết}
-Mỗi đơn vị được xử lý bởi hai bộ phân loại cùng tinh chỉnh từ \textbf{PhoBERT} \cite{nguyen2020phobert} --- mô hình ngôn ngữ \emph{được tiền huấn luyện chuyên cho tiếng Việt} trên kho ngữ liệu khoảng 20GB văn bản tiếng Việt --- nhờ vậy việc phân loại được thực hiện hoàn toàn trên văn bản tiếng Việt gốc. Bộ thứ nhất gán nhãn \emph{đa nhãn} ba trụ Môi trường (E), Xã hội (S), Quản trị (G) qua ba đầu ra sigmoid độc lập; bộ thứ hai là phân loại \emph{nhị phân}, xác định một đơn vị có phải \emph{cam kết} ESG hay không. Do thiếu dữ liệu gán nhãn quy mô lớn bằng tiếng Việt, cả hai được huấn luyện theo chiến lược \emph{translate-train}.\footnote{Các tập nhãn ESG công khai bằng tiếng Anh được dịch máy sang tiếng Việt để tạo dữ liệu huấn luyện trên miền đích; mô hình suy luận sau đó chạy trên báo cáo tiếng Việt gốc. Checkpoint của hai bộ phân loại được công khai cùng mã nguồn.}
+\textbf{Ngữ liệu phân tích.} Tập đánh giá chính của khung là \textbf{45 báo cáo thường niên} của \textbf{9 ngân hàng thương mại Việt Nam}, mỗi ngân hàng một báo cáo cho mỗi năm 2020--2024.\footnote{Các báo cáo tải công khai từ chuyên mục Quan hệ cổ đông trên website chính thức của từng ngân hàng; danh tính ngân hàng được mã hoá ở phần kết quả (Mục~\ref{sec:results}).} \textbf{Toàn bộ báo cáo bằng tiếng Việt}, và \emph{mọi bước} tách câu, phân loại, chấm điểm đều thao tác \emph{trực tiếp trên tiếng Việt}, không qua dịch máy sang tiếng Anh. Văn bản được trích từ PDF bằng OCR rồi làm sạch (loại tiêu đề/chân trang lặp lại, bảng số rời rạc, ký tự nhiễu). Thay vì cắt cứng theo cửa sổ token cố định (dễ cắt ngang câu, mất thực thể và số liệu), chúng tôi gói các câu liên tiếp thành các \emph{đơn vị ngữ nghĩa} dài tối đa 256 token theo ranh giới câu;\footnote{Dùng thư viện \emph{semantic-text-splitter} với bộ tách token của Qwen3; ngưỡng 256 token trùng độ dài đầu vào tối đa của PhoBERT để tránh cắt cụt khi phân loại.} thu được 14\,139 đơn vị (trung vị 228 token), là cấp phân tích cơ sở cho mọi bước sau.
 
-Bộ phân loại cam kết có xu hướng bắn rộng (nhiều câu ``cam kết'' không gắn trụ ESG nào, ví dụ cam kết tăng trưởng lợi nhuận). Để có mẫu số sạch cho các chỉ số, một đơn vị chỉ được giữ lại khi \emph{đồng thời} là cam kết \emph{và} có ít nhất một trụ E/S/G dương --- chúng tôi gọi là \emph{cổng topic} (topic gate).
+\subsection{Phân loại trụ ESG và cam kết}
+Để cô lập đúng đối tượng cần đo --- các \emph{cam kết ESG} --- pipeline phải trả lời hai câu hỏi trên từng đơn vị: nó thuộc trụ ESG nào (nếu có), và nó có phải một cam kết hay không. Hai câu hỏi này được giải bằng hai bộ phân loại riêng, cùng tinh chỉnh từ \textbf{PhoBERT} \cite{nguyen2020phobert} --- mô hình ngôn ngữ \emph{được tiền huấn luyện chuyên cho tiếng Việt} trên kho ngữ liệu khoảng 20GB --- kèm bước tách từ tiếng Việt; nhờ vậy việc phân loại chạy hoàn toàn trên văn bản tiếng Việt gốc.
 
-\subsection{Chấm độ cụ thể của cam kết}
-Trên mỗi đơn vị đã qua cổng topic, một mô hình ngôn ngữ lớn (\textbf{Qwen3-1.7B} \cite{yang2025qwen3}) đóng vai \emph{bộ chấm theo rubric}: nhận đơn vị cam kết bằng tiếng Việt và phân loại vào một trong ba mức cụ thể theo Bảng~\ref{tab:rubric}. Rubric \emph{nhận biết quy-về-chủ-thể} (attribution-aware): chỉ tính Mức~2 khi con số là đại lượng đo được \emph{quy về chính ngân hàng}; các con số của Ngân hàng Nhà nước, toàn ngành, quốc gia hay tiêu chuẩn quốc tế (ISO, Basel) không được tính là định lượng của chủ thể. Để chống hiện tượng mô hình ``bịa số'' (hallucination), một bước hậu kiểm tự động kiểm tra mọi con số mô hình trích ra phải thực sự xuất hiện trong văn bản gốc trước khi gán Mức~2.\footnote{Bước \texttt{verify\_rubric} đối sánh các chuỗi chữ số trong đầu ra của LLM với văn bản nguồn; nếu không khớp, đơn vị bị hạ mức để loại trừ số liệu bịa đặt.}
+\emph{Bộ phân loại trụ} gán nhãn đa lớp E/S/G qua ba đầu ra sigmoid độc lập, huấn luyện bằng hàm mất mát BCE có mặt nạ (masked-BCE) với trọng số lớp dương tự động và dò ngưỡng theo từng nhãn trên tập phát triển. \emph{Bộ phân loại cam kết} là phân loại nhị phân. Cả hai được tinh chỉnh siêu tham số bằng Optuna và huấn luyện đa hạt giống (5 hạt giống) rồi lấy trung bình để ổn định kết quả; checkpoint được công khai cùng mã nguồn.
+
+\emph{Vì sao cần cả hai bộ.} Bộ phân loại cam kết có xu hướng bắn rộng --- nhiều câu mang sắc thái ``cam kết'' nhưng không thuộc ESG (ví dụ cam kết tăng trưởng lợi nhuận); ngược lại, nhiều câu thuộc ESG chỉ mang tính mô tả chứ không phải cam kết. Vì vậy một đơn vị chỉ được giữ vào mẫu số khi \emph{đồng thời} là cam kết \emph{và} có ít nhất một trụ E/S/G dương. Chúng tôi gọi đây là \emph{cổng cam kết ESG} (ESG-commitment gate); nó bảo đảm CTI/NAR/QDR chỉ tính trên đúng tập cam kết ESG, tránh nhiễu từ các câu tài chính hay mô tả thuần tuý.
+
+\subsection{Chấm độ cụ thể của cam kết bằng mô hình ngôn ngữ lớn}
+\emph{Vì sao dùng mô hình ngôn ngữ lớn thay vì thêm một bộ phân loại.} Phân biệt ba mức cụ thể không phải bài toán phân loại bề mặt mà đòi hỏi suy luận theo ngữ cảnh: phải (i) \emph{phân rã} một câu cam kết thành các hành động thành phần, (ii) phán đoán mỗi hành động đã được \emph{định lượng} hay chưa, và (iii) \emph{nhận biết chủ thể} của con số --- của chính ngân hàng, hay của ngành/quốc gia/tiêu chuẩn. Những phán đoán này khó học ổn định từ vài nghìn nhãn, nên thay vì huấn luyện thêm một bộ phân loại, chúng tôi giao việc chấm điểm cho một mô hình ngôn ngữ lớn hoạt động theo \emph{rubric} --- vốn linh hoạt và cho lời giải thích kèm theo.
+
+Cụ thể, \textbf{Qwen3-1.7B} \cite{yang2025qwen3} nhận từng đơn vị cam kết (tiếng Việt) và phân vào một trong ba mức theo Bảng~\ref{tab:rubric}. Rubric \emph{nhận biết quy-về-chủ-thể} (attribution-aware): chỉ tính Mức~2 khi con số là đại lượng đo được \emph{quy về chính ngân hàng}; các con số của Ngân hàng Nhà nước, toàn ngành, quốc gia hay tiêu chuẩn quốc tế (ISO, Basel) không được tính là định lượng của chủ thể. Để chống hiện tượng ``bịa số'' (hallucination), một bước hậu kiểm tự động kiểm tra mọi con số mô hình trích ra phải thực sự xuất hiện trong văn bản gốc trước khi gán Mức~2.\footnote{Bước \texttt{verify\_rubric} đối sánh các chuỗi chữ số trong đầu ra của LLM với văn bản nguồn; nếu không khớp, đơn vị bị hạ mức để loại trừ số liệu bịa đặt.}
 
 \begin{table}[H]
 \centering
