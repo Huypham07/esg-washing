@@ -106,10 +106,10 @@ Ngoài ra, ESG-washing được đánh giá trên 45 báo cáo thường niên c
 \subsection{Topic and Commitment Classifier}
 Để cô lập đúng đối tượng cần đo là các cam kết ESG, pipeline phải trả lời hai câu hỏi trên từng đơn vị: nó thuộc trụ ESG nào, và nó có phải một cam kết hay không. Chúng tôi tiến hành xây dựng hai bộ phân loại riêng, cùng tinh chỉnh từ \textbf{PhoBERT} \cite{nguyen2020phobert} --- mô hình ngôn ngữ được tiền huấn luyện chuyên cho tiếng Việt. \textbf{Topic Classifier} phân loại đa lớp E/S/G qua ba đầu ra sigmoid độc lập. \textbf{Commitment Classifier} phân loại chunk có phải là một cam kết hay không. Cả hai được tinh chỉnh siêu tham số bằng Optuna.
 
-Nhiều câu mang sắc thái ``cam kết'' nhưng không thuộc ESG (ví dụ cam kết tăng trưởng lợi nhuận); ngược lại, nhiều câu thuộc ESG chỉ mang tính mô tả chứ không phải cam kết. Vì vậy chunk chỉ được giữ khi đồng thời là cam kết và thuộc ít nhất một trụ E/S/G. Chúng tôi gọi đây là \emph{ESG-commitment gate}; nó bảo đảm ESG-washing được phân tích qua CTI/NAR/QDR chỉ tính trên đúng tập cam kết ESG.
+Nhiều câu mang sắc thái ``cam kết'' nhưng không thuộc ESG (ví dụ cam kết tăng trưởng lợi nhuận); ngược lại, nhiều câu thuộc ESG chỉ mang tính mô tả chứ không phải cam kết. Vì vậy chunk chỉ được giữ khi đồng thời là cam kết và thuộc ít nhất một trụ E/S/G. Chúng tôi gọi đây là \emph(ESG-commitment gate); nó bảo đảm ESG-washing được phân tích qua CTI/NAR/QDR chỉ tính trên đúng tập cam kết ESG.
 
 \subsection{Specificity rubric}
-Bước này chỉ chấm trên các chunk \emph{đã} qua cổng cam kết ESG, nên cả ba mức đều là cam kết thực sự --- khác nhau ở \emph{độ cụ thể}, không phải ở việc có cam kết hay không. Mức~0 vì thế là một cam kết \emph{mơ hồ} (cheap talk) chứ không phải ``không phải cam kết''. Phân biệt ba mức cụ thể đòi hỏi suy luận theo ngữ cảnh: (i) phân rã chunk thành các hành động thành phần, (ii) phán đoán mỗi hành động đã được định lượng hay chưa, và (iii) nhận diện chủ thể của thông tin định lượng. Những phán đoán này khó học ổn định từ vài nghìn nhãn, nên thay vì huấn luyện thêm một bộ phân loại, chúng tôi dùng mô hình \textbf{Qwen3-1.7B} suy luận theo một bộ tiêu chí: nhận từng chunk cam kết, đánh dấu mỗi hành động trên ba tiêu chí --- \emph{có phải hành động cụ thể}, \emph{có kèm số liệu định lượng}, và \emph{số liệu có quy về chính ngân hàng} --- rồi gán cho cả chunk \emph{mức cao nhất} mà các hành động của nó đạt được (Bảng~\ref{tab:rubric}).
+Phân biệt ba mức cụ thể của một cam kết đòi hỏi suy luận theo ngữ cảnh, chúng tôi thực hiện các bước: (i) phân rã một câu cam kết thành các hành động thành phần, (ii) phán đoán mỗi hành động đã được định lượng hay chưa, và (iii) nhận diện chủ thể của thông tin định lượng. Những phán đoán này khó học ổn định từ vài nghìn nhãn, nên thay vì huấn luyện thêm một bộ phân loại, chúng tôi sử dụng một mô hình ngôn ngữ suy luận dựa trên một bộ tiêu chí đánh giá. Chúng tôi sử dụng mô hình \textbf{Qwen3-1.7B} nhận từng chunk cam kết và phân vào một trong ba mức theo Bảng~\ref{tab:rubric}.
 
 \begin{table}[H]
 \centering
@@ -124,29 +124,31 @@ Bước này chỉ chấm trên các chunk \emph{đã} qua cổng cam kết ESG,
 \toprule
 Mức độ & Ý nghĩa & Điều kiện & Ví dụ \\
 \midrule
-0 & Mơ hồ & là cam kết nhưng không nêu hành động cụ thể, chỉ khẩu hiệu/tính từ không kiểm chứng được & ``Ngân hàng cam kết hướng tới một tương lai xanh và bền vững.'' \\
-1 & Hành động có tên & có $\ge 1$ hành động/chương trình cụ thể quy về ngân hàng, nhưng chưa định lượng & ``Ngân hàng triển khai hệ thống quản lý môi trường nội bộ.'' \\
-2 & Định lượng & có $\ge 1$ số liệu đo được quy về chính ngân hàng & ``Dư nợ tín dụng xanh của ngân hàng đạt 74.177 tỷ đồng.'' \\
+
+0 & Mơ hồ & không nêu hành động cụ thể, chỉ khẩu hiệu/tính từ không kiểm chứng được & ``Ngân hàng hướng tới một tương lai xanh và bền vững.'' \\
+1 & Hành động & có $\ge 1$ hành động cụ thể nhưng chưa định lượng & ``Ngân hàng triển khai hệ thống quản lý môi trường nội bộ.'' \\
+2 & Hành động có định lượng & có $\ge 1$ hành động cụ thể có định lượng & ``Dư nợ tín dụng xanh của ngân hàng đạt 74.177 tỷ đồng.'' \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{ESG-washing Indices}
-Với mỗi ô (ngân hàng $b$, năm $y$) có $N$ chunk cam kết ESG, gọi $n_\ell$ là số chunk ở mức cụ thể $\ell\in\{0,1,2\}$. Ba chỉ số bổ sung nhau được định nghĩa như sau:\footnote{CTI --- Cheap-Talk Index; NAR --- Named-Action Rate; QDR --- Quantified-Disclosure Rate.}
+Với $N$ chunk cam kết ESG, gọi $n_\ell$ là số chunk ở mức cụ thể $\ell\in\{0,1,2\}$. Ba chỉ số bổ sung nhau được định nghĩa như sau:\footnote{CTI: Cheap-Talk Index; NAR: Named-Action Rate; QDR: Quantified-Disclosure Rate.}
 \begin{equation}
 \mathrm{CTI}=\frac{n_0}{N},\qquad
 \mathrm{NAR}=\frac{n_1}{N},\qquad
 \mathrm{QDR}=\frac{n_2}{N},\qquad
 \mathrm{CTI}+\mathrm{NAR}+\mathrm{QDR}=1.
 \end{equation}
-CTI đo nói suông (cam kết mơ hồ), QDR đo thực chất (đã định lượng), NAR là vùng trung gian; mỗi chỉ số kèm khoảng tin cậy 95\% theo \emph{percentile bootstrap} ($B=2000$). Từ bộ chỉ số, hai đại lượng dẫn xuất phục vụ phân tích sâu hơn. \emph{Tỉ trọng công bố theo trụ} đo cherry-picking:
+CTI đo nói suông (cam kết mơ hồ), QDR đo thực chất. \emph{Tỉ trọng công bố theo trụ} đo cherry-picking:
 \begin{equation}
 \mathrm{share}(p)=\frac{n_p}{n_E+n_S+n_G},\qquad p\in\{E,S,G\},
 \end{equation}
-với $n_p$ là số chunk thuộc trụ $p$. \emph{Khoảng cách say--do} theo trụ là $\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$ (tính riêng trên chunk thuộc trụ $p$); $\Delta_p>0$ nghĩa là trụ $p$ được nói nhiều hơn được định lượng.
+\emph{Khoảng cách say--do} là $\Delta=\mathrm{CTI}-\mathrm{QDR}$; $\Delta>0$ nghĩa là được nói nhiều hơn được định lượng.
+
 
 \section{Results and Discussion}
-Khung đo áp dụng cho 9 ngân hàng $\times$ 5 năm (45 quan sát panel). Để tránh quy kết rủi ro cho từng định chế, tên ngân hàng được \emph{mã hoá} bằng mã hai--ba ký tự (AK, BV, MK, OB, SB, TM, VMK, VNK, VK), dùng nhất quán trong mọi bảng và hình.\footnote{Mã suy ra cố định từ tên ngân hàng; nghiên cứu hướng tới mẫu hình toàn ngành, không nhằm xếp hạng/đánh giá danh tính. Bảng giải mã giữ riêng, cung cấp khi có yêu cầu hợp lệ.} Hiệu năng bộ phân loại được đánh giá trên Gold Set người-gán; bộ chấm độ cụ thể được audit thủ công (đang hoàn thiện).
+Khung đo thực nghiệm trên 9 ngân hàng $\times$ 5 năm. Để tránh quy kết rủi ro và đảm bảo tính bảo mật, tên ngân hàng đã được \emph{mã hoá}. Các mô hình phân loại được đánh giá trên Gold Set được chuyên gia gán nhãn.
 
 \textbf{RQ1 --- Nói suông phổ biến.} Trung bình $\mathrm{CTI}=0{,}383$ (CI~$[0{,}360;0{,}408]$), $\mathrm{NAR}=0{,}313$, $\mathrm{QDR}=0{,}304$: gần 40\% cam kết là nói suông, chỉ $\sim$30\% đạt định lượng. CTI dao động từ 0{,}293 (AK) đến 0{,}460 (MK) (Bảng~\ref{tab:by_bank}, Hình~\ref{fig:cartography}); MK nói suông nhiều nhất kèm QDR thấp (pha loãng), còn AK và OB an toàn hơn (OB dẫn đầu NAR --- mô tả hành động nhưng chưa định lượng).
 
