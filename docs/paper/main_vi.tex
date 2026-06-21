@@ -175,7 +175,14 @@ Toàn panel & 0{,}383 & [0{,}360;\,0{,}408] & 0{,}313 & 0{,}304 & 70{,}9 \\
 \end{tabular}
 \end{table}
 
-Theo thời gian, Khối lượng cam kết tăng mạnh theo thời gian (từ $\approx48$ cam kết mỗi báo cáo năm 2020 lên $\approx108$ năm 2024), nhưng \emph{cơ cấu độ cụ thể gần như bất động}: cả CTI lẫn QDR đều không có xu hướng theo thời gian có ý nghĩa --- ngân hàng \emph{nói nhiều hơn mà không cụ thể hơn}.
+Theo thời gian, Khối lượng cam kết tăng mạnh theo thời gian (từ $\approx48$ cam kết mỗi báo cáo năm 2020 lên $\approx108$ năm 2024), nhưng \emph{cơ cấu độ cụ thể gần như bất động}: cả CTI lẫn QDR đều không có xu hướng theo thời gian có ý nghĩa --- ngân hàng \emph{nói nhiều hơn mà không cụ thể hơn} (Hình~\ref{fig:ribbons}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{index_ribbons.png}
+\caption{Dải phân vị CTI/NAR/QDR theo năm 2020--2024 (vùng q10--q90 và q25--q75; đường đỏ là trung bình): cơ cấu độ cụ thể gần như đi ngang dù khối lượng cam kết tăng mạnh.}
+\label{fig:ribbons}
+\end{figure}
 
 \textbf{RQ2 --- ESG-washing thể hiện trên các trụ như thế nào?}\\
 Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}240 < \mathrm{share}(S)=0{,}357 < \mathrm{share}(G)=0{,}403$, và \emph{cả 9/9 ngân hàng đều công bố Môi trường ít nhất} (Hình~\ref{fig:rq2}a). Có thể đây là hành vi né chủ đề khó.
@@ -221,7 +228,7 @@ EN$\to$EN & 0{,}787 & 0{,}641 \\
 \textbf{Thảo luận.} Các phát hiện hội tụ thành bức tranh nhất quán về ESG-washing trong ngân hàng Việt Nam, rút ra \emph{mà không cần} dữ liệu bên thứ ba hay grounding vòng tròn. Tín hiệu nội văn bản vẫn mang thông tin nhờ lý thuyết cheap talk \cite{farrell1996cheap}: cam kết mơ hồ gần như không tốn chi phí và không thể bị bác bỏ, còn cam kết định lượng quy về chủ thể là phát ngôn \emph{có thể chứng minh sai}, tạo ràng buộc uy tín; phân bố độ cụ thể vì thế phản ánh mức sẵn sàng chịu trách nhiệm. Hàm ý thực tiễn: (1) yêu cầu định lượng phát thải (khoảng trống lớn nhất); (2) đặt sàn tỉ trọng trụ Môi trường để ngăn cherry-picking; (3) dùng CTI làm chỉ báo sàng lọc sớm cho giám sát định kỳ.
 
 \section{Conclusion}
-Nghiên cứu đề xuất khung NLP đa tín hiệu đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi BRI từ embedding và say--do gap với SHAP, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\%; trụ Môi trường bị né mạnh ($p=2{,}3\times10^{-12}$); khối lượng tăng mà chất lượng không cải thiện; BRI xác nhận giá trị hội tụ ($\rho=-0{,}429$); Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng. Hạn chế: độ cụ thể là proxy nội văn bản (không có walk-data ngoài); nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G; N=45 còn nhỏ. Hướng phát triển: mở rộng panel, hoàn tất audit thủ công, so sánh encoder PhoBERT--XLM-R, và bổ sung kiểm định nhiễu.
+Nghiên cứu đề xuất khung NLP đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi phân tích say--do theo trụ, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\% và khá đồng nhất giữa các ngân hàng; trụ Môi trường bị né mạnh ($p=2{,}3\times10^{-12}$); khối lượng tăng mà chất lượng không cải thiện; Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng. Hạn chế: độ cụ thể là proxy nội văn bản (không có walk-data ngoài); nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G; N=45 còn nhỏ. Hướng phát triển: mở rộng panel, hoàn tất audit thủ công, so sánh encoder PhoBERT--XLM-R, và bổ sung kiểm định nhiễu.
 
 \begin{credits}
 \subsubsection{\discintname}
