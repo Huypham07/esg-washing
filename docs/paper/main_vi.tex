@@ -150,7 +150,8 @@ CTI đo nói suông (cam kết mơ hồ), QDR đo thực chất. \emph{Tỉ tr�
 \section{Results and Discussion}
 Khung đo thực nghiệm trên 9 ngân hàng $\times$ 5 năm. Để tránh quy kết rủi ro và đảm bảo tính bảo mật, tên ngân hàng đã được \emph{mã hoá}. Các mô hình phân loại được đánh giá trên Gold Set được chuyên gia gán nhãn.
 
-\textbf{RQ1 --- Nói suông phổ biến đến mức nào trong ngành ngân hàng ở Việt Nam?}\\ Trung bình $\mathrm{CTI}=0{,}383$ (CI~$[0{,}360;0{,}408]$), $\mathrm{NAR}=0{,}313$, $\mathrm{QDR}=0{,}304$: gần 40\% cam kết ESG chỉ là nói suông, và chỉ khoảng 30\% đạt mức định lượng. Đáng chú ý, mức nói suông khá \emph{đồng nhất} giữa các ngân hàng --- CTI cụm trong khoảng 0{,}37--0{,}46 ở 6/9 ngân hàng (độ lệch chuẩn chỉ 0{,}056), chỉ AK và OB thấp hơn rõ rệt (Bảng~\ref{tab:by_bank}). Từ kết quả trên có thể thấy nói suông là khá phổ biến tuy nhiên xét tổng thể thì chưa thể phân hoá rõ ràng. Chúng tôi sẽ phân tích một yếu tố của ESG-washing là Selective disclosure \cite{marquis2016scrutiny} ở phần tiếp theo.
+\noindent\textbf{RQ1 --- Nói suông phổ biến đến mức nào trong ngành ngân hàng ở Việt Nam?}\\
+Trung bình $\mathrm{CTI}=0{,}383$ (CI~$[0{,}360;0{,}408]$), $\mathrm{NAR}=0{,}313$, $\mathrm{QDR}=0{,}304$: gần 40\% cam kết ESG chỉ là nói suông, và chỉ khoảng 30\% đạt mức định lượng. Đáng chú ý, mức nói suông khá \emph{đồng nhất} giữa các ngân hàng --- CTI cụm trong khoảng 0{,}37--0{,}46 ở 6/9 ngân hàng (độ lệch chuẩn chỉ 0{,}056), chỉ AK và OB thấp hơn rõ rệt (Bảng~\ref{tab:by_bank}). Từ kết quả trên có thể thấy nói suông là khá phổ biến tuy nhiên xét tổng thể thì chưa thể phân hoá rõ ràng. Chúng tôi sẽ phân tích một yếu tố của ESG-washing là Selective disclosure \cite{marquis2016scrutiny} ở phần tiếp theo.
 
 \begin{table}[H]
 \centering
@@ -179,60 +180,46 @@ Theo thời gian, Khối lượng cam kết tăng mạnh theo thời gian (từ 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.92\textwidth]{index_ribbons.png}
-\caption{Dải phân vị CTI/NAR/QDR theo năm 2020--2024 (vùng q10--q90 và q25--q75; đường đỏ là trung bình): cơ cấu độ cụ thể gần như đi ngang dù khối lượng cam kết tăng mạnh.}
+\includegraphics[width=0.7\textwidth]{index_ribbons.png}
+\caption{Dải phân vị CTI/NAR/QDR theo năm 2020--2024.}
 \label{fig:ribbons}
 \end{figure}
 
-\textbf{RQ2 --- ESG-washing thể hiện trên các trụ như thế nào?}\\
+\noindent\textbf{RQ2 --- ESG-washing thể hiện trên các trụ như thế nào?}\\
 Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}240 < \mathrm{share}(S)=0{,}357 < \mathrm{share}(G)=0{,}403$, và \emph{cả 9/9 ngân hàng đều công bố Môi trường ít nhất} (Hình~\ref{fig:rq2}a). Có thể đây là hành vi né chủ đề khó.
 
 \begin{figure}[H]
 \centering
-\begin{minipage}[c]{0.46\textwidth}\centering
+\begin{minipage}[c]{0.42\textwidth}\centering
 \includegraphics[width=0.92\linewidth]{share_pillars.png}\\[1pt]
 {\footnotesize (a) Tỉ trọng công bố theo trụ}\\[6pt]
 \includegraphics[width=0.98\linewidth]{fig_rq5_figtypes.png}\\[1pt]
 {\footnotesize (c) Đại lượng định lượng theo loại}
 \end{minipage}\hfill
-\begin{minipage}[c]{0.40\textwidth}\centering
+\begin{minipage}[c]{0.44\textwidth}\centering
 \includegraphics[width=0.74\linewidth]{fig_rq5_saydo.png}\\[1pt]
 {\footnotesize (b) Khoảng cách say--do theo trụ}
 \end{minipage}
-\caption{Bằng chứng ESG-washing chọn lọc theo trụ. (a) Tỉ trọng công bố trung bình theo trụ trên 45 ô (ngân hàng, năm): Môi trường thấp nhất. (b) Khoảng cách say--do $\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$: Quản trị lệch phải mạnh, Môi trường/Xã hội quanh 0. (c) Đại lượng định lượng theo loại: tín dụng xanh ($n=208$) áp đảo, phát thải ($n=13$) gần như vắng mặt.}
+\caption{ESG-washing chọn lọc theo trụ. (a) Tỉ trọng công bố ESG trung bình. (b) Khoảng cách say--do $\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$. (c) Đại lượng định lượng theo loại}
 \label{fig:rq2}
 \end{figure}
 
+Trong các đại lượng được định lượng, ``tín dụng xanh'' áp đảo ($n=208$) còn ``lượng phát thải'' chỉ xuất hiện 13 lần (Hình~\ref{fig:rq2}c) --- ngân hàng định lượng tài chính xanh rất tốt nhưng gần như không công bố số phát thải của chính mình.
 
 Khoảng cách say--do tổng thể chỉ $\mathrm{CTI}-\mathrm{QDR}=+0{,}08$, nhưng phân rã theo trụ cho thấy gần như toàn bộ đến từ Quản trị ($\Delta_{\mathrm{gov}}=+0{,}33$), trong khi Môi trường ($+0{,}06$) và Xã hội ($+0{,}02$) gần cân bằng (Hình~\ref{fig:rq2}b): ngân hàng nói nhiều về quản trị (chính sách, tuân thủ, đạo đức) nhưng hiếm khi định lượng.
 
-Trong các đại lượng được định lượng, tín dụng xanh áp đảo ($n=208$) còn \emph{lượng phát thải chỉ xuất hiện 13 lần} trên 45 ô (Hình~\ref{fig:rq2}c) --- ngân hàng định lượng tài chính xanh rất tốt nhưng gần như không công bố số phát thải của chính mình. Ở cấp đơn vị, một bộ Random Forest dự đoán mức cụ thể đạt macro-F1$=0{,}546$ và SHAP xếp xác suất thuộc Quản trị (\texttt{p\_gov}) vào nhóm đặc trưng quan trọng nhất --- nhất quán với khoảng cách say--do lớn ở trụ này. Tổng hợp, ngân hàng \emph{né} trụ Môi trường, \emph{bơm} trụ Quản trị bằng ngôn từ mơ hồ, và tránh con số khó nhất là phát thải.
 
-\textbf{Chuyển giao ngôn ngữ.} Đặc trưng từ vựng sụp đổ khi train tiếng Anh--test tiếng Việt: macro-F1 phân loại trụ giảm từ 0{,}83 (VI$\to$VI) xuống 0{,}22 (EN$\to$VI) (Bảng~\ref{tab:transfer}) --- minh chứng đặc trưng từ vựng không chuyển giao cross-lingual, lý giải sự cần thiết của translate-train với PhoBERT.
+\subsubsection{Discussion.} Các phát hiện hội tụ thành bức tranh nhất quán về ESG-washing trong ngân hàng Việt Nam, rút ra mà không cần dữ liệu bên thứ ba. Tín hiệu nội văn bản vẫn mang thông tin nhờ lý thuyết cheap talk \cite{farrell1996cheap}: cam kết mơ hồ gần như không tốn chi phí và không thể bị bác bỏ, còn cam kết định lượng quy về chủ thể là phát ngôn \emph{có thể chứng minh sai}; phân bố độ cụ thể vì thế phản ánh mức sẵn sàng chịu trách nhiệm. Ý nghĩa thực tiễn: (1) yêu cầu định lượng phát thải (khoảng trống lớn nhất); (2) đặt sàn tỉ trọng trụ Môi trường để ngăn cherry-picking; (3) dùng CTI làm chỉ báo sàng lọc sớm cho giám sát định kỳ.
 
-\begin{table}[H]
-\centering
-\caption{Macro-F1 đường cơ sở TF-IDF+LR theo cấu hình ngôn ngữ.}
-\label{tab:transfer}
-\begin{tabular}{lcc}
-\toprule
-Cấu hình & Phân loại trụ (E/S/G) & Cam kết \\
-\midrule
-VI$\to$VI & 0{,}832 & 0{,}664 \\
-EN$\to$VI & 0{,}220 & 0{,}470 \\
-EN$\to$EN & 0{,}787 & 0{,}641 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{Thảo luận.} Các phát hiện hội tụ thành bức tranh nhất quán về ESG-washing trong ngân hàng Việt Nam, rút ra \emph{mà không cần} dữ liệu bên thứ ba hay grounding vòng tròn. Tín hiệu nội văn bản vẫn mang thông tin nhờ lý thuyết cheap talk \cite{farrell1996cheap}: cam kết mơ hồ gần như không tốn chi phí và không thể bị bác bỏ, còn cam kết định lượng quy về chủ thể là phát ngôn \emph{có thể chứng minh sai}, tạo ràng buộc uy tín; phân bố độ cụ thể vì thế phản ánh mức sẵn sàng chịu trách nhiệm. Hàm ý thực tiễn: (1) yêu cầu định lượng phát thải (khoảng trống lớn nhất); (2) đặt sàn tỉ trọng trụ Môi trường để ngăn cherry-picking; (3) dùng CTI làm chỉ báo sàng lọc sớm cho giám sát định kỳ.
 
 \section{Conclusion}
-Nghiên cứu đề xuất khung NLP đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi phân tích say--do theo trụ, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\% và khá đồng nhất giữa các ngân hàng; trụ Môi trường bị né mạnh ($p=2{,}3\times10^{-12}$); khối lượng tăng mà chất lượng không cải thiện; Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng. Hạn chế: độ cụ thể là proxy nội văn bản (không có walk-data ngoài); nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G; N=45 còn nhỏ. Hướng phát triển: mở rộng panel, hoàn tất audit thủ công, so sánh encoder PhoBERT--XLM-R, và bổ sung kiểm định nhiễu.
+
+Nghiên cứu đề xuất khung NLP đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi phân tích say--do theo trụ, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\%; trụ Môi trường bị né nhiều hơn phần còn lại; khối lượng tăng mà chất lượng không cải thiện; Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng. Hạn chế: độ cụ thể là proxy nội văn bản không có walk-data ngoài; nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G; Số lượng ngân hàng và báo cáo còn ít. Hướng phát triển: mở rộng phạm vi đánh giá, triển khai đa ngôn ngữ, tích hợp đánh giá đối với các dữ liệu có từ bên ngoài báo cáo.
+
 
 \begin{credits}
 \subsubsection{\discintname}
-Các tác giả tuyên bố không có xung đột lợi ích liên quan đến nội dung bài báo.
+The authors have no competing interests to declare that are relevant to the content of this article.
 \end{credits}
 
 %
