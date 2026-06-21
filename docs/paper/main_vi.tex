@@ -175,6 +175,8 @@ Toàn panel & 0{,}383 & [0{,}360;\,0{,}408] & 0{,}313 & 0{,}304 & 70{,}9 \\
 \end{tabular}
 \end{table}
 
+Theo thời gian, Khối lượng cam kết tăng mạnh theo thời gian (từ $\approx48$ cam kết mỗi báo cáo năm 2020 lên $\approx108$ năm 2024), nhưng \emph{cơ cấu độ cụ thể gần như bất động}: cả CTI lẫn QDR đều không có xu hướng theo thời gian có ý nghĩa --- ngân hàng \emph{nói nhiều hơn mà không cụ thể hơn}.
+
 \textbf{RQ2 --- ESG-washing thể hiện trên các trụ như thế nào?}\\
 Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}240 < \mathrm{share}(S)=0{,}357 < \mathrm{share}(G)=0{,}403$, và \emph{cả 9/9 ngân hàng đều công bố Môi trường ít nhất} (Hình~\ref{fig:rq2}a). Có thể đây là hành vi né chủ đề khó.
 
@@ -198,11 +200,6 @@ Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}2
 Khoảng cách say--do tổng thể chỉ $\mathrm{CTI}-\mathrm{QDR}=+0{,}08$, nhưng phân rã theo trụ cho thấy gần như toàn bộ đến từ Quản trị ($\Delta_{\mathrm{gov}}=+0{,}33$), trong khi Môi trường ($+0{,}06$) và Xã hội ($+0{,}02$) gần cân bằng (Hình~\ref{fig:rq2}b): ngân hàng nói nhiều về quản trị (chính sách, tuân thủ, đạo đức) nhưng hiếm khi định lượng.
 
 Trong các đại lượng được định lượng, tín dụng xanh áp đảo ($n=208$) còn \emph{lượng phát thải chỉ xuất hiện 13 lần} trên 45 ô (Hình~\ref{fig:rq2}c) --- ngân hàng định lượng tài chính xanh rất tốt nhưng gần như không công bố số phát thải của chính mình. Ở cấp đơn vị, một bộ Random Forest dự đoán mức cụ thể đạt macro-F1$=0{,}546$ và SHAP xếp xác suất thuộc Quản trị (\texttt{p\_gov}) vào nhóm đặc trưng quan trọng nhất --- nhất quán với khoảng cách say--do lớn ở trụ này. Tổng hợp, ngân hàng \emph{né} trụ Môi trường, \emph{bơm} trụ Quản trị bằng ngôn từ mơ hồ, và tránh con số khó nhất là phát thải.
-
-
-\textbf{RQ3 --- Công bố ESG ngày càng nhiều, vậy ESG-washing có giảm theo thời gian?} Khối lượng cam kết tăng mạnh theo thời gian (Spearman $\rho=0{,}668$, $p=5{,}5\times10^{-7}$; từ $\approx48$ cam kết mỗi báo cáo năm 2020 lên $\approx108$ năm 2024), nhưng \emph{cơ cấu độ cụ thể gần như bất động}: cả CTI ($\rho=-0{,}087$) lẫn QDR ($\rho=0{,}068$) đều không có xu hướng theo thời gian có ý nghĩa --- ngân hàng \emph{nói nhiều hơn mà không cụ thể hơn}. Xu hướng còn dị biệt giữa các ngân hàng nên triệt tiêu khi gộp panel: không có quỹ đạo cải thiện chung cho ngành (thứ hạng CTI ổn định vừa phải, bootstrap Kendall $\tau=0{,}72$).
-
-\textbf{Kiểm chứng độ tin cậy của bức tranh.} Để khẳng định các kết quả trên không phải tạo tác của riêng rubric, chúng tôi đối chiếu CTI với một tín hiệu embedding độc lập --- chỉ số tái dùng ngôn ngữ chung BRI. Kết quả đúng hướng lý thuyết: $\mathrm{Spearman}(\mathrm{CTI},\mathrm{BRI})=-0{,}429$ ($p=0{,}003$) và $(\mathrm{NAR},\mathrm{BRI})=+0{,}370$ ($p=0{,}012$) --- ngôn ngữ được tái dùng nhiều nhất giữa các ngân hàng là \emph{hành động có tên} chứ không phải khẩu hiệu mơ hồ. Hai hướng tương quan đối lập này bác bỏ giả thuyết ``CTI chỉ đo mức phổ biến của ngôn ngữ'', xác nhận chỉ số đo đúng \emph{độ cụ thể}.
 
 \textbf{Chuyển giao ngôn ngữ.} Đặc trưng từ vựng sụp đổ khi train tiếng Anh--test tiếng Việt: macro-F1 phân loại trụ giảm từ 0{,}83 (VI$\to$VI) xuống 0{,}22 (EN$\to$VI) (Bảng~\ref{tab:transfer}) --- minh chứng đặc trưng từ vựng không chuyển giao cross-lingual, lý giải sự cần thiết của translate-train với PhoBERT.
 
