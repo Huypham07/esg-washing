@@ -146,7 +146,7 @@ CTI đo nói suông (cam kết mơ hồ), QDR đo thực chất. \emph{Tỉ tr�
 \begin{equation}
 \mathrm{share}(p)=\frac{n_p}{n_E+n_S+n_G},\qquad p\in\{E,S,G\},
 \end{equation}
-\emph{Khoảng cách say--do} là $\Delta=\mathrm{CTI}-\mathrm{QDR}$; $\Delta>0$ nghĩa là được nói nhiều hơn được định lượng.
+\emph{Khoảng cách mơ hồ--định lượng} (vague--quantified gap) là $\Delta=\mathrm{CTI}-\mathrm{QDR}$; $\Delta>0$ nghĩa là cam kết mơ hồ nhiều hơn cam kết định lượng.
 
 
 \section{Results and Discussion}
@@ -200,15 +200,15 @@ Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}2
 \end{minipage}\hfill
 \begin{minipage}[c]{0.44\textwidth}\centering
 \includegraphics[width=0.74\linewidth]{fig_rq5_saydo.png}\\[1pt]
-{\footnotesize (b) Khoảng cách say--do theo trụ}
+{\footnotesize (b) Khoảng cách mơ hồ--định lượng theo trụ}
 \end{minipage}
-\caption{ESG-washing chọn lọc theo trụ. (a) Tỉ trọng công bố ESG trung bình. (b) Khoảng cách say--do $\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$. (c) Đại lượng định lượng theo loại}
+\caption{ESG-washing chọn lọc theo trụ. (a) Tỉ trọng công bố ESG trung bình. (b) Khoảng cách mơ hồ--định lượng $\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$. (c) Đại lượng định lượng theo loại}
 \label{fig:rq2}
 \end{figure}
 
 Trong các đại lượng được định lượng, ``tín dụng xanh'' áp đảo ($n=208$) còn ``lượng phát thải'' chỉ xuất hiện 13 lần (Hình~\ref{fig:rq2}c) --- ngân hàng định lượng tài chính xanh rất tốt nhưng gần như không công bố số phát thải của chính mình.
 
-Khoảng cách say--do tổng thể chỉ $\mathrm{CTI}-\mathrm{QDR}=+0{,}08$, nhưng phân rã theo trụ cho thấy gần như toàn bộ đến từ Quản trị ($\Delta_{\mathrm{gov}}=+0{,}33$), trong khi Môi trường ($+0{,}06$) và Xã hội ($+0{,}02$) gần cân bằng (Hình~\ref{fig:rq2}b): ngân hàng nói nhiều về quản trị (chính sách, tuân thủ, đạo đức) nhưng hiếm khi định lượng.
+Khoảng cách mơ hồ--định lượng tổng thể chỉ $\mathrm{CTI}-\mathrm{QDR}=+0{,}08$, nhưng phân rã theo trụ cho thấy gần như toàn bộ đến từ Quản trị ($\Delta_{\mathrm{gov}}=+0{,}33$), trong khi Môi trường ($+0{,}06$) và Xã hội ($+0{,}02$) gần cân bằng (Hình~\ref{fig:rq2}b): ngân hàng nói nhiều về quản trị (chính sách, tuân thủ, đạo đức) nhưng hiếm khi định lượng.
 
 
 \subsubsection{Discussion.} Các phát hiện hội tụ thành bức tranh nhất quán về ESG-washing trong ngân hàng Việt Nam, rút ra mà không cần dữ liệu bên thứ ba. Tín hiệu nội văn bản vẫn mang thông tin nhờ lý thuyết cheap talk \cite{farrell1996cheap}: cam kết mơ hồ gần như không tốn chi phí và không thể bị bác bỏ, còn cam kết định lượng quy về chủ thể là phát ngôn \emph{có thể chứng minh sai}; phân bố độ cụ thể vì thế phản ánh mức sẵn sàng chịu trách nhiệm. Ý nghĩa thực tiễn: (1) yêu cầu định lượng phát thải (khoảng trống lớn nhất); (2) đặt sàn tỉ trọng trụ Môi trường để ngăn cherry-picking; (3) dùng CTI làm chỉ báo sàng lọc sớm cho giám sát định kỳ.
@@ -216,7 +216,7 @@ Khoảng cách say--do tổng thể chỉ $\mathrm{CTI}-\mathrm{QDR}=+0{,}08$, n
 
 \section{Conclusion}
 
-Nghiên cứu đề xuất khung NLP đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi phân tích say--do theo trụ, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\%; trụ Môi trường bị né nhiều hơn phần còn lại; khối lượng tăng mà chất lượng không cải thiện; Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng. Hạn chế: độ cụ thể là proxy nội văn bản không có walk-data ngoài; nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G; Số lượng ngân hàng và báo cáo còn ít. Hướng phát triển: mở rộng phạm vi đánh giá, triển khai đa ngôn ngữ, tích hợp đánh giá đối với các dữ liệu có từ bên ngoài báo cáo.
+Nghiên cứu đề xuất khung NLP đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi phân tích khoảng cách mơ hồ--định lượng theo trụ, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\%; trụ Môi trường bị né nhiều hơn phần còn lại; khối lượng tăng mà chất lượng không cải thiện; Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng. Hạn chế: độ cụ thể là proxy nội văn bản không có walk-data ngoài; nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G; Số lượng ngân hàng và báo cáo còn ít. Hướng phát triển: mở rộng phạm vi đánh giá, triển khai đa ngôn ngữ, tích hợp đánh giá đối với các dữ liệu có từ bên ngoài báo cáo.
 
 
 \begin{credits}
