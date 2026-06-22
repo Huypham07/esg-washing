@@ -71,11 +71,11 @@ def fig_say_do(classified, out_dir: Path) -> Path:
     fig, ax = plt.subplots(figsize=(8, max(4, 0.4 * len(grid))), facecolor=PALETTE["paper"])
     im = ax.imshow(grid.to_numpy(), aspect="auto", cmap=DELTA_CMAP,
                    norm=symmetric_delta_norm(grid.to_numpy().ravel()))
-    ax.set_title("Say-do gap per pillar (CTI_p - QDR_p), exploratory", loc="left",
+    ax.set_title("Vague-quantified gap per pillar (CTI_p - QDR_p)", loc="left",
                  fontweight="bold", color=PALETTE["ink"], pad=20)
     ax.set_xticks(range(len(grid.columns)), grid.columns)
     ax.set_yticks(range(len(grid.index)), [f"{b} {y}" for b, y in grid.index], fontsize=7)
-    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04, label="say - do")
+    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04, label="CTI_p - QDR_p")
     return _save(fig, out_dir, "index_say_do.png"), sd
 
 
