@@ -146,6 +146,9 @@ CTI = n0/N;  NAR = n1/N;  QDR = n2/N
 
 - §Methodology: mở rộng mô tả từng tầng theo §4 (backbone+lý do, dữ liệu+nhãn, masked-BCE, Optuna
   TPE+pruning, tách tune/test, multi-seed). Liệt kê cải tiến rõ ràng.
+  - **Ràng buộc viết:** nêu Optuna TPE+pruning ở mức *phương pháp*; **KHÔNG** liệt kê giá trị
+    siêu tham số chi tiết / không gian tìm trong main text (để repo). Mọi mô tả mô hình bám sát
+    code đã chạy — không thêm thành phần không tồn tại.
 - §Specificity rubric → §Attribute extraction: 5 cờ + luật + grounding + guard.
 - §Độ tin cậy nhãn vàng: viết lại quanh **phép nhảy κ** + **lập luận tương phản S/G**; bỏ lập luận
   "systematic offset cancels" cũ.
