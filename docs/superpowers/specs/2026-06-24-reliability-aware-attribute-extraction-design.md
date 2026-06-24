@@ -59,8 +59,9 @@ Pipeline 4 tầng nối tiếp. Mỗi tầng nêu: backbone + lý do, dữ liệ
 huấn luyện, và **cải tiến** so với baseline ngây thơ.
 
 ### 4.1 Tầng Topic Classifier (E/S/G)
-- **Backbone:** PhoBERT (pretrained tiếng Việt) — lý do: corpus đích là báo cáo tiếng Việt;
-  PhoBERT > mBERT/XLM-R trên tác vụ tiếng Việt do tiền-huấn-luyện chuyên ngữ + tách từ.
+- **Backbone:** PhoBERT (pretrained tiếng Việt) — lý do thiết kế (biện minh theo literature,
+  KHÔNG phải so sánh thực nghiệm của ta): corpus đích là báo cáo tiếng Việt, PhoBERT tiền-huấn-luyện
+  chuyên ngữ + tách từ tiếng Việt. **Ta chưa chạy XLM-R/mBERT nên không tuyên bố hơn-kém bằng số.**
 - **Kiến trúc:** 3 đầu sigmoid độc lập (đa nhãn, không softmax) — một chunk có thể vừa E vừa S.
 - **Nhãn & dữ liệu:** translate-train. Gom nhiều nguồn EN chuyên gia (ESGBERT,
   environmental-claims) → dịch máy sang VI → fine-tune. **Cải tiến dữ liệu:** hòa hợp taxonomy
