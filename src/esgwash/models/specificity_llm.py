@@ -1,11 +1,14 @@
-"""Specificity scorer bang small instruct-LLM + rubric.
+"""Specificity scorer bang small instruct-LLM + rubric 5 co atomic.
 
-Tranh shortcut "co chu so -> specific" cua encoder: LLM phan ra cau thanh cac item
-{action_or_event, figure, is_quantified, is_concrete_action, attributable_to_actor} + has_baseline_or_timeline,
-roi suy nhan bang luat tuong minh (derive):
-  spec_level 2 = dinh luong & quy ve chu the | 1 = hanh dong co ten & quy ve chu the | 0 = mo ho.
+LLM phan ra 5 co nhi phan (co_cam_ket, co_hanh_dong_ten, co_so_dinh_luong,
+quy_ve_bank, co_moc_tg) + evidence trich dan nguyen van. Luat tuong minh (derive_flags):
+  spec_level 2 = co_so_dinh_luong AND quy_ve_bank
+             1 = co_hanh_dong_ten (chua dat Muc 2)
+             0 = con lai
   is_specific = (spec_level >= 1). CTI = ti le Muc 0.
-verify_rubric huy figure bia (so khong co trong text). Retry khi parse loi, het retry -> Muc 0.
+verify_rubric_flags huy co_so_dinh_luong neu chu so trong evidence khong co trong text.
+enforce_evidence ha co ve 0 neu evidence khong phai substring cua text.
+Retry khi parse loi, het retry -> moi co 0, spec_level 0, parse_ok False.
 """
 from __future__ import annotations
 
@@ -15,119 +18,46 @@ import re
 import pandas as pd
 
 SYSTEM = (
-    "Bạn là chuyên gia phân tích báo cáo ESG ngân hàng. Với mỗi ĐOẠN VĂN, phân rã TỪNG "
-    "hành động/sự kiện thành item. Với MỖI item, đánh giá ĐỘC LẬP 2 thuộc tính:\n"
-    "(1) is_quantified + attributable_to_actor: có ĐẠI LƯỢNG ĐỊNH LƯỢNG đo được QUY VỀ "
-    "CHÍNH CHỦ THỂ không (ví dụ: giảm 30% phát thải, dư nợ tín dụng xanh 5.000 tỷ, 100 MW "
-    "điện mặt trời). KHÔNG tính: năm của chiến lược/luật quốc gia, tên tiêu chuẩn (ISO, "
-    "VIETGAP), số liệu của NHNN/toàn ngành/quốc gia, điều kiện vay, từ mơ hồ ('hấp dẫn').\n"
-    "(2) is_concrete_action: item có nêu HÀNH ĐỘNG/CÔNG CỤ/CHƯƠNG TRÌNH/HỆ THỐNG CỤ THỂ CÓ "
-    "TÊN, KIỂM CHỨNG ĐƯỢC của chủ thể không (ví dụ: 'ban hành gói Tín dụng xanh', 'hệ thống "
-    "B.One', 'Chatbot AI', 'trồng cây xanh') — KHÁC với khẩu hiệu/tính từ chung chung KHÔNG "
-    "kiểm chứng được ('chuyển đổi toàn diện', 'nâng cao năng lực', 'hướng tới bền vững', "
-    "'thực chất, bài bản'). Tính từ/khát vọng -> is_concrete_action=false.\n"
+    "Bạn là chuyên gia phân tích báo cáo ESG ngân hàng. Với mỗi ĐOẠN VĂN, trả lời 5 câu hỏi "
+    "YES/NO khách quan, và với mỗi câu trả lời YES phải TRÍCH nguyên văn cụm trong đoạn làm "
+    "bằng chứng (evidence):\n"
+    "1. co_cam_ket: đoạn có Ý CAM KẾT/hướng tương lai (sẽ, cam kết, hướng tới, mục tiêu, đặt mục tiêu)?\n"
+    "2. co_hanh_dong_ten: có HÀNH ĐỘNG/CHƯƠNG TRÌNH/CÔNG CỤ/HỆ THỐNG CÓ TÊN, kiểm chứng được "
+    "(vd 'gói Tín dụng xanh', 'hệ thống B.One') — KHÁC khẩu hiệu/tính từ ('bền vững', 'toàn diện')?\n"
+    "3. co_so_dinh_luong: có ĐẠI LƯỢNG ĐỊNH LƯỢNG (số, %, tỷ đồng, MW)? KHÔNG tính năm chiến "
+    "lược/luật, tên tiêu chuẩn (ISO), số của NHNN/toàn ngành.\n"
+    "4. quy_ve_bank: số/hành động đó QUY VỀ CHÍNH NGÂN HÀNG chủ thể (không phải quốc gia/ngành)?\n"
+    "5. co_moc_tg: có MỐC THỜI GIAN/deadline (năm mục tiêu, 'đến 2030', 'giai đoạn 2021-2025')?\n"
     "Chỉ trả về JSON, không giải thích ngoài JSON."
 )
 
 SCHEMA_HINT = (
     'Trả về JSON đúng dạng:\n'
-    '{"items": [{"action_or_event": "<hành động/sự kiện>", "figure": "<số liệu gắn với '
-    'nó hoặc null>", "is_quantified": true/false, "attributable_to_actor": true/false, '
-    '"is_concrete_action": true/false}], '
-    '"has_baseline_or_timeline": true/false, "reason": "<giải thích ngắn>"}'
+    '{"co_cam_ket": true/false, "co_hanh_dong_ten": true/false, "co_so_dinh_luong": true/false, '
+    '"quy_ve_bank": true/false, "co_moc_tg": true/false, '
+    '"evidence": {"co_cam_ket": "<trích dẫn hoặc null>", "co_hanh_dong_ten": "...", '
+    '"co_so_dinh_luong": "...", "quy_ve_bank": "...", "co_moc_tg": "..."}, "reason": "<ngắn>"}'
 )
 
-# Few-shot day 3 muc: (a) cu the-khong-so (Muc 1), (b) dinh luong (Muc 2),
-# (c) nhieu item dinh luong, (d) mo ho thuan (Muc 0).
 FEWSHOT = [
-    ("Hưởng ứng Chiến lược quốc gia về tăng trưởng xanh giai đoạn 2021-2030, tầm nhìn "
-     "2050, BIDV đã ban hành gói Tín dụng xanh cho khách hàng cá nhân vay phát triển năng "
-     "lượng sạch (điện mặt trời, điện gió) hoặc trồng trọt chăn nuôi theo VIETGAP, ISO với "
-     "lãi suất hấp dẫn và ưu đãi hơn thông thường.",
-     {"items": [{"action_or_event": "ban hành gói Tín dụng xanh cho vay năng lượng sạch",
-                 "figure": None, "is_quantified": False, "attributable_to_actor": True,
-                 "is_concrete_action": True}],
-      "has_baseline_or_timeline": False,
-      "reason": "Gói Tín dụng xanh là hành động cụ thể có tên, kiểm chứng được (Mức 1) nhưng "
-                "không có số quy về BIDV; các số (2021-2030, ISO) là của chiến lược quốc gia."}),
-    ("Ngân hàng đặt mục tiêu giảm 30% cường độ phát thải khí nhà kính vào năm 2030 so với "
-     "mức năm 2020.",
-     {"items": [{"action_or_event": "giảm cường độ phát thải khí nhà kính",
-                 "figure": "30% vào 2030", "is_quantified": True,
-                 "attributable_to_actor": True, "is_concrete_action": True}],
-      "has_baseline_or_timeline": True,
-      "reason": "Mục tiêu định lượng 30% có mốc 2020 làm baseline và mốc 2030, quy về chủ thể (Mức 2)."}),
-    # Đoạn NHIỀU hành động -> NHIỀU item trong CÙNG một mảng "items" (KHÔNG tách mỗi item một mảng).
-    ("Năm 2023, dư nợ tín dụng xanh của ngân hàng đạt 74.000 tỷ đồng, tăng 12% so với năm trước; "
-     "đồng thời ngân hàng tài trợ 109,5 tỷ đồng cho lĩnh vực giáo dục và trồng 330.000 cây xanh.",
-     {"items": [{"action_or_event": "dư nợ tín dụng xanh", "figure": "74.000 tỷ đồng",
-                 "is_quantified": True, "attributable_to_actor": True, "is_concrete_action": True},
-                {"action_or_event": "tài trợ lĩnh vực giáo dục", "figure": "109,5 tỷ đồng",
-                 "is_quantified": True, "attributable_to_actor": True, "is_concrete_action": True},
-                {"action_or_event": "trồng cây xanh", "figure": "330.000 cây",
-                 "is_quantified": True, "attributable_to_actor": True, "is_concrete_action": True}],
-      "has_baseline_or_timeline": True,
-      "reason": "Ba đại lượng định lượng quy về ngân hàng, có mốc 2023 và so với năm trước (Mức 2)."}),
-    ("BIDV sẽ chuyển đổi toàn diện, đồng bộ, thực chất, bài bản tất cả các hoạt động, "
-     "chuyển đổi mạnh mẽ căn bản từ tư duy nhận thức, nâng cao năng lực quản trị điều hành, "
-     "hướng tới phát triển xanh, bền vững.",
-     {"items": [{"action_or_event": "chuyển đổi toàn diện, đồng bộ, thực chất, bài bản",
-                 "figure": None, "is_quantified": False, "attributable_to_actor": True,
-                 "is_concrete_action": False},
-                {"action_or_event": "nâng cao năng lực quản trị điều hành", "figure": None,
-                 "is_quantified": False, "attributable_to_actor": True,
-                 "is_concrete_action": False}],
-      "has_baseline_or_timeline": False,
-      "reason": "Toàn khẩu hiệu/tính từ chung chung, không nêu công cụ/chương trình cụ thể "
-                "nào kiểm chứng được, không có số (Mức 0 - mơ hồ)."}),
+    ("Ngân hàng hướng tới một tương lai xanh và bền vững.",
+     {"co_cam_ket": True, "co_hanh_dong_ten": False, "co_so_dinh_luong": False,
+      "quy_ve_bank": False, "co_moc_tg": False,
+      "evidence": {"co_cam_ket": "hướng tới"},
+      "reason": "Chỉ khẩu hiệu, không hành động có tên, không số (Mức 0)."}),
+    ("BIDV đã ban hành gói Tín dụng xanh cho khách hàng vay phát triển năng lượng sạch.",
+     {"co_cam_ket": True, "co_hanh_dong_ten": True, "co_so_dinh_luong": False,
+      "quy_ve_bank": True, "co_moc_tg": False,
+      "evidence": {"co_cam_ket": "ban hành", "co_hanh_dong_ten": "gói Tín dụng xanh",
+                   "quy_ve_bank": "BIDV"},
+      "reason": "Hành động có tên, không số (Mức 1)."}),
+    ("Ngân hàng đặt mục tiêu giảm 30% cường độ phát thải khí nhà kính vào năm 2030.",
+     {"co_cam_ket": True, "co_hanh_dong_ten": True, "co_so_dinh_luong": True,
+      "quy_ve_bank": True, "co_moc_tg": True,
+      "evidence": {"co_cam_ket": "đặt mục tiêu", "co_hanh_dong_ten": "giảm cường độ phát thải",
+                   "co_so_dinh_luong": "30%", "quy_ve_bank": "Ngân hàng", "co_moc_tg": "năm 2030"},
+      "reason": "Số 30% quy về ngân hàng, có mốc 2030 (Mức 2)."}),
 ]
-
-DEFAULT_WEIGHTS = {"quantified_attributable": 0.6,
-                   "baseline_or_timeline": 0.2, "any_quantified": 0.2}
-
-
-# Item object PHANG (khong ngoac long nhau) co khoa action_or_event — de salvage khi JSON hong.
-_ITEM_RE = re.compile(r'\{[^{}]*?"action_or_event"[^{}]*?\}', re.DOTALL)
-_HAS_BT_RE = re.compile(r'"has_baseline_or_timeline"\s*:\s*(true|false)')
-
-
-def _extract_json(text: str) -> dict | None:
-    """Bo <think>...</think> (Qwen3) roi lay rubric. Thu parse chuan truoc; neu hong thi
-    SALVAGE: Qwen3-1.7B hay sinh sai ngoac ({"items":[o], [o], [o]}) hoac bi truncate ->
-    vot moi item object phang bang regex + tim co has_baseline_or_timeline. Giu duoc ~3/4
-    truong hop ma neu khong se fallback is_specific=0 (lam CTI thoi phong)."""
-    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
-    # 1) JSON dung chuan: lay object dau tien khop ngoac
-    start = text.find("{")
-    if start >= 0:
-        depth = 0
-        for i in range(start, len(text)):
-            if text[i] == "{":
-                depth += 1
-            elif text[i] == "}":
-                depth -= 1
-                if depth == 0:
-                    try:
-                        obj = json.loads(text[start:i + 1])
-                        if isinstance(obj, dict) and isinstance(obj.get("items"), list):
-                            return obj
-                    except json.JSONDecodeError:
-                        pass
-                    break
-    # 2) Salvage: gom moi item object phang con doc duoc (bo cai cuoi bi truncate)
-    items = []
-    for m in _ITEM_RE.finditer(text):
-        try:
-            o = json.loads(m.group(0))
-        except json.JSONDecodeError:
-            continue
-        if isinstance(o, dict) and "action_or_event" in o:
-            items.append(o)
-    if not items:
-        return None
-    hb = _HAS_BT_RE.search(text)
-    return {"items": items, "has_baseline_or_timeline": bool(hb and hb.group(1) == "true")}
-
 
 _DIGITS_RE = re.compile(r"\d+")
 _YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
@@ -145,28 +75,54 @@ def _digit_runs(s: str) -> list[str]:
     return _DIGITS_RE.findall(re.sub(r"(?<=\d)[.,\s](?=\d)", "", str(s)))
 
 
-def verify_rubric(rubric: dict, text: str) -> dict:
-    """Chong bia: model 0.6B hay copy figure tu few-shot / bia so khong co trong doan.
-    - item.is_quantified chi giu True neu figure co chu so XUAT HIEN trong `text`.
-    - has_baseline_or_timeline chi giu True neu doan co nam (19xx/20xx) hoac cum 'so voi'.
-    Tra ve ban rubric da loc (khong sua tai cho)."""
-    text_digits = set(_digit_runs(text))
-    low = str(text).lower()
-    items = []
-    for it in (rubric.get("items") or []):
-        it = dict(it)
-        if it.get("is_quantified"):
-            figs = _digit_runs(it.get("figure") or "")
-            if not figs or not any(f in text_digits for f in figs):
-                it["is_quantified"] = False  # figure khong co thuc trong doan -> huy
-        items.append(it)
-    has_bt = bool(rubric.get("has_baseline_or_timeline")) and (
-        bool(_YEAR_RE.search(text)) or "so với" in low or "so voi" in low)
-    return {**rubric, "items": items, "has_baseline_or_timeline": has_bt}
+def _extract_json_obj(text: str) -> dict | None:
+    """Bo <think>...</think> roi lay object JSON dau tien khop ngoac. Tra None neu hong."""
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
+    start = text.find("{")
+    if start < 0:
+        return None
+    depth = 0
+    for i in range(start, len(text)):
+        if text[i] == "{":
+            depth += 1
+        elif text[i] == "}":
+            depth -= 1
+            if depth == 0:
+                try:
+                    obj = json.loads(text[start:i + 1])
+                    if isinstance(obj, dict):
+                        return obj
+                except json.JSONDecodeError:
+                    pass
+                return None
+    return None
+
+
+def _parse_flags(text: str) -> dict | None:
+    """Boc JSON (da bo <think>), tach flags + evidence. Tra None neu hong."""
+    obj = _extract_json_obj(text)
+    if obj is None:
+        return None
+    flags = {f: int(bool(obj.get(f))) for f in ATOMIC_FLAGS}
+    ev = obj.get("evidence") or {}
+    evidence = {f: (ev.get(f) if isinstance(ev, dict) else None) for f in ATOMIC_FLAGS}
+    return {"flags": flags, "evidence": evidence}
+
+
+def verify_rubric_flags(flags: dict, evidence: dict, text: str) -> dict:
+    """Chong bia so: neu co_so_dinh_luong=1 ma chu so trong evidence khong co trong text -> ha ve 0."""
+    flags = dict(flags)
+    if flags.get("co_so_dinh_luong"):
+        ev_str = evidence.get("co_so_dinh_luong") or ""
+        ev_digits = _digit_runs(ev_str)
+        text_digits = set(_digit_runs(text))
+        if not ev_digits or not any(d in text_digits for d in ev_digits):
+            flags["co_so_dinh_luong"] = 0
+    return flags
 
 
 def enforce_evidence(flags: dict, evidence: dict, text: str) -> dict:
-    """Cờ 'yes' phải có evidence là chuỗi con của chunk, nếu không -> hạ về 0."""
+    """Co 'yes' phai co evidence la chuoi con cua chunk, neu khong -> ha ve 0."""
     norm_text = _norm(text)
     out = {}
     for f in ATOMIC_FLAGS:
@@ -180,30 +136,14 @@ def enforce_evidence(flags: dict, evidence: dict, text: str) -> dict:
 
 
 def derive_flags(flags: dict) -> tuple[float, int]:
-    """5 cờ atomic -> (p_specificity, spec_level) bằng luật tất định.
+    """5 co atomic -> (p_specificity, spec_level) bang luat tat dinh.
       2 = co_so_dinh_luong AND quy_ve_bank
-      1 = co_hanh_dong_ten (chưa đạt Mức 2)
-      0 = còn lại
-    Cổng commit (co_cam_ket AND ESG) xử lý ở classify_chunks, không ở đây."""
+      1 = co_hanh_dong_ten (chua dat Muc 2)
+      0 = con lai
+    Cong commit (co_cam_ket AND ESG) xu ly o classify_chunks, khong o day."""
     quant = bool(flags.get("co_so_dinh_luong")) and bool(flags.get("quy_ve_bank"))
     action = bool(flags.get("co_hanh_dong_ten"))
     level = 2 if quant else (1 if action else 0)
-    return {0: 0.0, 1: 0.5, 2: 1.0}[level], level
-
-
-def derive(rubric: dict, weights: dict | None = None) -> tuple[float, int]:
-    """rubric -> (p_specificity, spec_level) bang luat tuong minh. spec_level:
-      2 = DINH LUONG: co item is_quantified & attributable_to_actor (so do duoc quy ve chu the)
-      1 = CU THE   : co item is_concrete_action & attributable_to_actor (hanh dong/cong cu co ten,
-                     kiem chung duoc) nhung khong dat Muc 2
-      0 = MO HO    : chi khau hieu/tinh tu, khong kiem chung duoc
-    is_specific = (spec_level >= 1) suy ra o ngoai. CTI = ti le Muc 0 (cheap talk that su)."""
-    items = rubric.get("items") or []
-    quant_attr = any(bool(it.get("is_quantified")) and bool(it.get("attributable_to_actor"))
-                     for it in items)
-    concrete = any(bool(it.get("is_concrete_action")) and bool(it.get("attributable_to_actor"))
-                   for it in items)
-    level = 2 if quant_attr else (1 if concrete else 0)
     return {0: 0.0, 1: 0.5, 2: 1.0}[level], level
 
 
@@ -214,7 +154,6 @@ class SpecificityLLM:
         self.max_new_tokens = int(cfg.get("max_new_tokens", 256))
         self.retries = int(cfg.get("retries", 2))
         self.enable_thinking = bool(cfg.get("enable_thinking", False))
-        self.weights = {**DEFAULT_WEIGHTS, **cfg.get("score_weights", {})}
         self._tok = None
         self._model = None
 
@@ -261,24 +200,28 @@ class SpecificityLLM:
         return self._tok.decode(out[0][enc["input_ids"].shape[1]:], skip_special_tokens=True)
 
     def score_one(self, text: str) -> dict:
-        rubric, raw = None, ""
+        parsed, raw = None, ""
         for attempt in range(self.retries + 1):
             raw = self._complete(self._build_messages(text, stricter=attempt > 0))
-            rubric = _extract_json(raw)
-            if rubric is not None and "items" in rubric:
+            parsed = _parse_flags(raw)
+            if parsed is not None:
                 break
-        # LUON luu raw response (truoc parse) de trace / re-parse offline duoc.
-        if rubric is None or "items" not in rubric:
+        base = {f: 0 for f in ATOMIC_FLAGS}
+        if parsed is None:
             return {"p_specificity": 0.0, "spec_level": 0, "is_specific": 0,
-                    "parse_ok": False, "rubric": pd.NA, "raw": raw}
-        rubric = verify_rubric(rubric, text)  # huy figure bia / baseline khong co trong doan
-        p, level = derive(rubric, self.weights)
+                    "parse_ok": False, "rubric": pd.NA, "raw": raw,
+                    "evidence": pd.NA, **base}
+        flags = verify_rubric_flags(parsed["flags"], parsed["evidence"], text)
+        flags = enforce_evidence(flags, parsed["evidence"], text)
+        p, level = derive_flags(flags)
         return {"p_specificity": p, "spec_level": level, "is_specific": int(level >= 1),
-                "parse_ok": True, "rubric": json.dumps(rubric, ensure_ascii=False), "raw": raw}
+                "parse_ok": True, "rubric": json.dumps(parsed, ensure_ascii=False), "raw": raw,
+                "evidence": json.dumps(parsed["evidence"], ensure_ascii=False), **flags}
 
     def predict(self, sentences: list[str]) -> pd.DataFrame:
         from tqdm.auto import tqdm
         rows = [self.score_one(str(t))
                 for t in tqdm(sentences, desc="specificity-LLM", unit="chunk")]
         return pd.DataFrame(rows, columns=["p_specificity", "spec_level", "is_specific",
-                                           "parse_ok", "rubric", "raw"])
+                                           "parse_ok", "rubric", "raw",
+                                           "evidence", *ATOMIC_FLAGS])
