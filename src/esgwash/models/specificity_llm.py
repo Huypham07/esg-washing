@@ -98,11 +98,34 @@ def _extract_json_obj(text: str) -> dict | None:
     return None
 
 
+_FLAG_NAMES = "|".join(ATOMIC_FLAGS)
+_SALVAGE_BOOL_RE = re.compile(r'"(' + _FLAG_NAMES + r')"\s*:\s*(true|false)')
+_SALVAGE_EV_RE = re.compile(r'"(' + _FLAG_NAMES + r')"\s*:\s*"([^"]*)"')
+
+
+def _salvage_flags(text: str) -> dict | None:
+    """Vot co + evidence khi JSON bi truncate giua chung (Qwen3-0.6B cat o max_new_tokens).
+    Lay moi cap "<co>": true/false bang regex; voi cap evidence "<co>": "..." con nguyen.
+    Tra None neu khong vot duoc co nao -> retry -> Muc 0 (khong thoi phong CTI)."""
+    bools = _SALVAGE_BOOL_RE.findall(text)
+    if not bools:
+        return None
+    recovered = {f: (v == "true") for f, v in bools}
+    flags = {f: int(bool(recovered.get(f))) for f in ATOMIC_FLAGS}
+    ev_pairs = dict(_SALVAGE_EV_RE.findall(text))
+    evidence = {f: ev_pairs.get(f) for f in ATOMIC_FLAGS}
+    return {"flags": flags, "evidence": evidence}
+
+
 def _parse_flags(text: str) -> dict | None:
-    """Boc JSON (da bo <think>), tach flags + evidence. Tra None neu hong."""
+    """Boc JSON (da bo <think>), tach flags + evidence. Tra None neu hong.
+    Neu balanced-object parse hong (vd JSON truncate giua chung), thu salvage bang
+    regex truoc khi bo cuoc -> khong ep chunk ve Muc 0 (vot moi cap bool + evidence
+    con nguyen). Khong vot duoc co nao -> None -> retry -> eventual Muc 0."""
     obj = _extract_json_obj(text)
     if obj is None:
-        return None
+        stripped = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
+        return _salvage_flags(stripped)
     flags = {f: int(bool(obj.get(f))) for f in ATOMIC_FLAGS}
     ev = obj.get("evidence") or {}
     evidence = {f: (ev.get(f) if isinstance(ev, dict) else None) for f in ATOMIC_FLAGS}

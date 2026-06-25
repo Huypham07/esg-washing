@@ -68,6 +68,23 @@ def test_score_one_parse_fail_safe():
     assert out["co_cam_ket"] == 0
 
 
+def test_score_one_salvages_truncated_json():
+    # Qwen3-0.6B truncates mid-JSON: booleans + 2 complete evidence pairs survive,
+    # rest cut off (unbalanced braces -> _extract_json_obj fails -> salvage kicks in).
+    text = "Ngân hàng sẽ triển khai hệ thống quản lý môi trường nội bộ."
+    truncated = (
+        '{"co_cam_ket": true, "co_hanh_dong_ten": true, "co_so_dinh_luong": false, '
+        '"quy_ve_bank": true, "co_moc_tg": false, '
+        '"evidence": {"co_cam_ket": "sẽ triển khai", '
+        '"co_hanh_dong_ten": "hệ thống quản lý môi trường nội bộ", '
+        '"quy_ve_bank": "Ngân '  # truncated mid-string, unbalanced
+    )
+    out = _StubLLM([truncated]).score_one(text)
+    assert out["parse_ok"] is True
+    assert out["co_hanh_dong_ten"] == 1
+    assert out["spec_level"] == 1
+
+
 # ── Retry behaviour ───────────────────────────────────────────────────────────
 
 def test_retry_then_success():
