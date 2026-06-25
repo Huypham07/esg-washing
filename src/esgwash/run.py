@@ -23,6 +23,7 @@ from esgwash.models.topic_model import TopicModel
 
 PILLARS = ("env", "soc", "gov")
 HF_REPOS = {"topic": "huypham71/esg-topic", "commitment": "huypham71/esg-commitment"}
+ATOMIC_FLAGS = ("co_cam_ket", "co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg")
 
 CHUNKS_PATH = "data/chunks.parquet"
 CTI_ROOT = Path("outputs/cti")
@@ -102,6 +103,11 @@ def classify_chunks(chunks: pd.DataFrame, topic_model, commitment_model,
     out["spec_parse_ok"] = pd.NA
     out["spec_rubric"] = pd.NA
     out["spec_raw"] = pd.NA     # phan hoi LLM goc truoc parse, de truy vet / parse lai offline
+    # 5 atomic flags + evidence — initialise to 0 / empty for ALL rows (no NaN dtype surprises)
+    for flag in ATOMIC_FLAGS:
+        out[flag] = 0
+    out["evidence"] = ""
+
     mask = (out["is_commitment"] == 1) if spec_on_commitment else pd.Series(True, index=out.index)
     if specificity_model is not None and bool(mask.any()):
         sp = specificity_model.predict(out.loc[mask, "content_text"].astype(str).tolist())
@@ -111,6 +117,16 @@ def classify_chunks(chunks: pd.DataFrame, topic_model, commitment_model,
         out.loc[mask, "spec_parse_ok"] = sp["parse_ok"].to_numpy()
         out.loc[mask, "spec_rubric"] = sp["rubric"].to_numpy()
         out.loc[mask, "spec_raw"] = sp["raw"].to_numpy()
+        # propagate 5 atomic flags + evidence from LLM output
+        for flag in ATOMIC_FLAGS:
+            out.loc[mask, flag] = sp[flag].to_numpy()
+        out.loc[mask, "evidence"] = sp["evidence"].to_numpy()
+
+    # Final commit gate: co_cam_ket AND (is_env OR is_soc OR is_gov)
+    # PhoBERT commitment model is kept as cheap pre-filter deciding which rows get LLM scoring;
+    # the FINAL is_commitment written to output reflects atomic flag intent + ESG topic gate.
+    is_esg = ((out["is_env"] == 1) | (out["is_soc"] == 1) | (out["is_gov"] == 1)).astype(int)
+    out["is_commitment"] = (out["co_cam_ket"].astype(int) & is_esg).astype(int)
     return out
 
 
