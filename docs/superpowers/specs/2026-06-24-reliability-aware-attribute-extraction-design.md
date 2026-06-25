@@ -18,6 +18,35 @@ Phản hồi về paper hiện tại:
 Mục tiêu (người dùng chốt): giải quyết **đồng thời** cả độ sâu phương pháp lẫn tính hợp lệ kết quả,
 bằng **một khung thống nhất**.
 
+---
+
+## BẢN SỬA 2026-06-25 (ghi đè các phần liên quan bên dưới)
+
+Sau khi cân nhắc, người dùng chốt thu hẹp phạm vi để pipeline đáng tin và đúng định hướng ML/DL:
+
+1. **Commitment = mô hình PhoBERT đã train, là cổng DUY NHẤT.** Đây là thành phần ML/DL của bài.
+   Đánh giá vs gold như cũ; κ người trên nhãn commitment (0.18) báo cáo **thẳng như một hạn chế**.
+2. **LLM chỉ làm specificity**, với **4 cờ atomic** (bỏ `co_cam_ket`):
+   `co_hanh_dong_ten, co_so_dinh_luong, quy_ve_bank, co_moc_tg`. LLM **không** còn quyết định commitment.
+3. **Bỏ HẲN `co_cam_ket`** khỏi pipeline VÀ khỏi phần bán chính. Lý do người dùng: con số κ=0.98 cho
+   commitment "nhìn cao nhưng không tin dùng" → không lấy làm điểm bán, tránh bị nghi ngờ.
+4. **Điểm bán chính chuyển sang reliability của specificity**: rubric tổng thể (QWK 0.42) → phân rã
+   atomic (QWK ~1.0), dựng từ các cờ khách quan đáng tin (`co_so_dinh_luong` κ=0.99, `quy_ve_bank`
+   κ=0.99, `co_hanh_dong_ten` κ=1.0). Đây là phần người dùng tin.
+
+**Pipeline cuối:** PhoBERT Topic (ESG) → PhoBERT Commitment (cổng) → LLM 4-cờ specificity + evidence →
+luật → spec_level → CTI/NAR/QDR. Luật mức **không đổi** (vốn không dùng `co_cam_ket`):
+`level = 2 if (co_so_dinh_luong AND quy_ve_bank) else 1 if co_hanh_dong_ten else 0`.
+
+**Hệ quả với code đã xây:** đảo cổng commit ở `run.py` về `PhoBERT is_commitment AND ESG`; gỡ
+`co_cam_ket` khỏi `ATOMIC_FLAGS`/prompt/fewshot/salvage trong `specificity_llm.py`, khỏi `BIN`
+trong `eval_gold.py`, khỏi fields trong `iaa_atomic.py`, và cập nhật tests. Mọi guard chống bịa +
+extractor specificity + IAA atomic (cho 4 cờ) **giữ nguyên**.
+
+Phần dưới giữ nguyên để tham chiếu; chỗ nào nói `co_cam_ket`/5 cờ/κ-jump-commitment thì đọc theo bản sửa này.
+
+---
+
 ## 2. Bằng chứng quyết định (đã có, không phải giả thuyết)
 
 Đã gán lại 400 chunk bởi **hai người độc lập, mù** (`data/gold_annot_{1,2}_relabeled.xlsx`) theo
