@@ -30,6 +30,7 @@ from sklearn.metrics import cohen_kappa_score, precision_recall_fscore_support
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from esgwash.models.specificity_llm import derive_flags  # noqa: E402
 from esgwash.run import classify_chunks, load_models  # noqa: E402
 
 GOLD = {"A": ROOT / "data/gold_annot_1_relabeled.xlsx",
@@ -37,6 +38,9 @@ GOLD = {"A": ROOT / "data/gold_annot_1_relabeled.xlsx",
 SHEET = "Sheet1"
 OUT = ROOT / "experiments/eval"
 # (ten hien thi, cot gold, cot du doan model)
+# NOTE on "commit" row: model's is_commitment = co_cam_ket AND ESG-topic, so kappa here
+# is confounded by topic-head errors.  The "co_cam_ket" row below (atomic flag, no ESG
+# gate) is the unconfounded commitment-intent comparison.
 BIN = [("env", "g_env", "is_env"), ("soc", "g_soc", "is_soc"),
        ("gov", "g_gov", "is_gov"), ("commit", "g_is_commit", "is_commitment"),
        # 5 atomic flags — gold col name == model output col name
@@ -47,8 +51,31 @@ BIN = [("env", "g_env", "is_env"), ("soc", "g_soc", "is_soc"),
        ("co_moc_tg", "co_moc_tg", "co_moc_tg")]
 
 
+def _derive_spec_level_from_row(row: dict) -> "int | float":
+    """Derive spec_level from a single row's atomic flags using the shared rule.
+
+    Returns the integer spec_level (0/1/2) for committed rows (co_cam_ket==1),
+    or float('nan') for non-committed rows (spec_level undefined on non-commitments).
+    Uses derive_flags() — the single source of truth — so human and model use one rule.
+    """
+    if not row.get("co_cam_ket"):
+        return float("nan")
+    _, level = derive_flags({
+        "co_so_dinh_luong": row.get("co_so_dinh_luong", 0),
+        "quy_ve_bank": row.get("quy_ve_bank", 0),
+        "co_hanh_dong_ten": row.get("co_hanh_dong_ten", 0),
+    })
+    return level
+
+
 def load_gold() -> pd.DataFrame:
-    """Merge A/B theo chunk_id; giu content_text + nhan moi nguoi (suffix _A/_B)."""
+    """Merge A/B theo chunk_id; giu content_text + nhan moi nguoi (suffix _A/_B).
+
+    g_spec_level_A/B are DERIVED from each annotator's atomic flags via derive_flags()
+    (same rule as the model), not read from the pre-baked xlsx column, so human and
+    model use one source of truth. A consistency assert checks the derived values match
+    the pre-baked xlsx column on all non-null pre-baked rows (catches data drift).
+    """
     a = pd.read_excel(GOLD["A"], sheet_name=SHEET)
     b = pd.read_excel(GOLD["B"], sheet_name=SHEET)
     atomic_flags = ["co_cam_ket", "co_hanh_dong_ten", "co_so_dinh_luong",
@@ -57,6 +84,30 @@ def load_gold() -> pd.DataFrame:
     m = a[["chunk_id", "content_text"] + keep[1:]].merge(
         b[keep], on="chunk_id", suffixes=("_A", "_B"))
     m["content_text"] = m["content_text"].astype(str)
+
+    # Derive g_spec_level_A/B from each annotator's atomic flags (single source of truth).
+    for side in ("A", "B"):
+        derived = m.apply(
+            lambda row, s=side: _derive_spec_level_from_row({
+                "co_cam_ket": row[f"co_cam_ket_{s}"],
+                "co_so_dinh_luong": row[f"co_so_dinh_luong_{s}"],
+                "quy_ve_bank": row[f"quy_ve_bank_{s}"],
+                "co_hanh_dong_ten": row[f"co_hanh_dong_ten_{s}"],
+            }),
+            axis=1,
+        )
+        # Consistency assert: derived must equal pre-baked wherever pre-baked is non-null.
+        prebaked_col = f"g_spec_level_{side}"
+        non_null_mask = m[prebaked_col].notna()
+        mismatches = non_null_mask & (m[prebaked_col] != derived)
+        n_mismatch = int(mismatches.sum())
+        if n_mismatch > 0:
+            bad = m.loc[mismatches, ["chunk_id", prebaked_col]].head(5)
+            print(f"WARNING: {n_mismatch} g_spec_level_{side} pre-baked vs derived mismatch "
+                  f"(data drift?). First few:\n{bad.to_string()}", flush=True)
+        # Overwrite with rule-derived values (single source of truth).
+        m[prebaked_col] = derived
+
     return m
 
 
@@ -79,7 +130,8 @@ def _spec_scores(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
     yt, yp = y_true[keep].astype(int), y_pred[keep].astype(int)
     if len(yt) == 0:
         return {"n": 0}
-    qwk = cohen_kappa_score(yt, yp, weights="quadratic") if len(set(yt)) > 1 else float("nan")
+    qwk = (cohen_kappa_score(yt, yp, weights="quadratic")
+           if len(set(yt)) > 1 and len(set(yp)) > 1 else float("nan"))
     return {"n": int(len(yt)), "accuracy": round(float((yt == yp).mean()), 4),
             "quadratic_weighted_kappa": round(float(qwk), 4),
             "qdr_kappa": _binary_scores((yt == 2).astype(float),
