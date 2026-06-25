@@ -131,3 +131,5 @@ def test_enforce_evidence_drops_unsupported_flag():
     assert out["co_hanh_dong_ten"] == 1
     assert out["co_so_dinh_luong"] == 0   # evidence không phải substring
     assert out["co_cam_ket"] == 1
+    assert out["quy_ve_bank"] == 1   # evidence "Ngân hàng" IS a substring; valid flag preserved
+    assert out["co_moc_tg"] == 0     # flag input was 0 -> stays 0 regardless of evidence
