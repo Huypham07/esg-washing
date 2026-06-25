@@ -23,7 +23,7 @@ from esgwash.models.topic_model import TopicModel
 
 PILLARS = ("env", "soc", "gov")
 HF_REPOS = {"topic": "huypham71/esg-topic", "commitment": "huypham71/esg-commitment"}
-ATOMIC_FLAGS = ("co_cam_ket", "co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg")
+ATOMIC_FLAGS = ("co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg")
 
 CHUNKS_PATH = "data/chunks.parquet"
 CTI_ROOT = Path("outputs/cti")
@@ -122,11 +122,10 @@ def classify_chunks(chunks: pd.DataFrame, topic_model, commitment_model,
             out.loc[mask, flag] = sp[flag].to_numpy()
         out.loc[mask, "evidence"] = sp["evidence"].to_numpy()
 
-    # Final commit gate: co_cam_ket AND (is_env OR is_soc OR is_gov)
-    # PhoBERT commitment model is kept as cheap pre-filter deciding which rows get LLM scoring;
-    # the FINAL is_commitment written to output reflects atomic flag intent + ESG topic gate.
+    # Final commit gate: PhoBERT is_commitment AND (is_env OR is_soc OR is_gov).
+    # PhoBERT is the SOLE commitment arbiter (BAN SUA 2026-06-25). LLM handles specificity only.
     is_esg = ((out["is_env"] == 1) | (out["is_soc"] == 1) | (out["is_gov"] == 1)).astype(int)
-    out["is_commitment"] = (out["co_cam_ket"].astype(int) & is_esg).astype(int)
+    out["is_commitment"] = (out["is_commitment"].astype(int) & is_esg).astype(int)
     return out
 
 

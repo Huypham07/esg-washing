@@ -7,7 +7,8 @@ from esgwash.run import classify_chunks, to_long
 # Shared stubs
 # ---------------------------------------------------------------------------
 
-FLAG_COLS = ["co_cam_ket", "co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg"]
+# co_cam_ket removed; only 4 specificity flags remain
+FLAG_COLS = ["co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg"]
 
 
 class _StubTopic:
@@ -25,14 +26,14 @@ class _StubCommit:
 
 
 class _StubSpec:
-    """Returns all 5 atomic flags + evidence (co_cam_ket=0 -> gate will block)."""
+    """Returns 4 atomic specificity flags + evidence. co_cam_ket is NOT present."""
     def predict(self, texts):
         n = len(texts)
         return pd.DataFrame({
             "p_specificity": [0.0] * n, "spec_level": [0] * n,
             "is_specific": [0] * n, "parse_ok": [True] * n,
             "rubric": ["{}"] * n, "raw": ["{}"] * n, "evidence": ["{}"] * n,
-            "co_cam_ket": [0] * n, "co_hanh_dong_ten": [0] * n,
+            "co_hanh_dong_ten": [0] * n,
             "co_so_dinh_luong": [0] * n, "quy_ve_bank": [0] * n,
             "co_moc_tg": [0] * n,
         })
@@ -71,12 +72,13 @@ def test_to_long_carries_spec_level_for_index():
 
 
 def test_classify_commit_gate_uses_flags():
-    """Task 4: 5 atomic flag cols + evidence must appear in output."""
+    """4 specificity flag cols + evidence must appear in output. co_cam_ket must NOT."""
     chunks = pd.DataFrame({"content_text": ["x"], "doc_id": ["d"], "chunk_index": [0]})
     out = classify_chunks(chunks, _StubTopic(), _StubCommit(), _StubSpec())
     assert "co_so_dinh_luong" in out.columns
     for col in FLAG_COLS:
         assert col in out.columns, f"Missing flag column: {col}"
+    assert "co_cam_ket" not in out.columns, "co_cam_ket must be removed from pipeline"
     assert "evidence" in out.columns
 
 
@@ -93,39 +95,49 @@ def test_classify_flag_columns_present_on_non_commit_rows():
     for col in FLAG_COLS:
         assert col in out.columns, f"Missing flag column: {col}"
         assert out[col].iloc[0] == 0, f"Non-commit row should have {col}=0"
+    assert "co_cam_ket" not in out.columns
     assert "evidence" in out.columns
     assert out["evidence"].iloc[0] == ""
 
 
 def test_classify_final_is_commitment_gate():
-    """Final is_commitment = co_cam_ket AND (is_env OR is_soc OR is_gov).
-    PhoBERT says is_commitment=1, but co_cam_ket=0 -> final must be 0."""
+    """Final is_commitment = PhoBERT is_commitment AND (is_env OR is_soc OR is_gov).
+    PhoBERT says is_commitment=1, is_env=1 -> final must be 1 (PhoBERT gate, not co_cam_ket)."""
     chunks = pd.DataFrame({"content_text": ["x"], "doc_id": ["d"], "chunk_index": [0]})
-    # _StubSpec returns co_cam_ket=0, _StubTopic returns is_env=1
+    # _StubCommit returns is_commitment=1, _StubTopic returns is_env=1
     out = classify_chunks(chunks, _StubTopic(), _StubCommit(), _StubSpec())
-    # co_cam_ket=0 so final is_commitment must be 0
+    # PhoBERT=1 AND is_env=1 -> final is_commitment=1
+    assert out["is_commitment"].iloc[0] == 1
+
+
+def test_classify_final_is_commitment_gate_non_esg():
+    """PhoBERT says is_commitment=1 but no ESG topic -> final is_commitment=0."""
+
+    class StubTopicNoESG:
+        def predict(self, texts):
+            n = len(texts)
+            return pd.DataFrame({"env": [0.1] * n, "soc": [0.1] * n, "gov": [0.1] * n,
+                                 "is_env": [0] * n, "is_soc": [0] * n, "is_gov": [0] * n,
+                                 "pillar": ["env"] * n})
+
+    chunks = pd.DataFrame({"content_text": ["x"], "doc_id": ["d"], "chunk_index": [0]})
+    out = classify_chunks(chunks, StubTopicNoESG(), _StubCommit(), _StubSpec())
+    # PhoBERT=1 but no ESG topic -> final is_commitment=0
     assert out["is_commitment"].iloc[0] == 0
 
 
-def test_classify_final_is_commitment_passes_when_flag_set():
-    """co_cam_ket=1 AND is_env=1 -> final is_commitment=1."""
+def test_classify_final_is_commitment_phobert_false():
+    """PhoBERT says is_commitment=0 -> final must be 0 even if ESG."""
 
-    class StubSpecCommit:
+    class StubCommitFalse:
         def predict(self, texts):
-            n = len(texts)
-            return pd.DataFrame({
-                "p_specificity": [0.8] * n, "spec_level": [1] * n,
-                "is_specific": [1] * n, "parse_ok": [True] * n,
-                "rubric": ["{}"] * n, "raw": ["{}"] * n, "evidence": ["some"] * n,
-                "co_cam_ket": [1] * n, "co_hanh_dong_ten": [1] * n,
-                "co_so_dinh_luong": [0] * n, "quy_ve_bank": [0] * n,
-                "co_moc_tg": [0] * n,
-            })
+            return pd.DataFrame({"p_commitment": [0.1] * len(texts),
+                                 "is_commitment": [0] * len(texts)})
 
     chunks = pd.DataFrame({"content_text": ["x"], "doc_id": ["d"], "chunk_index": [0]})
-    out = classify_chunks(chunks, _StubTopic(), _StubCommit(), StubSpecCommit())
-    # co_cam_ket=1 AND is_env=1 -> final is_commitment=1
-    assert out["is_commitment"].iloc[0] == 1
+    out = classify_chunks(chunks, _StubTopic(), StubCommitFalse(), _StubSpec())
+    # PhoBERT=0 -> final is_commitment=0 regardless of ESG
+    assert out["is_commitment"].iloc[0] == 0
 
 
 def test_classify_only_scores_commitments():
@@ -145,7 +157,7 @@ def test_classify_only_scores_commitments():
                 "p_specificity": [0.9] * n, "spec_level": [1] * n,
                 "is_specific": [1] * n, "parse_ok": [True] * n,
                 "rubric": ["{}"] * n, "raw": ["{}"] * n, "evidence": ["ev"] * n,
-                "co_cam_ket": [1] * n, "co_hanh_dong_ten": [1] * n,
+                "co_hanh_dong_ten": [1] * n,
                 "co_so_dinh_luong": [0] * n, "quy_ve_bank": [0] * n,
                 "co_moc_tg": [0] * n,
             })
@@ -155,33 +167,36 @@ def test_classify_only_scores_commitments():
     out = classify_chunks(chunks, _StubTopic(), StubCommitMixed(), StubSpecLevel1())
     # non-commit row (index 1) must have spec_level=0 (not scored by LLM)
     assert out.loc[1, "spec_level"] == 0
+    # co_cam_ket must not appear at all
+    assert "co_cam_ket" not in out.columns
 
 
 def test_classify_spec_on_commitment_false_all_rows_get_llm_flags():
     """Regression guard for experiments/eval_gold.py: spec_on_commitment=False scores
     ALL rows via the LLM, even those the PhoBERT pre-filter marks is_commitment=0.
-    The atomic flags must carry the LLM value, not the initialised 0."""
+    The 4 atomic specificity flags must carry the LLM value, not the initialised 0."""
 
     class StubCommitNo:
         def predict(self, texts):
             return pd.DataFrame({"p_commitment": [0.1] * len(texts),
                                  "is_commitment": [0] * len(texts)})
 
-    class StubSpecCommit:
+    class StubSpecLevel1:
         def predict(self, texts):
             n = len(texts)
             return pd.DataFrame({
                 "p_specificity": [0.8] * n, "spec_level": [1] * n,
                 "is_specific": [1] * n, "parse_ok": [True] * n,
                 "rubric": ["{}"] * n, "raw": ["{}"] * n, "evidence": ["ev"] * n,
-                "co_cam_ket": [1] * n, "co_hanh_dong_ten": [0] * n,
+                "co_hanh_dong_ten": [1] * n,
                 "co_so_dinh_luong": [0] * n, "quy_ve_bank": [0] * n,
                 "co_moc_tg": [0] * n,
             })
 
     chunks = pd.DataFrame({"content_text": ["x"], "doc_id": ["d"], "chunk_index": [0]})
-    out = classify_chunks(chunks, _StubTopic(), StubCommitNo(), StubSpecCommit(),
+    out = classify_chunks(chunks, _StubTopic(), StubCommitNo(), StubSpecLevel1(),
                           spec_on_commitment=False)
-    assert out["co_cam_ket"].iloc[0] == 1   # from LLM, not the PhoBERT pre-filter
+    assert "co_cam_ket" not in out.columns   # co_cam_ket removed from pipeline
+    assert out["co_hanh_dong_ten"].iloc[0] == 1   # from LLM, not initialised 0
     assert out["evidence"].iloc[0] == "ev"
     assert out["spec_level"].iloc[0] == 1

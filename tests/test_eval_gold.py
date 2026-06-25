@@ -20,43 +20,45 @@ from esgwash.models.specificity_llm import derive_flags  # noqa: E402
 
 
 def test_eval_gold_has_atomic_bins():
-    """BIN must contain all 5 atomic flag entries."""
+    """BIN must contain the 4 specificity flag entries; co_cam_ket must NOT be present."""
     names = {b[0] for b in eg.BIN}
-    assert {"co_cam_ket", "co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg"} <= names
+    assert {"co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg"} <= names
+    assert "co_cam_ket" not in names, "co_cam_ket removed per BAN SUA 2026-06-25"
 
 
 # ── Fix 1: derive_spec_level_from_row helper ─────────────────────────────────
 
 def test_derive_spec_level_from_row_committed():
-    """For committed rows, helper must match derive_flags rule."""
+    """For committed rows (g_is_commit=1), helper must match derive_flags rule.
+    Now keys off g_is_commit, not co_cam_ket."""
     # Muc 2: quant + bank
-    row = {"co_cam_ket": 1, "co_so_dinh_luong": 1, "quy_ve_bank": 1,
+    row = {"g_is_commit": 1, "co_so_dinh_luong": 1, "quy_ve_bank": 1,
            "co_hanh_dong_ten": 0, "co_moc_tg": 0}
     assert eg._derive_spec_level_from_row(row) == 2
 
     # Muc 1: action only
-    row2 = {"co_cam_ket": 1, "co_so_dinh_luong": 0, "quy_ve_bank": 0,
+    row2 = {"g_is_commit": 1, "co_so_dinh_luong": 0, "quy_ve_bank": 0,
             "co_hanh_dong_ten": 1, "co_moc_tg": 0}
     assert eg._derive_spec_level_from_row(row2) == 1
 
     # Muc 0: nothing
-    row3 = {"co_cam_ket": 1, "co_so_dinh_luong": 0, "quy_ve_bank": 0,
+    row3 = {"g_is_commit": 1, "co_so_dinh_luong": 0, "quy_ve_bank": 0,
             "co_hanh_dong_ten": 0, "co_moc_tg": 0}
     assert eg._derive_spec_level_from_row(row3) == 0
 
 
 def test_derive_spec_level_from_row_not_committed():
-    """For non-committed rows, helper must return NaN."""
-    row = {"co_cam_ket": 0, "co_so_dinh_luong": 1, "quy_ve_bank": 1,
+    """For non-committed rows (g_is_commit=0), helper must return NaN."""
+    row = {"g_is_commit": 0, "co_so_dinh_luong": 1, "quy_ve_bank": 1,
            "co_hanh_dong_ten": 1, "co_moc_tg": 0}
     result = eg._derive_spec_level_from_row(row)
     assert result is np.nan or (isinstance(result, float) and np.isnan(result))
 
 
 def test_derive_spec_level_matches_derive_flags():
-    """Helper output must equal derive_flags(...)[ 1] for committed rows."""
+    """Helper output must equal derive_flags(...)[1] for committed rows."""
     flags_in = {"co_so_dinh_luong": 1, "quy_ve_bank": 1, "co_hanh_dong_ten": 0}
-    row = {"co_cam_ket": 1, **flags_in, "co_moc_tg": 0}
+    row = {"g_is_commit": 1, **flags_in, "co_moc_tg": 0}
     _, expected_level = derive_flags(flags_in)
     assert eg._derive_spec_level_from_row(row) == expected_level
 
@@ -64,7 +66,9 @@ def test_derive_spec_level_matches_derive_flags():
 def test_load_gold_spec_level_is_rule_derived():
     """load_gold() must produce g_spec_level_A/B derived purely from atomic flags.
 
-    For committed rows: derived value must match derive_flags on the same flags.
+    For committed rows (keyed off g_is_commit_A/B): derived value must match
+    derive_flags on the same flags.  co_cam_ket no longer exists in the pipeline;
+    the commitment mask uses the gold human-label column g_is_commit instead.
     This is a data-integrity check (GPU-free, pandas only).
     """
     gold_a = ROOT / "data/gold_annot_1_relabeled.xlsx"
@@ -76,7 +80,9 @@ def test_load_gold_spec_level_is_rule_derived():
     m = eg.load_gold()
 
     for side in ("A", "B"):
-        committed_mask = m[f"co_cam_ket_{side}"] == 1
+        # Use g_is_commit (human commitment label) to identify committed rows;
+        # co_cam_ket is no longer in the pipeline.
+        committed_mask = m[f"g_is_commit_{side}"] == 1
         committed = m[committed_mask]
         for _, row in committed.iterrows():
             flags_in = {

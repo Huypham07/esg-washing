@@ -1,12 +1,5 @@
 [
   {
-    "field":"co_cam_ket",
-    "n":400,
-    "agree":397,
-    "kappa":0.9841813868,
-    "n_disagree":3
-  },
-  {
     "field":"co_hanh_dong_ten",
     "n":400,
     "agree":400,

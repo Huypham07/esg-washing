@@ -21,7 +21,6 @@ from sklearn.metrics import cohen_kappa_score
 # ---------------------------------------------------------------------------
 
 FIELDS = [
-    "co_cam_ket",
     "co_hanh_dong_ten",
     "co_so_dinh_luong",
     "quy_ve_bank",
@@ -169,7 +168,7 @@ def _save_figure(result: pd.DataFrame) -> None:
     # Legend: colour meaning
     from matplotlib.patches import Patch
     legend_elements = [
-        Patch(facecolor="#2196F3", label="Atomic commitment flags"),
+        Patch(facecolor="#2196F3", label="Atomic specificity flags"),
         Patch(facecolor="#FF9800", label="Topic flags (S/G — lower IAA)"),
     ]
     ax.legend(handles=legend_elements, fontsize=8, loc="lower right")

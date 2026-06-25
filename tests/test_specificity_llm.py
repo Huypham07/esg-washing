@@ -1,4 +1,4 @@
-"""Test logic specificity scorer 5 co atomic (parse + retry + derive) khong tai model."""
+"""Test logic specificity scorer 4 co atomic specificity (parse + retry + derive) khong tai model."""
 import json
 import sys
 from pathlib import Path
@@ -39,33 +39,34 @@ class _StubLLM(SpecificityLLM):
 
 def test_score_one_emits_atomic_flags():
     text = "Ngân hàng sẽ triển khai hệ thống quản lý môi trường nội bộ."
-    reply = json.dumps({"co_cam_ket": True, "co_hanh_dong_ten": True,
+    reply = json.dumps({"co_hanh_dong_ten": True,
                         "co_so_dinh_luong": False, "quy_ve_bank": True, "co_moc_tg": False,
-                        "evidence": {"co_cam_ket": "sẽ triển khai",
-                                     "co_hanh_dong_ten": "hệ thống quản lý môi trường nội bộ",
+                        "evidence": {"co_hanh_dong_ten": "hệ thống quản lý môi trường nội bộ",
                                      "quy_ve_bank": "Ngân hàng"}}, ensure_ascii=False)
     out = _StubLLM([reply]).score_one(text)
     assert out["parse_ok"] is True
-    assert out["co_cam_ket"] == 1 and out["co_hanh_dong_ten"] == 1
+    assert "co_cam_ket" not in out
+    assert out["co_hanh_dong_ten"] == 1
     assert out["co_so_dinh_luong"] == 0
     assert out["spec_level"] == 1 and out["is_specific"] == 1
 
 
 def test_score_one_fabricated_quant_dropped():
     text = "Ngân hàng cam kết giảm phát thải mạnh mẽ."   # khong co so
-    reply = json.dumps({"co_cam_ket": True, "co_so_dinh_luong": True, "quy_ve_bank": True,
+    reply = json.dumps({"co_so_dinh_luong": True, "quy_ve_bank": True,
                         "co_hanh_dong_ten": False, "co_moc_tg": False,
-                        "evidence": {"co_cam_ket": "cam kết",
-                                     "co_so_dinh_luong": "giảm 30%",  # so khong co trong text
+                        "evidence": {"co_so_dinh_luong": "giảm 30%",  # so khong co trong text
                                      "quy_ve_bank": "Ngân hàng"}}, ensure_ascii=False)
     out = _StubLLM([reply]).score_one(text)
+    assert "co_cam_ket" not in out
     assert out["co_so_dinh_luong"] == 0 and out["spec_level"] == 0
 
 
 def test_score_one_parse_fail_safe():
     out = _StubLLM(["rac", "van rac", "rac nua"]).score_one("cau")
     assert out["parse_ok"] is False and out["spec_level"] == 0
-    assert out["co_cam_ket"] == 0
+    assert "co_cam_ket" not in out
+    assert out["co_hanh_dong_ten"] == 0
 
 
 def test_score_one_salvages_truncated_json():
@@ -73,14 +74,14 @@ def test_score_one_salvages_truncated_json():
     # rest cut off (unbalanced braces -> _extract_json_obj fails -> salvage kicks in).
     text = "Ngân hàng sẽ triển khai hệ thống quản lý môi trường nội bộ."
     truncated = (
-        '{"co_cam_ket": true, "co_hanh_dong_ten": true, "co_so_dinh_luong": false, '
+        '{"co_hanh_dong_ten": true, "co_so_dinh_luong": false, '
         '"quy_ve_bank": true, "co_moc_tg": false, '
-        '"evidence": {"co_cam_ket": "sẽ triển khai", '
-        '"co_hanh_dong_ten": "hệ thống quản lý môi trường nội bộ", '
+        '"evidence": {"co_hanh_dong_ten": "hệ thống quản lý môi trường nội bộ", '
         '"quy_ve_bank": "Ngân '  # truncated mid-string, unbalanced
     )
     out = _StubLLM([truncated]).score_one(text)
     assert out["parse_ok"] is True
+    assert "co_cam_ket" not in out
     assert out["co_hanh_dong_ten"] == 1
     assert out["spec_level"] == 1
 
@@ -90,13 +91,13 @@ def test_score_one_salvages_truncated_json():
 def test_retry_then_success():
     # lan 1 rac -> lan 2 JSON hop le (hanh dong co ten -> Muc 1)
     text = "BIDV trien khai B.One"
-    reply = json.dumps({"co_cam_ket": True, "co_hanh_dong_ten": True,
+    reply = json.dumps({"co_hanh_dong_ten": True,
                         "co_so_dinh_luong": False, "quy_ve_bank": True, "co_moc_tg": False,
-                        "evidence": {"co_cam_ket": "trien khai",
-                                     "co_hanh_dong_ten": "B.One",
+                        "evidence": {"co_hanh_dong_ten": "B.One",
                                      "quy_ve_bank": "BIDV"}}, ensure_ascii=False)
     llm = _StubLLM(["rac khong json", reply])
     out = llm.score_one(text)
+    assert "co_cam_ket" not in out
     assert out["parse_ok"] and out["is_specific"] == 1 and out["spec_level"] == 1
 
 
@@ -132,16 +133,17 @@ def test_verify_rubric_flags_keeps_real_figure():
 
 def test_predict_columns():
     text = "Ngân hàng triển khai hệ thống B.One."
-    reply = json.dumps({"co_cam_ket": True, "co_hanh_dong_ten": True,
+    reply = json.dumps({"co_hanh_dong_ten": True,
                         "co_so_dinh_luong": False, "quy_ve_bank": True, "co_moc_tg": False,
-                        "evidence": {"co_cam_ket": "triển khai",
-                                     "co_hanh_dong_ten": "hệ thống B.One",
+                        "evidence": {"co_hanh_dong_ten": "hệ thống B.One",
                                      "quy_ve_bank": "Ngân hàng"}}, ensure_ascii=False)
     llm = _StubLLM([reply])
     df = llm.predict([text])
     expected = ["p_specificity", "spec_level", "is_specific", "parse_ok",
                 "rubric", "raw", "evidence", *ATOMIC_FLAGS]
     assert list(df.columns) == expected
+    # co_cam_ket must not appear (only 4 specificity flags)
+    assert "co_cam_ket" not in df.columns
 
 
 # ── Tasks 1+2 tests (keep passing) ───────────────────────────────────────────
@@ -161,15 +163,15 @@ def test_derive_flags_levels():
 
 def test_enforce_evidence_drops_unsupported_flag():
     text = "Ngân hàng triển khai hệ thống quản lý môi trường nội bộ."
-    flags = {"co_cam_ket": 1, "co_hanh_dong_ten": 1, "co_so_dinh_luong": 1,
+    flags = {"co_hanh_dong_ten": 1, "co_so_dinh_luong": 1,
              "quy_ve_bank": 1, "co_moc_tg": 0}
-    evidence = {"co_cam_ket": "triển khai", "co_hanh_dong_ten": "hệ thống quản lý môi trường",
+    evidence = {"co_hanh_dong_ten": "hệ thống quản lý môi trường",
                 "co_so_dinh_luong": "5000 tỷ",  # KHONG co trong text -> phai ha ve 0
                 "quy_ve_bank": "Ngân hàng"}
     out = enforce_evidence(flags, evidence, text)
     assert out["co_hanh_dong_ten"] == 1
     assert out["co_so_dinh_luong"] == 0   # evidence khong phai substring
-    assert out["co_cam_ket"] == 1
+    assert "co_cam_ket" not in out        # co_cam_ket removed from pipeline
     assert out["quy_ve_bank"] == 1   # evidence "Ngân hàng" IS a substring
     assert out["co_moc_tg"] == 0     # flag input was 0 -> stays 0
 
@@ -177,7 +179,8 @@ def test_enforce_evidence_drops_unsupported_flag():
 # ── run.py integration smoke-test ─────────────────────────────────────────────
 
 def test_classify_only_scores_commitments():
-    """Specificity LLM chi cham tren chunk is_commitment=1 (tiet kiem + dung CTI)."""
+    """Specificity LLM chi cham tren chunk is_commitment=1 (tiet kiem + dung CTI).
+    Final is_commitment comes from PhoBERT (StubCommit) gated by ESG, NOT from co_cam_ket."""
     from esgwash.run import classify_chunks
 
     class StubTopic:
@@ -213,3 +216,9 @@ def test_classify_only_scores_commitments():
     assert spec.calls == [["cam ket A"]]               # chi chunk commitment
     assert out.loc[0, "is_specific"] == 1 and out.loc[1, "is_specific"] == 0
     assert out.loc[0, "spec_level"] == 2
+    # Final is_commitment gate: PhoBERT(row0)=1 AND is_env=1 -> 1
+    assert out.loc[0, "is_commitment"] == 1
+    # PhoBERT(row1)=0 -> final 0 regardless of ESG
+    assert out.loc[1, "is_commitment"] == 0
+    # co_cam_ket must NOT appear in output columns
+    assert "co_cam_ket" not in out.columns

@@ -1,11 +1,12 @@
-"""Specificity scorer bang small instruct-LLM + rubric 5 co atomic.
+"""Specificity scorer bang small instruct-LLM + rubric 4 co atomic.
 
-LLM phan ra 5 co nhi phan (co_cam_ket, co_hanh_dong_ten, co_so_dinh_luong,
+LLM phan ra 4 co nhi phan specificity (co_hanh_dong_ten, co_so_dinh_luong,
 quy_ve_bank, co_moc_tg) + evidence trich dan nguyen van. Luat tuong minh (derive_flags):
   spec_level 2 = co_so_dinh_luong AND quy_ve_bank
              1 = co_hanh_dong_ten (chua dat Muc 2)
              0 = con lai
   is_specific = (spec_level >= 1). CTI = ti le Muc 0.
+Commitment KHONG con do o day — do boi mo hinh PhoBERT o run.py.
 verify_rubric_flags huy co_so_dinh_luong neu chu so trong evidence khong co trong text.
 enforce_evidence ha co ve 0 neu evidence khong phai substring cua text.
 Retry khi parse loi, het retry -> moi co 0, spec_level 0, parse_ok False.
@@ -18,43 +19,42 @@ import re
 import pandas as pd
 
 SYSTEM = (
-    "Bạn là chuyên gia phân tích báo cáo ESG ngân hàng. Với mỗi ĐOẠN VĂN, trả lời 5 câu hỏi "
-    "YES/NO khách quan, và với mỗi câu trả lời YES phải TRÍCH nguyên văn cụm trong đoạn làm "
-    "bằng chứng (evidence):\n"
-    "1. co_cam_ket: đoạn có Ý CAM KẾT/hướng tương lai (sẽ, cam kết, hướng tới, mục tiêu, đặt mục tiêu)?\n"
-    "2. co_hanh_dong_ten: có HÀNH ĐỘNG/CHƯƠNG TRÌNH/CÔNG CỤ/HỆ THỐNG CÓ TÊN, kiểm chứng được "
+    "Bạn là chuyên gia phân tích báo cáo ESG ngân hàng. Với mỗi ĐOẠN VĂN, trả lời 4 câu hỏi "
+    "YES/NO khách quan về tính CỤ THỂ, và với mỗi câu trả lời YES phải TRÍCH nguyên văn cụm trong "
+    "đoạn làm bằng chứng (evidence):\n"
+    "1. co_hanh_dong_ten: có HÀNH ĐỘNG/CHƯƠNG TRÌNH/CÔNG CỤ/HỆ THỐNG CÓ TÊN, kiểm chứng được "
     "(vd 'gói Tín dụng xanh', 'hệ thống B.One') — KHÁC khẩu hiệu/tính từ ('bền vững', 'toàn diện')?\n"
-    "3. co_so_dinh_luong: có ĐẠI LƯỢNG ĐỊNH LƯỢNG (số, %, tỷ đồng, MW)? KHÔNG tính năm chiến "
+    "2. co_so_dinh_luong: có ĐẠI LƯỢNG ĐỊNH LƯỢNG (số, %, tỷ đồng, MW)? KHÔNG tính năm chiến "
     "lược/luật, tên tiêu chuẩn (ISO), số của NHNN/toàn ngành.\n"
-    "4. quy_ve_bank: số/hành động đó QUY VỀ CHÍNH NGÂN HÀNG chủ thể (không phải quốc gia/ngành)?\n"
-    "5. co_moc_tg: có MỐC THỜI GIAN/deadline (năm mục tiêu, 'đến 2030', 'giai đoạn 2021-2025')?\n"
+    "3. quy_ve_bank: số/hành động đó QUY VỀ CHÍNH NGÂN HÀNG chủ thể (không phải quốc gia/ngành)?\n"
+    "4. co_moc_tg: có MỐC THỜI GIAN/deadline (năm mục tiêu, 'đến 2030', 'giai đoạn 2021-2025')?\n"
     "Chỉ trả về JSON, không giải thích ngoài JSON."
 )
 
 SCHEMA_HINT = (
     'Trả về JSON đúng dạng:\n'
-    '{"co_cam_ket": true/false, "co_hanh_dong_ten": true/false, "co_so_dinh_luong": true/false, '
+    '{"co_hanh_dong_ten": true/false, "co_so_dinh_luong": true/false, '
     '"quy_ve_bank": true/false, "co_moc_tg": true/false, '
-    '"evidence": {"co_cam_ket": "<trích dẫn hoặc null>", "co_hanh_dong_ten": "...", '
+    '"evidence": {"co_hanh_dong_ten": "...", '
     '"co_so_dinh_luong": "...", "quy_ve_bank": "...", "co_moc_tg": "..."}, "reason": "<ngắn>"}'
 )
 
 FEWSHOT = [
     ("Ngân hàng hướng tới một tương lai xanh và bền vững.",
-     {"co_cam_ket": True, "co_hanh_dong_ten": False, "co_so_dinh_luong": False,
+     {"co_hanh_dong_ten": False, "co_so_dinh_luong": False,
       "quy_ve_bank": False, "co_moc_tg": False,
-      "evidence": {"co_cam_ket": "hướng tới"},
+      "evidence": {},
       "reason": "Chỉ khẩu hiệu, không hành động có tên, không số (Mức 0)."}),
     ("BIDV đã ban hành gói Tín dụng xanh cho khách hàng vay phát triển năng lượng sạch.",
-     {"co_cam_ket": True, "co_hanh_dong_ten": True, "co_so_dinh_luong": False,
+     {"co_hanh_dong_ten": True, "co_so_dinh_luong": False,
       "quy_ve_bank": True, "co_moc_tg": False,
-      "evidence": {"co_cam_ket": "ban hành", "co_hanh_dong_ten": "gói Tín dụng xanh",
+      "evidence": {"co_hanh_dong_ten": "gói Tín dụng xanh",
                    "quy_ve_bank": "BIDV"},
       "reason": "Hành động có tên, không số (Mức 1)."}),
     ("Ngân hàng đặt mục tiêu giảm 30% cường độ phát thải khí nhà kính vào năm 2030.",
-     {"co_cam_ket": True, "co_hanh_dong_ten": True, "co_so_dinh_luong": True,
+     {"co_hanh_dong_ten": True, "co_so_dinh_luong": True,
       "quy_ve_bank": True, "co_moc_tg": True,
-      "evidence": {"co_cam_ket": "đặt mục tiêu", "co_hanh_dong_ten": "giảm cường độ phát thải",
+      "evidence": {"co_hanh_dong_ten": "giảm cường độ phát thải",
                    "co_so_dinh_luong": "30%", "quy_ve_bank": "Ngân hàng", "co_moc_tg": "năm 2030"},
       "reason": "Số 30% quy về ngân hàng, có mốc 2030 (Mức 2)."}),
 ]
@@ -62,8 +62,7 @@ FEWSHOT = [
 _DIGITS_RE = re.compile(r"\d+")
 _YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
 
-ATOMIC_FLAGS = ("co_cam_ket", "co_hanh_dong_ten", "co_so_dinh_luong",
-                "quy_ve_bank", "co_moc_tg")
+ATOMIC_FLAGS = ("co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg")
 
 
 def _norm(s: str) -> str:
@@ -159,11 +158,11 @@ def enforce_evidence(flags: dict, evidence: dict, text: str) -> dict:
 
 
 def derive_flags(flags: dict) -> tuple[float, int]:
-    """5 co atomic -> (p_specificity, spec_level) bang luat tat dinh.
+    """4 co atomic specificity -> (p_specificity, spec_level) bang luat tat dinh.
       2 = co_so_dinh_luong AND quy_ve_bank
       1 = co_hanh_dong_ten (chua dat Muc 2)
       0 = con lai
-    Cong commit (co_cam_ket AND ESG) xu ly o classify_chunks, khong o day."""
+    Commitment xu ly boi mo hinh PhoBERT o run.py, khong o day."""
     quant = bool(flags.get("co_so_dinh_luong")) and bool(flags.get("quy_ve_bank"))
     action = bool(flags.get("co_hanh_dong_ten"))
     level = 2 if quant else (1 if action else 0)

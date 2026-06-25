@@ -38,13 +38,11 @@ GOLD = {"A": ROOT / "data/gold_annot_1_relabeled.xlsx",
 SHEET = "Sheet1"
 OUT = ROOT / "experiments/eval"
 # (ten hien thi, cot gold, cot du doan model)
-# NOTE on "commit" row: model's is_commitment = co_cam_ket AND ESG-topic, so kappa here
-# is confounded by topic-head errors.  The "co_cam_ket" row below (atomic flag, no ESG
-# gate) is the unconfounded commitment-intent comparison.
+# NOTE on "commit" row: model's is_commitment = PhoBERT AND ESG-topic (BAN SUA 2026-06-25).
+# PhoBERT is the SOLE commitment gate; LLM handles only the 4 specificity flags.
 BIN = [("env", "g_env", "is_env"), ("soc", "g_soc", "is_soc"),
        ("gov", "g_gov", "is_gov"), ("commit", "g_is_commit", "is_commitment"),
-       # 5 atomic flags — gold col name == model output col name
-       ("co_cam_ket", "co_cam_ket", "co_cam_ket"),
+       # 4 atomic specificity flags — gold col name == model output col name
        ("co_hanh_dong_ten", "co_hanh_dong_ten", "co_hanh_dong_ten"),
        ("co_so_dinh_luong", "co_so_dinh_luong", "co_so_dinh_luong"),
        ("quy_ve_bank", "quy_ve_bank", "quy_ve_bank"),
@@ -54,11 +52,13 @@ BIN = [("env", "g_env", "is_env"), ("soc", "g_soc", "is_soc"),
 def _derive_spec_level_from_row(row: dict) -> "int | float":
     """Derive spec_level from a single row's atomic flags using the shared rule.
 
-    Returns the integer spec_level (0/1/2) for committed rows (co_cam_ket==1),
+    Returns the integer spec_level (0/1/2) for committed rows (g_is_commit==1),
     or float('nan') for non-committed rows (spec_level undefined on non-commitments).
     Uses derive_flags() — the single source of truth — so human and model use one rule.
+    Commitment is keyed off g_is_commit (gold human label), NOT co_cam_ket
+    (removed per BAN SUA 2026-06-25).
     """
-    if not row.get("co_cam_ket"):
+    if not row.get("g_is_commit"):
         return float("nan")
     _, level = derive_flags({
         "co_so_dinh_luong": row.get("co_so_dinh_luong", 0),
@@ -78,18 +78,18 @@ def load_gold() -> pd.DataFrame:
     """
     a = pd.read_excel(GOLD["A"], sheet_name=SHEET)
     b = pd.read_excel(GOLD["B"], sheet_name=SHEET)
-    atomic_flags = ["co_cam_ket", "co_hanh_dong_ten", "co_so_dinh_luong",
-                    "quy_ve_bank", "co_moc_tg"]
+    atomic_flags = ["co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg"]
     keep = ["chunk_id", "g_env", "g_soc", "g_gov", "g_is_commit", "g_spec_level"] + atomic_flags
     m = a[["chunk_id", "content_text"] + keep[1:]].merge(
         b[keep], on="chunk_id", suffixes=("_A", "_B"))
     m["content_text"] = m["content_text"].astype(str)
 
     # Derive g_spec_level_A/B from each annotator's atomic flags (single source of truth).
+    # Commitment keyed off g_is_commit (human label); co_cam_ket removed (BAN SUA 2026-06-25).
     for side in ("A", "B"):
         derived = m.apply(
             lambda row, s=side: _derive_spec_level_from_row({
-                "co_cam_ket": row[f"co_cam_ket_{s}"],
+                "g_is_commit": row[f"g_is_commit_{s}"],
                 "co_so_dinh_luong": row[f"co_so_dinh_luong_{s}"],
                 "quy_ve_bank": row[f"quy_ve_bank_{s}"],
                 "co_hanh_dong_ten": row[f"co_hanh_dong_ten_{s}"],
