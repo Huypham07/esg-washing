@@ -7,7 +7,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from esgwash.models.specificity_llm import SpecificityLLM, _extract_json, derive
+from esgwash.models.specificity_llm import SpecificityLLM, _extract_json, derive, derive_flags, enforce_evidence
 
 
 def test_extract_json_strips_think_and_prose():
@@ -105,3 +105,29 @@ def test_classify_only_scores_commitments():
     assert spec.calls == [["cam ket A"]]               # chi chunk commitment
     assert out.loc[0, "is_specific"] == 1 and out.loc[1, "is_specific"] == 0
     assert out.loc[0, "spec_level"] == 2
+
+
+def test_derive_flags_levels():
+    # Mức 2: có số định lượng & quy về chủ thể
+    assert derive_flags({"co_so_dinh_luong": 1, "quy_ve_bank": 1}) == (1.0, 2)
+    # Mức 2 hụt: có số nhưng KHÔNG quy về chủ thể -> rớt xuống theo hành động
+    assert derive_flags({"co_so_dinh_luong": 1, "quy_ve_bank": 0,
+                         "co_hanh_dong_ten": 1}) == (0.5, 1)
+    # Mức 1: có hành động có tên, không số
+    assert derive_flags({"co_hanh_dong_ten": 1}) == (0.5, 1)
+    # Mức 0: không có gì
+    assert derive_flags({}) == (0.0, 0)
+    assert derive_flags({"co_so_dinh_luong": 1, "quy_ve_bank": 0}) == (0.0, 0)
+
+
+def test_enforce_evidence_drops_unsupported_flag():
+    text = "Ngân hàng triển khai hệ thống quản lý môi trường nội bộ."
+    flags = {"co_cam_ket": 1, "co_hanh_dong_ten": 1, "co_so_dinh_luong": 1,
+             "quy_ve_bank": 1, "co_moc_tg": 0}
+    evidence = {"co_cam_ket": "triển khai", "co_hanh_dong_ten": "hệ thống quản lý môi trường",
+                "co_so_dinh_luong": "5000 tỷ",  # KHÔNG có trong text -> phải hạ về 0
+                "quy_ve_bank": "Ngân hàng"}
+    out = enforce_evidence(flags, evidence, text)
+    assert out["co_hanh_dong_ten"] == 1
+    assert out["co_so_dinh_luong"] == 0   # evidence không phải substring
+    assert out["co_cam_ket"] == 1

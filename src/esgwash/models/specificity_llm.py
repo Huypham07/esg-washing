@@ -132,6 +132,13 @@ def _extract_json(text: str) -> dict | None:
 _DIGITS_RE = re.compile(r"\d+")
 _YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
 
+ATOMIC_FLAGS = ("co_cam_ket", "co_hanh_dong_ten", "co_so_dinh_luong",
+                "quy_ve_bank", "co_moc_tg")
+
+
+def _norm(s: str) -> str:
+    return re.sub(r"\s+", " ", str(s)).strip().lower()
+
 
 def _digit_runs(s: str) -> list[str]:
     """Cac chuoi chu so trong s, da bo dau phan cach (1,89 / 5.000 -> 189 / 5000)."""
@@ -156,6 +163,32 @@ def verify_rubric(rubric: dict, text: str) -> dict:
     has_bt = bool(rubric.get("has_baseline_or_timeline")) and (
         bool(_YEAR_RE.search(text)) or "so với" in low or "so voi" in low)
     return {**rubric, "items": items, "has_baseline_or_timeline": has_bt}
+
+
+def enforce_evidence(flags: dict, evidence: dict, text: str) -> dict:
+    """Cờ 'yes' phải có evidence là chuỗi con của chunk, nếu không -> hạ về 0."""
+    norm_text = _norm(text)
+    out = {}
+    for f in ATOMIC_FLAGS:
+        v = int(bool(flags.get(f)))
+        if v:
+            ev = _norm(evidence.get(f) or "")
+            if not ev or ev not in norm_text:
+                v = 0
+        out[f] = v
+    return out
+
+
+def derive_flags(flags: dict) -> tuple[float, int]:
+    """5 cờ atomic -> (p_specificity, spec_level) bằng luật tất định.
+      2 = co_so_dinh_luong AND quy_ve_bank
+      1 = co_hanh_dong_ten (chưa đạt Mức 2)
+      0 = còn lại
+    Cổng commit (co_cam_ket AND ESG) xử lý ở classify_chunks, không ở đây."""
+    quant = bool(flags.get("co_so_dinh_luong")) and bool(flags.get("quy_ve_bank"))
+    action = bool(flags.get("co_hanh_dong_ten"))
+    level = 2 if quant else (1 if action else 0)
+    return {0: 0.0, 1: 0.5, 2: 1.0}[level], level
 
 
 def derive(rubric: dict, weights: dict | None = None) -> tuple[float, int]:
