@@ -155,3 +155,33 @@ def test_classify_only_scores_commitments():
     out = classify_chunks(chunks, _StubTopic(), StubCommitMixed(), StubSpecLevel1())
     # non-commit row (index 1) must have spec_level=0 (not scored by LLM)
     assert out.loc[1, "spec_level"] == 0
+
+
+def test_classify_spec_on_commitment_false_all_rows_get_llm_flags():
+    """Regression guard for experiments/eval_gold.py: spec_on_commitment=False scores
+    ALL rows via the LLM, even those the PhoBERT pre-filter marks is_commitment=0.
+    The atomic flags must carry the LLM value, not the initialised 0."""
+
+    class StubCommitNo:
+        def predict(self, texts):
+            return pd.DataFrame({"p_commitment": [0.1] * len(texts),
+                                 "is_commitment": [0] * len(texts)})
+
+    class StubSpecCommit:
+        def predict(self, texts):
+            n = len(texts)
+            return pd.DataFrame({
+                "p_specificity": [0.8] * n, "spec_level": [1] * n,
+                "is_specific": [1] * n, "parse_ok": [True] * n,
+                "rubric": ["{}"] * n, "raw": ["{}"] * n, "evidence": ["ev"] * n,
+                "co_cam_ket": [1] * n, "co_hanh_dong_ten": [0] * n,
+                "co_so_dinh_luong": [0] * n, "quy_ve_bank": [0] * n,
+                "co_moc_tg": [0] * n,
+            })
+
+    chunks = pd.DataFrame({"content_text": ["x"], "doc_id": ["d"], "chunk_index": [0]})
+    out = classify_chunks(chunks, _StubTopic(), StubCommitNo(), StubSpecCommit(),
+                          spec_on_commitment=False)
+    assert out["co_cam_ket"].iloc[0] == 1   # from LLM, not the PhoBERT pre-filter
+    assert out["evidence"].iloc[0] == "ev"
+    assert out["spec_level"].iloc[0] == 1
