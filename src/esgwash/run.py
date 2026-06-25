@@ -103,7 +103,7 @@ def classify_chunks(chunks: pd.DataFrame, topic_model, commitment_model,
     out["spec_parse_ok"] = pd.NA
     out["spec_rubric"] = pd.NA
     out["spec_raw"] = pd.NA     # phan hoi LLM goc truoc parse, de truy vet / parse lai offline
-    # 5 atomic flags + evidence — initialise to 0 / empty for ALL rows (no NaN dtype surprises)
+    # 4 atomic flags + evidence — initialise to 0 / empty for ALL rows (no NaN dtype surprises)
     for flag in ATOMIC_FLAGS:
         out[flag] = 0
     out["evidence"] = ""
@@ -117,7 +117,7 @@ def classify_chunks(chunks: pd.DataFrame, topic_model, commitment_model,
         out.loc[mask, "spec_parse_ok"] = sp["parse_ok"].to_numpy()
         out.loc[mask, "spec_rubric"] = sp["rubric"].to_numpy()
         out.loc[mask, "spec_raw"] = sp["raw"].to_numpy()
-        # propagate 5 atomic flags + evidence from LLM output
+        # propagate 4 atomic flags + evidence from LLM output
         for flag in ATOMIC_FLAGS:
             out.loc[mask, flag] = sp[flag].to_numpy()
         out.loc[mask, "evidence"] = sp["evidence"].to_numpy()

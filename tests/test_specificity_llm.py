@@ -20,8 +20,8 @@ from esgwash.models.specificity_llm import (
 
 def test_extract_json_obj_strips_think_and_prose():
     # strips <think> and returns first balanced JSON object
-    obj = _extract_json_obj('rac<think>suy nghi</think> {"co_cam_ket": true} duoi')
-    assert obj == {"co_cam_ket": True}
+    obj = _extract_json_obj('rac<think>suy nghi</think> {"co_hanh_dong_ten": true} duoi')
+    assert obj == {"co_hanh_dong_ten": True}
     assert _extract_json_obj("khong co json") is None
     assert _extract_json_obj('{"co_cam_ket": [}') is None   # invalid JSON -> None
 
