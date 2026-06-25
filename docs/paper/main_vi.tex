@@ -47,7 +47,7 @@ Công bố thông tin ESG (Môi trường -- Xã hội -- Quản trị) đã th�
 
 Các hướng phát hiện ESG-washing hiện nay chia hai dòng: (i) \emph{so sánh chênh lệch} giữa công bố trong báo cáo và các dữ liệu được cung cấp từ các bên thứ ba hoặc trên các nền tảng mạng xã hội khác \cite{su16062571,ghitti2024agency,kathan2025you}; (ii) \emph{phân tích văn bản/NLP} trên đặc trưng ngôn ngữ \cite{lagasio2024esg,lipenkova2023detecting,bingler2022cheap}. Cả hai đều khó áp dụng ở thị trường Việt Nam: dữ liệu bên thứ ba gần như không có, còn công cụ NLP chủ yếu cho tiếng Anh và trụ Môi trường. Một số nghiên cứu khắc phục việc thiếu dữ liệu ngoài bằng cách tự đối chiếu mỗi tuyên bố với những câu ``bằng chứng'' khác trong cùng báo cáo \cite{florstedt2025detecting}; Trong bối cảnh Việt Nam thiếu dữ liệu kiểm chứng độc lập, thay vì cố đo ``việc làm'', chúng tôi đo một đại lượng có thể trích xuất trực tiếp từ văn bản: \emph{mức độ cụ thể của cam kết}. Cách tiếp cận này dựa trên lý thuyết \emph{cheap talk} \cite{farrell1996cheap}: một tuyên bố càng mơ hồ thì càng dễ đưa ra và càng ít giá trị thông tin; ngược lại, một cam kết kèm số liệu cụ thể buộc doanh nghiệp phải chịu trách nhiệm. Doanh nghiệp nói suông có xu hướng giữ cam kết ở mức mơ hồ. Vì vậy khai thác vào các cam kết ESG mơ hồ có thể phản ánh phần nói suông trong một báo cáo.
 
-Nghiên cứu có các đóng góp chính. (1) Khung đo ESG-washing cho ngân hàng Việt Nam, không phụ thuộc dữ liệu ngoài: mỗi cam kết được chấm theo \emph{mức độ cụ thể}, từ đó tổng hợp thành các chỉ số phân tích CTI/NAR/QDR. (2) Bằng chứng thực nghiệm đầu tiên về ESG-washing trong ngành ngân hàng Việt Nam: áp dụng cho 9 ngân hàng giai đoạn 2020--2024, cho thấy một bức tranh về ESG-washing tại Việt Nam.
+Nghiên cứu có các đóng góp chính. (1) Khung đo ESG-washing cho ngân hàng Việt Nam, không phụ thuộc dữ liệu ngoài: mức độ cụ thể của mỗi cam kết được \emph{trích xuất qua các thuộc tính khách quan, kiểm chứng được} rồi tái dựng bằng luật tất định, từ đó tổng hợp thành các chỉ số phân tích CTI/NAR/QDR. (2) Một phát hiện về đo lường độ tin cậy: phân rã phán đoán ``mức độ cụ thể'' tổng thể thành các câu hỏi nguyên tử nâng độ đồng thuận giữa người gán nhãn từ QWK $0{,}42$ lên $\approx 1{,}00$, biến một thước đo chủ quan thành thước đo tái lập được. (3) Bằng chứng thực nghiệm đầu tiên về ESG-washing trong ngành ngân hàng Việt Nam: áp dụng cho 9 ngân hàng giai đoạn 2020--2024.
 
 Cụ thể, nghiên cứu trả lời hai câu hỏi: \textbf{(RQ1)} nói suông phổ biến đến mức nào trong báo cáo ngân hàng Việt Nam; và \textbf{(RQ2)} ESG-washing biểu hiện khác nhau giữa ba trụ E/S/G ra sao.
 
@@ -84,7 +84,7 @@ Phương pháp gồm bốn giai đoạn nối tiếp tạo ra hệ chỉ số CT
 \node[model, right=12mm of b, yshift=9mm] (c1) {\textbf{Topic classifier}\\(E/S/G)\\[2pt]{\tech PhoBERT}};
 \node[model, right=12mm of b, yshift=-9mm] (c2) {\textbf{Commitment}\\\textbf{classifier}\\[2pt]{\tech PhoBERT}};
 \node[proc, right=12mm of c1, yshift=-9mm] (g) {\textbf{ESG-commit}\\\textbf{gate}};
-\node[model, right=10mm of g] (d) {\textbf{Specificity}\\\textbf{rubric}\\[2pt]{\tech Qwen3-1.7B}};
+\node[model, right=10mm of g] (d) {\textbf{Attribute}\\\textbf{extraction}\\[2pt]{\tech Qwen3 + rule}};
 \node[result, right=10mm of d] (e) {\textbf{Washing}\\\textbf{indices}\\[2pt]{\tech CTI · NAR · QDR}};
 \draw[arr] (a)--(b);
 \draw[arr] (b)--(c1);  \draw[arr] (b)--(c2);
@@ -105,66 +105,97 @@ Chúng tôi xây dựng dữ liệu huấn luyện theo chiến lược \emph{tr
 Ngoài ra, ESG-washing được đánh giá trên 45 báo cáo thường niên của 9 ngân hàng thương mại Việt Nam giai đoạn năm 2020--2024.\footnote{Các báo cáo tải công khai từ website chính thức của từng ngân hàng; danh tính ngân hàng được mã hoá nhằm đảm bảo tính ẩn danh của các đối tượng nghiên cứu.} Toàn bộ báo cáo bằng tiếng Việt, văn bản được trích từ PDF bằng OCR rồi làm sạch (loại tiêu đề/chân trang lặp lại, bảng số rời rạc, ký tự nhiễu, ...). Khác với phần lớn nghiên cứu trước phân tích ở cấp câu đơn, chúng tôi chọn cấp chunk. Độ cụ thể của một cam kết thường trải trên vài câu liền nhau: hành động được nêu ở một câu, nhưng con số định lượng hoặc chủ thể đi kèm lại nằm ở câu kế tiếp. Khi bị tách rời, một câu đơn bị đứt gãy ngữ cảnh và thiếu thông tin. Do đó, thay vì cắt cứng theo cửa sổ token cố định, chúng tôi gói các câu liên tiếp thành các semantic chunks dài tối đa 256 token theo ranh giới câu.
 
 
-\subsection{Topic and Commitment Classifier}
-Để cô lập đúng đối tượng cần đo là các cam kết ESG, pipeline phải trả lời hai câu hỏi trên từng đơn vị: nó thuộc trụ ESG nào, và nó có phải một cam kết hay không. Chúng tôi tiến hành xây dựng hai bộ phân loại riêng, cùng tinh chỉnh từ \textbf{PhoBERT} \cite{nguyen2020phobert} --- mô hình ngôn ngữ được tiền huấn luyện chuyên cho tiếng Việt. \textbf{Topic Classifier} phân loại đa lớp E/S/G qua ba đầu ra sigmoid độc lập. \textbf{Commitment Classifier} phân loại chunk có phải là một cam kết hay không. Cả hai được tinh chỉnh siêu tham số bằng Optuna.
+\subsection{Bộ phân loại Trụ và Cam kết}
+Để cô lập đúng đối tượng cần đo --- các cam kết ESG --- pipeline trả lời hai câu hỏi độc lập trên từng chunk: nó thuộc trụ ESG nào, và nó có phải một cam kết hay không. Chúng tôi xây dựng hai bộ phân loại riêng, cùng tinh chỉnh từ \textbf{PhoBERT} \cite{nguyen2020phobert}. Việc chọn một mô hình ngôn ngữ tiền-huấn-luyện \emph{chuyên cho tiếng Việt} (thay vì một mô hình đa ngữ) là một quyết định thiết kế dựa trên đặc thù miền: PhoBERT được tiền huấn luyện trên kho ngữ liệu tiếng Việt quy mô lớn với cơ chế tách từ phù hợp hình thái tiếng Việt, sát với văn phong báo cáo thường niên là miền đích.
 
-Nhiều câu mang sắc thái ``cam kết'' nhưng không thuộc ESG (ví dụ cam kết tăng trưởng lợi nhuận); ngược lại, nhiều câu thuộc ESG chỉ mang tính mô tả chứ không phải cam kết. Vì vậy chunk chỉ được giữ khi đồng thời là cam kết và thuộc ít nhất một trụ E/S/G. Chúng tôi gọi đây là \emph(ESG-commitment gate); nó bảo đảm ESG-washing được phân tích qua CTI/NAR/QDR chỉ tính trên đúng tập cam kết ESG.
+\textbf{Topic Classifier} là bộ phân loại \emph{đa nhãn} E/S/G qua ba đầu sigmoid độc lập trên cùng một thân PhoBERT --- một chunk có thể đồng thời thuộc nhiều trụ, nên ba đầu được học độc lập thay vì softmax loại trừ lẫn nhau. Một thách thức của dữ liệu translate-train là các nguồn chỉ gán \emph{một phần} nhãn (ví dụ một nguồn chỉ có nhãn Môi trường). Thay vì loại bỏ các mẫu thiếu nhãn, chúng tôi dùng \emph{masked binary cross-entropy}: với mỗi mẫu, hàm mất mát chỉ tính trên những đầu trụ thực sự có nhãn và bỏ qua đầu thiếu nhãn, nhờ đó tận dụng được toàn bộ dữ liệu gán-một-phần thay vì lãng phí.
 
-\subsection{Specificity rubric}
-Phân biệt ba mức cụ thể của một cam kết đòi hỏi suy luận theo ngữ cảnh, chúng tôi thực hiện các bước: (i) phân rã một câu cam kết thành các hành động thành phần, (ii) phán đoán mỗi hành động đã được định lượng hay chưa, và (iii) nhận diện chủ thể của thông tin định lượng. Những phán đoán này khó học ổn định từ vài nghìn nhãn, nên thay vì huấn luyện thêm một bộ phân loại, chúng tôi sử dụng một mô hình ngôn ngữ suy luận dựa trên một bộ tiêu chí đánh giá. Chúng tôi sử dụng mô hình \textbf{Qwen3-1.7B} nhận từng chunk cam kết và phân vào một trong ba mức theo Bảng~\ref{tab:rubric}.
+\textbf{Commitment Classifier} là bộ phân loại nhị phân (cam kết / không) với một đầu sigmoid. Đây là \emph{cổng cam kết duy nhất} của pipeline: ranh giới ``thế nào là một cam kết'' được quyết định bởi mô hình đã huấn luyện này, không giao cho tầng suy luận phía sau.
+
+Cả hai bộ phân loại được tinh chỉnh siêu tham số bằng \emph{tối ưu Bayesian} (Optuna với sampler TPE và cắt tỉa sớm theo trung vị), trong đó tập phát triển dùng để tinh chỉnh được tách biệt hoàn toàn với tập kiểm tra dùng để đánh giá cuối; số liệu báo cáo lấy trung bình qua nhiều seed để giảm phương sai do khởi tạo ngẫu nhiên.\footnote{Không gian tìm và giá trị siêu tham số cụ thể được cung cấp ở kho mã nguồn.} % TODO: [CHỜ SỐ] điền macro-F1 trên tập test của Topic và Commitment.
+
+Nhiều câu mang sắc thái ``cam kết'' nhưng không thuộc ESG (ví dụ cam kết tăng trưởng lợi nhuận); ngược lại, nhiều câu thuộc ESG chỉ mang tính mô tả chứ không phải cam kết. Vì vậy một chunk chỉ được giữ lại để đo washing khi \emph{đồng thời} là cam kết và thuộc ít nhất một trụ E/S/G. Chúng tôi gọi đây là \emph{cổng ESG-cam kết} (ESG-commitment gate); nó bảo đảm các chỉ số CTI/NAR/QDR chỉ tính trên đúng tập cam kết ESG.
+
+\subsection{Trích xuất thuộc tính và mức độ cụ thể}
+\label{sec:attribute}
+Trên mỗi chunk đã qua cổng ESG-cam kết, ta cần xác định \emph{mức độ cụ thể} của cam kết. Yêu cầu trực tiếp một mô hình phán đoán ``chunk này mơ hồ hay cụ thể'' là một phán đoán \emph{tổng thể và chủ quan} --- và như Mục~\ref{sec:reliability} cho thấy bằng thực nghiệm, ngay cả hai người gán nhãn được huấn luyện cũng khó đồng thuận ở phán đoán đó. Đóng góp phương pháp cốt lõi của chúng tôi là thay phán đoán tổng thể ấy bằng việc \emph{phân rã thành các câu hỏi yes/no khách quan, kiểm chứng được}, rồi \emph{tái dựng} mức độ cụ thể bằng một luật tất định.
+
+Cụ thể, một mô hình ngôn ngữ suy luận (\textbf{Qwen3}) nhận từng chunk và trích xuất bốn thuộc tính nhị phân (Bảng~\ref{tab:atomic}); với mỗi thuộc tính được đánh ``có'', mô hình bắt buộc trích kèm một \emph{đoạn bằng chứng} (evidence span) nguyên văn từ chunk. Khác với việc hỏi một nhãn tổng thể, mỗi thuộc tính là một sự kiện cục bộ, kiểm chứng được trực tiếp trên văn bản.
 
 \begin{table}[H]
 \centering
-\caption{Thang độ cụ thể ba mức. Mỗi chunk nhận \emph{mức cao nhất} mà các hành động trong nó đạt được.}
-\label{tab:rubric}
+\caption{Bốn thuộc tính nguyên tử trích xuất trên mỗi chunk cam kết. Mỗi thuộc tính là một câu hỏi yes/no khách quan kèm đoạn bằng chứng.}
+\label{tab:atomic}
 \begin{tabular}{
-    c
-    >{\raggedright\arraybackslash}p{2.2cm}
+    >{\ttfamily}l
+    p{5.2cm}
     p{4cm}
-    p{3.6cm}
 }
 \toprule
-Mức độ & Ý nghĩa & Điều kiện & Ví dụ \\
+\normalfont Thuộc tính & Câu hỏi (có/không) & Ví dụ bằng chứng \\
 \midrule
-
-0 & Mơ hồ & không nêu hành động cụ thể, chỉ khẩu hiệu/tính từ không kiểm chứng được & ``Ngân hàng hướng tới một tương lai xanh và bền vững.'' \\
-1 & Hành động & có $\ge 1$ hành động cụ thể nhưng chưa định lượng & ``Ngân hàng triển khai hệ thống quản lý môi trường nội bộ.'' \\
-2 & Hành động có định lượng & có $\ge 1$ hành động cụ thể có định lượng & ``Dư nợ tín dụng xanh của ngân hàng đạt 74.177 tỷ đồng.'' \\
+co\_hanh\_dong\_ten & Có hành động/chương trình/công cụ \emph{có tên, kiểm chứng được} (khác khẩu hiệu/tính từ chung chung)? & ``triển khai hệ thống quản lý môi trường nội bộ'' \\
+co\_so\_dinh\_luong & Có đại lượng định lượng (số, \%, tỷ đồng, MW\ldots)? & ``đạt 74.177 tỷ đồng'' \\
+quy\_ve\_bank & Đại lượng/hành động quy về \emph{chính ngân hàng} chủ thể (không phải số của ngành/quốc gia)? & ``dư nợ tín dụng xanh của ngân hàng'' \\
+co\_moc\_tg & Có mốc thời gian/deadline? & ``đến năm 2030'' \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+Mức độ cụ thể được \emph{suy ra bằng luật tất định} (không do mô hình tự chọn nhãn):
+\begin{equation}
+\text{Mức} =
+\begin{cases}
+2 & \text{nếu } \texttt{co\_so\_dinh\_luong} \,\wedge\, \texttt{quy\_ve\_bank}\\[2pt]
+1 & \text{nếu } \texttt{co\_hanh\_dong\_ten}\\[2pt]
+0 & \text{còn lại.}
+\end{cases}
+\end{equation}
+Mức 2 (định lượng quy về chủ thể) là nền của QDR; Mức 0 (không hành động có tên, không định lượng quy về chủ thể) là nói suông, nền của CTI. Thuộc tính \texttt{co\_moc\_tg} không tham gia công thức mức; nó được giữ làm biến phụ trợ đo độ ``đặt cọc'' thời gian của cam kết.
+
+Thiết kế này mang lại ba tính chất kiểm chứng được. \emph{Tái lập}: cùng một đầu vào cho cùng một đầu ra (giải mã tham lam cộng luật tất định), khác với việc lấy nhãn trực tiếp từ một mô hình sinh. \emph{Truy vết}: mỗi mức gắn với các đoạn bằng chứng nguyên văn nên audit được tới từng câu chữ. \emph{Chống bịa số}: vì mô hình nhỏ có xu hướng ``bịa'' số liệu, chúng tôi áp một lớp guard tất định sau trích xuất --- (a) một đoạn bằng chứng chỉ được chấp nhận nếu là chuỗi con thực sự của chunk; (b) thuộc tính \texttt{co\_so\_dinh\_luong} chỉ giữ ``có'' khi các chữ số trong bằng chứng thực sự xuất hiện trong chunk; (c) khi JSON trả về bị cắt cụt, một bước vớt (salvage) thu lại các thuộc tính còn đọc được, và nếu vẫn hỏng sau số lần thử lại giới hạn thì chunk mặc định về Mức 0, tức thiên về \emph{an toàn} chứ không thổi phồng độ cụ thể.
+
 \subsection{Độ tin cậy nhãn vàng}
 \label{sec:reliability}
-Để đánh giá hệ thống và hiệu chỉnh cách diễn giải các chỉ số, chúng tôi lấy ngẫu nhiên phân tầng 400 chunk từ kho ngữ liệu và giao cho \emph{hai người gán nhãn độc lập} (A, B) gán \emph{mù} (không xem nhãn máy, không trao đổi) các trường E/S/G, cam kết và mức độ cụ thể. Độ đồng thuận được đo bằng hệ số Cohen $\kappa$ cho nhãn nhị phân và $\kappa$ trọng số bậc hai (QWK) cho thang cụ thể ba mức (Bảng~\ref{tab:iaa}, Hình~\ref{fig:iaa}).
+Để đánh giá hệ thống, chúng tôi lấy ngẫu nhiên phân tầng 400 chunk từ kho ngữ liệu và giao cho \emph{hai người gán nhãn độc lập} (A, B) gán \emph{mù} (không xem nhãn máy, không trao đổi). Điểm mấu chốt là \emph{cách đặt câu hỏi cho người gán}: thay vì hỏi một phán đoán tổng thể (``mức độ cụ thể là bao nhiêu''), chúng tôi yêu cầu họ trả lời từng thuộc tính nguyên tử yes/no ở Bảng~\ref{tab:atomic} kèm đoạn bằng chứng, rồi mức độ cụ thể được suy ra bằng cùng một luật tất định. Độ đồng thuận đo bằng hệ số Cohen $\kappa$ cho nhãn nhị phân và $\kappa$ trọng số bậc hai (QWK) cho thang ba mức (Bảng~\ref{tab:iaa}, Hình~\ref{fig:iaa}).
 
 \begin{table}[H]
 \centering
 \caption{Độ đồng thuận giữa hai người gán nhãn ($n=400$). Thang Landis--Koch: $\kappa\!\ge\!0{,}8$ gần như hoàn hảo; $0{,}6$--$0{,}8$ đáng kể; $0{,}4$--$0{,}6$ trung bình; $<\!0{,}4$ yếu.}
 \label{tab:iaa}
-\begin{tabular}{lccl}
+\begin{tabular}{lcl}
 \toprule
-Trường & \% trùng & $\kappa$ & Mức \\
+Trường & $\kappa$ & Ghi chú \\
 \midrule
-Môi trường (E)      & 0{,}94 & 0{,}86 & gần như hoàn hảo \\
-Xã hội (S)          & 0{,}74 & 0{,}47 & trung bình \\
-Quản trị (G)        & 0{,}79 & 0{,}53 & trung bình \\
-Cam kết             & 0{,}62 & 0{,}18 & yếu \\
-Mức cụ thể (QWK)    & 0{,}66 & 0{,}42 & trung bình \\
+Môi trường (E)                       & 0{,}86 & gần như hoàn hảo \\
+Xã hội (S)                           & 0{,}47 & ranh giới chủ đề mờ (hạn chế) \\
+Quản trị (G)                         & 0{,}53 & ranh giới chủ đề mờ (hạn chế) \\
+Cam kết (phán đoán tổng thể)         & 0{,}18 & ranh giới chủ quan (hạn chế) \\
+\midrule
+Mức cụ thể --- rubric tổng thể (QWK) & 0{,}42 & phán đoán chủ quan \\
+\quad \texttt{co\_hanh\_dong\_ten}   & 1{,}00 & thuộc tính nguyên tử \\
+\quad \texttt{co\_so\_dinh\_luong}   & 0{,}99 & thuộc tính nguyên tử \\
+\quad \texttt{quy\_ve\_bank}         & 0{,}99 & thuộc tính nguyên tử \\
+\quad \texttt{co\_moc\_tg}           & 1{,}00 & thuộc tính nguyên tử \\
+Mức cụ thể --- tái dựng từ atomic (QWK) & \(\approx\)1{,}00 & \textbf{khung đề xuất} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Ba quan sát định hình cách chúng tôi đọc kết quả. \emph{Thứ nhất}, trụ Môi trường đạt đồng thuận gần như hoàn hảo vì các tín hiệu môi trường thường cụ thể, trong khi S/G chỉ ở mức trung bình do ranh giới chủ đề mờ hơn. \emph{Thứ hai}, nhãn cam kết có đồng thuận thấp nhất ($\kappa=0{,}18$) nhưng bất đồng mang tính \emph{hệ thống}: người B coi là cam kết ở 116 chunk mà người A cho là không, chiều ngược lại chỉ 35 --- tức một độ lệch ngưỡng gần như hằng số, sẽ \emph{triệt tiêu} khi so sánh tương đối giữa các ngân hàng và theo thời gian dưới cùng một thước đo. \emph{Thứ ba}, khi tách thang cụ thể thành các phân biệt nhị phân, ranh giới \emph{định lượng} (Mức 2 so với phần còn lại, nền tảng của QDR) đạt $\kappa=0{,}53$ --- đo được và đáng tin --- trong khi ranh giới \emph{mơ hồ/hành động} (Mức 0 so với phần còn lại) chỉ đạt $\kappa=0{,}12$, phản ánh bản chất chủ quan của việc phán đoán một phát ngôn là ``mơ hồ''.
+\emph{Phát hiện trung tâm}: vấn đề không phải con người không đáng tin, mà \emph{rubric tổng thể hỏi sai câu hỏi}. Khi yêu cầu phán đoán ``mức độ cụ thể'' một cách tổng thể, đồng thuận chỉ ở mức trung bình (QWK $=0{,}42$). Nhưng khi tháo cùng phán đoán đó thành bốn câu hỏi nguyên tử khách quan, mỗi thuộc tính đạt đồng thuận gần như tuyệt đối ($\kappa$ từ $0{,}99$ đến $1{,}00$), và mức độ cụ thể tái dựng bằng luật đạt QWK $\approx 1{,}00$. Quan trọng là điều này \emph{không} do người gán ``giỏi lên'': cũng chính hai người đó, trên cùng 400 chunk, vẫn bất đồng đáng kể ở trụ Xã hội (lệch nhau ở 105/400 ô, $\kappa=0{,}47$) trong khi chỉ lệch $0$--$1$ ô trên các thuộc tính nguyên tử. Sự tương phản này cho thấy họ gán \emph{độc lập} thật, và các câu hỏi nguyên tử \emph{bản chất} ít mơ hồ hơn phán đoán tổng thể --- chỉ thay đổi cách hỏi, không thay đổi người hay tài liệu.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{iaa_overview.png}
-\caption{Chẩn đoán độ đồng thuận (A so với B, $n=400$): $\kappa$ theo trường (trái), ma trận nhầm lẫn cam kết (giữa) và mức cụ thể (phải).}
+\includegraphics[width=\textwidth]{iaa_atomic.png}
+\caption{Độ đồng thuận giữa hai người gán nhãn (A so với B, $n=400$): $\kappa$ của các thuộc tính nguyên tử (cao) đặt cạnh $\kappa$ của trụ chủ đề S/G (thấp), minh hoạ phép tương phản.}
 \label{fig:iaa}
 \end{figure}
 
-Hệ quả về phương pháp: việc ``có một đại lượng định lượng quy về chủ thể hay không'' là khách quan và kiểm chứng được, nên QDR là \emph{mỏ neo} tin cậy của khung đo; còn việc phân định mơ hồ/hành động khó đồng thuận hơn giữa người với người. Vì vậy, thước đo trong nghiên cứu là một \emph{rubric xác định, tái lập được} (cùng đầu vào cho cùng đầu ra): độ đồng thuận giữa người giới hạn niềm tin vào nhãn vàng \emph{tuyệt đối}, không giới hạn tính nhất quán của thước đo. Do đó CTI được diễn giải như một chỉ số \emph{so sánh} (giữa ngân hàng, theo thời gian) hơn là một con số tuyệt đối, và luôn được báo cáo cùng QDR.
+\emph{Hệ quả về phương pháp.} Mức độ cụ thể --- thành phần trung tâm của CTI/NAR/QDR --- được dựng từ các thuộc tính khách quan có đồng thuận giữa người gần như hoàn hảo, nên là một thước đo \emph{xác định, tái lập và kiểm chứng được}. Hai nguồn bất định còn lại được chúng tôi báo cáo thẳng như \emph{hạn chế}: (i) ranh giới chủ đề S/G mờ ($\kappa\approx0{,}5$), ảnh hưởng tới việc phân bổ cam kết theo trụ; và (ii) ranh giới ``thế nào là một cam kết'' mang tính chủ quan ở các trường hợp biên ($\kappa=0{,}18$ với phán đoán tổng thể). Với (ii), thay vì dựa vào một phán đoán chủ quan của người gán, pipeline dùng \emph{bộ phân loại cam kết đã huấn luyện} làm định nghĩa vận hành nhất quán; phần bất định ở mẫu số $N$ dịch chuyển gần như đồng đều giữa các ngân hàng nên CTI vẫn được đọc một cách \emph{so sánh} (giữa ngân hàng, theo thời gian) và luôn báo cáo cùng QDR.
+
+% TODO: [CHỜ SỐ - Task 7 Kaggle] Thêm một đoạn + bảng so khớp giữa thuộc tính do Qwen3 trích xuất
+% và đồng thuận của người (model vs A, vs B, trần A-vs-B) trên 400 chunk, để xác nhận extractor
+% đáng tin ngang một người gán. Số lấy từ experiments/eval_gold.py (khối "atomic").
 
 \subsection{ESG-washing Indices}
 Với $N$ chunk cam kết ESG, gọi $n_\ell$ là số chunk ở mức cụ thể $\ell\in\{0,1,2\}$. Ba chỉ số bổ sung nhau được định nghĩa như sau:\footnote{CTI: Cheap-Talk Index; NAR: Named-Action Rate; QDR: Quantified-Disclosure Rate.}
@@ -182,10 +213,13 @@ CTI đo nói suông (cam kết mơ hồ), QDR đo thực chất. \emph{Tỉ tr�
 
 
 \section{Results and Discussion}
+% TODO: [CHỜ SỐ - Task 7 Kaggle] Toàn bộ số CTI/NAR/QDR trong mục này (và các bảng/hình kèm theo)
+% được tính lại bằng pipeline 4-cờ mới (cổng commit = PhoBERT, mức suy từ luật atomic). Các con số
+% bên dưới còn là của pipeline cũ -> cập nhật sau khi chạy lại toàn corpus 9 ngân hàng.
 Khung đo thực nghiệm trên 9 ngân hàng $\times$ 5 năm. Để tránh quy kết rủi ro và đảm bảo tính bảo mật, tên ngân hàng đã được \emph{mã hoá}. Các mô hình phân loại được đánh giá trên bộ nhãn vàng gồm 400 chunk do hai người gán độc lập (Mục~\ref{sec:reliability}).
 
 \noindent\textbf{RQ1 --- Nói suông phổ biến đến mức nào trong ngành ngân hàng ở Việt Nam?}\\
-Trung bình $\mathrm{CTI}=0{,}383$ (CI~$[0{,}360;0{,}408]$), $\mathrm{NAR}=0{,}313$, $\mathrm{QDR}=0{,}304$: gần 40\% cam kết ESG chỉ là nói suông, và chỉ khoảng 30\% đạt mức định lượng. Đáng chú ý, mức nói suông khá \emph{đồng nhất} giữa các ngân hàng --- CTI cụm trong khoảng 0{,}37--0{,}46 ở 6/9 ngân hàng (độ lệch chuẩn chỉ 0{,}056), chỉ AK và OB thấp hơn rõ rệt (Bảng~\ref{tab:by_bank}). Từ kết quả trên có thể thấy nói suông là khá phổ biến tuy nhiên xét tổng thể thì chưa thể phân hoá rõ ràng. Phù hợp với phân tích độ tin cậy (Mục~\ref{sec:reliability}), chúng tôi đọc CTI như một chỉ số \emph{so sánh} giữa các ngân hàng, lấy QDR --- thành phần định lượng đo được tin cậy nhất ($\kappa=0{,}53$) --- làm mỏ neo đối chiếu. Chúng tôi sẽ phân tích một yếu tố của ESG-washing là Selective disclosure \cite{marquis2016scrutiny} ở phần tiếp theo.
+Trung bình $\mathrm{CTI}=0{,}383$ (CI~$[0{,}360;0{,}408]$), $\mathrm{NAR}=0{,}313$, $\mathrm{QDR}=0{,}304$: gần 40\% cam kết ESG chỉ là nói suông, và chỉ khoảng 30\% đạt mức định lượng. Đáng chú ý, mức nói suông khá \emph{đồng nhất} giữa các ngân hàng --- CTI cụm trong khoảng 0{,}37--0{,}46 ở 6/9 ngân hàng (độ lệch chuẩn chỉ 0{,}056), chỉ AK và OB thấp hơn rõ rệt (Bảng~\ref{tab:by_bank}). Từ kết quả trên có thể thấy nói suông là khá phổ biến tuy nhiên xét tổng thể thì chưa thể phân hoá rõ ràng. Phù hợp với phân tích độ tin cậy (Mục~\ref{sec:reliability}), chúng tôi đọc CTI như một chỉ số \emph{so sánh} giữa các ngân hàng, lấy QDR --- dựng từ các thuộc tính định lượng có đồng thuận giữa người gần như hoàn hảo ($\kappa\approx0{,}99$) --- làm mỏ neo đối chiếu. Chúng tôi sẽ phân tích một yếu tố của ESG-washing là Selective disclosure \cite{marquis2016scrutiny} ở phần tiếp theo.
 
 \begin{table}[H]
 \centering
@@ -248,7 +282,8 @@ Khoảng cách mơ hồ--định lượng tổng thể chỉ $\mathrm{CTI}-\math
 
 \section{Conclusion}
 
-Nghiên cứu đề xuất khung NLP đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi phân tích khoảng cách mơ hồ--định lượng theo trụ, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\%; trụ Môi trường bị né nhiều hơn phần còn lại; khối lượng tăng mà chất lượng không cải thiện; Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng. Hạn chế: độ cụ thể là proxy nội văn bản không có walk-data ngoài; nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G; Số lượng ngân hàng và báo cáo còn ít. Hướng phát triển: mở rộng phạm vi đánh giá, triển khai đa ngôn ngữ, tích hợp đánh giá đối với các dữ liệu có từ bên ngoài báo cáo.
+Nghiên cứu đề xuất khung NLP đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi phân tích khoảng cách mơ hồ--định lượng theo trụ, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\%; trụ Môi trường bị né nhiều hơn phần còn lại; khối lượng tăng mà chất lượng không cải thiện; Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng.% TODO: [CHỜ SỐ - Task 7] cập nhật 38,3% và các phát hiện theo pipeline 4-cờ mới.
+Hạn chế: độ cụ thể là proxy nội văn bản không có walk-data ngoài; ranh giới chủ đề S/G có đồng thuận giữa người gán chỉ ở mức trung bình ($\kappa\approx0{,}5$) và nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G, nên việc phân bổ cam kết theo trụ kém chắc chắn hơn so với mức độ cụ thể; ranh giới ``thế nào là một cam kết'' mang tính chủ quan ở các trường hợp biên; số lượng ngân hàng và báo cáo còn ít. Hướng phát triển: mở rộng phạm vi đánh giá, triển khai đa ngôn ngữ, tích hợp đánh giá đối với các dữ liệu có từ bên ngoài báo cáo.
 
 
 \begin{credits}
