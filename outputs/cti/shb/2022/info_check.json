@@ -3,12 +3,12 @@
   "year": 2022,
   "n_chunks": 300,
   "non_esg_share": 0.573,
-  "n_commitment": 145,
+  "n_commitment": 75,
   "spec_level_counts": {
-    "0": 48,
-    "1": 44,
-    "2": 53
+    "0": 45,
+    "1": 19,
+    "2": 11
   },
   "chunk_gt_256tok": 0,
-  "spec_parse_fail": 1
+  "spec_parse_fail": 0
 }

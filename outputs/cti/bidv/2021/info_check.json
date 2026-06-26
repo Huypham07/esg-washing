@@ -3,11 +3,11 @@
   "year": 2021,
   "n_chunks": 334,
   "non_esg_share": 0.608,
-  "n_commitment": 196,
+  "n_commitment": 86,
   "spec_level_counts": {
-    "0": 52,
-    "1": 71,
-    "2": 73
+    "0": 38,
+    "1": 28,
+    "2": 20
   },
   "chunk_gt_256tok": 0,
   "spec_parse_fail": 0
