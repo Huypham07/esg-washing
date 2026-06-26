@@ -24,24 +24,32 @@ from sklearn.metrics import (average_precision_score, confusion_matrix,
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from esgwash.models.trainer import MultiHeadTrainer
 
-REPOS = {"topic": "huypham71/esg-topic", "commitment": "huypham71/esg-commitment"}
+# commitment = dqa2412 (model deploy trong pipeline: CommitmentHF, softmax 2 lop +
+# underthesea); topic = MultiHeadTrainer in-repo. Dung DUNG model deploy de F1 khop ket qua.
+REPOS = {"topic": "huypham71/esg-topic", "commitment": "dqa2412/esg-washing-optimized"}
 TEST = {"topic": "data/topic_test.parquet", "commitment": "data/commitment_test.parquet"}
 BASELINE = {"topic": 0.813, "commitment": 0.655}  # TF-IDF+LR macro-F1 (run_baselines)
 OUT = Path("experiments/eval")
 
 
-def load_model(name):
+def _predict(name: str):
+    """-> (heads, thresholds, probs_df, df). Commitment nap qua CommitmentHF (dqa2412,
+    dung model deploy); topic qua MultiHeadTrainer. Text test la tho, ca hai loader tu tach tu."""
+    df = pd.read_parquet(TEST[name])
+    texts = df["text"].tolist()
+    if name == "commitment":
+        from esgwash.models.commitment_hf import CommitmentHF
+        chf = CommitmentHF(repo=REPOS["commitment"])
+        return ["commitment"], {"commitment": chf.threshold}, \
+            pd.DataFrame({"commitment": chf.predict_proba(texts)}), df
     d = snapshot_download(REPOS[name])
     cfg = json.loads((Path(d) / "config.json").read_text(encoding="utf-8"))
-    return MultiHeadTrainer(cfg).load(d), cfg
+    model = MultiHeadTrainer(cfg).load(d)
+    return cfg["heads"], model.thresholds, model.predict_proba(texts), df
 
 
 def eval_one(name: str) -> dict:
-    model, cfg = load_model(name)
-    heads = cfg["heads"]
-    thr = model.thresholds
-    df = pd.read_parquet(TEST[name])
-    probs = model.predict_proba(df["text"].tolist())
+    heads, thr, probs, df = _predict(name)
 
     rows, f1s_tuned, f1s_half = [], [], []
     fig, axes = plt.subplots(2, len(heads), figsize=(4.5 * len(heads), 8))

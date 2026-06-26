@@ -22,7 +22,9 @@ from esgwash.models.commitment_model import CommitmentModel
 from esgwash.models.topic_model import TopicModel
 
 PILLARS = ("env", "soc", "gov")
-HF_REPOS = {"topic": "huypham71/esg-topic", "commitment": "huypham71/esg-commitment"}
+# Topic nap qua load_trained_model (MultiHeadTrainer). Commitment KHONG o day: nap qua
+# load_commitment_model -> dqa2412/esg-washing-optimized (CommitmentHF). Xem load_models().
+HF_REPOS = {"topic": "huypham71/esg-topic"}
 ATOMIC_FLAGS = ("co_hanh_dong_ten", "co_so_dinh_luong", "quy_ve_bank", "co_moc_tg")
 
 CHUNKS_PATH = "data/chunks.parquet"
