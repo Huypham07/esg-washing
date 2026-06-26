@@ -220,7 +220,7 @@ CTI đo nói suông (cam kết mơ hồ), QDR đo thực chất. \emph{Tỉ tr�
 Khung đo thực nghiệm trên 9 ngân hàng $\times$ 5 năm. Để tránh quy kết rủi ro và đảm bảo tính bảo mật, tên ngân hàng đã được \emph{mã hoá}. Các mô hình phân loại được đánh giá trên bộ nhãn vàng gồm 400 chunk do hai người gán độc lập (Mục~\ref{sec:reliability}).
 
 \noindent\textbf{RQ1 --- Nói suông phổ biến đến mức nào trong ngành ngân hàng ở Việt Nam?}\\
-Trung bình $\mathrm{CTI}=0{,}479$ (CI~$[0{,}453;0{,}506]$), $\mathrm{NAR}=0{,}304$, $\mathrm{QDR}=0{,}217$: gần một nửa cam kết ESG (\(\approx\)48\%) chỉ là nói suông, và chỉ \(\approx\)22\% đạt mức định lượng quy về chủ thể. Mức nói suông trải khá rộng giữa các ngân hàng --- CTI từ $0{,}35$ (AK, thấp nhất) đến $0{,}53$ (VNK), độ lệch chuẩn $0{,}092$; phần lớn ngân hàng cụm ở $0{,}45$--$0{,}53$, chỉ AK và OB thấp hơn rõ rệt (Bảng~\ref{tab:by_bank}). Phù hợp với phân tích độ tin cậy (Mục~\ref{sec:reliability}), chúng tôi đọc CTI như một chỉ số \emph{so sánh} giữa các ngân hàng, lấy QDR --- dựng từ các thuộc tính định lượng có đồng thuận giữa người gần như hoàn hảo ($\kappa\approx0{,}99$) --- làm mỏ neo đối chiếu. Chúng tôi sẽ phân tích một yếu tố của ESG-washing là Selective disclosure \cite{marquis2016scrutiny} ở phần tiếp theo.
+Trung bình $\mathrm{CTI}=0{,}479$ (CI~$[0{,}453;0{,}506]$), $\mathrm{NAR}=0{,}304$, $\mathrm{QDR}=0{,}217$: gần một nửa cam kết ESG (\(\approx\)48\%) chỉ là nói suông, và chỉ \(\approx\)22\% đạt mức định lượng quy về chủ thể. Mức nói suông trải khá rộng giữa các ngân hàng --- CTI từ $0{,}35$ (B\_A, thấp nhất) đến $0{,}53$ (B\_I), độ lệch chuẩn $0{,}092$; phần lớn ngân hàng cụm ở $0{,}45$--$0{,}53$, chỉ B\_A và B\_B thấp hơn rõ rệt (Bảng~\ref{tab:by_bank}). Phù hợp với phân tích độ tin cậy (Mục~\ref{sec:reliability}), chúng tôi đọc CTI như một chỉ số \emph{so sánh} giữa các ngân hàng, lấy QDR --- dựng từ các thuộc tính định lượng có đồng thuận giữa người gần như hoàn hảo ($\kappa\approx0{,}99$) --- làm mỏ neo đối chiếu. Chúng tôi sẽ phân tích một yếu tố của ESG-washing là Selective disclosure \cite{marquis2016scrutiny} ở phần tiếp theo.
 
 \begin{table}[H]
 \centering
@@ -230,15 +230,15 @@ Trung bình $\mathrm{CTI}=0{,}479$ (CI~$[0{,}453;0{,}506]$), $\mathrm{NAR}=0{,}3
 \toprule
 NH & CTI & CTI (CI 95\%) & NAR & QDR & $\bar{N}$ \\
 \midrule
-AK  & 0{,}349 & [0{,}291;\,0{,}411] & 0{,}373 & 0{,}278 & 48{,}2 \\
-OB  & 0{,}400 & [0{,}333;\,0{,}467] & 0{,}348 & 0{,}252 & 42{,}0 \\
-BV  & 0{,}456 & [0{,}407;\,0{,}501] & 0{,}330 & 0{,}214 & 89{,}0 \\
-MK  & 0{,}481 & [0{,}435;\,0{,}530] & 0{,}311 & 0{,}208 & 85{,}6 \\
-VK  & 0{,}493 & [0{,}441;\,0{,}547] & 0{,}287 & 0{,}221 & 69{,}8 \\
-VMK & 0{,}493 & [0{,}437;\,0{,}552] & 0{,}301 & 0{,}206 & 57{,}2 \\
-SB  & 0{,}493 & [0{,}447;\,0{,}542] & 0{,}293 & 0{,}214 & 86{,}0 \\
-TM  & 0{,}517 & [0{,}470;\,0{,}564] & 0{,}290 & 0{,}193 & 76{,}6 \\
-VNK & 0{,}532 & [0{,}485;\,0{,}580] & 0{,}282 & 0{,}187 & 82{,}4 \\
+B\_A & 0{,}349 & [0{,}291;\,0{,}411] & 0{,}373 & 0{,}278 & 48{,}2 \\
+B\_B & 0{,}400 & [0{,}333;\,0{,}467] & 0{,}348 & 0{,}252 & 42{,}0 \\
+B\_C & 0{,}456 & [0{,}407;\,0{,}501] & 0{,}330 & 0{,}214 & 89{,}0 \\
+B\_D & 0{,}481 & [0{,}435;\,0{,}530] & 0{,}311 & 0{,}208 & 85{,}6 \\
+B\_E & 0{,}493 & [0{,}441;\,0{,}547] & 0{,}287 & 0{,}221 & 69{,}8 \\
+B\_F & 0{,}493 & [0{,}437;\,0{,}552] & 0{,}301 & 0{,}206 & 57{,}2 \\
+B\_G & 0{,}493 & [0{,}447;\,0{,}542] & 0{,}293 & 0{,}214 & 86{,}0 \\
+B\_H & 0{,}517 & [0{,}470;\,0{,}564] & 0{,}290 & 0{,}193 & 76{,}6 \\
+B\_I & 0{,}532 & [0{,}485;\,0{,}580] & 0{,}282 & 0{,}187 & 82{,}4 \\
 \midrule
 Toàn panel & 0{,}479 & [0{,}453;\,0{,}506] & 0{,}304 & 0{,}217 & 70{,}9 \\
 \bottomrule

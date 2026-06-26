@@ -1,25 +1,24 @@
 """Mã hoá tên ngân hàng cho paper + figure (anonymisation).
 
-Mã = chữ cái đầu + chữ cái cuối của tên ngân hàng (3 ngân hàng "V..." phân biệt
-thành VMK/VNK/VK). Mapping CỐ ĐỊNH dùng chung mọi figure/bảng để nhất quán.
+Mã = B_A .. B_I, gán theo thứ tự CTI tăng dần (B_A = thấp nhất) để bảng/hình
+đọc xuôi. Mapping CỐ ĐỊNH dùng chung mọi figure/bảng để nhất quán.
 Decoder (mã -> tên thật) chỉ giữ nội bộ; paper xuất bản chỉ hiện mã.
 """
 from __future__ import annotations
 
 import pandas as pd
 
-# bank (lowercase key trong dữ liệu) -> mã ẩn danh (chữ đầu + chữ cuối của tên,
-# 3 ngân hàng "V..." phân biệt bằng VMK/VNK/VK).
+# bank (lowercase key trong dữ liệu) -> mã ẩn danh B_A..B_I (thứ tự CTI tăng dần).
 BANK_CODE = {
-    "agribank": "AK",
-    "bidv": "BV",
-    "mbbank": "MK",
-    "ocb": "OB",
-    "shb": "SB",
-    "techcombank": "TM",
-    "vietcombank": "VMK",
-    "viettinbank": "VNK",
-    "vpbank": "VK",
+    "agribank": "B_A",
+    "ocb": "B_B",
+    "bidv": "B_C",
+    "mbbank": "B_D",
+    "vpbank": "B_E",
+    "vietcombank": "B_F",
+    "shb": "B_G",
+    "techcombank": "B_H",
+    "viettinbank": "B_I",
 }
 
 
