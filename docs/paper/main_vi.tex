@@ -36,7 +36,7 @@
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-Sự bùng nổ của ngôn ngữ ESG trong báo cáo ngân hàng làm gia tăng lo ngại về \emph{ESG-washing} --- nhấn mạnh các cam kết nghe hay nhưng thiếu nội dung thực chất. Chúng tôi đo ESG-washing trực tiếp qua \emph{độ cụ thể của cam kết} dựa trên nội tại báo cáo: Các cam kết về ESG trong báo cáo thường niên sẽ được mô hình phân loại giữ lại, đi qua một mô hình ngôn ngữ để xác định là hành động mơ hồ, hành động có tên, hay là những định lượng cụ thể. Sau khi có được những đặc trưng cho các cam kết, các chỉ số CTI (Cheap Talk Index), NAR (Named Action Rate) và QDR (Quantified Disclosure Rate) được tổng hợp và cho ra đánh giá chi tiết về báo cáo. Áp dụng cho 9 ngân hàng thương mại Việt Nam giai đoạn 2020--2024 (45 quan sát panel), kết quả cho thấy: trung bình 38{,}3\% cam kết là nói suông và khá đồng nhất giữa các ngân hàng --- gợi ý nói suông như một chuẩn mực chung của ngành; trụ Môi trường bị công bố thiếu một cách có ý nghĩa thống kê (Friedman $p=2{,}3\times10^{-12}$) trong khi Quản trị bị ``bơm'' bằng cam kết mơ hồ; và dù khối lượng cam kết tăng mạnh theo thời gian, tỉ trọng nội dung thực chất gần như không cải thiện. Khung đo cung cấp một cách tiếp cận trung thực, đủ ba trụ E/S/G, không phụ thuộc dữ liệu bên thứ ba, phù hợp cho các thị trường thiếu dữ liệu.
+Sự bùng nổ của ngôn ngữ ESG trong báo cáo ngân hàng làm gia tăng lo ngại về \emph{ESG-washing} --- nhấn mạnh các cam kết nghe hay nhưng thiếu nội dung thực chất. Chúng tôi đo ESG-washing trực tiếp qua \emph{độ cụ thể của cam kết} dựa trên nội tại báo cáo: các cam kết ESG trong báo cáo thường niên được mô hình phân loại giữ lại, rồi một mô hình ngôn ngữ \emph{trích xuất các thuộc tính khách quan, kiểm chứng được} (có hành động được nêu tên, có đại lượng định lượng, quy về chính ngân hàng\ldots); mức độ cụ thể --- mơ hồ, hành động có tên, hay định lượng --- được \emph{suy ra bằng luật tất định}. Từ đó các chỉ số CTI (Cheap Talk Index), NAR (Named Action Rate) và QDR (Quantified Disclosure Rate) được tổng hợp. Cách phân rã này nâng độ đồng thuận giữa hai người gán nhãn từ QWK $0{,}42$ (phán đoán tổng thể) lên $\approx 1{,}00$. Áp dụng cho 9 ngân hàng thương mại Việt Nam giai đoạn 2020--2024 (45 quan sát panel), kết quả cho thấy: trung bình gần một nửa cam kết ($\approx48\%$) là nói suông, hiện diện ở mọi ngân hàng (CTI từ $0{,}35$ đến $0{,}53$); trụ Môi trường bị công bố thiếu một cách có ý nghĩa thống kê (Friedman $p=2{,}3\times10^{-12}$) trong khi Quản trị có khoảng cách mơ hồ--định lượng lớn nhất; và dù khối lượng cam kết tăng mạnh theo thời gian, mức định lượng (QDR) gần như không cải thiện. Khung đo cung cấp một cách tiếp cận trung thực, đủ ba trụ E/S/G, không phụ thuộc dữ liệu bên thứ ba, phù hợp cho các thị trường thiếu dữ liệu.
 
 
 \keywords{ESG-washing \and Báo cáo thường niên \and Ngân hàng \and Xử lý ngôn ngữ tự nhiên \and Độ cụ thể của cam kết}
@@ -213,13 +213,14 @@ CTI đo nói suông (cam kết mơ hồ), QDR đo thực chất. \emph{Tỉ tr�
 
 
 \section{Results and Discussion}
-% TODO: [CHỜ SỐ - Task 7 Kaggle] Toàn bộ số CTI/NAR/QDR trong mục này (và các bảng/hình kèm theo)
-% được tính lại bằng pipeline 4-cờ mới (cổng commit = PhoBERT, mức suy từ luật atomic). Các con số
-% bên dưới còn là của pipeline cũ -> cập nhật sau khi chạy lại toàn corpus 9 ngân hàng.
+% NOTE: Số CTI/NAR/QDR + bảng theo ngân hàng + hình (ribbons, share, say-do) ĐÃ cập nhật theo
+% pipeline 4-cờ mới (run --all -> analyse_panel, 2026-06-26). Phân tích "loại định lượng"
+% (figure types) đã GỠ vì pipeline mới không trích loại figure. Còn chờ Kaggle: macro-F1
+% classifier (line ~115) và bảng LLM-vs-người (mục reliability).
 Khung đo thực nghiệm trên 9 ngân hàng $\times$ 5 năm. Để tránh quy kết rủi ro và đảm bảo tính bảo mật, tên ngân hàng đã được \emph{mã hoá}. Các mô hình phân loại được đánh giá trên bộ nhãn vàng gồm 400 chunk do hai người gán độc lập (Mục~\ref{sec:reliability}).
 
 \noindent\textbf{RQ1 --- Nói suông phổ biến đến mức nào trong ngành ngân hàng ở Việt Nam?}\\
-Trung bình $\mathrm{CTI}=0{,}383$ (CI~$[0{,}360;0{,}408]$), $\mathrm{NAR}=0{,}313$, $\mathrm{QDR}=0{,}304$: gần 40\% cam kết ESG chỉ là nói suông, và chỉ khoảng 30\% đạt mức định lượng. Đáng chú ý, mức nói suông khá \emph{đồng nhất} giữa các ngân hàng --- CTI cụm trong khoảng 0{,}37--0{,}46 ở 6/9 ngân hàng (độ lệch chuẩn chỉ 0{,}056), chỉ AK và OB thấp hơn rõ rệt (Bảng~\ref{tab:by_bank}). Từ kết quả trên có thể thấy nói suông là khá phổ biến tuy nhiên xét tổng thể thì chưa thể phân hoá rõ ràng. Phù hợp với phân tích độ tin cậy (Mục~\ref{sec:reliability}), chúng tôi đọc CTI như một chỉ số \emph{so sánh} giữa các ngân hàng, lấy QDR --- dựng từ các thuộc tính định lượng có đồng thuận giữa người gần như hoàn hảo ($\kappa\approx0{,}99$) --- làm mỏ neo đối chiếu. Chúng tôi sẽ phân tích một yếu tố của ESG-washing là Selective disclosure \cite{marquis2016scrutiny} ở phần tiếp theo.
+Trung bình $\mathrm{CTI}=0{,}479$ (CI~$[0{,}453;0{,}506]$), $\mathrm{NAR}=0{,}304$, $\mathrm{QDR}=0{,}217$: gần một nửa cam kết ESG (\(\approx\)48\%) chỉ là nói suông, và chỉ \(\approx\)22\% đạt mức định lượng quy về chủ thể. Mức nói suông trải khá rộng giữa các ngân hàng --- CTI từ $0{,}35$ (AK, thấp nhất) đến $0{,}53$ (VNK), độ lệch chuẩn $0{,}092$; phần lớn ngân hàng cụm ở $0{,}45$--$0{,}53$, chỉ AK và OB thấp hơn rõ rệt (Bảng~\ref{tab:by_bank}). Phù hợp với phân tích độ tin cậy (Mục~\ref{sec:reliability}), chúng tôi đọc CTI như một chỉ số \emph{so sánh} giữa các ngân hàng, lấy QDR --- dựng từ các thuộc tính định lượng có đồng thuận giữa người gần như hoàn hảo ($\kappa\approx0{,}99$) --- làm mỏ neo đối chiếu. Chúng tôi sẽ phân tích một yếu tố của ESG-washing là Selective disclosure \cite{marquis2016scrutiny} ở phần tiếp theo.
 
 \begin{table}[H]
 \centering
@@ -229,22 +230,22 @@ Trung bình $\mathrm{CTI}=0{,}383$ (CI~$[0{,}360;0{,}408]$), $\mathrm{NAR}=0{,}3
 \toprule
 NH & CTI & CTI (CI 95\%) & NAR & QDR & $\bar{N}$ \\
 \midrule
-AK  & 0{,}293 & [0{,}227;\,0{,}359] & 0{,}349 & 0{,}358 & 48{,}2 \\
-OB  & 0{,}296 & [0{,}258;\,0{,}334] & 0{,}444 & 0{,}260 & 42{,}0 \\
-BV  & 0{,}373 & [0{,}337;\,0{,}409] & 0{,}326 & 0{,}301 & 89{,}0 \\
-VMK & 0{,}391 & [0{,}336;\,0{,}447] & 0{,}299 & 0{,}311 & 57{,}2 \\
-VK  & 0{,}394 & [0{,}313;\,0{,}475] & 0{,}270 & 0{,}336 & 69{,}8 \\
-TM  & 0{,}397 & [0{,}320;\,0{,}474] & 0{,}275 & 0{,}328 & 76{,}6 \\
-SB  & 0{,}416 & [0{,}354;\,0{,}478] & 0{,}283 & 0{,}301 & 86{,}0 \\
-VNK & 0{,}431 & [0{,}395;\,0{,}467] & 0{,}326 & 0{,}244 & 82{,}4 \\
-MK  & 0{,}460 & [0{,}381;\,0{,}539] & 0{,}245 & 0{,}295 & 85{,}6 \\
+AK  & 0{,}349 & [0{,}291;\,0{,}411] & 0{,}373 & 0{,}278 & 48{,}2 \\
+OB  & 0{,}400 & [0{,}333;\,0{,}467] & 0{,}348 & 0{,}252 & 42{,}0 \\
+BV  & 0{,}456 & [0{,}407;\,0{,}501] & 0{,}330 & 0{,}214 & 89{,}0 \\
+MK  & 0{,}481 & [0{,}435;\,0{,}530] & 0{,}311 & 0{,}208 & 85{,}6 \\
+VK  & 0{,}493 & [0{,}441;\,0{,}547] & 0{,}287 & 0{,}221 & 69{,}8 \\
+VMK & 0{,}493 & [0{,}437;\,0{,}552] & 0{,}301 & 0{,}206 & 57{,}2 \\
+SB  & 0{,}493 & [0{,}447;\,0{,}542] & 0{,}293 & 0{,}214 & 86{,}0 \\
+TM  & 0{,}517 & [0{,}470;\,0{,}564] & 0{,}290 & 0{,}193 & 76{,}6 \\
+VNK & 0{,}532 & [0{,}485;\,0{,}580] & 0{,}282 & 0{,}187 & 82{,}4 \\
 \midrule
-Toàn panel & 0{,}383 & [0{,}360;\,0{,}408] & 0{,}313 & 0{,}304 & 70{,}9 \\
+Toàn panel & 0{,}479 & [0{,}453;\,0{,}506] & 0{,}304 & 0{,}217 & 70{,}9 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Theo thời gian, khối lượng cam kết tăng mạnh (từ $\approx48$ cam kết mỗi báo cáo năm 2020 lên $\approx108$ năm 2024), nhưng \emph{cơ cấu độ cụ thể gần như bất động}: cả CTI lẫn QDR đều không có xu hướng theo thời gian có ý nghĩa --- ngân hàng \emph{nói nhiều hơn mà không cụ thể hơn} (Hình~\ref{fig:ribbons}).
+Theo thời gian, khối lượng cam kết tăng mạnh (từ $\approx48$ cam kết mỗi báo cáo năm 2020 lên $\approx108$ năm 2024; Spearman $\rho=0{,}67$, $p<0{,}001$), nhưng \emph{mức định lượng không hề tăng theo}: QDR gần như phẳng ($\rho=-0{,}04$, $p=0{,}77$) --- ngân hàng \emph{nói nhiều hơn mà không định lượng hơn}. Phần mơ hồ có giảm nhẹ ($\mathrm{CTI}$: $\rho=-0{,}30$, $p=0{,}05$) nhưng chỉ dịch sang \emph{hành động chưa định lượng} chứ không sang định lượng ($\mathrm{NAR}$: $\rho=+0{,}34$, $p=0{,}02$) (Hình~\ref{fig:ribbons}).
 
 \begin{figure}[H]
 \centering
@@ -258,31 +259,27 @@ Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}2
 
 \begin{figure}[H]
 \centering
-\begin{minipage}[c]{0.42\textwidth}\centering
-\includegraphics[width=0.92\linewidth]{share_pillars.png}\\[1pt]
-{\footnotesize (a) Tỉ trọng công bố theo trụ}\\[6pt]
-\includegraphics[width=0.98\linewidth]{fig_rq5_figtypes.png}\\[1pt]
-{\footnotesize (c) Đại lượng định lượng theo loại}
+\begin{minipage}[c]{0.46\textwidth}\centering
+\includegraphics[width=0.95\linewidth]{share_pillars.png}\\[1pt]
+{\footnotesize (a) Tỉ trọng công bố theo trụ}
 \end{minipage}\hfill
-\begin{minipage}[c]{0.44\textwidth}\centering
-\includegraphics[width=0.74\linewidth]{fig_rq5_saydo.png}\\[1pt]
+\begin{minipage}[c]{0.46\textwidth}\centering
+\includegraphics[width=0.78\linewidth]{fig_rq5_saydo.png}\\[1pt]
 {\footnotesize (b) Khoảng cách mơ hồ--định lượng theo trụ}
 \end{minipage}
-\caption{ESG-washing chọn lọc theo trụ. (a) Tỉ trọng công bố ESG trung bình. (b) Khoảng cách mơ hồ--định lượng $\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$. (c) Đại lượng định lượng theo loại}
+\caption{ESG-washing chọn lọc theo trụ. (a) Tỉ trọng công bố ESG trung bình. (b) Khoảng cách mơ hồ--định lượng $\Delta_p=\mathrm{CTI}_p-\mathrm{QDR}_p$.}
 \label{fig:rq2}
 \end{figure}
 
-Trong các đại lượng được định lượng, ``tín dụng xanh'' áp đảo ($n=208$) còn ``lượng phát thải'' chỉ xuất hiện 13 lần (Hình~\ref{fig:rq2}c) --- ngân hàng định lượng tài chính xanh rất tốt nhưng gần như không công bố số phát thải của chính mình.
-
-Khoảng cách mơ hồ--định lượng tổng thể chỉ $\mathrm{CTI}-\mathrm{QDR}=+0{,}08$, nhưng phân rã theo trụ cho thấy gần như toàn bộ đến từ Quản trị ($\Delta_{\mathrm{gov}}=+0{,}33$), trong khi Môi trường ($+0{,}06$) và Xã hội ($+0{,}02$) gần cân bằng (Hình~\ref{fig:rq2}b): ngân hàng nói nhiều về quản trị (chính sách, tuân thủ, đạo đức) nhưng hiếm khi định lượng.
+Khoảng cách mơ hồ--định lượng tổng thể $\mathrm{CTI}-\mathrm{QDR}=+0{,}26$ là lớn và hiện diện ở \emph{cả ba trụ}, song phân rã theo trụ cho thấy nặng nhất ở Quản trị ($\Delta_{\mathrm{gov}}=+0{,}41$), rồi đến Xã hội ($+0{,}23$) và Môi trường ($+0{,}19$) (Hình~\ref{fig:rq2}b): ở mọi trụ ngân hàng nói nhiều hơn nhiều so với phần định lượng được, mất cân đối nhất là khi nói về quản trị (chính sách, tuân thủ, đạo đức).
 
 
-\subsubsection{Discussion.} Các phát hiện hội tụ thành bức tranh nhất quán về ESG-washing trong ngân hàng Việt Nam, rút ra mà không cần dữ liệu bên thứ ba. Tín hiệu nội văn bản vẫn mang thông tin nhờ lý thuyết cheap talk \cite{farrell1996cheap}: cam kết mơ hồ gần như không tốn chi phí và không thể bị bác bỏ, còn cam kết định lượng quy về chủ thể là phát ngôn \emph{có thể chứng minh sai}; phân bố độ cụ thể vì thế phản ánh mức sẵn sàng chịu trách nhiệm. Ý nghĩa thực tiễn: (1) yêu cầu định lượng phát thải (khoảng trống lớn nhất); (2) đặt sàn tỉ trọng trụ Môi trường để ngăn cherry-picking; (3) dùng CTI làm chỉ báo sàng lọc sớm cho giám sát định kỳ.
+\subsubsection{Discussion.} Các phát hiện hội tụ thành bức tranh nhất quán về ESG-washing trong ngân hàng Việt Nam, rút ra mà không cần dữ liệu bên thứ ba. Tín hiệu nội văn bản vẫn mang thông tin nhờ lý thuyết cheap talk \cite{farrell1996cheap}: cam kết mơ hồ gần như không tốn chi phí và không thể bị bác bỏ, còn cam kết định lượng quy về chủ thể là phát ngôn \emph{có thể chứng minh sai}; phân bố độ cụ thể vì thế phản ánh mức sẵn sàng chịu trách nhiệm. Ý nghĩa thực tiễn: (1) yêu cầu định lượng cam kết --- khoảng trống lớn nhất của ngành, đặc biệt ở trụ Quản trị nơi khoảng cách mơ hồ--định lượng rộng nhất ($\Delta_{\mathrm{gov}}=+0{,}41$); (2) đặt sàn tỉ trọng trụ Môi trường để ngăn cherry-picking; (3) dùng CTI làm chỉ báo sàng lọc sớm cho giám sát định kỳ.
 
 
 \section{Conclusion}
 
-Nghiên cứu đề xuất khung NLP đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi phân tích khoảng cách mơ hồ--định lượng theo trụ, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm 38{,}3\%; trụ Môi trường bị né nhiều hơn phần còn lại; khối lượng tăng mà chất lượng không cải thiện; Quản trị là trụ cheap-talk nặng nhất, phát thải gần như không được định lượng.% TODO: [CHỜ SỐ - Task 7] cập nhật 38,3% và các phát hiện theo pipeline 4-cờ mới.
+Nghiên cứu đề xuất khung NLP đo rủi ro ESG-washing qua \emph{độ cụ thể của cam kết} (CTI/NAR/QDR), bổ sung bởi phân tích khoảng cách mơ hồ--định lượng theo trụ, không cần dữ liệu ngoài. Trên 9 ngân hàng (2020--2024): nói suông chiếm $\approx48\%$ cam kết ESG; trụ Môi trường bị né nhiều hơn phần còn lại; khối lượng cam kết tăng mạnh mà mức định lượng không cải thiện (QDR phẳng theo thời gian); Quản trị là trụ có khoảng cách mơ hồ--định lượng lớn nhất, và định lượng nhìn chung yếu ở cả ba trụ (QDR chỉ $\approx22\%$).
 Hạn chế: độ cụ thể là proxy nội văn bản không có walk-data ngoài; ranh giới chủ đề S/G có đồng thuận giữa người gán chỉ ở mức trung bình ($\kappa\approx0{,}5$) và nhãn translate-train từ tiếng Anh có thể chưa chuyển giao hoàn hảo sang trụ S/G, nên việc phân bổ cam kết theo trụ kém chắc chắn hơn so với mức độ cụ thể; ranh giới ``thế nào là một cam kết'' mang tính chủ quan ở các trường hợp biên; số lượng ngân hàng và báo cáo còn ít. Hướng phát triển: mở rộng phạm vi đánh giá, triển khai đa ngôn ngữ, tích hợp đánh giá đối với các dữ liệu có từ bên ngoài báo cáo.
 
 
