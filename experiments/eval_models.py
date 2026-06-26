@@ -52,7 +52,8 @@ def eval_one(name: str) -> dict:
     heads, thr, probs, df = _predict(name)
 
     rows, f1s_tuned, f1s_half = [], [], []
-    fig, axes = plt.subplots(2, len(heads), figsize=(4.5 * len(heads), 8))
+    # squeeze=False: giu axes luon 2D ke ca khi 1 head (commitment) -> axes[i, j] khong vo.
+    fig, axes = plt.subplots(2, len(heads), figsize=(4.5 * len(heads), 8), squeeze=False)
     for j, h in enumerate(heads):
         y = df[h].to_numpy(dtype=float)
         valid = ~np.isnan(y)
