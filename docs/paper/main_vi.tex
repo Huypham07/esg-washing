@@ -119,7 +119,7 @@ Nhiều câu mang sắc thái ``cam kết'' nhưng không thuộc ESG (ví dụ 
 
 \subsection{Attribute Extraction}
 \label{sec:attribute}
-Trên mỗi chunk đã qua cổng ESG-cam kết, ta cần xác định \emph{mức độ cụ thể} của cam kết. Yêu cầu trực tiếp một mô hình phán đoán chunk là mơ hồ hay cụ thể.
+Trên mỗi chunk đã qua cổng ESG-cam kết, ta cần xác định \emph{mức độ cụ thể} của cam kết. Thay vì yêu cầu mô hình phán đoán trực tiếp ``chunk này mơ hồ hay cụ thể'' --- một nhãn tổng thể chủ quan, khó kiểm chứng --- chúng tôi phân rã thành các thuộc tính khách quan kèm bằng chứng rồi suy mức bằng một luật tất định.
 
 Cụ thể, một mô hình ngôn ngữ suy luận (\textbf{Qwen3-1.7B}) nhận từng chunk và trích xuất bốn thuộc tính nhị phân; với mỗi thuộc tính được đánh ``có'', mô hình bắt buộc trích kèm một đoạn bằng chứng từ chunk. Khác với việc hỏi một nhãn tổng thể, mỗi thuộc tính là một sự kiện cục bộ, kiểm chứng được trực tiếp trên văn bản. Bốn thuộc tính gồm: (i) \texttt{có\_hành\_động} --- có nêu một hành động, chương trình hoặc công cụ \emph{có tên, kiểm chứng được} (khác với khẩu hiệu hay tính từ chung chung); (ii) \texttt{có\_định\_lượng} --- có một đại lượng định lượng (số, phần trăm, tỷ đồng, MW\ldots); (iii) \texttt{quy\_về\_bank} --- đại lượng hoặc hành động đó quy về \emph{chính ngân hàng} chủ thể chứ không phải con số của ngành hay quốc gia; và (iv) \texttt{có\_mốc\_thời\_gian} --- có một mốc thời gian hoặc thời hạn, ví dụ ``đến năm 2030''.
 
@@ -127,8 +127,8 @@ Mức độ cụ thể được suy ra từ luật:
 \begin{equation}
 \text{Mức} =
 \begin{cases}
-2 & \text{nếu } \texttt{co\_so\_dinh\_luong} \,\wedge\, \texttt{quy\_ve\_bank}\\[2pt]
-1 & \text{nếu } \texttt{co\_hanh\_dong\_ten}\\[2pt]
+2 & \text{nếu } \texttt{có\_định\_lượng} \,\wedge\, \texttt{quy\_về\_bank}\\[2pt]
+1 & \text{nếu } \texttt{có\_hành\_động}\\[2pt]
 0 & \text{còn lại.}
 \end{cases}
 \end{equation}
@@ -153,7 +153,7 @@ CTI đo nói suông (cam kết mơ hồ), QDR đo thực chất. \emph{Tỉ tr�
 \label{sec:results}
 Khung đo được áp dụng trên 9 ngân hàng $\times$ 5 năm. Để tránh quy kết rủi ro và đảm bảo tính bảo mật, tên ngân hàng đã được \emph{mã hoá}.
 
-\noindent\textbf{Độ chính xác của pipeline.} Hai bộ phân loại encoder đạt chất lượng tốt trên tập kiểm tra: Topic macro-F1 $=0{,}86$ (E $0{,}90$, S $0{,}88$, G $0{,}79$) và Commitment F1 $=0{,}73$, đều vượt baseline TF--IDF+LR. Để đánh giá tầng còn lại, chúng tôi đối chiếu đầu ra với một bộ \emph{nhãn vàng} gồm 400 chunk được nhóm tác giả gán theo cùng giao thức thuộc tính. \emph{Trích xuất độ cụ thể là tầng khó hơn rõ rệt}: so với nhãn vàng, bốn thuộc tính nguyên tử đạt F1 từ $0{,}47$ đến $0{,}67$ --- mô hình phát hiện \emph{sự hiện diện của con số} tốt hơn (\texttt{co\_so\_dinh\_luong}) nhưng yếu ở các phán đoán ngữ nghĩa như quy kết chủ thể (\texttt{quy\_ve\_bank}, F1 $0{,}47$). Tuy độ chính xác ở cấp từng chunk còn vừa phải, ở \emph{cấp tổng hợp} ước lượng QDR gần như trùng nhãn vàng ($0{,}22$ so với $0{,}22$) trong khi CTI bị thiên cao ($0{,}44$ so với $0{,}35$). Do đó chúng tôi xem \textbf{QDR là chỉ số đáng tin cậy nhất}, đọc \textbf{CTI theo hướng so sánh} giữa các ngân hàng hơn là một con số tuyệt đối, và coi việc củng cố tầng trích xuất specificity là hạn chế chính của khung đo.
+\noindent\textbf{Độ chính xác của pipeline.} Hai bộ phân loại encoder đạt chất lượng tốt trên tập kiểm tra: Topic macro-F1 $=0{,}86$ (E $0{,}90$, S $0{,}88$, G $0{,}79$) và Commitment F1 $=0{,}73$, đều vượt baseline TF--IDF+LR. Để đánh giá tầng còn lại, chúng tôi đối chiếu đầu ra với một bộ \emph{nhãn vàng} gồm 400 chunk được nhóm tác giả gán theo cùng giao thức thuộc tính. \emph{Trích xuất độ cụ thể là tầng khó hơn rõ rệt}: so với nhãn vàng, bốn thuộc tính nguyên tử đạt F1 từ $0{,}47$ đến $0{,}67$ --- mô hình phát hiện \emph{sự hiện diện của con số} tốt hơn (\texttt{có\_định\_lượng}) nhưng yếu ở các phán đoán ngữ nghĩa như quy kết chủ thể (\texttt{quy\_về\_bank}, F1 $0{,}47$). Tuy độ chính xác ở cấp từng chunk còn vừa phải, ở \emph{cấp tổng hợp} ước lượng QDR gần như trùng nhãn vàng ($0{,}22$ so với $0{,}22$) trong khi CTI bị thiên cao ($0{,}44$ so với $0{,}35$). Do đó chúng tôi xem \textbf{QDR là chỉ số đáng tin cậy nhất}, đọc \textbf{CTI theo hướng so sánh} giữa các ngân hàng hơn là một con số tuyệt đối, và coi việc củng cố tầng trích xuất specificity là hạn chế chính của khung đo.
 
 \noindent\textbf{RQ1 --- Nói suông phổ biến đến mức nào trong ngành ngân hàng ở Việt Nam?}\\
 Trung bình $\mathrm{CTI}=0{,}479$ (CI~$[0{,}453;0{,}506]$), $\mathrm{NAR}=0{,}304$, $\mathrm{QDR}=0{,}217$: gần một nửa cam kết ESG (\(\approx\)48\%) chỉ là nói suông, và chỉ \(\approx\)22\% đạt mức định lượng quy về chủ thể. Mức nói suông trải khá rộng giữa các ngân hàng --- CTI từ $0{,}35$ (B\_A, thấp nhất) đến $0{,}53$ (B\_I), độ lệch chuẩn $0{,}092$; phần lớn ngân hàng cụm ở $0{,}45$--$0{,}53$, chỉ B\_A và B\_B thấp hơn rõ rệt (Bảng~\ref{tab:by_bank}). Chúng tôi đọc CTI như một chỉ số so sánh giữa các ngân hàng. Chúng tôi sẽ phân tích một yếu tố của ESG-washing là Selective disclosure \cite{marquis2016scrutiny} ở phần tiếp theo.
@@ -191,8 +191,7 @@ Theo thời gian, khối lượng cam kết tăng từ $\approx48$ cam kết m�
 \end{figure}
 
 \noindent\textbf{RQ2 --- ESG-washing thể hiện trên các trụ như thế nào?}\\
-Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}240 < \mathrm{share}(S)=0{,}357 < \mathrm{share}(G)=0{,}403$, và \emph{cả 9/9 ngân hàng đều công bố Môi trường ít nhất} (Hình~\ref{fig:rq2}a). Có thể đây là hành vi né chủ đề khó.
-% sửa câu Có thể đây là hành vi né chủ đề khó.%
+Tỉ trọng công bố lệch rõ và nhất quán --- $\mathrm{share}(E)=0{,}240 < \mathrm{share}(S)=0{,}357 < \mathrm{share}(G)=0{,}403$, và \emph{cả 9/9 ngân hàng đều công bố Môi trường ít nhất} (Hình~\ref{fig:rq2}a). Việc Môi trường nhất quán bị công bố ít nhất gợi ý một khuôn mẫu \emph{cherry-picking}: ngân hàng nghiêng về các trụ dễ trình bày hơn và né trụ Môi trường --- vốn đòi hỏi số liệu cụ thể, kiểm chứng được.
 
 \begin{figure}[H]
 \centering
