@@ -1,0 +1,2553 @@
+<!-- image -->
+
+## BÁO CÁO T H Ư Ờ N G  N I Ê N
+
+<!-- image -->
+
+## Danh mục các thuật ngữ viết tắt
+
+| OCB   | Ngân hàng TMCPPhương Đông   | TTS    | Tổng tài sản                            |
+|-------|-----------------------------|--------|-----------------------------------------|
+| ĐHĐCĐ | Đại hội đồng Cổ đông        | TV     | Thành viên                              |
+| HĐQT  | Hội đồng Quản trị           | VCSH   | Vốn chủ sở hữu                          |
+| BĐH   | Ban Điều hành               | VĐL    | Vốn điều lệ                             |
+| BLĐ   | Ban Lãnh đạo                | VN     | ViệtNam                                 |
+| BKS   | Ban Kiểm soát               | BCKT   | Báo cáo kiểm toán                       |
+| NĐT   | Nhà đầu tư                  | BCTC   | Báo cáo tài chính                       |
+| TGĐ   | Tổng Giám đốc               | RB     | Khối Bán lẻ                             |
+| QHNĐT | Quan hệ nhà đầu tư          | CIB    | Khối Khách hàng doanh nghiệp lớn        |
+| HĐKD  | Hoạt động kinh doanh        |        | và Dịch vụ Ngân hàng đầu tư             |
+| CĐ    | Cổ đông                     | SME    | Khối Khách hàng doanh nghiệp vừa và nhỏ |
+| CBTT  | Công bố thông tin           | COM-B  | Khối Khách hàng đại chúng               |
+| CTTV  | Công ty thành viên          | TCTD   | Tổ chức tín dụng                        |
+| DTT   | Doanh thu thuần             | CBNV   | Cán bộ nhân viên                        |
+| KTNB  | Kiểm toán nội bộ            | NHTM   | Ngân hàng thương mại                    |
+| LN    | Lợi nhuận                   | CN/PGD | Chi nhánh/Phòng Giao dịch               |
+| NĐ    | Nghị định                   | KHDN   | Khách hàng doanh nghiệp                 |
+| NQ    | Nghị quyết                  | KHCN   | Khách hàng cá nhân                      |
+| PTBV  | Phát triển bền vững         | KH     | Khách hàng                              |
+| QĐ    | Quyết định                  | NHNN   | Ngân hàng Nhà nước                      |
+| QLRR  | Quản lý rủi ro              | RRTD   | Rủi ro tín dụng                         |
+| QTDN  | Quản trị doanh nghiệp       | QLRRHĐ | Quản lý rủi ro hoạt động                |
+| SGDCK | Sở Giao dịch Chứng khoán    | MT&XH  | Môi trường &Xãhội                       |
+| TT    | Thông tư                    |        |                                         |
+
+<!-- image -->
+
+Các thuật ngữ viết tắt Thông điệp Chủ tịch HĐQT
+
+| CHƯƠNG1                             | 08   |
+|-------------------------------------|------|
+| THÔNGTINCHUNG                       |      |
+| Tầmnhìn - S ứ mệnh- Giá trị cốt lõi | 10   |
+| Thông tin chung                     | 12   |
+| Quá trình hình thành và phát triển  | 14   |
+| Top 10 sự kiện, dấu ấn năm2023      | 16   |
+| CHƯƠNG2 QUẢNTRỊDOANHNGHIỆP          | 22   |
+| Môhình quản trị                     | 23   |
+| Sơ đồ tổ chức                       | 23   |
+| Quản trị công ty                    | 24   |
+| CHƯƠNG3 BÁOCÁOKẾTQUẢHOẠTĐỘNG        | 52   |
+| Kết quả hoạt động năm2023           | 53   |
+| Định hướng mụctiêu hoạt độngnăm2024 | 65   |
+
+| CHƯƠNG4                                                                      | 66   |
+|------------------------------------------------------------------------------|------|
+| ĐÁNHGIÁCỦAHĐQTVỀHOẠTĐỘNGOCB Đánh giá chung về công tác quản trị doanh nghiệp | 67   |
+| Định hướng hoạtđộngcủaHĐQTnăm2024                                            | 71   |
+| CHƯƠNG5                                                                      | 72   |
+| BÁOCÁOBANKIỂMSOÁT Kết quả hoạt động của Ban Kiểm soát năm2023                | 73   |
+| Đánh giá tình hình thực hiện nghịquyếtĐHĐCĐnăm2023                           | 74   |
+| Phương hướng hoạt độngnăm2024                                                | 75   |
+| CHƯƠNG6                                                                      | 76   |
+| BÁOCÁOPHÁTTRIỂNBỀNVỮNG Tiêu chuẩn kinh tế GRI 200                            | 80   |
+| Tiêu chuẩn môi trường GRI 300                                                | 96   |
+| Tiêu chuẩn xã hội GRI 400                                                    | 105  |
+| CHƯƠNG7                                                                      | 112  |
+| MẠNGLƯỚIHOẠTĐỘNG CHƯƠNG8                                                     | 124  |
+| BÁOCÁOTÀI CHÍNH VÀ THUYẾT MINH                                               |      |
+
+<!-- image -->
+
+Năm 2023, OCB được đánh giá là một trong số ít các ngân hàng kinh doanh khởi sắc và kiểm soát tốt chi phí. Bước sang năm 2024, mục tiêu của OCB chính là chú trọng vào công tác kiểm soát rủi ro, nâng cao chất lượng tài sản, đẩy mạnh hoạt động chuyển đổi số. Bằng sự đồng lòng, nỗ lực không ngừng nghỉ, Tôi tin rằng, OCB sẽ thực hiện được mục tiêu xây dựng một ngân hàng có tốc độ tăng trưởng bền vững, an toàn, hiệu quả và minh bạch, đem lại giá trị cho cổ đông, cộng đồng và xã hội.
+
+<!-- image -->
+
+<!-- image -->
+
+## Thưa Quý cổ đông và Quý khách hàng,
+
+Từ cuối năm 2022, khi tăng trưởng Quý III/2022 của Việt Nam đang ở mức trên 8% (cao nhất từ trước tới nay), một số báo cáo chuyên sâu về kinh tế vĩ mô đã có những cảnh báo thận trọng về diễn biến khó lường trong năm 2023.
+
+Quả thật bước sang năm 2023, nền kinh tế Việt Nam vẫn phải đối mặt với nhiều diễn biến phức tạp  bởi  ảnh  hưởng  những  'cơn  gió  ngược'  về xung đột chính trị, lạm phát và lãi suất tăng cao, tâm lý tiêu dùng bất ổn định, v.v… điều này đã khiến kinh tế Việt Nam giảm đà tăng trưởng  một  cách  đáng  kể,  có  những  lúc xuống mức thấp nhất trong hơn mười năm trở lại đây.
+
+Tuy nhiên, với những  nỗ lực không ngừng của Chính phủ, các Bộ,  Ngành,  Việt  Nam  đã  có  một năm vượt khó xuất sắc. Riêng đối với  ngành  Ngân  hàng,  Chính  phủ cùng  NHNN  đã  đưa  ra  nhiều  chỉ đạo, chính sách có tính chất thực tiễn, đúng lúc, đúng bệnh giải quyết ngay những vấn đề bế tắc giúp khơi thông  nguồn  vốn.  Tại  OCB,  ngân hàng cũng đã quyết liệt trong việc đưa ra nhiều sản phẩm, dịch vụ tài chính phù hợp. Chủ động triển  khai  hàng  loạt  các  chương  trình  đồng hành cùng khách hàng theo định hướng của Chính phủ, NHNN.
+
+Kết quả kinh doanh năm 2023 của OCB cho thấy, các hoạt động kinh doanh cốt lõi của ngân hàng đều ghi nhận sự tăng trưởng. Tăng vốn điều lệ thành công lên 20.548 tỷ đồng (tăng 6.849 tỷ đồng), chính thức nằm trong nhóm ngân hàng tư nhân có vốn điều lệ lớn nhất hệ thống. Chỉ số CIR năm 2023 (chi phí/doanh thu) ở mức 35,5%, được đánh giá là một trong số ít các ngân hàng kinh doanh khởi sắc, kiểm soát tốt chi phí hoạt động trong năm 2023 khi bối cảnh kinh doanh chung của các ngân hàng trên toàn hệ thống còn gặp nhiều khó khăn.
+
+Năm 2023, OCB đã hoàn tất nhiều dự án quan trọng như: Ngân hàng đầu tiên tại Việt Nam công bố hoàn thành triển khai và áp dụng nền tảng quản lý vốn theo Basel II Nâng cao và Basel III; Chính thức chuyển văn phòng Hội sở về Tòa nhà The Hallmark tại TP.HCM và The West tại Hà Nội theo chuẩn quốc tế; Tuyên bố chiến lược phát triển bền vững, đưa OCB trở thành ngân hàng XANH tiên phong tại Việt Nam, hoàn thành mở rộng 10 CN/PGD nâng tổng số CN/PGD trên toàn quốc lên 159 CN/PGD… Từ đó, tiếp tục được vinh danh trong Top ngân hàng mạnh nhất Châu Á - Thái Bình Dương và Top 30 doanh nghiệp nộp thuế lớn nhất Việt Nam.
+
+Năm 2024, được dự đoán sẽ tiếp tục là một năm khó khăn với cả hệ thống ngân hàng với các thách thức lớn liên quan đến điều hành chính sách tiền tệ, nợ xấu, áp lực lợi nhuận và tính thanh khoản. Trong bối cảnh Thông tư 02 hết hiệu lực và luật tổ chức tín dụng chưa được thông qua. Ngoài ra, Nghị quyết 42 hết hiệu lực cũng khiến áp lực thu hồi nợ cực kỳ khó khăn, trong khi đó các doanh nghiệp phải đối mặt với tình trạng kinh doanh khó khăn, nhất là các doanh nghiệp trong lĩnh vực bất động sản, xuất khẩu. Khi nợ xấu gia tăng khiến chi phí trích lập dự phòng của nhiều ngân hàng tăng mạnh, từ đó chắc chắn lợi nhuận sẽ bị ảnh hưởng. Do đó, OCB sẽ phải nỗ lực nhiều hơn nữa nhằm đảm bảo an toàn hoạt động cũng như khả năng sinh lời của ngân hàng. Mục tiêu năm nay của OCB chính là chú trọng vào công tác kiểm soát rủi ro, nâng cao chất lượng tài sản, đẩy mạnh hoạt động chuyển đổi số.
+
+Thay mặt Hội đồng quản trị OCB, Tôi trân trọng gửi lời cảm ơn chân thành đến các cổ đông, khách hàng, đối tác và gần 7.000 CBNV OCB trên toàn quốc đã luôn tin tưởng, đồng hành cùng xây dựng một thương hiệu ngân hàng với đầy đủ những giá trị cốt lõi đầy tự hào: Khách hàng là trọng tâm. Nỗ lực. Trách nhiệm. Sáng tạo. Hợp tác cùng phát triển.
+
+Tôi tin rằng, với sự dẫn dắt của đội ngũ quản trị, điều hành giàu kinh nghiệm, sự hỗ trợ của Quý cổ đông, khách hàng, đối tác cùng sự nỗ lực của đội ngũ CBNV OCB… OCB sẽ thực hiện được mục tiêu xây dựng một ngân hàng có tốc độ tăng trưởng bền vững, an toàn, hiệu quả và minh bạch, đem lại giá trị cho cổ đông, cộng đồng và xã hội.
+
+Một lần nữa, xin cảm ơn và kính chúc Quý vị nhiều sức khỏe, hạnh phúc và thành công! Trân trọng.
+
+<!-- image -->
+
+CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ
+
+TRỊNH VĂN TUẤN
+
+## CHƯƠNG 01 THÔNG TIN CHUNG CHƯƠNG 01 THÔNG TIN CHUNG
+
+| Tầmnhìn - S ứ mệnh- Giá trị cốt lõi Tầmnhìn - S ứ mệnh- Giá trị cốt lõi   | 10 10   |
+|---------------------------------------------------------------------------|---------|
+| Thông tin chung                                                           | 12      |
+| Quá trình hình thành và phát triển Quá trình hình thành và phát triển     | 14 14   |
+| Top 10 sự kiện, dấu ấn năm2023                                            | 16      |
+
+<!-- image -->
+
+## TẦM NHÌN - SỨ MỆNH GIÁ TRỊ CỐT LÕI
+
+## TẦM NHÌN
+
+Top 5 Ngân hàng TMCP tư nhân vào năm 2025
+
+## SỨ MỆNH
+
+Hỗ trợ hiện thực hóa ước mơ và tham vọng  của  người  tiêu  dùng,  doanh nhân và doanh nghiệp tại Việt Nam, giúp họ đạt được sự tăng trưởng và hoài bão như kỳ vọng.
+
+<!-- image -->
+
+<!-- image -->
+
+## GIÁ TRỊ CỐT LÕI
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## KHÁCH HÀNG LÀ TRỌNG TÂM
+
+- Chúng ta lắng nghe, trân trọng và thấu hiểu khách hàng.
+- Chúng ta ưu tiên trước hết thỏa mãn nhu cầu khách hàng.
+- Chúng ta cam kết mang lại giải pháp, sản phẩm tốt nhất cho khách hàng.
+
+## NỖ LỰC
+
+- Chúng ta tập trung cao độ trong công việc và làm hết mình.
+- Chúng ta chủ động và nhanh nhạy trong công việc.
+- Chúng ta kiên cường trước những khó khăn.
+
+## SÁNG TẠO
+
+- Chúng ta không thỏa mãn với những thứ hiện có và tìm cách đạt những thành tựu mới.
+- Chúng ta  tìm những phương thức, giải pháp thông minh, hiệu quả hơn.
+- Chúng ta tìm kiếm cơ hội, chuẩn bị kế hoạch, sẵn sàng ứng biến cho những thay đổi.
+
+## TRÁCH NHIỆM
+
+- Chúng ta ứng xử chuyên nghiệp, chuẩn mực.
+- Chúng ta dám ra quyết định và chịu trách nhiệm với hành động của mình.
+- Chúng ta giữ chữ tín, và hướng đến lợi ích, giá trị bền vững.
+
+## HỢP TÁC CÙNG PHÁT TRIỂN
+
+- Chúng ta có thái độ tôn trọng và tư duy cùng thành công.
+- Chúng ta chia sẻ, đồng hành cùng nhau.
+- Chúng ta trao đổi cởi mở, minh bạch, tích cực.
+
+<!-- image -->
+
+## THÔNG TIN CHUNG
+
+## NGÂN HÀNG TMCP PHƯƠNG ĐÔNG
+
+| Tên tiếng Anh      | Orient Commercial Joint Stock Bank                                                                                                                        |
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Tên viết tắt       | Ngân Hàng Phương Đông hoặcOCB                                                                                                                             |
+| Giấy chứngnhậnĐKKD | 0300852005                                                                                                                                                |
+| Mãcổphiếu          | OCB                                                                                                                                                       |
+| Thời điểm niêm yết | 28/01/2021                                                                                                                                                |
+| Vốn điều lệ        | 20.548.242.940.000VNĐ (Tại thời điểm 31/12/2023)                                                                                                          |
+| Vốn chủ sở hữu     | 28.535.703.470.870VNĐ (Tại thời điểm 31/12/2023)                                                                                                          |
+| Hội sở chính       | Số 41 và 45 Lê Duẩn, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, ViệtNam Số 41 và 45 Lê Duẩn, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, ViệtNam |
+| Số điện thoại      | (84) 28. 38220 960 (84) 28. 38220 960                                                                                                                     |
+| Hotline            | 1800 6678 1800 6678                                                                                                                                       |
+| Website            | http://www.ocb.com.vn http://www.ocb.com.vn                                                                                                               |
+
+## NGÀNH NGHỀ KINH DOANH
+
+| • Dịch vụ huy động vốn            | • Dịch vụ ngân hàngsốOCBOMNI                                            |
+|-----------------------------------|-------------------------------------------------------------------------|
+| • Dịch vụ cho vay                 | • Dịch vụ Chuyển tiền nhanh trong và ngoài nước                         |
+| • Dịch vụ thanh toán quốc tế      | • Dịch vụ chi trả kiều hối                                              |
+| • Dịch vụ tài trợ xuất nhập khẩu  | • Dịch vụ muabánngoại tệ                                                |
+| • Dịch vụ tài khoản • Dịch vụ thẻ | • Các dịch vụ ngân hàng khác trong khuôn khổ được phép hoạt động củaOCB |
+
+OCB - Niềm tin và thịnh vượng
+
+13
+
+## QUÁ TRÌNH HÌNH THÀNH VÀ PHÁT TRIỂN
+
+## NGÂN HÀNG TMCP PHƯƠNG ĐÔNG
+
+Được thành lập từ năm 1996, trải qua 27 năm xây dựng và phát triển, OCB đã ghi tên mình trong nhóm các ngân hàng tư nhân hàng đầu tại Việt Nam với tốc độ tăng trưởng, an toàn hiệu quả, tiên phong trong hoạt động chuyển đổi số và phát triển bền vững.
+
+## 2008
+
+Triển khai ngân hàng lõi T24
+
+## 2013
+
+- Triển khai đề án tự tái cơ cấu GĐ 2012 - 2015
+- Công bố hệ thống nhận diện thương hiệu mới
+
+## 2021
+
+- OCB niêm yết trên Sở Giao dịch Chứng khoán Tp. HCM (HoSE) ngày 28/01/2021
+- Top 25 thương hiệu tài chính dẫn đầu tại Việt Nam do Forbes bình chọn
+
+## 10/6/1996
+
+Thành lập Ngân hàng TMCP Phương Đông
+
+## 2007
+
+Thiết lập quan hệ hợp tác chiến lược với
+
+<!-- image -->
+
+## 2023
+
+- Di dời văn phòng hội sở về tòa nhà The Hallmark (Tp. Hồ Chí Minh)
+- Chính thức tăng vốn điều lệ lên 20.548 tỷ đồng , đưa ngân hàng vào Top 10 ngân hàng tư nhân có vốn điều lệ lớn nhất hệ thống.
+- Ngân hàng đầu tiên hoàn thành triển khai và áp dụng nền tảng quản lý vốn theo Basel II nâng cao và Basel III
+- Ra mắt ngân hàng số thế hệ mới LIOBANK
+
+## 2022
+
+- Top 10 Ngân Hàng Mạnh Nhất Việt Nam trong bảng xếp hạng 500 ngân hàng mạnh nhất khu vực Châu Á - Thái Bình Dương do The Asian Banker công bố
+- Tự hào thương hiệu quốc gia Việt Nam 2022
+- Top 30 doanh nghiệp đóng thuế nhiều nhất Việt Nam do tạp chí Forbes công bố
+- Ra mắt nền tảng vay mua nhà trực tuyến Unlock Dream Home
+
+## 2014
+
+- Xây dựng mô hình quản trị rủi ro mới chuẩn quốc tế dưới sự tư vấn của KPMG
+
+<!-- image -->
+
+## 2015
+
+- Khởi động dự án Basel II dưới sự tư vấn của Ngân hàng DBS Singapore
+
+<!-- image -->
+
+## 2019
+
+Moody's tăng bậc xếp hạng đánh giá rủi ro đối tác (CRA) và xếp hạng rủi ro đối tác (CRR) lên mức Ba3
+
+## 2020
+
+- Chào đón nhà đầu tư chiến lược - Ngân hàng Aozora (Nhật Bản)
+- Đạt chứng nhận
+- Thương hiệu quốc gia · Top 4 trong 10
+
+Ngân hàng TMCP kinh doanh hiệu quả nhất trên thị trường
+
+## 2018
+
+·
+
+Tháng 3/2018:
+
+Ra mắt ngân hàng số OCB OMNI
+
+- OCB chính thức được công nhận hoàn thành Basel II
+- Moody's tăng mức tín nhiệm và xếp hạng lên B1 đối với xếp hạng rủi ro đối tác (CRR) &amp; xếp hạng tiền gửi
+
+## 2016
+
+- Tốc độ tăng trưởng thuộc nhóm 3 ngân hàng dẫn đầu thị trường
+- Moody's công bố mức xếp hạng B2 trong lần đầu xếp hạng
+
+## 2017
+
+- Ra mắt bộ nhận diện thương hiệu riêng "Com-B" tài chính tiêu dùng OCB
+- Ngân hàng đầu tiên công bố hoàn thành dự án triển khai Basel II , đáp ứng các tiêu chuẩn quốc tế về quản lý rủi ro
+
+TOP 10 SỰ KIỆN DẤU ẤN 2023
+
+<!-- image -->
+
+## OCB TĂNG VỐN ĐIỀU LỆ LÊN 20.548 TỶ ĐỒNG
+
+Năm 2023,  OCB  chính  thức  tăng  vốn  điều  lệ  từ 13.699 tỷ đồng lên 20.548 tỷ đồng, đưa ngân hàng vào Top ngân hàng tư nhân có vốn điều lệ lớn nhất hệ  thống,  đồng  thời  trở  thành  một  trong  những ngân  hàng  tăng  trưởng  vốn  điều  lệ  mạnh  nhất trong năm nay.
+
+Việc tăng vốn điều lệ này nhằm mở rộng quy mô hoạt  động  và  tiếp  tục  phát  triển  hệ  thống  sản phẩm, dịch vụ, nâng cao năng lực tài chính cũng như đảm bảo hệ số an toàn vốn (CAR) cho OCB theo quy định của các cơ quan chức năng.
+
+<!-- image -->
+
+<!-- image -->
+
+## NGÂN HÀNG ĐẦU TIÊN HOÀN THÀNH TRIỂN KHAI VÀ ÁP DỤNG NỀN TẢNG QUẢN LÝ VỐN THEO BASEL II NÂNG CAO
+
+Ngày 12/4/2023, OCB đã công bố hoàn thành triển khai và áp dụng nền tảng tính vốn điện toán đám mây theo Basel II Nâng cao (phương pháp tiếp cận nội bộ - IRB). Theo đó, OCB là ngân hàng đầu tiên tại Việt Nam hoàn thành tất cả các yêu cầu tiên tiến  của  Basel  trong  chuẩn  mực  quản  trị  rủi  ro quốc tế, bao gồm Basel II &amp; Basel III.
+
+Hoạt động này không những giúp ngân hàng nâng cao năng lực quản trị rủi ro tín dụng mà còn đảm bảo việc đo lường rủi ro và tỉ lệ an toàn vốn chính xác,  từ  đó  hỗ  trợ  hiệu  quả  các  quyết  định  kinh doanh. Đặc biệt, khẳng định mạnh mẽ mục tiêu dài hạn của OCB trong việc củng cố nền tảng quản trị  rủi  ro  vững  chắc,  hướng  đến  sự  minh  bạch, nâng cao vị thế cạnh tranh trên thị trường.
+
+<!-- image -->
+
+## RA MẮT NGÂN HÀNG SỐ THẾ HỆ MỚI LIOBANK
+
+Ngày  02/3/2023, ngân  hàng  số  thế  hệ  mới  Liobank chính  thức  được  giới  thiệu  đến  khách hàng. Với giao diện thân thiện, thủ tục tinh gọn, thao tác đơn giản, Liobank cho phép người dùng mở tài khoản đa năng, phát hành thẻ 2 trong 1 kết  hợp  giữa  thẻ  tín  dụng  và  thẻ  ghi  nợ,  cùng nhiều hơn nữa các giao dịch ngay trên ứng dụng chỉ với 1 chạm mà không cần đến quầy giao dịch.
+
+Chỉ  sau  9  tháng  được  tung  ra  thị  trường,  ngân hàng số Liobank đã gặt hái được những dấu ấn đầy ấn tượng như: gần 450.000 lượt khách hàng đã tải và cài đặt Liobank, được bình chọn 4,6/5 sao  trong  các  ứng  dụng  App  Store  và  Google Play Store.
+
+<!-- image -->
+
+## RA MẮT DÒNG THẺ CAO CẤP: OCB MASTERCARD WORLD
+
+Ngày  04/10/2023,  OCB  chính  thức  ra  mắt  dòng thẻ mới OCB Mastercard World -  dòng thẻ được thiết  kế  dành  riêng  cho  phân  khúc  khách  hàng cao cấp.
+
+Khác với  các  dòng  thẻ  cùng  phân  khúc  trên  thị trường, OCB Mastercard World chính là sự kết hợp hoàn hảo giữa công nghệ vượt trội, bảo mật tối ưu và ưu đãi không giới hạn. Đây cũng chính là dòng sản phẩm chiến lược mà ngân hàng sẽ đẩy mạnh trong thời gian tới.
+
+<!-- image -->
+
+<!-- image -->
+
+## OCB MỞ RỘNG MẠNG LƯỚI HOẠT ĐỘNG TRÊN TOÀN QUỐC
+
+Năm 2023, OCB đã khai trương thêm 10 CN/PGD, nâng tổng số điểm giao dịch của ngân hàng lên 159 điểm. Bên cạnh đó, OCB cũng đã tiến hành di dời trụ sở 14 CN/PGD trên toàn hệ thống.
+
+Việc được NHNN chấp thuận cho phép OCB mở rộng mạng lưới CN/PGD là minh chứng cho những đánh giá tích cực về năng lực quản trị điều hành cũng như kết quả kinh doanh đầy ấn tượng của OCB trong thời gian qua.
+
+TOP 500 NGÂN HÀNG MẠNH NHẤT CHÂU Á - THÁI BÌNH DƯƠNG Do The Asian Banker bình chọn
+
+<!-- image -->
+
+TỰ HÀO THƯƠNG HIỆU QUỐC GIA
+
+<!-- image -->
+
+Do Bộ Công Thương bình chọn
+
+TOP 30 DOANH NGHIỆP ĐÓNG THUẾ LỚN NHẤT VIỆT NAM
+
+<!-- image -->
+
+THƯƠNG HIỆU NGÂN HÀNG SỐ TỐT NHẤT VIỆT NAM Do tạp chí Global Brands Magazine bình chọn
+
+<!-- image -->
+
+## KHẲNG ĐỊNH VỊ THẾ VỚI HÀNG LOẠT GIẢI THƯỞNG LỚN TRONG NƯỚC VÀ QUỐC TẾ
+
+Năm 2023, một năm đầy tự hào khi OCB liên tục được vinh danh tại các giải thưởng danh giá.
+
+Cụ  thể:  OCB  tiếp  tục  nằm  trong  Top  500  ngân hàng mạnh nhất Châu Á - Thái Bình Dương, Top 30 doanh nghiệp nộp thuế lớn nhất Việt Nam, Top 50 thương hiệu tài chính  giá trị nhất Việt Nam, Top 8 thương hiệu ngân hàng mạnh nhất năm 2023 và hàng  loạt  các  giải  thưởng  uy  tín  trong  nước  và quốc tế khác.
+
+<!-- image -->
+
+<!-- image -->
+
+## ĐÁP ỨNG NHU CẦU KHÁCH HÀNG CÁ NHÂN VÀ DOANH NGHIỆP, OCB LIÊN TỤC RA MẮT SẢN PHẨM MỚI
+
+Với định hướng khách hàng là trọng tâm, OCB đã tạo nên những dấu ấn riêng trong năm 2023 khi cho ra mắt các sản phẩm, dịch vụ nổi bật, được 'may đo' theo nhu cầu từng đối tượng khách hàng như:
+
+- Gói sản phẩm OCB Speed up : Hỗ trợ tối đa cho các  chủ  hộ  kinh  doanh  trong  việc  thu  hút khách hàng, tiết kiệm chi phí kinh doanh.
+- Nền tảng Unlock Dream Home trên ứng dụng di  động:  Phiên  bản  ứng  dụng  được  thiết  kế hiện đại theo hướng tối giản, giúp khách hàng có trải nghiệm tối ưu khi tìm, vay mua nhà.
+- Triển khai ngân hàng số OCB OMNI 4.0 thế hệ mới: Với định hướng chuyển đổi số và tiếp tục gia tăng trải nghiệm, tiện ích cho Quý khách hàng,  OCB  đã  triển  khai  kế  hoạch  nâng  cấp OCB OMNI phiên bản 4.0 thế hệ mới, dự kiến chính thức ra mắt vào đầu năm 2024.
+- SME GreenBiz : Gói giải pháp số xanh đầu tiên trên  thị  trường  giúp  doanh  nghiệp  tiết  kiệm lên đến 99% phí vận hành.
+
+Cùng với đó là hàng loạt các sản phẩm khác.
+
+<!-- image -->
+
+## KÝ KẾT THỎA THUẬN HỢP TÁC VỚI NHIỀU ĐỐI TÁC LỚN
+
+Năm 2023, OCB liên tục ký kết hợp tác chiến lược với  nhiều  đối  tác  như:  Backbase,  SmartOSC, Sepay, Casso, Viettle Post, Khối liên hợp hợp tác xã tín dụng nông thôn khu tự trị dân tộc Choang Quảng Tây, Trung Quốc...
+
+Thông qua việc hợp tác chiến lược với các đối tác lớn trong nhiều lĩnh vực, OCB có thể phối hợp và tận dụng tối đa các nguồn lực, từ đó phát triển và hoàn thiện sản phẩm, dịch vụ nhằm nâng cao trải nghiệm người dùng, gia tăng tiện ích, mở rộng, thu hút tệp khách hàng mới cũng như giữ chân khách hàng đang hiện hữu.
+
+<!-- image -->
+
+<!-- image -->
+
+## DI DỜI VĂN PHÒNG HỘI SỞ TẠI TP. HỒ CHÍ MINH &amp; HÀ NỘI
+
+Một  trong  những  dấu  mốc  ấn  tượng  trong  2023 của OCB chính là sự kiện ngân hàng chính thức chuyển văn phòng Hội sở về tòa nhà The Hallmark (TP. Hồ Chí Minh) và The West (Hà Nội).
+
+Văn phòng làm việc được ngân hàng chú trọng đầu tư, xây dựng theo chuẩn quốc tế. Đặc biệt trụ sở tại TP. Hồ Chí Minh được đặt tại tòa nhà hạng A+ với nhiều dịch vụ, tiện ích hiện đại và đẳng cấp. Kiến tạo một môi trường làm việc năng động, sáng tạo, hướng đến sự phát triển bền vững.
+
+<!-- image -->
+
+## CHUỖI HOẠT ĐỘNG CHÀO MỪNG 27 NĂM NGÀY THÀNH LẬP NGÂN HÀNG
+
+Ngày 10/6/2023 , OCB chính thức bước sang tuổi 27, đánh dấu hành trình phát triển với nhiều thành tựu đáng tự hào.
+
+Mừng tuổi mới, OCB cũng đã triển khai hàng loạt các  chương  trình  khuyến  mãi,  tri  ân  dành  cho khách  hàng  với  tổng  giá  trị  giải  thưởng  lên  đến hàng chục tỷ đồng.
+
+Đặc biệt, chuỗi hoạt động chào mừng như: sự kiện hội thao, hội diễn văn nghệ và các cuộc thi trực tuyến cũng đã được tổ chức, tạo sân chơi hấp dẫn, thú vị cho gần 7.000 CBNV trên toàn quốc.
+
+<!-- image -->
+
+## CHƯƠNG 02 QUẢN TRỊ DOANH NGHIỆP
+
+| Môhình quản trị   |   23 |
+|-------------------|------|
+| Sơ đồ tổ chức     |   23 |
+| Quản trị công ty  |   24 |
+
+## MÔ HÌNH QUẢN TRỊ
+
+Cơ cấu bộ máy quản lý của OCB bao gồm: Đại hội đồng Cổ đông, Hội đồng Quản trị, Ban Kiểm soát, Tổng Giám đốc và bộ máy giúp việc theo như quy định của Luật Các tổ chức tín dụng năm 2010 và Luật sửa đổi, bổ sung một số điều Luật Các tổ chức tín dụng năm 2017 tại Điều 32.1 về cơ cấu bộ máy quản lý của tổ chức tín dụng.
+
+Đại hội đồng Cổ đông gồm tất cả Cổ đông có quyền biểu quyết, là cơ quan quyết định cao nhất của Ngân hàng (Điều 27.1 Điều lệ OCB 2020). Đại hội đồng cổ đông quyết định số lượng thành viên Hội đồng Quản trị, Ban Kiểm soát; bầu, bãi nhiệm, miễn nhiệm, bầu bổ sung, thay thế thành viên Hội đồng Quản trị và Ban Kiểm soát (Điều 27.3.d Điều lệ OCB 2020).
+
+## Hội đồng Quản trị gồm các cơ quan trực thuộc như sau:
+
+- Văn phòng HĐQT; Ủy ban Quản lý rủi ro, Ủy ban Nhân sự, Ủy ban Tín dụng, Ủy ban Xử lý rủi ro, Ủy ban cơ cấu nợ, Ủy ban Hợp tác chiến lược, Hội đồng mua bán nợ.
+
+## Hệ thống điều hành của OCB gồm:
+
+- Hội sở chính, các Chi nhánh, các Phòng Giao dịch, Văn phòng đại diện, Đơn vị sự nghiệp, Công ty trực thuộc. Các đơn vị Hội sở gồm 9 Khối và 8 phòng, ban, trung tâm và cơ quan trực thuộc Tổng Giám đốc.
+
+## SƠ ĐỒ TỔ CHỨC
+
+<!-- image -->
+
+- Các cơ quan trực thuộc HĐQT gồm có: Ủy ban Nhân sự, Ủy ban Quản lý rủi ro,  Ủy ban Tín dụng, Ủy ban Xử lý rủi ro, Ủy ban Cơ cấu nợ, Ủy ban Hợp tác chiến lược, Hội đồng Mua bán nợ, các cơ quan khác do HĐQT thành lập. *
+- Các cơ quan trực thuộc TGĐ gồm có: Hội đồng Xét duyệt sản phẩm, Hội đồng Rủi ro, Hội đồng Quản lý vốn, Hội đồng ALCO, các cơ quan khác do TGĐ thành lập. **
+
+## QUẢN TRỊ CÔNG TY
+
+<!-- image -->
+
+## Giới thiệu HĐQT
+
+Đầu  năm  2023,  HĐQT  của  OCB  gồm  07  thành  viên,  trong  đó  có  02  thành  viên  độc  lập.  Đến  ngày 28/4/2023, OCB bổ sung thêm 02 thành viên HĐQT nhiệm kỳ 2020 - 2025.
+
+Các thành viên HĐQT của ngân hàng đã thực hiện công tác quản trị trên nguyên tắc công khai, minh bạch, tách bạch giữa quản trị và hoạt động điều hành.
+
+<!-- image -->
+
+|   1 | Ông Trịnh Văn Tuấn       | Chủ tịchHĐQT          |
+|-----|--------------------------|-----------------------|
+|   2 | Ông Ngô Hà Bắc           | Thành viênHĐQT        |
+|   3 | Bà Trịnh Thị Mai Anh     | Thành viênHĐQT        |
+|   4 | Ông Yoshizawa Toshiki    | Thành viênHĐQT        |
+|   5 | Ông Phan Trung           | Thành viênHĐQT        |
+|   6 | Ông Kato Shin (*)        | Thành viênHĐQT        |
+|   7 | Ông Nguyễn Đình Tùng (*) | Thành viênHĐQT        |
+|   8 | Ông Bùi Minh Đức         | Thành viên HĐQTđộclập |
+|   9 | Ông PhamTri Nguyen       | Thành viên HĐQTđộclập |
+
+* 02 (hai) thành viên HĐQT được bầu bổ sung vào ngày 28/4/2023.
+
+<!-- image -->
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+<!-- image -->
+
+Giới thiệu HĐQT
+
+<!-- image -->
+
+## ÔNG TRỊNH VĂN TUẤN
+
+Chủ tịch Hội đồng Quản trị
+
+- Ông tốt nghiệp thủ khoa Đại học Bách khoa Hà Nội năm 1988 và được chuyển tiếp Nghiên cứu sinh tại Cộng hòa Ba Lan.
+- Ông Trịnh Văn Tuấn là doanh nhân thành đạt tại Ba Lan và Việt Nam.
+- Ông gia nhập OCB từ tháng 8/2010 đến nay và được bầu  làm  Chủ  tịch  HĐQT  nhiệm  kỳ  2011  -  2015, nhiệm  kỳ  2015  -  2020  và  tiếp  tục  làm  Chủ  tịch HĐQT nhiệm kỳ 2020 - 2025.
+- Với  gần  30  năm  kinh  nghiệm  trong  lĩnh  vực  tài chính ngân hàng, Ông đã và đang có những đóng góp quan trọng trong việc đưa OCB trở thành ngân hàng hoạt động hiệu quả hàng đầu Việt Nam.
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+## Giới thiệu HĐQT 1
+
+ÔNG NGÔ HÀ BẮC Thành viên Hội đồng Quản trị nhiệm kỳ 2020 - 2025
+
+<!-- image -->
+
+<!-- image -->
+
+- Ông có bằng Tiến sĩ ngành Công nghệ Điện tử bảo vệ tại Cộng hòa Ba Lan.
+- Ông được bầu làm Thành viên HĐQT độc lập của OCB  nhiệm  kỳ  2011  -  2015;  Thành  viên  HĐQT nhiệm kỳ 2015 - 2020 và tiếp tục được bầu làm Thành  viên  HĐQT  của  OCB  nhiệm  kỳ  2020  2025.
+- Ông đã từng nắm nhiều cương vị ở các tổ chức: Chủ  tịch  HĐQT  (Công  ty  LBT  tại  Warsaw,  Ba Lan), Thành viên, Trưởng Ban Quản lý Giám sát hoạt động kinh doanh của HĐQT VIS.
+- Bà  tốt  nghiệp  Cử  nhân  Khoa  học  -  London School  of  Economics  and  Political  Science (Vương quốc Anh).
+- Bà được bầu làm Thành viên HĐQT OCB nhiệm kỳ 2020 - 2025.
+- Bà đã có nhiều năm kinh nghiệm trong lĩnh vực Tài chính tại các doanh nghiệp, tổ chức lớn trong và  ngoài  nước  như:  Ngân  hàng  HSBC  London, Tập  đoàn  VinaCapital  và  Tập  đoàn  Temasek Singapore.
+
+BÀ TRỊNH THỊ MAI ANH Thành viên Hội đồng Quản trị nhiệm kỳ 2020 - 2025
+
+<!-- image -->
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+## Giới thiệu HĐQT 1
+
+ÔNG YOSHIZAWA TOSHIKI Thành viên Hội đồng Quản trị nhiệm kỳ 2020 - 2025
+
+<!-- image -->
+
+<!-- image -->
+
+- Ông  tốt  nghiệp  Cử  nhân  Luật  trường  Đại  học Waseda, Tokyo.
+- Ông được bầu làm Thành viên HĐQT OCB nhiệm kỳ 2020 - 2025.
+- Ông có hơn 30 năm kinh nghiệm trong lĩnh vực Tài  chính.  Hiện  Ông  đang  là  Tổng  quản  lý  tại Ngân hàng Aozora từ năm 2018 đến nay.
+- Ông có bằng Thạc sĩ trường Asia E University (Malaysia) chuyên ngành Quản trị kinh doanh và tốt  nghiệp  Đại  học  Thương  mại  chuyên  ngành Quản trị kinh doanh.
+- Ông được bầu làm Thành viên HĐQT OCB nhiệm kỳ 2011 - 2015; Thành viên HĐQT nhiệm kỳ 2015 2020  và  tiếp  tục  làm  Thành  viên  HĐQT  OCB nhiệm kỳ 2020 - 2025.
+- Ông đã có 20 năm kinh nghiệm công tác và đảm nhiệm nhiều chức vụ quan trọng ở các doanh nghiệp, tổ chức. Hiện Ông là Phó Chủ tịch HĐQT -  Công ty đầu tư Romana &amp; Spa - Phan Thiết, đồng thời Ông còn là Tổng Giám đốc - Công ty TNHH Đầu Tư An Huy.
+
+ÔNG PHAN TRUNG Thành viên Hội đồng Quản trị nhiệm kỳ 2020 - 2025
+
+<!-- image -->
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+## Giới thiệu HĐQT 1
+
+ÔNG KATO SHIN Thành viên Hội đồng Quản trị nhiệm kỳ 2020 - 2025
+
+<!-- image -->
+
+<!-- image -->
+
+- Ông tốt nghiệp Cử nhân Kinh doanh Thương mại - Đại học Keio, Tokyo.
+- Ông được bầu làm Thành viên HĐQT OCB nhiệm kỳ 2020 - 2025 từ ngày 28/4/2023.
+- Ông đã có hơn 30 năm kinh nghiệm trong lĩnh vực tài chính - ngân hàng, hiện ông đang là Cán bộ Điều hành Trưởng Khối Đầu tư Châu Á, kiêm Trưởng  Bộ  phận  Châu  Á  -  Thái  Bình  Dương  tại Ngân  hàng  Aozora.  Ông  từng  đảm  nhiệm  các chức  vụ  khác  tại  Ngân  hàng  Aozora  như:  Phó Trưởng Khối Đầu tư Châu Á; Trưởng Bộ phận Giải pháp Kinh doanh Châu Á; Đồng Trưởng Bộ phận Tư vấn M&amp;A; Nhân viên biệt phái; Nhân viên Bộ phận Đầu tư Doanh nghiệp. Đã từng giữ các chức vụ Tổng Giám đốc kiêm Chủ tịch Hội đồng Quản trị tại Arise Capital Partners, Inc.
+- Ông tốt nghiệp MBA tại trường Maastricht University, Hà Lan.
+- Ông được bầu làm Thành viên HĐQT OCB nhiệm kỳ 2020 - 2025 từ ngày 28/4/2024.
+- Ông có hơn 30 năm kinh nghiệm làm việc trong ngành Tài chính - Ngân hàng tại Việt Nam và nước ngoài. Ông từng giữ các chức vụ: Phó Tổng Giám đốc, phụ trách kinh doanh Ngân hàng TMCP Hàng Hải Việt Nam, từ tháng 5/2009 đến tháng 4/2012, ông còn giữ thêm chức vụ Phó Chủ tịch Thường trực HĐQT Ngân hàng Mekong; Giám đốc Quốc gia Ngân hàng ING Private Banking, Singapore; Phó Tổng Giám đốc, phụ trách Khối Khách hàng doanh nghiệp Ngân hàng TMCP Quốc tế Việt Nam; Giám đốc Chi nhánh TP. HCM, Ngân hàng TMCP Quốc tế Việt Nam; Phó Giám đốc Chi nhánh TP.HCM Ngân hàng TMCP Hàng Hải Việt Nam.
+
+ÔNG NGUYỄN ĐÌNH TÙNG Thành viên Hội đồng Quản trị nhiệm kỳ 2020 - 2025
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+## Giới thiệu HĐQT 1
+
+<!-- image -->
+
+<!-- image -->
+
+Thành viên Hội đồng Quản trị độc lập
+
+ÔNG BÙI MINH ĐỨC nhiệm kỳ 2020 - 2025
+
+- Ông tốt nghiệp Cử nhân Đại học Tài chính Kế toán chuyên ngành Kế toán thương nghiệp.
+- Ông được bầu làm Thành viên HĐQT OCB nhiệm kỳ 2020 - 2025.
+- Ông đã có hơn 32 năm kinh nghiệm ở nhiều vị trí quan trọng tại các doanh nghiệp, tổ chức tại Việt Nam như: Phó Tổng Giám đốc - Tổng công ty thuốc lá Việt Nam (Vinataba), Giám đốc - Công ty thương mại Thuốc lá; Kế toán trưởng Công ty XNK Thủy sản; Trưởng phòng Marketing - Nhà máy Thuốc lá Vĩnh Hội.
+- Ông tốt nghiệp Cử nhân trường George Washington  University  (GWU)  chuyên  ngành Kinh tế &amp; Quản lý định lượng và tốt nghiệp Thạc sĩ  trường Catholic University of America (CUA) chuyên ngành Tài chính và Đầu tư.
+- Ông được bầu làm Thành viên HĐQT OCB nhiệm kỳ 2020 - 2025.
+- Ông đã có hơn 36 năm kinh nghiệm trong lĩnh vực  Tài  chính  và  đảm  nhiệm  nhiều  vị  trí  quan trọng  tại  các  tổ  chức  quốc  tế  như:  The  World Bank (IBRD), International Finance Corporation. Ông từng giữ chức vụ Tổng Giám đốc - Deutsche Bank (DB) AG, Vietnam từ năm 2007 đến năm 2014, chức vụ Phó Chủ tịch - Công ty TNHH Tập Đoàn Bitexco Group từ năm 2014 đến năm 2017. Hiện Ông đang giữ vị trí Chủ tịch Công ty TNHH Vnexus capital Advisors từ năm 2018 đến nay.
+
+ÔNG PHAM TRI NGUYEN Thành viên Hội đồng Quản trị độc lập nhiệm kỳ 2020 - 2025
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+<!-- image -->
+
+## Giới thiệu Ban Kiểm soát
+
+Ban Kiểm soát nhiệm kỳ 2020 - 2025 được Đại hội đồng cổ đông bầu vào ngày 30/6/2020. Các thành viên Ban Kiểm soát cũng bầu chức danh Trưởng ban cùng ngày.
+
+1
+
+2
+
+3
+
+Bà Nguyễn Thị Thúy Minh Ông Phạm Quang Vinh Bà Đặng Thị Quý
+
+Trưởng Ban Kiểm soát Thành viên Ban Kiểm soát Thành viên Ban Kiểm soát chuyên trách
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+<!-- image -->
+
+## Giới thiệu Ban Kiểm soát
+
+ÔNG PHẠM QUANG VINH Thành viên Ban Kiểm Soát
+
+<!-- image -->
+
+<!-- image -->
+
+- Ông tốt nghiệp Cử nhân Kinh tế, trường Đại học Kinh tế Quốc dân.
+- Ông  được  bầu  làm  Thành  viên  Ban  Kiểm  soát OCB nhiệm kỳ 2020 - 2025.
+- Ông đã có hơn 14 năm tham gia làm Thành viên Ban kiểm soát, Trưởng Ban kiểm soát của VIB; Trưởng Ban kiểm soát của VIS. Ông từng giữ vị trí Thành  viên  HĐQT  OCB  vào  tháng  11/2014  và Thành viên Ban Kiểm soát OCB nhiệm kỳ 2015 2020.
+
+## BÀ NGUYỄN THỊ THÚY MINH
+
+Trưởng Ban Kiểm Soát
+
+- Bà tốt nghiệp Cử nhân Kinh tế, trường Đại học Kinh tế TP. HCM.
+- Bà  được  bầu  làm  Trưởng  Ban  Kiểm  soát  OCB nhiệm kỳ 2020 - 2025.
+- Bà đã có hơn 18 năm công tác tại OCB với nhiều vị trí  quan  trọng  như:  Trưởng  phòng  Kế  toán,  Kế toán trưởng.
+- Bà tốt  nghiệp  Cử  nhân  Kinh  tế,  trường  Đại  học Kinh tế TP. HCM.
+- Bà được bầu làm Thành viên Ban Kiểm soát OCB nhiệm kỳ 2020 - 2025.
+- Bà từng giữ nhiều chức vụ quan trọng ở các tổ chức tín dụng khác như: Trưởng Ban Kiểm soát HD  Bank,  Trưởng  Ban  Kiểm  soát  khu  vực  phía nam Techcombank; Phó phòng tín dụng VietinBank. Bà từng giữ chức vụ thành viên Ban Kiểm soát OCB chuyên trách nhiệm kỳ 2011 - 2015 và nhiệm kỳ 2015 - 2020.
+
+BÀ ĐẶNG THỊ QUÝ Thành viên Ban Kiểm Soát chuyên trách
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+<!-- image -->
+
+## Giới thiệu Ban Điều hành
+
+Ban Điều hành gồm Tổng Giám đốc, 05 Phó Tổng Giám đốc, 07 Giám đốc khối đảm nhiệm công việc thực hiện các chiến lược kinh doanh mà HĐQT đặt ra, quản lý và giải quyết các công việc hàng ngày của ngân hàng. Ban Tổng Giám đốc điều hành các khối nghiệp vụ bao gồm: Khối Bán Lẻ, Khối Khách hàng Doanh Nghiệp lớn và Dịch vụ Ngân hàng đầu tư, Khối Doanh nghiệp vừa và nhỏ, Khối Kinh doanh tiền tệ và đầu tư, Khối Tài chính, Khối Quản lý rủi ro, Khối Công nghệ và Chuyển đổi số, các Phòng, Ban, Trung tâm trực thuộc Tổng Giám đốc và các Chi nhánh, Phòng giao dịch.
+
+<!-- image -->
+
+|   1 | Ông Nguyễn Đình Tùng   | Tổng Giám đốc                                                         |
+|-----|------------------------|-----------------------------------------------------------------------|
+|   2 | Ông Trương Đình Long   | Phó Tổng Giám đốc                                                     |
+|   3 | Ông Nguyễn Văn Hương   | Phó Tổng Giám đốc                                                     |
+|   4 | Ông Bùi Thành Trung    | Phó Tổng Giám đốc                                                     |
+|   5 | Bà Huỳnh Lê Mai        | Phó Tổng Giám đốc                                                     |
+|   6 | Ông TrươngThànhNam     | Phó Tổng Giám đốc                                                     |
+|   7 | Ông Nguyễn Bá Ngọc     | Giám đốc Khối Khách hàng Doanh Nghiệp lớn và Dịch vụ Ngân hàng đầu tư |
+|   8 | Ông Lê Đăng Khoa       | Giám đốc Khối Doanh nghiệp vừa và nhỏ                                 |
+|   9 | Ông Lê Thanh Quý Ngọc  | Giám đốc Khối Quản lý rủi ro                                          |
+|  10 | Ông Lương Tuấn Thành   | Giám đốc Khối Công nghệ và Chuyển đổi số                              |
+|  11 | Ông Đoàn Hà Tuyên      | Giám đốc Khối Quản lý tín dụng                                        |
+|  12 | Ông Ngô Bình Nguyên    | Giám đốc Chiến lược                                                   |
+|  13 | Ông Nguyễn Văn Cường   | Giám đốc Tài chính                                                    |
+
+## Thay đổi về nhân sự Ban Điều hành năm 2023
+
+| Giảm       | Tăng                                                                                              |
+|------------|---------------------------------------------------------------------------------------------------|
+| Không giảm | Ông Nguyễn Văn Cường Bổ nhiệm chức vụ Giám đốc Tài chính từ ngày 18/9/2023                        |
+| Không giảm | Ông Lương Tuấn Thành Bổ nhiệm chức vụ Giám đốc Khối Công nghệ và Chuyển đổi số từ ngày 09/10/2023 |
+| Không giảm | Ông Lê Đăng Khoa Bổ nhiệm chức vụ Giám đốc Khối Doanh nghiệp vừa và nhỏ từ tháng 12/2023          |
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+<!-- image -->
+
+## Giới thiệu Ban Điều hành
+
+<!-- image -->
+
+## ÔNG NGUYỄN ĐÌNH TÙNG
+
+Tổng Giám đốc
+
+- Ông Nguyễn Đình Tùng được bổ nhiệm chức vụ Tổng Giám đốc Ngân hàng TMCP Phương Đông kể từ ngày 24/8/2012.
+- Ông tốt nghiệp MBA tại trường Maastricht University, Hà Lan.
+- Ông  có  hơn  30  năm  kinh  nghiệm  làm  việc  trong ngành Tài chính - Ngân hàng tại Việt Nam và nước ngoài. Ông từng giữ các chức vụ: Phó Tổng Giám đốc, phụ trách kinh doanh Ngân hàng TMCP Hàng Hải Việt Nam, từ tháng 5/2009 đến tháng 4/2012, ông còn giữ thêm chức vụ Phó Chủ tịch Thường trực HĐQT Ngân hàng  Mekong;  Giám  đốc  Quốc  gia  Ngân  hàng  ING Private Banking, Singapore; Phó Tổng Giám đốc, phụ trách  Khối  Khách  hàng  doanh  nghiệp  Ngân  hàng TMCP  Quốc  tế  Việt  Nam;  Giám  đốc  Chi  nhánh TPHCM,  Ngân  hàng  TMCP  Quốc  tế  Việt  Nam;  Phó Giám đốc Chi nhánh TP.HCM Ngân hàng TMCP Hàng Hải Việt Nam.
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+## Giới thiệu Ban Điều hành 3
+
+ÔNG TRƯƠNG ĐÌNH LONG Phó Tổng Giám đốc
+
+<!-- image -->
+
+<!-- image -->
+
+Khối Vận hành
+
+- Ông Trương Đình Long được bổ nhiệm làm Phó Tổng Giám đốc Ngân hàng TMCP Phương Đông từ tháng 3/2007.
+- Là Thạc sỹ Quản trị kinh doanh.
+- Ông Long đã gắn bó với OCB ngay từ khi bắt đầu sự nghiệp. Ba năm trong vai trò Phó phòng Kế toán Hội sở Ngân hàng Phương Đông, Ông được bổ nhiệm làm Giám đốc OCB - Chi nhánh Phú Lâm, sau đó là Giám đốc OCB - Chi nhánh Khánh Hòa và Giám đốc OCB - Chi nhánh Đắk Lắk.
+
+ÔNG NGUYỄN VĂN HƯƠNG Phó Tổng Giám đốc
+
+<!-- image -->
+
+Khối Bán lẻ
+
+- Ông Nguyễn Văn Hương được bổ nhiệm làm Phó Tổng Giám đốc Ngân hàng TMCP Phương Đông kể từ tháng 12/2022.
+- Ông tốt nghiệp Thạc sĩ Quản trị Kinh doanh, Đại học Kinh tế Quốc dân.
+- Ông đã có gần 20 năm kinh nghiệm trong lĩnh vực Tài chính ngân hàng và từng giữ chức vụ như: Phó Giám  đốc  Khối  Khách  hàng  cá  nhân,  Giám  đốc Miền  Bắc  kênh  Chi  nhánh,  Giám  đốc  kênh  Bán hàng  trực  tiếp,  Giám  đốc  Vùng,  Giám  đốc  Chi nhánh Ngô Quyền, Trưởng phòng Phát triển Khách hàng  doanh  nghiệp  (Ngân  hàng  TMCP  Việt  Nam Thịnh Vượng); Phó phòng Tín dụng Tổng hợp (Ngân hàng TMCP Ngoại Thương Việt Nam).
+
+## QUẢN TRỊ CÔNG TY
+
+## Giới thiệu Ban Điều hành 3
+
+ÔNG BÙI THÀNH TRUNG Phó Tổng Giám đốc Khối Kinh doanh tiền tệ và đầu tư
+
+<!-- image -->
+
+<!-- image -->
+
+- Ông  Bùi  Thành  Trung  được  bổ  nhiệm  chức  vụ Phó Tổng Giám đốc phụ trách Khối Kinh doanh tiền tệ và đầu tư kể từ tháng 7/2022.
+- Ông tốt nghiệp Cử nhân chuyên ngành Kinh tế đối ngoại tại Đại học Ngoại thương.
+- Là người đã có hơn 20 năm kinh nghiệm trong lĩnh vực tài chính ngân hàng. Ông đã đảm nhiệm nhiều vị trí cấp cao như Phó Tổng Giám đốc phụ trách  Khối  Thị  trường  tài  chính  -  Ngân  hàng TNHH  MTV  Standard  Chartered  Việt  Nam; Trưởng phòng Kinh doanh thị trường tài chính Ngân hàng TNHH MTV Standard Chartered Việt Nam;  Dealer  Sales  -  Ngân  hàng  TNHH  MTV Standard Chartered Việt Nam; Trợ lý Giám đốc  Công ty TNHH Sojitz Việt Nam.
+- Bà Huỳnh Lê Mai được bổ nhiệm vào chức vụ Phó Tổng Giám Đốc Ngân hàng TMCP Phương Đông kể từ tháng 11/2013.
+- Bà đã tốt nghiệp Thạc sỹ Quản trị kinh doanh Trường  ĐH  Quốc  gia  Hà  Nội  liên  kết  ĐH Griggs; Cử nhân Quản trị kinh doanh Trường ĐH Mở TP. HCM; Cử nhân Ngoại ngữ Trường ĐH Cần Thơ.
+- Bà có trên 15 năm kinh nghiệm làm việc trong lĩnh vực tài chính ngân hàng và từng giữ các chức vụ: Giám đốc Vùng Đồng bằng sông Cửu Long - Ngân hàng TMCP Quốc tế; Phó Tổng Giám đốc Kinh doanh - Ngân hàng TMCP Phát triển Mêkông; Giám đốc Chi nhánh Cần Thơ Ngân hàng TMCP Quốc tế.
+
+BÀ HUỲNH LÊ MAI Phó Tổng Giám đốc
+
+<!-- image -->
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+<!-- image -->
+
+## Giới thiệu Ban Điều hành
+
+ÔNG TRƯƠNG THÀNH NAM Phó Tổng Giám đốc
+
+<!-- image -->
+
+- Ông Trương Thành Nam được bổ nhiệm chức vụ Phó  Tổng  Giám  đốc  Ngân  hàng  TMCP  Phương Đông kể từ tháng 5/2010.
+- Ông tốt nghiệp Cử nhân Luật, Cử nhân Tài chính Ngân hàng.
+- Với  hơn  25  năm  kinh  nghiệm  trong  ngành  ngân hàng, Ông đã giữ nhiều nhiệm vụ quan trọng tại Ngân hàng Công Thương và Á Châu.
+- Năm 2003, Ông được bổ nhiệm làm Phó Giám đốc Chi  nhánh  Trung  Việt  Ngân  hàng  TMCP  Phương Đông. Sau đó là Giám đốc OCB - Chi nhánh Trung Việt.
+
+<!-- image -->
+
+Giám đốc Khối Khách hàng Doanh Nghiệp lớn
+
+ÔNG NGUYỄN BÁ NGỌC và Dịch vụ Ngân hàng đầu tư
+
+- Ông Nguyễn Bá Ngọc được bổ nhiệm chức vụ Giám đốc Khối Khách hàng Doanh Nghiệp lớn và Dịch vụ Ngân hàng đầu tư, Ngân hàng TMCP Phương Đông kể từ tháng 3/2023.
+- Ông tốt nghiệp Thạc sĩ Quản trị Kinh doanh.
+- Ông có nhiều năm kinh nghiệm và từng giữ chức vụ như:  Phó  Giám  đốc  phụ  trách  Khối  Khách  hàng Doanh  nghiệp,  Giám  đốc  Vùng,  Giám  đốc  Chi nhánh thành phố Hồ Chí Minh, Giám đốc Sở Giao Dịch, Giám đốc Khách hàng Doanh nghiệp, Giám đốc Chi nhánh Đắk Lắk.
+
+## QUẢN TRỊ CÔNG TY
+
+- Giới thiệu Ban Điều hành 3
+
+ÔNG LÊ ĐĂNG KHOA
+
+<!-- image -->
+
+<!-- image -->
+
+Giám đốc Khối Doanh nghiệp vừa và nhỏ
+
+- Ông Lê Đăng Khoa được bổ nhiệm chức vụ Giám đốc Khối Doanh nghiệp vừa và nhỏ Ngân hàng TMCP Phương Đông kể từ tháng 12/2023.
+- Ông tốt nghiệp Cử nhân chuyên ngành Tài chính tín dụng, Đại học Ngân hàng TP. HCM.
+- Ông từng giữ chức vụ quan trọng ở các tổ chức tài  chính  khác  như:  Phó  Tổng  Giám  đốc  ngân hàng  TMCP  Phương  Tây;  Giám  đốc  toàn  quốc Khối Ngân hàng Doanh nghiệp và Giám đốc toàn quốc Quản lý kinh doanh Ngân hàng HSBC Việt Nam; Tổng giám đốc Ngân hàng doanh nghiệp Ngân hàng TMCP Hàng Hải Việt Nam; Giám đốc Khối  Khách  hàng  Doanh  nghiệp  Ngân  hàng Hong Leong Việt Nam.
+- Ông Lê Thanh Quý Ngọc được bổ nhiệm chức vụ Giám đốc Khối Quản lý rủi ro Ngân hàng TMCP Phương Đông kể từ tháng 7/2022.
+- Ông tốt nghiệp Thạc sĩ Quản trị Kinh doanh Cấp cao tại trường Đại học RMIT Việt Nam.
+- Ông từng giữ chức vụ quan trọng ở các tổ chức tài chính khác như: Trưởng phòng Thanh toán Ngân hàng Citibank Việt Nam; Giám đốc Khối Quản lý tín dụng - Ngân hàng TNHH MTV Hong Leong Việt Nam; Cố vấn Cao cấp Quốc gia về Tuân  thủ  và  Quản  lý  rủi  ro  -  Công  ty  Cổ  phần Công nghệ M-Pay (Airpay Vietnam).
+
+ÔNG LÊ THANH QUÝ NGỌC Giám đốc Khối Quản lý rủi ro
+
+<!-- image -->
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+<!-- image -->
+
+## Giới thiệu Ban Điều hành
+
+ÔNG LƯƠNG TUẤN THÀNH Giám đốc Khối Công nghệ và Chuyển đổi số
+
+<!-- image -->
+
+- Ông  Lương  Tuấn  Thành  được  bổ  nhiệm  chức  vụ Giám đốc Khối Công nghệ và Chuyển đổi số kể từ ngày 09/10/2023.
+- Ông tốt nghiệp Thạc sỹ chuyên ngành Quản trị Kinh doanh, Đại học Quốc gia Singapore.
+- Ông có nhiều năm kinh nghiệm trong lĩnh vực công nghệ thông tin ông đảm nhiệm nhiều vị trí cấp cao tại các tổ chức như: Giám đốc Cấp cao Dịch vụ Tài chính - Công ty cổ phần Tiki; Phó chủ tịch cấp cao, Giám  đốc  công  nghệ  Công  ty  cổ  phần  tập  đoàn CMC, đồng Giám đốc Công nghệ Tổng Công ty Công nghệ &amp; Giải pháp CMC; Giám đốc Công nghệ thông tin - Công ty TNHH Chứng Khoán Kỹ Thương &amp; Công ty quản lý quỹ Kỹ Thương; Giám đốc dự án - Pactera (HiSoft) Technology International Limited (Singapore); Giám đốc dự án, kiến trúc sư giải pháp - Công ty FPT Asia Pacific (Singapore).
+- Ông Đoàn Hà Tuyên được bổ nhiệm giữ chức vụ Giám đốc Khối Quản lý tín dụng tại Ngân hàng TMCP Phương Đông vào tháng 12/2021.
+- Ông tốt nghiệp Cử nhân ngành Tài chính - Ngân hàng, Đại học Kinh tế Quốc dân.
+- Ông từng giữ những chức vụ quan trọng ở OCB và các tổ chức tài chính khác như: Giám đốc Khối Quản  lý  tín  dụng  -  Ngân  hàng  TMCP  Phương Đông;  Phó  Giám  đốc  Khối  Quản  lý  tín  dụng  Ngân hàng TMCP Phương Đông; Phó Giám đốc Khối Quản lý rủi ro - Ngân hàng TMCP Phương Đông; Giám đốc Trung tâm Tái Thẩm định và Phê duyệt Tín dụng kiêm Giám đốc Tái Thẩm định Ngân hàng TMCP Phương Đông; Giám đốc Tái thẩm định - Ngân hàng TMCP Quốc tế Việt Nam.
+
+ÔNG ĐOÀN HÀ TUYÊN Giám đốc Khối Quản lý tín dụng
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+## Giới thiệu Ban Điều hành 3
+
+ÔNG NGÔ BÌNH NGUYÊN Giám đốc Chiến lược
+
+<!-- image -->
+
+<!-- image -->
+
+- Ông Ngô Bình Nguyên được bổ nhiệm chức vụ Giám đốc Chiến lược, Ngân hàng TMCP Phương Đông kể từ tháng 12/2023.
+- Ông tốt nghiệp Thạc sĩ chuyên ngành Tài chính Ngân hàng, Đại học Portsmouth (Anh).
+- Ông có nhiều năm kinh nghiệm trong lĩnh vực Tài chính ngân hàng và từng giữ chức vụ như: Giám đốc Phân khúc khách hàng SME và MSME (Ngân hàng TMCP Kỹ Thương Việt Nam), Giám đốc Khu vực  miền  Bắc  phụ  trách  mảng  Khách  hàng doanh nghiệp - Khối SME, Giám đốc kinh doanh -  Khối  Khách  hàng  Doanh  nghiệp  (Ngân  hàng TMCP Việt Nam Thịnh Vượng).
+- Ông  Nguyễn  Văn  Cường  được  bổ  nhiệm  chức  vụ Giám đốc Tài chính kể từ ngày 18/9/2023.
+- Ông tốt nghiệp Thạc sỹ chuyên ngành Tài chính Ngân  hàng,  Đại  học  Paris  Dauphine  and  ESCP Europe.
+- Ông có nhiều năm kinh nghiệm trong lĩnh vực tài chính ông đảm nhiệm nhiều vị trí cấp cao tại các tổ chức như: Giám đốc Điều hành - Công Ty Cổ Phần Thời trang và Mỹ phẩm Duy Anh (DAFC) thuộcTập đoàn IPPG; Giám đốc Tài chính -  Tập đoàn Liên Thái Bình Dương (IPPG); Trưởng phòng Tài chính Công ty cổ phần Vinhomes - Tập Đoàn Vingroup; Chuyên viên phân tích cao cấp - Ngân hàng đầu tư tại  Công  ty  Chứng  khoán  Sài  gòn  (SSI);  Trưởng nhóm kiểm toán  - Công ty TNHH Ernst &amp; Young Việt Nam.
+
+ÔNG NGUYỄN VĂN CƯỜNG Giám đốc Tài chính
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+<!-- image -->
+
+Các công ty con, công ty liên kết
+
+<!-- image -->
+
+Công ty con
+
+Công ty TNHH MTV Chuyển tiền Quốc tế Ngân hàng Thương mại Phương Đông
+
+<!-- image -->
+
+Địa chỉ
+
+Tầng 11, cao ốc 123, số 123 - 127 Võ Văn Tần, Phường 06, Quận 3, Thành phố Hồ Chí Minh
+
+Vốn điều lệ
+
+25 tỷ đồng
+
+Ngành nghề kinh doanh
+
+Dịch vụ nhận và chi, trả ngoại tệ
+
+Tỷ lệ sở hữu của OCB
+
+100,00%
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+## Danh mục các dự án công nghệ trọng điểm 5
+
+<!-- image -->
+
+|   STT | Tên dự án                                          | Diễn giải                                                                                                                                                                                                           | Lợi ích manglại                                                          | Tình trạng   |
+|-------|----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------|
+|     1 | UDHP2: Phát triển ứng dụng di động cho nền tảngUDH | Nâng cấp mở rộng tính năng cho nền tảng UDH và triển khai phiên bản mobile cho môi giớivàRM                                                                                                                         | Tăng năng suất lao động&Giảmthiểu rủi ro hoạt động                       | Đã hoàn tất  |
+|     2 | Thẻ IGEN                                           | Triển khai sản phẩm thẻ ảo trên kênh OMNI                                                                                                                                                                           | Gia tăng sảnphẩm dịch vụ, tiện ích cung cấp đến khách hàng               | Đã hoàn tất  |
+|     3 | Kế toán thuế tập trung                             | Nângcấpcáchệthốngliênquanđể triểnkhaimôhìnhkếtoántậptrung nhằm gia tăng hiệu suất hoạt động tác nghiệp và hiệu quả quản trị toàn hàng                                                                               | Tăng năng suất lao động & Giảm thiểu rủi ro hoạt động                    | Đã hoàn tất  |
+|     4 | Credit Card Web/App                                | Số hóa hoạt động phê duyệt, cấp phát Thẻ tín dụng - áp dụng OCR và e-contract nhằm gia tăng hiệu suất hoạt động tác nghiệp, tăng tốc độ xửlýhồsơchokháchhàng,giảmsai sót tác nghiệp                                 | Tăng năng suất lao động & Giảm thiểu rủi ro hoạt động                    | Đã hoàn tất  |
+|     5 | Liên kết Google Pay và Apple Pay                   | Kết nối thanh toán với Google và Apple,giatăngkênhthanhtoáncho khách hàng                                                                                                                                           | Gia tăng sản phẩm dịch vụ, tiện ích cung cấp đến khách hàng              | Đã hoàn tất  |
+|     6 | Dự án cải tiến PDTD (SK 1-2-7)                     | Số hóa hoạt động cấp tín dụng từ khâu khởi tạo khoản vay - định giá - check CIC - phê duyệt khoản vay nhằm gia tăng hiệu suất hoạt động tác nghiệp, tăng tốc độ xử lý hồ sơ cho khách hàng, giảm sai sót tác nghiệp | Tăng năng suất lao động & Giảm thiểu rủi ro hoạt động                    | Đã hoàn tất  |
+|     7 | AMLsoftware                                        | Triển khai mới hệ thống kiểm soát giao dịch đáp ứng yêu cầu về phòng chống rửa tiền - áp dụng toàn diện cho các kênh quầy, online và các loại nghiệp vụ cần kiểm soát, gia tăng năng lực quản trị và cạnh tranh     | Gia tăng năng lực giám sát và quản trị rủi ro, đảm bảo an toàn giao dịch | Đã hoàn tất  |
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+|   STT | Tên dự án                                                                        | Diễn giải                                                                                                                                                                                                                                              | Lợi ích manglại                                                          | Tình trạng   |
+|-------|----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------|
+|     8 | Ứng dụng dữ liệu về dân cư, định danh và xác thực điện tử trong 1 số hoạt độngNH | Nâng cấp các hệ thống liên quan để triển khai ứng dụng dữ liệu dân cư, định danh và xác thực điện tử trong các giao dịch on boarding, giao dịch tại các kênh quầy, OMNI, Thẻ nhằm giatăngtiệníchcungcấpđếnkhách hàngvàtăngcườngđộantoàntrong giao dịch | Gia tăng sảnphẩm dịch vụ, tiện ích cung cấp đến khách hàng               | Đã hoàn tất  |
+|     9 | Xây dựng hệ thống Fraud management system                                        | Trển khai hệ thống giám sát/phát hiện giao dịch gian lận cho các giao dịch thẻ, online nhằm gia tăng mức độ an toàn trong giao dịch                                                                                                                    | Gia tăng năng lực giám sát và quản trị rủi ro, đảm bảo an toàn giao dịch | Đã hoàn tất  |
+|    10 | Dự án Mởtài khoản KHDNOnline (eKYC)                                              | Triển khai dịch vụ mở tài khoản Online cho khách hàng nhằm gia tăng tiện ích cho khách hàng qua đó gia tăng khách hàng mới và doanh thu                                                                                                                | Gia tăng sảnphẩm dịch vụ, tiện ích cung cấp đến khách hàng               | Đã hoàn tất  |
+|    11 | Dự án Hệ thống cảnhbáonợsớm (EWS)                                                | Triểnkhaihệthốngchophépcảnhbáo nợsớmgiúpcácđơnvịchuyênmôncó phương án/biện pháp xử lý kịp thời và hiệuquả                                                                                                                                              | Gia tăng năng lực giám sát và quản trị rủi ro, đảm bảo an toàn giao dịch | Đã hoàn tất  |
+|    12 | DựánOMNICORP App (Phase 2)                                                       | Nâng cấp/bổ sung các dịch vụ, tiện ích dành cho khách hàng doanh nghiệp nhằm gia tăng sức thu hút khách hàng mới, giữ chân khách hàng hiện hữu qua đó gia tăng doanh thu và phí dịch vụ                                                                | Gia tăng sảnphẩm dịch vụ, tiện ích cung cấp đến khách hàng               | Đã hoàn tất  |
+|    13 | Hệ thống báo cáo mới thay thế cho thông tư 11                                    | Triển khai hệ thống báo cáo NHNN mới thay thế cho hệ thống báo cáo theo thông tư 11                                                                                                                                                                    | Mục tiêu đáp ứng tuân thủ chế độ báo cáo thống kê NHNN                   | Đã hoàn tất  |
+
+<!-- image -->
+
+<!-- image -->
+
+## QUẢN TRỊ CÔNG TY
+
+|   STT | Tên dự án                              | Diễn giải                                                                                                                                                                                                                                                                 | Lợi ích manglại                                       | Tình trạng                              |
+|-------|----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|-----------------------------------------|
+|    14 | Cụm dịch vụ tín dụng 2023              | Nâng cấp các hệ thống liên quan để triển khai mô hình cụm dịch vụ tín dụng nhằm gia tăng hiệu suất tác nghiệp, tăng tốc độ xử lý giải ngân                                                                                                                                | Tăng năng suất lao động &Giảmthiểu rủi ro hoạt động   | Đã hoàn tất                             |
+|    15 | Triển khai mới nền tảng OMNI MPV1      | Triển khai nền tảng OMNI mới 4.0 cho phép (1) Tối ưu các dịch vụ cung cấp đến khách hàng về trải nghiệm, tốc độ xử lý giao dịch; (2) Năng lực triển khai nhanh các sản phẩmdịch vụ mới                                                                                    | Giatăngsảnphẩm dịch vụ, tiện ích cungcấpđếnkhách hàng | Đã hoàn tất                             |
+|    16 | Hệ thống quản lý theo dõi TSCĐ và CCDC | Nâng cấp thay mới hệ thống quản lý tài sản cố định giúp gia tăng hơn nữa hiệu quả quản lý tài sản cố định và CCDC, tăng hiệu suất tác nghiệp và giảm chi phí vận hành                                                                                                     | Tăng năng suất lao động &Giảmthiểu rủi ro hoạt động   | Đã hoàn tất                             |
+|    17 | Payment Platform - Banking Hub         | Triển khai nền tảng thanh toán cung cấp cho các khối kinh doanh năng lực pháttriển mởrộngnhanhchóngvềcơ sở khách hàng và gia tăng lượng giao dịch, doanh thu, số dư tiền gửi                                                                                              | Giatăngsảnphẩm dịch vụ, tiện ích cungcấpđếnkhách hàng | Đã hoàn tất MPV1                        |
+|    18 | DựánGREEN                              | Triển khai hệ thống giúp tối ưu hoạt động giao dịch khách hàng tại quầy nhằm gia tăng trải nghiệm cho khách hàng (giao dịch nhanh, gọn, chính xác), gia tăng hiệu suất tác nghiệp (ít thao tác, tự động hóa cao, chính xác), tiết giảm chi phí vận hành (giảm giấy tờ in) | Tăng năng suất lao động &Giảmthiểu rủi ro hoạt động   | Đangtriểnkhai Dựkiếnhoàntất: 3/2024     |
+|    19 | Nâng cấp hệ thống Thẩmđịnh giá         | Cải tiến các tính năng hiện hữu/bổ sung tính năng mới hỗ trợ cho hoạt động định giá tài sản đảm bảo nhằm gia tăng hiệu suất tác nghiệp, đẩy nhanh tốc độ xử lý hồsơ                                                                                                       | Tăng năng suất lao động &Giảmthiểu rủi ro hoạt động   | Đangtriểnkhai Dựkiếnhoàntất MPV1:3/2024 |
+
+<!-- image -->
+
+## Quyền và trách nhiệm của cổ đông 6
+
+## Quyền của cổ đông
+
+- Trong năm 2023, OCB đã thực hiện nghiêm túc tất cả các quyền của cổ đông theo quy định tại Điều 25 - Điều lệ OCB và các quy định của pháp luật liên quan.
+- Tại  ĐHĐCĐ  thường  niên  năm  tài  chính  2022 được tổ chức vào ngày 28/4/2023, tất cả các cổ đông đều được đảm bảo quyền tham dự, biểu quyết và đóng góp ý kiến tại Đại hội hoặc gửi thư về  Ban  tổ  chức.  Tất  cả  cổ  đông  của  OCB  đều được đối xử công bằng và được tiếp cận thông tin đầy đủ theo quy định của pháp luật.
+- Tại  phiên  họp  này,  ĐHĐCĐ  đã  thông  qua  các Báo cáo đánh giá tình hình hoạt động năm 2022, thông  qua  phương  án  phân  phối  lợi  nhuận  và trích lập các quỹ năm 2022, đồng thời tin tưởng giao cho HĐQT và Ban Điều hành triển khai thực hiện cụ thể các kế hoạch hoạt động kinh doanh của ngân hàng trong năm 2023.
+
+## Giao tiếp với cổ đông
+
+- Bên cạnh việc giải đáp các thắc mắc, chất vấn của cổ đông tại phiên họp ĐHĐCĐ thường niên năm tài chính  2022  được  tổ  chức  vào  ngày  28/4/2023, trong  năm  2023,  thông  qua  hoạt  động  Quan  hệ Nhà đầu tư (IR), chúng tôi đã từng bước chuẩn hoá và đa dạng các kênh thông tin cho cổ đông thông qua các sự kiện tiếp xúc Nhà đầu tư và phát hành các tài liệu/ấn phẩm IR.
+- Ngoài ra, qua phương tiện điện thoại, thư điện tử OCB cũng đã giải đáp các ý kiến của cổ đông liên quan đến vấn đề cổ phần, cổ tức, các thông tin tài chính và các quy trình liên quan đến quyền lợi của cổ đông... OCB chú trọng hoàn thiện việc cung cấp thông  tin  cho  cổ  đông  tại  mục  Nhà  đầu  tư (www.ocb.com.vn). Năm 2024, phát huy những kết quả đã đạt được, OCB sẽ không ngừng đẩy mạnh hoạt động quan hệ nhà đầu tư và công tác quản lý cổ phiếu nhằm khẳng định vị thế vững mạnh của cổ phiếu OCB trên thị trường và là cầu nối đáp ứng nhu cầu thông tin của cộng đồng nhà đầu tư.
+- Thông tin về cổ phần và cơ cấu cổ đông 7
+
+<!-- image -->
+
+<!-- image -->
+
+## Cổ phần:
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## Cơ cấu cổ đông:
+
+Căn cứ theo danh sách của Trung tâm lưu ký chốt tại thời điểm ngày 31/12/2023
+
+| Cơ cấu cổ đông theo tiêu chí tỷ lệ sở hữu                | Số lượng cổ phần   | Tỷ lệ cổ phần (%)   |
+|----------------------------------------------------------|--------------------|---------------------|
+| Theo tiêu chí tỷ lệ sở hữu (cổ đông lớn, cổ đông nhỏ)    |                    |                     |
+| Cổ đông lớn                                              | 308.223.660        | 15,0%               |
+| Cổ đông nhỏ                                              | 1.746.600.634      | 85,0%               |
+| Theo tiêu chí cổ đông cá nhân, cổ đông tổ chức           |                    |                     |
+| Cổ đông cá nhân                                          | 999.727.132        | 48,65%              |
+| Cổ đông tổ chức                                          | 1.055.097.162      | 51,35%              |
+| Theo tiêu chí cổ đông trong nước, cổ đông nước ngoài (*) |                    |                     |
+| Cổ đông trong nước                                       | 1.615.721.280      | 78,63%              |
+| Cổ đông nước ngoài                                       | 439.103.014        | 21,37%              |
+| Theo tiêu chí cổ đông Nhà nước, cổ đông khác             |                    |                     |
+| Cổ đông Nhà nước                                         | 176.991.211        | 8,61%               |
+| Cổ đông khác                                             | 1.877.833.083      | 91,39%              |
+
+- Số lượng cổ phần của OCB: 2.054.824.294 cổ phần
+- Số lượng cổ phần lưu hành: 2.054.824.294 cổ phần
+- Số cổ phần hạn chế chuyển nhượng: 526.367.908 cổ phần
+- Số lượng cổ phiếu quỹ: 0 cổ phần
+- Năm 2023, OCB không phát sinh giao dịch cổ phiếu quỹ
+
+## Tỉ lệ sở hữu cổ phần của người nội bộ 8
+
+<!-- image -->
+
+Tỷ lệ sở hữu cổ phần của người nội bộ tại ngày 31/12/2023
+
+| STT   | Họ và tên                        | Chức vụ tại Ngân hàng           | Số lượng cổ phần nắmgiữ   | Tỷ lệ sở hữu (%)   |
+|-------|----------------------------------|---------------------------------|---------------------------|--------------------|
+|       | Cá nhân là thành viênHĐQT        |                                 | 217.772.410               | 10,598             |
+| 1     | Trịnh Văn Tuấn                   | Chủ tịchHĐQT                    | 91.117.321                | 4,434              |
+| 2     | Trịnh Thị Mai Anh                | Thành viênHĐQT                  | 60.424.065                | 2,941              |
+| 3     | Ngô Hà Bắc                       | Thành viênHĐQT                  | 12.877.255                | 0,627              |
+| 4     | Phan Trung                       | Thành viênHĐQT                  | 52.524.266                | 2,556              |
+| 5     | Yoshizawa Toshiki                | Thành viênHĐQT                  | 0                         | 0,000              |
+| 6     | Kato Shin                        | Thành viênHĐQT                  | 0                         | 0,000              |
+| 7     | Nguyễn Đình Tùng                 | Thành viênHĐQT                  | 829.503                   | 0,040              |
+| 8     | Bùi Minh Đức                     | Thành viên HĐQTđộclập           | 0                         | 0,000              |
+| 9     | PhamTri Nguyen                   | Thành viên HĐQTđộclập           | 0                         | 0,000              |
+|       | Cá nhân là thành viênBKS         |                                 | 182.832                   | 0,009              |
+| 1     | Nguyễn Thị Thúy Minh             | TrưởngBKS                       | 182.832                   | 0,009              |
+| 2     | PhạmQuangVinh                    | Thành viênBKS                   | -                         | 0,000              |
+| 3     | Đặng Thị Quý                     | Thành viênBKS                   | -                         | 0,000              |
+|       | Cá nhân là thành viênBĐH         |                                 | 1.534.645                 | 0,074              |
+| 1     | Nguyễn Đình Tùng                 | Tổng Giám đốc                   | 829.503                   | 0,040              |
+| 2     | Trương Đình Long                 | PhóTGĐ                          | 412.642                   | 0,020              |
+| 3     | Huỳnh Lê Mai                     | PhóTGĐ                          | 168.750                   | 0,008              |
+| 4     | TrươngThànhNam                   | PhóTGĐ                          | 123.750                   | 0,006              |
+| 5     | Bùi Thành Trung                  | PhóTGĐ                          | 0                         | 0,000              |
+| 6     | Nguyễn Văn Hương                 | PhóTGĐ                          | 0                         | 0,000              |
+| 7     | Nguyễn Văn Cường                 | Giám đốc Tài chính              | 0                         | 0,000              |
+|       | Người phụ trách quản trị công ty |                                 | 412.642                   | 0,020              |
+| 1     | Trương Đình Long                 | Người phụ trách quản trị nội bộ | 412.642                   | 0,020              |
+|       | TỔNGCỘNG                         |                                 | 218.660.384               | 10,641             |
+
+*Kế toán trưởng: hiện khuyết
+
+## Tình hình thay đổi vốn đầu tư của chủ sở hữu 9
+
+<!-- image -->
+
+Thông tin các đợt tăng vốn cổ phần từ khi thành lập
+
+(Đơn vị: Triệu đồng)
+
+|   Năm | Đợt   | Giá trị vốn trước phát hành   |   Giá trị vốn tăng thêm | Mứcvốn điều lệ sau khi tăng   | Hình thức tăng vốn và đối tượng                                                                                                  | Cơ quan chấp thuận            |
+|-------|-------|-------------------------------|-------------------------|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------|-------------------------------|
+|  1996 | -     | -                             |                  70     | 70.000                        | Góp vốn thành lập                                                                                                                | NHNNvàSở KH&ĐTTP. HCM         |
+|  2003 | 1     | 70.000                        |                  23.736 | 93.736                        | Phát hành cho cổ đông hiện hữu                                                                                                   | NHNN; Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2003 | 2     | 93.736                        |                   7.615 | 101.351                       | Pháthànhcổphiếu đểsápnhậpvớiNgân hàngTMCPNông ThônTâyĐô                                                                          | NHNN; Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2004 | 3     | 101.351                       |                  35.779 | 137.130                       | Phát hành cho cổ đông hiện hữu                                                                                                   | NHNN; Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2004 | 4     | 137.130                       |                  62.87  | 200.000                       | Phát hành cho cổ đông hiện hữu                                                                                                   | NHNN; Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2005 | 5     | 200.000                       |                 100     | 300.000                       | Phát hành cho cổ đông hiện hữu                                                                                                   | NHNN; Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2006 | 6     | 300.000                       |                 267     | 567.000                       | Phát hành cổ phiếu thưởng cho cổ đông hiện hữu, chào bán cổ phiếu cho cổ đông hiện hữu và cán bộ nhân viên và phát hành riêng lẻ | NHNN; Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2007 | 7     | 567.000                       |                 544.111 | 1.111.111                     | Phát hành cổ phiếu thưởng cho cổ đông hiện hữu, chào bán cổ phiếu cho cổ đông hiện hữu và cán bộ nhân viên và phát hành riêng lẻ | NHNN; Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+
+|   Năm |   Đợt | Giá trị vốn trước phát hành   |   Giá trị vốn tăng thêm | Mứcvốn điều lệ sau khi tăng   | Hình thức tăng vốn và đối tượng                                                                                                                | Cơ quan chấp thuận                                          |
+|-------|-------|-------------------------------|-------------------------|-------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+|  2008 |     8 | 1.111.111                     |                 363.366 | 1.474.477                     | Phát hành cổ phiếu thưởng cho cổ đông hiện hữu                                                                                                 | NHNN; Sở KH&ĐTTP. HCMvà ĐHĐCĐ NHNN; Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2009 |     9 | 1.474.477                     |                 525.523 | 2.000.000                     | Phát hành cho cổ đông hiện hữu và phát hành riêng lẻ cho cổ đông chiến lược PNBParibas với tỷ lệ sở hữu 15%                                    | UBCKNN, NHNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ                       |
+|  2010 |    10 | 2.000.000                     |                 635     | 2.635.000                     | Phát hành cổ phiếu thưởng cho cổ đông hiện hữu; chào bán cổ phiếu cho cổ đông hiện hữu và phát hành riêng lẻ cho cổ đông chiến lược PNBParibas | NHNN, UBCKNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ                       |
+|  2011 |    11 | 2.635.000                     |                 365     | 3.000.000                     | Phát hành riêng lẻ cho cổ đông chiến lược PNBParibas                                                                                           | NHNN, UBCKNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ                       |
+|  2012 |    12 | 3.000.000                     |                 234     | 3.234.000                     | Phát hành cổ phiếu thưởng cho cổ đông hiện hữu và phát hành cổ phiếu trả cổ tức                                                                | NHNN, UBCKNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ                       |
+|  2014 |    13 | 3.234.000                     |                 313.148 | 3.547.148                     | Phát hành cổ phiếu thưởng cho cổ đông hiện hữu                                                                                                 | NHNN, UBCKNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ                       |
+|  2016 |    14 | 3.547.148                     |                 452.852 | 4.000.000                     | Phát hành cổ phiếu thưởng cho cổ đông hiện hữu và phát hành cổ phiếu riêng lẻ                                                                  | NHNN, UBCKNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ                       |
+
+|   Năm |   Đợt | Giá trị vốn trước phát hành   | Giá trị vốn tăng thêm   | Mứcvốn điều lệ sau khi tăng   | Hình thức tăng vốn và đối tượng                                                     | Cơ quan chấp thuận                    |
+|-------|-------|-------------------------------|-------------------------|-------------------------------|-------------------------------------------------------------------------------------|---------------------------------------|
+|  2017 |    15 | 4.000.000                     | 1.000.000               | 5.000.000                     | Phát hành cổ phiếu thưởng cho cổ đông hiện hữu và phát hành riêng lẻ                | UBCKNN, NHNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2018 |    16 | 5.000.000                     | 1.599.211               | 6.599.211                     | Phát hành cổ phiếu trả cổ tức và phát hành cho cổ đông hiện hữu                     | UBCKNN, NHNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2019 |    17 | 6.599.211                     | 1.299.360               | 7.898.571                     | Phát hành cổ phiếu trả cổ tức                                                       | UBCKNN, NHNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2020 |    18 | 7.898.571                     | 3.060.493               | 10.959.063                    | Phát hành cổ phiếu trả cổ tức và phát hành riêng lẻ cho Ngân hàng Aozora (Nhật Bản) | NHNN, UBCKNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2021 |    19 | 10.959.063                    | 2.739.766               | 13.698.829                    | Phát hành cổ phiếu trả cổ tức                                                       | UBCKNN, NHNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+|  2023 |    20 | 13.698.829                    | 6.849.414               | 20.548.243                    | Phát hành cổ phiếu cho cổ đông hiện hữu từ nguồn vốn chủ sở hữu                     | UBCKNN, NHNN, Sở KH&ĐTTP. HCMvà ĐHĐCĐ |
+
+## Giao dịch cổ phiếu của cổ đông nội bộ và những người có liên quan:
+
+Giao dịch cổ phiếu của người nội bộ: không phát sinh Giao dịch cổ phiếu của người có liên quan của người nội bộ:
+
+| Giao dịch   |   Số lượt | Khối lượng cổ phiếu giao dịch   |
+|-------------|-----------|---------------------------------|
+| Mua         |         0 | 0 cổ phần                       |
+| Bán         |         4 | 1.700.000 cổ phần               |
+| Tổng cộng   |         4 | 1.700.000 cổ phần               |
+
+<!-- image -->
+
+## Báo cáo về thù lao, thưởng và các chi phí khác năm 2023
+
+Tính hết ngày 31/12/2023, thù lao, thưởng và các chi phí khác thực tế đã chi trả cho các thành viên HĐQT và thành viên BKS như sau:
+
+(Đơn vị: Đồng)
+
+| Đối tượng         | Thù lao, thưởng   | Chi phí khác   | Tổng cộng      |
+|-------------------|-------------------|----------------|----------------|
+| Hội đồng quản trị | 23.345.874.000    | 3.794.067.513  | 27.139.941.513 |
+| Ban Kiểm soát     | 2.529.540.000     | 788.909.189    | 3.318.449.189  |
+| Tổng              | 25.875.414.000    | 4.582.976.702  | 30.458.390.702 |
+
+<!-- image -->
+
+OCB - Niềm tin và thịnh vượng
+
+51
+
+## CHƯƠNG
+
+## 03
+
+## BÁO CÁO KẾT QUẢ HOẠT ĐỘNG
+
+Kết quả hoạt động năm 2023
+
+53
+
+Định hướng mục tiêu hoạt động năm 2024
+
+65
+
+## KẾT QUẢ HOẠT ĐỘNG NĂM 2023
+
+## Kết quả kinh doanh 1
+
+<!-- image -->
+
+Năm 2023, tình hình kinh tế vĩ mô thế giới chứng kiến nhiều biến động phức tạp, không đứng ngoài xu hướng chung toàn cầu, nền kinh tế Việt Nam diễn biến cùng pha và đối diện với không ít khó khăn. Đối mặt với những cơn gió ngược từ thế giới như: căng thẳng địa chính trị leo thang, chính sách thắt chặt tiền tệ của nhiều NHTW lớn nhằm kiểm soát lạm phát, tổng cầu thế giới giảm...kết hợp với những khó khăn nội tại như tiêu dùng và bán lẻ tăng trưởng không như kỳ vọng, xuất nhập khẩu suy yếu; thị trường bất động sản tiếp tục trầm lắng; từ đó, dẫn đến tăng trưởng GDP của Việt Nam năm 2023 chỉ đạt 5,05%, thấp hơn mục tiêu Chính phủ đặt ra đầu năm. Đối với lĩnh vực ngân hàng, do tình hình kinh tế diễn biến không thuận lợi khiến lượng hấp thụ vốn toàn nền kinh tế suy yếu, tỷ lệ nợ xấu có xu hướng tăng so với cùng kỳ.
+
+Mặc dù bối cảnh vĩ mô không thuận lợi, OCB vẫn tiếp tục ghi nhận tốc độ tăng trưởng mạnh mẽ về quy mô Tổng tài sản, quy mô Tín dụng thị trường 1 và Huy động thị trường 1; Kiểm soát chất lượng tài sản; Tuân thủ các giới hạn, tỷ lệ đảm bảo an toàn hoạt động ngân hàng.
+
+## Kết quả thực hiện các chỉ tiêu kinh doanh cơ bản của năm 2023 như sau :
+
+Tỷ lệ nợ xấu
+
+<!-- image -->
+
+(*) Số liệu Thực hiện 2023 theo báo cáo tài chính hợp nhất năm 2023 (sau kiểm toán)
+
+<!-- image -->
+
+1 Tổng dư nợ TT1 gồm: Cho vay khách hàng; TPDN; Mua nợ.
+
+2 Tổng huy động TT1 gồm: Tiền gửi khách hàng; GTCG; Vốn tài trợ - ủy thác.
+
+| Chỉ tiêu             | %tăng/giảm so với 2022   | %sovới kế hoạch 2023   |
+|----------------------|--------------------------|------------------------|
+| Tổng tài sản         | 24%                      | 99%                    |
+| Tổng dư nợ TT1 1     | 20,53%                   | 100%                   |
+| Tổng huy động TT1 2  | 22%                      | 97%                    |
+| Lợi nhuận trước thuế | 6%                       | 69%                    |
+| Tỷ lệ nợ xấu         |                          | Đạt                    |
+
+## Một số chỉ tiêu tài chính của OCB giai đoạn 2022 - 2023
+
+ĐVT: tỷ đồng
+
+| Chỉ tiêu                                    | Thực hiện năm2022   | Thực hiện năm2023   | Ghi chú                                                   |
+|---------------------------------------------|---------------------|---------------------|-----------------------------------------------------------|
+| Quymôvốn                                    |                     |                     |                                                           |
+| Vốn điều lệ                                 | 13.699              | 20.548              | Số liệu BCTC Hợp nhất                                     |
+| Vốn chủ sở hữu                              | 25.272              | 28.536              | Số liệu BCTC Hợp nhất                                     |
+| Tổng tài sản                                | 193.994             | 240.114             | Số liệu BCTC Hợp nhất                                     |
+| Tỷ lệ an toàn vốn                           | 12,84%              | 13,30%              | CARhợpnhất                                                |
+| Kết quả hoạt động kinh doanh                |                     |                     |                                                           |
+| Lợi nhuận trước thuế                        | 4.389               | 4.139               | Số liệu BCTC Hợp nhất                                     |
+| Số dư huy động thị trường 1                 | 137.394             | 168.112             | Bao gồmTiền gửi khách hàng, GTCG và Ủy thác đầu tư        |
+| Số dư tín dụng thị trường 1                 | 122.792             | 148.005             | Bao gồmChovay khách hàng, Mua nợ, Trái phiếu doanh nghiệp |
+| Doanh số thu nợ                             | 84.910              | 93.655              | Số liệu BCTC Hợp nhất                                     |
+| Nợ quá hạn                                  | 5.705               | 7.114               | Tổng nợ nhóm2, 3, 4, 5 TT1                                |
+| Nợ xấu                                      | 2.671               | 3.975               | Tổng nợ nhóm3, 4, 5 TT1                                   |
+| Tỷ lệ bảo lãnh quá hạn/ Tổng số dư bảo lãnh | 3,84%               | 3,73%               | Số liệu BCTC Hợp nhất                                     |
+| Tỷ lệ nợ quá hạn/ Tổng dư nợ                | 4,65%               | 3,61%               | Tỷ lệ nợ nhóm2, 3, 4, 5/ Tài sản có                       |
+| Tỷ lệ nợ khó đòi/ Tổng dư nợ                | 2,18%               | 2,02%               | Tỷ lệ nợ nhóm3, 4, 5/ Tài sản có                          |
+| Khả năng thanh khoản                        |                     |                     |                                                           |
+| Tỷ lệ dự trữ thanh khoản                    | 19,77%              | 20,35%              | Số liệu BCTC Hợp nhất                                     |
+| Tỷ lệ khả năng chi trả 30 ngày_VNĐ          | 90,30%              | 80,07%              | Số liệu BCTC Hợp nhất                                     |
+| Tỷ lệ khả năng chi trả 30 ngày_USD          | Không phát sinh     | Không phát sinh     | Số liệu BCTC Hợp nhất                                     |
+| Cổ tức                                      | 0%                  | 0%                  |                                                           |
+| EPS (đồng)                                  | 1.689               | 1.594               |                                                           |
+
+## Tăng cường hỗ trợ khách hàng với hàng loạt gói tín dụng ưu đãi 1.1
+
+<!-- image -->
+
+<!-- image -->
+
+## Huy động thị trường 1 tăng tốc 1.2
+
+<!-- image -->
+
+<!-- image -->
+
+Trong năm 2023, nhờ có chiến lược đúng đắn trong bối  cảnh  cầu  tín  dụng  thấp,  thay  đổi/điều  chỉnh sản phẩm phù hợp với thị trường, bên cạnh hài hòa giữa lợi ích của khách hàng và ngân hàng, OCB đã ghi nhận tốc độ tăng trưởng tín dụng vượt trội. Đối với KHDN, OCB chuyển dịch tín dụng trọng tâm vào các ngành nghề ưu tiên, đầu tư công và giảm tỷ trọng các ngành nghề có rủi ro cao với mục tiêu đa dạng hóa, tối ưu hiệu quả danh mục để phát triển bền vững. Đối với KHCN, OCB tập trung vào các sản  phẩm  thế  mạnh  của  ngân  hàng  và  nhu  cầu tăng trưởng tốt, an toàn như: Cho vay SXKD; Cho vay tiêu dùng có TSĐB, Thẻ tín dụng.
+
+Bên  cạnh  các  biện  pháp  cơ  cấu  nợ,  ngân  hàng cũng đã triển khai nhiều gói tín dụng ưu đãi với lãi suất thấp hỗ trợ doanh nghiệp, cá nhân vượt qua giai đoạn khó khăn như: Gói vay SXKD lãi suất chỉ từ 5,2%/năm; Vay ưu đãi phục vụ nhu cầu nhà ở lãi suất chỉ từ 6,49%/năm; sản phẩm Easy Loan với thời gian phê duyệt nhanh, giảm lãi suất 1-2% so với mức lãi suất thông thường kết hợp với các ưu đãi  miễn/giảm  phí  hấp  dẫn…  Nhờ  đó,  đã  được khách  hàng  đón  nhận  tích  cực,  thúc  đẩy  tăng trưởng  tín  dụng  cao  hơn  mức  13,7%  trung  bình ngành. Các biện pháp hỗ trợ khách hàng này tác động đến NIM trong ngắn hạn; tuy nhiên, sẽ tạo cơ hội để OCB tìm kiếm thêm khách hàng tiềm năng, thúc đẩy tăng trưởng quy mô của ngân hàng trong dài hạn.
+
+Huy động thị trường 1 tăng 22% so với cùng kỳ, đạt trên 168 nghìn tỷ đồng. Trong đó tăng trưởng mạnh mẽ đến từ cả Tiền gửi khách hàng, Phát hành giấy tờ có giá và Nguồn vốn tài trợ và ủy thác đầu tư từ các định chế tài chính quốc tế. Đặc biệt, tiền gửi khách hàng tăng 23% lên mức 126 nghìn tỷ đồng, trong đó huy động KHCN tăng 27% cho thấy OCB đã có bước tiến về nhận diện thương hiệu, khẳng định  sự  an  toàn,  uy  tín  của  OCB  trên  thị  trường. Trong năm, OCB cũng đã tăng cường quan hệ hợp tác với các định chế tài chính nước ngoài như IFC, DEG,...  giúp OCB củng cố nguồn vốn trung dài hạn. Tính đến 31/12/2023, nguồn vốn tài trợ và ủy thác đạt 4.358 tỷ đồng, tăng 38% so với cuối năm 2022.
+
+<!-- image -->
+
+## Hoạt động Công nghệ thông tin và Ngân hàng số
+
+Trong năm 2023, OCB bổ sung 20% nguồn lực nhân sự công nghệ thông tin để phát triển và thực hiện các dự án theo kế hoạch chuyển đổi số, tái cấu trúc Khối Công nghệ và Chuyển đổi số nhằm đáp ứng nhu cầu vận hành, phát triển, chuyển đổi số và mở rộng sản phẩm dịch vụ tài chính/ngân hàng.
+
+Năm 2023, Ngân hàng hoàn tất đầu tư và đưa vào sử dụng các giải pháp hiện đại, đầu ngành như:
+
+- Dự án phòng chống tội phạm, gian lận tài chính &amp; rửa tiền - Oracle Financial Crime and Compliance Management (Oracle FCCM)
+- Dự án phòng chống, giám sát và quản lý gian lận giao dịch đa kênh - IBM Safer Payment
+- Dự án chuyển đổi nền tảng công nghệ ngân hàng số OCB OMNI qua giải pháp ngân hàng số với công nghệ và trải nghiệm tiên tiến nhất hiện nay Backbase Digital Banking Platform.
+
+Ngoài ra, đến 31/12/2023, số lượng người dùng và số lượng giao dịch qua kênh ngân hàng số OCB OMNI lần lượt tăng trên 30% và 100% so với đầu năm. OCB đã hoàn thiện thêm bộ giải pháp Open API và đẩy mạnh kết nối các hệ sinh thái đối tác, số lượng giao dịch, doanh số qua hệ sinh thái đối tác tăng trưởng lần lượt là 55% &amp; 350%.
+
+## Hoạt động phát triển kênh phân phối 1.4
+
+<!-- image -->
+
+Trong năm 2023, OCB đã hoàn thành việc triển khai và đưa vào hoạt động 04 Chi nhánh, 06 Phòng Giao dịch theo cấp phép của Ngân hàng Nhà nước. Tính đến 31/12/2023, OCB có tổng cộng 159 đơn vị mạng lưới, gồm 01 Hội sở, 57 Chi nhánh, 101 Phòng Giao dịch hiện diện trên 43 tỉnh thành của cả nước.
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## Công tác quản trị nhân sự và đào tạo
+
+<!-- image -->
+
+Tính đến 31/12/2023, tổng số CBNV của OCB là 6.816 nhân sự, đảm bảo nguồn nhân lực cho toàn bộ hoạt động kinh doanh và vận hành của tất cả các Đơn vị trong hệ thống.
+
+Việc triển khai các hoạt động phát triển nguồn nhân lực tại OCB luôn có sự định hướng và chỉ đạo sát sao từ HĐQT, Tổng Giám đốc và Ban Điều hành nhằm đáp ứng nguồn nhân lực trong ngắn và dài hạn cả về số lượng và chất lượng. Các hoạt động phát triển nguồn nhân lực đều có sự tham gia phối hợp trực tiếp của các Khối, Phòng ban Hội sở và Đơn vị kinh doanh, từ cấp quản lý đến đội ngũ nhân sự chuyên môn nhằm xây dựng và phát triển đội ngũ nhân sự đáp ứng nhu cầu của OCB. Trong năm 2023, OCB tiếp tục triển khai các hoạt động phát triển nguồn nhân lực tập trung vào:
+
+- Chú trọng đào tạo phát triển đội ngũ nhân sự kế thừa đáp ứng nhu cầu công việc và lộ trình phát triển cho CBNV ở các khối kinh doanh và Hội sở. Trong đó có 4 chương trình cho Đơn vị kinh doanh gồm: Giám đốc tiềm năng; Giám đốc quan hệ khách hàng/Giám đốc Tín dụng tiềm năng; Kiểm soát viên/Dịch vụ khách hàng tiềm năng; và 3 chương trình triển khai cho Hội sở bao gồm: OCB Line-Up Leader; OCB Talented Bankers; OCB Talented Technologist. Với tổng số nhân sự được quy hoạch là 177 CBNV.
+- Tăng cường nâng cao năng lực quản lý thông qua triển khai các chương trình đào tạo: Digital Academy; Nâng tầm BM; Mentoring coach;…
+- Đẩy mạnh đào tạo nâng cao năng lực tiếng Anh cho CBNV thông qua cung cấp các bài học tiếng Anh với chương trình Micro learning mỗi ngày 1 tip learning; Hệ thống học online Elsa Speak.
+- Triển khai đánh giá năng lực tiềm năng và phát triển định kỳ đội ngũ kế thừa (succession planning) để xây dựng chương trình đào tạo, hỗ trợ kịp thời cho lộ trình phát triển nghề nghiệp của CBNV.
+
+<!-- image -->
+
+## HOẠT ĐỘNG QUẢN TRỊ RỦI RO
+
+## Triển khai thực hiện chính sách quản lý rủi ro 1
+
+<!-- image -->
+
+Khẩu vị rủi ro năm 2023 được xây dựng với các mục tiêu kiểm soát rủi ro chặt chẽ và linh hoạt hợp lý để đảm bảo an toàn tài chính cho OCB, vừa tạo điều kiện để OCB có thể phát triển quy mô, vừa đảm bảo chất lượng tín dụng.
+
+Các chỉ tiêu kiểm soát RRTD tập trung được duy trì như: tỷ lệ cấp tín dụng không có tài sản đảm bảo, tỷ lệ cấp tín dụng đối với khách hàng lớn, rủi ro tín dụng tập trung các khách hàng lớn, tỷ lệ cấp tín dụng các ngành kinh tế, giới hạn cấp tín dụng cho một khách hàng/nhóm khách hàng liên quan và các chỉ tiêu giới hạn cấp tín dụng khác theo quy định NHNN. Hệ thống văn bản khung quy định nghiệp vụ được rà soát cập nhật định kỳ, đánh giá và trình phê duyệt tại các cuộc họp của Ủy ban Quản lý rủi ro (UBQLRR), Ban điều hành, Hội đồng rủi ro.
+
+Xây dựng khẩu vị rủi ro hoạt động năm 2023 với các mục tiêu kiểm soát rủi ro nội bộ chặt chẽ hơn và phù hợp với chiến lược kinh doanh.
+
+Duy trì thiết lập và giám sát các công cụ đo lường rủi ro hoạt động bao gồm: nhận diện rủi ro sớm thông qua việc đánh giá rủi ro các sản phẩm, quy trình, quy định, phát triển ứng dụng công nghệ, dự án; Giám sát chặt chẽ các chỉ số rủi ro trọng yếu (KRIs); thực hiện tự nhận diện rủi ro và chốt kiểm soát (Risk Control Self Assessment - RCSA); đánh giá rủi ro đối với các hoạt động thuê ngoài.
+
+Chính sách quản lý rủi ro hoạt động triển khai theo các quy định và chiến lược kinh doanh của OCB. Hệ thống quản lý rủi ro hoạt động của OCB bao gồm hệ thống theo dõi hạn mức tổn thất về tài chính và hạn mức tổn thất phi tài chính.
+
+Triển khai công tác ứng phó và xây dựng kế hoạch duy trì hoạt động liên tục (BCP) trong các trường hợp dịch bệnh, thiên tai, bão lụt, cháy nổ, cướp tấn công; Triển khai hệ thống dự phòng thảm họa (DRP) và tổ chức diễn tập thường xuyên hằng năm nhằm sẵn sàng ứng phó khi xảy ra các sự cố hay thảm họa.
+
+## Tình hình thực hiện giám sát một số hạn mức rủi ro trọng yếu năm 2023
+
+| Chỉ tiêu kiểm soát rủi ro                | Chỉ tiêu 2023   | Thực hiện 2023   |
+|------------------------------------------|-----------------|------------------|
+| CAR- TT41 hợp nhất                       | ≥ 11%           | 13,30%           |
+| Tỷ lệ nợ nhóm2/Tài sản có                | ≤ 2,5%          | 1,59%            |
+| Tỷ lệ nợ xấu/Tài sản có                  | ≤ 2,0%          | 2,02%            |
+| Tỷ lệ nợ có vấn đề/Dư nợ thị trường 1    | ≤ 4,04%         | 4,81%            |
+| LDR (Dư nợ cho vay/Tổng tiền gửi)        | ≤85%            | 73,66%           |
+| LRR (Tỷ lệ dự trữ thanh khoản)           | ≥ 10%           | 20,35%           |
+| Nguồn vốn ngắn hạn cho vay trung dài hạn | ≤30%            | 23,94%           |
+
+<!-- image -->
+
+## Triển khai quản lý danh mục tín dụng, các phương pháp, công cụ đo lường, theo dõi, kiểm soát rủi ro tín dụng 2
+
+Quản lý danh mục:
+
+- Xây dựng danh mục tín dụng định hướng 2023 theo phân khúc khách hàng, ngành nghề kinh tế, sản phẩm tín dụng nhằm đảm bảo phân tán rủi ro, tối ưu hóa danh mục tín dụng. Việc giám sát danh mục tín dụng định kỳ hàng tháng và báo cáo UBQLRR hàng quý gồm dư nợ và đặc tính của phân khúc.
+
+Các phương pháp, công cụ đo lường, theo dõi, quản lý rủi ro tín dụng:
+
+- Triển khai quản lý danh mục tín dụng theo các phân khúc cụ thể, bao gồm dư nợ và đặc tính của phân khúc.
+- Triển khai quản lý quy trình cấp tín dụng tập trung thông qua hệ thống BPM: giám sát chặt chẽ thời gian thực hiện trong từng khâu trong quy trình xử lý từ Đơn vị kinh doanh đến Hội sở và theo từng cá nhân xử lý, đẩy nhanh tiến độ xử lý đồng thời hạn chế sai sót trong quá trình tác nghiệp, hệ thống sẽ đưa ra các cảnh báo trong trường hợp phát hiện sai sót.
+- Tiếp tục triển khai Bộ phận kiểm tra thực địa trực thuộc Khối Quản lý tín dụng hoạt động độc lập để hỗ trợ công tác thẩm định và phê duyệt tín dụng, thực hiện công tác thẩm định thực tế các hồ sơ cấp tín dụng có rủi ro cao nhằm gia tăng mức độ kiểm soát rủi ro, đảm bảo tính khách quan và thực tế trong công tác thẩm định, phê duyệt tín dụng.
+- Triển khai mô hình phân cấp phê duyệt tín dụng theo các hạn mức rủi ro; Quản lý khung phân cấp phán quyết từ cấp Ủy ban tín dụng đến các cá nhân phê duyệt. Định kỳ hàng tháng, rà soát các mức phán quyết để đánh giá giao, duy trì, ngưng mức phán quyết đối với các cá nhân phê duyệt tín dụng hết hiệu lực giao hạn mức/vi phạm ngưỡng giới hạn cấp tín dụng.
+- Triển khai vận hành hệ thống cảnh báo sớm và theo dõi, giám sát sau cấp tín dụng tại Đơn vị kinh doanh và Phòng Kiểm soát tuân thủ.
+- Theo dõi phân loại nợ và trích lập dự phòng rủi ro tín dụng đối với từng khoản tín dụng theo đúng quy định của NHNN.
+
+<!-- image -->
+
+## Triển khai các công cụ đo lường rủi ro hoạt động
+
+Các công cụ đang triển khai chính:
+
+- Thu thập và phân tích số liệu tổn thất (Loss Data Collection - LDC).
+- Tự đánh giá kiểm soát rủi ro hoạt động (Risk Control Self Assessment - RCSA).
+- Chỉ số rủi ro trọng yếu (Key Risk indicators - KRI).
+- Nhận diện rủi ro sớm đối với các chính sách, quy định, sản phẩm, dịch vụ mới.
+- Các chuyên đề giám sát từ xa nhằm phát hiện sớm gian lận, rủi ro tập trung vào các hoạt động trọng yếu của ngân hàng.
+- Thu thập và phân tích các phát hiện của kiểm toán nội bộ, kiểm toán độc lập, các cơ quan thanh tra… để đánh giá điểm yếu kiểm soát và lên kế hoạch giảm thiểu rủi ro.
+- Thu thập các sự vụ tổn thất từ các tổ chức tài chính khác để phân tích bài học kinh nghiệm, bổ sung các biện pháp ngăn ngừa rủi ro.
+- Sử dụng công cụ sơ đồ hóa các quy trình nghiệp vụ (Business Process Mapping - BPM) để xác định mức độ rủi ro hoạt động của từng quy trình nghiệp vụ.
+- Năm 2023 OCB thực hiện đầu tư, triển khai và đưa vào vận hành hệ thống quản lý gian lận trên nền tảng IBM® Safer Payments để giám sát, chủ động ngăn chặn và quản lý các hành vi gian lận trong hoạt  động  ngân  hàng  đa  kênh  kỹ  thuật  số  hướng  đến  việc  bảo  vệ  khách  hàng,  mang  lại  trải nghiệm tối ưu, an toàn khi sử dụng sản phẩm dịch vụ, giảm thiểu tổn thất cho ngân hàng và đáp ứng các quy định của NHNN về giám sát giao dịch và phòng chống gian lận.
+
+<!-- image -->
+
+## Hoàn thiện 3 cột trụ Basel 4
+
+<!-- image -->
+
+Năm 2023, OCB đã hoàn thiện và áp dụng thành công nền tảng quản lý vốn và tài sản có rủi ro theo Basel II nâng cao. Dự án bao gồm:
+
+- Kho dữ liệu số tập trung: Đáp ứng tiêu chuẩn quốc tế, giúp OCB quản lý dữ liệu hiệu quả và thống nhất.
+- Hệ thống mô hình đo lường rủi ro: Đo lường rủi ro tín dụng toàn diện cho cả phân khúc bán lẻ và doanh nghiệp.
+- Phương pháp tính toán tài sản có rủi ro và tỷ lệ an toàn vốn: Đáp ứng yêu cầu của Basel II nâng cao.
+- Ứng dụng nền tảng số Moody's: Hỗ trợ quản lý rủi ro hiệu quả.
+
+Việc áp dụng Basel II nâng cao là một bước tiến lớn của OCB, thể hiện mức độ phát triển cao về dữ liệu và phương pháp đo lường rủi ro. Kết quả đo lường rủi ro theo phương pháp Basel II nâng cao cho phép ngân hàng đo lường và phân loại rủi ro chi tiết đến từng hợp đồng vay, khách hàng vay. Đây là cơ sở để ngân hàng triển khai các phương thức quản lý danh mục chủ động và áp dụng lãi suất cho vay linh hoạt theo mức độ rủi ro cho từng khoản vay.
+
+Về rủi ro thị trường, cùng với định hướng phát triển khung quản trị rủi ro, với mục tiêu không ngừng củng cố và nâng cao trong công tác triển khai các tiêu chuẩn quản lý tiên tiến nhất, năm 2023 OCB đã áp  dụng  tính  vốn  theo  Basel  II  IMA  song  song  với  việc  tính  vốn  theo  quy  định  của  thông  tư 41/2016/TT-NHNN. Phương pháp đánh giá sản phẩm tài chính theo tư vấn của Kiểm toán nằm trong khuôn khổ dự án Basel II IMA cũng đã được đưa vào quy trình giám sát hạn mức rủi ro thị trường. Theo đó, OCB thực hiện giám sát rủi ro thị trường trong khuôn khổ quy định (từ quy chế đến hướng dẫn) đã được bổ sung/cập nhật và đi vào vận hành, đáp ứng tuân thủ chuẩn mực Basel II IMA.
+
+Bên cạnh đó, OCB đã thực hiện các biện pháp nhằm nâng cao hoạt động giám sát rủi ro của mình bằng cách đề ra một lộ trình nội bộ rõ ràng để tuân thủ các hạn mức Basel III, bao gồm việc tính toán tỷ lệ đảm bảo khả năng thanh khoản (LCR) và tỷ lệ vốn ổn định ròng (NSFR) theo tiêu chuẩn Basel III. Các tỷ lệ này được tính toán và theo dõi đều đặn hàng tháng. Việc triển khai tuân thủ Basel III đặt ra yêu cầu lớn cho OCB, đòi hỏi xây dựng và thiết lập cấu trúc bảng cân đối kế toán một cách hợp lý. Qua đó OCB thể hiện cam kết thiết lập nền tảng quản lý rủi ro linh hoạt và hiện đại, từ đó giúp định hình phát triển theo hướng bền vững, an toàn, minh bạch và hiệu quả.
+
+<!-- image -->
+
+## HOẠT ĐỘNG PHÁT TRIỂN THƯƠNG HIỆU
+
+Năm 2023 hoạt động Marketing, Truyền thông của OCB được đẩy mạnh, với nhiều chương trình nổi bật, sáng tạo, đưa thương hiệu OCB trở nên quen thuộc và có vị thế nhất định trong lòng khách hàng.
+
+Chủ động nghiên cứu, đề xuất và tiếp cận các phương pháp truyền thông mới để tối ưu hóa hiệu quả các chiến dịch. Qua đó, tăng điểm chạm về thương hiệu, giúp khách hàng cá nhân và doanh nghiệp dễ dàng tiếp cận các thông tin, sản phẩm, dịch vụ đồng thời có cơ hội gia tăng lợi ích khi nhận thêm ưu đãi, cơ hội trúng thưởng từ các chương trình khuyến mãi.
+
+Sau 10 năm công bố hệ thống nhận diện thương hiệu, năm 2023, OCB đã thực hiện cải tiến, quy chuẩn lại hình ảnh hệ thống Chi nhánh/ Phòng Giao dịch trên toàn quốc, với không gian hiện đại, sang trọng, chuyên nghiệp, qua đó tối ưu hiệu quả quảng cáo, tiếp cận khách hàng, bước đầu nhận được phản hồi rất tích cực từ khách hàng và đối tác.
+
+<!-- image -->
+
+<!-- image -->
+
+Đặc biệt, OCB thường xuyên triển khai các chương trình vì cộng đồng, xã hội, như hợp tác cùng Quỹ Hiểu về trái tim trong việc tài trợ chi phí mổ tim cho các bệnh nhi có hoàn cảnh khó khăn, tiếp sức đến trường cho học sinh, chăm lo Tết cho bà con có hoàn cảnh khó khăn tại nhiều địa phương, cùng nhiều hoạt động ý nghĩa khác xuyên suốt trong năm.
+
+<!-- image -->
+
+## OCB tiếp tục được ghi nhận và vinh danh tại nhiều giải thưởng uy tín trong nước và quốc tế trong năm 2023:
+
+<!-- image -->
+
+Top 30 Doanh nghiệp nộp thuế lớn nhất Việt Nam
+
+<!-- image -->
+
+Top 500 Ngân hàng mạnh nhất Châu Á - Thái Bình Dương theo xếp hạng The Asian Banker
+
+<!-- image -->
+
+Top 50 Thương hiệu giá trị nhất Việt Nam do Brand Finance công bố
+
+Nhà cung cấp dịch vụ ngân hàng số tiêu biểu Việt Nam 2023 (Global Economics)
+
+<!-- image -->
+
+Asian Technology Excellence Awards 2023 Design Technology Award for Unlock Dream Home application (tạp chí Asian Business Review trao tặng)
+
+<!-- image -->
+
+## ĐỊNH HƯỚNG MỤC TIÊU HOẠT ĐỘNG NĂM 2024
+
+Kinh tế Việt Nam dự phóng vẫn tiếp tục đối mặt với nhiều thách thức trong năm 2024. GDP Việt Nam được dự báo tăng trưởng ở mức 5,5% - 6,0% (7)  trong 2024  với nhiều rủi ro tiềm ẩn trong nước và quốc tế. Theo đó, các chính sách của NHNN dự kiến theo hướng linh hoạt, kịp thời hỗ trợ tăng trưởng kinh tế, kiểm soát lạm phát, ổn định kinh tế vĩ mô. Năm 2024 cũng là năm bản lề với hàng loạt thay đổi trọng yếu về pháp lý sau khi Quốc hội thông qua Luật Các tổ chức tín dụng 2024, Luật Đất đai 2024, Luật Nhà ở 2023 ….
+
+Từ nhận định trên, OCB định hướng như sau:
+
+- Điều chỉnh cơ cấu tổ chức, hệ thống quản lý hiệu suất theo hướng tinh gọn, hiệu quả.
+- Từng bước tái cơ cấu lại danh mục kinh doanh theo hướng đa dạng nguồn thu, nâng cao chất lượng tài sản, tích cực đẩy mạnh công tác thu hồi xử lý nợ xấu, xử lý tài sản đảm bảo.
+- Triển khai áp dụng chuẩn mực báo cáo tài chính quốc tế (IFRS) và các tiêu chuẩn cao hơn trong công tác quản trị doanh nghiệp theo thông lệ quốc tế.
+- Triển khai các chương trình chiến lược cải thiện năng lực cạnh tranh và phát triển bền vững, định vị OCB là 'Ngân hàng xanh tiên phong tại Việt Nam'.
+- Ra mắt thành công New OMNI 4.0, thúc đẩy Open Banking, số hoá quy trình và mở rộng ứng dụng công nghệ dữ liệu vào các lĩnh vực hoạt động.
+- Nâng cao chất lượng tuyển dụng, đào tạo và phát triển nguồn nhân lực.
+- Tiếp tục mở rộng mạng lưới CN/PGD trên cả nước với kế hoạch mở rộng thêm 17 CN và PGD trong 2024.
+
+## Định hướng về chỉ tiêu kế hoạch cơ bản năm 2024:
+
+ĐVT: tỷ đồng
+
+|   STT | Chỉ tiêu 2024        | Thực hiện 2023   | Kế hoạch 2024   | So sánh KH2024vàTH2023   | So sánh KH2024vàTH2023   |
+|-------|----------------------|------------------|-----------------|--------------------------|--------------------------|
+|     1 | Tổng tài sản         | 240.114          | 286.562         | 46.448                   | 19%                      |
+|     2 | Tổng huy động TT1    | 168.112          | 197.346         | 29.234                   | 17%                      |
+|     3 | Tổng dư nợ TT1 (*)   | 148.005          | 177.592         | 29.586                   | 20%                      |
+|     4 | Tỷ lệ nợ xấu (SBV)   | 2,02%            | <3%             | -                        | -                        |
+|     5 | Lợi nhuận trước thuế | 4.139            | 6.885           | 2.746                    | 66                       |
+
+## CHƯƠNG
+
+04
+
+ĐÁNH GIÁ CỦA HĐQT
+
+VỀ HOẠT ĐỘNG CỦA OCB
+
+Đánh giá chung về công tác quản trị doanh nghiệp
+
+Định hướng hoạt động của HĐQT năm 2024
+
+<!-- image -->
+
+<!-- image -->
+
+## ĐÁNH GIÁ CHUNG VỀ CÔNG TÁC QUẢN TRỊ DOANH NGHIỆP I
+
+<!-- image -->
+
+## ĐÁNH GIÁ CHUNG VỀ CÔNG TÁC QUẢN TRỊ DOANH NGHIỆP
+
+<!-- image -->
+
+## Công tác quản trị
+
+Đầu năm 2023, HĐQT của OCB gồm 07 thành viên, trong đó có 02 thành viên độc lập. Đến 28/4/2023, OCB bầu bổ sung 02 thành viên HĐQT. Các thành viên HĐQT của Ngân hàng đã thực hiện công tác quản trị trên nguyên tắc công khai, minh bạch, tách bạch giữa hoạt động quản trị và hoạt động điều hành.
+
+Trong năm 2023, HĐQT đã tổ chức 32 phiên họp, bao gồm 05 phiên họp HĐQT trực tiếp và 27 phiên họp bằng hình thức lấy ý kiến bằng văn bản để triển khai các nghị quyết của Đại hội đồng cổ đông, giao nhiệm vụ cho BĐH và kiểm tra kết quả thực hiện các chỉ tiêu. Ngoài 32 phiên họp HĐQT, HĐQT cũng đã thảo luận và thông qua 140 Nghị quyết và Quyết định về nhiều lĩnh vực hoạt động, kinh doanh của Ngân hàng.
+
+Trong năm 2023, HĐQT đã ban hành mới và sửa đổi, bổ sung một số văn bản như: Quy chế cơ cấu tổ chức Ngân hàng TMCP Phương Đông; Quy chế tổ chức và hoạt động của Ủy ban Nhân sự OCB; Quy chế phòng, chống phổ biến vũ khí hủy diệt hàng loạt tại OCB; Quy chế bảo lãnh Ngân hàng; Quy chế về hoạt động kinh doanh Trái phiếu doanh nghiệp; Quy chế phân cấp quản lý nhân sự; Quy chế phân cấp phán quyết đối với nghiệp vụ tín dụng đầu tư giấy tờ có giá và mua bán có kỳ hạn giấy tờ có giá; Quy chế cho vay đối với khách hàng,…
+
+<!-- image -->
+
+## Hoạt động của các Ủy ban
+
+Nhằm giúp việc cho HĐQT trong công tác quản trị, HĐQT đã thành lập các cơ quan trực thuộc để triển khai công việc. Trong năm 2023, các Ủy ban đã hoàn thành tốt vai trò và đóng góp tích cực vào kết quả hoạt động chung của Ngân hàng.
+
+Chi tiết hoạt động của các Ủy ban như sau :
+
+## Ủy ban Quản lý rủi ro (UBQLRR)
+
+- Gồm có 05 thành viên, tham mưu cho HĐQT về khung chiến lược QLRR, đảm bảo OCB xây dựng và hoàn thành các chính sách liên quan.
+- Trong năm 2023, Ủy ban QLRR đã tổ chức 04 phiên  họp  định  kỳ  và  tổ  chức  ý  kiến  qua email  nhằm  giám  sát  khẩu  vị  rủi  ro,  trạng thái  rủi  ro  toàn  hàng;  đánh  giá  và  chỉ  đạo triển khai các chương trình hành động, biện pháp  kiểm  soát  rủi  ro;  thông  qua  các  đề xuất  ban  hành  các  Quy  chế  liên  quan  đến khung  quản  lý  mô  hình  đo  lường  rủi  ro, khung chiến lược QLRR, khung khẩu vị rủi ro, đánh giá nội bộ về mức đủ vốn phù hợp và tuân  thủ  quy  định  pháp  luật  và  thực  tiễn kinh doanh.
+
+## Ủy ban Nhân sự
+
+- Gồm  có  04  thành  viên,  chịu  trách  nhiệm tham mưu cho HĐQT các định hướng trong công tác quản lý và phát triển nhân sự, xây dựng  văn  hóa, gắn  kết, chế  độ  lương, thưởng, phúc lợi cho cán bộ nhân viên OCB.
+- Trong năm 2023, Ủy ban Nhân sự đã chỉ đạo rà soát năng suất lao động nhằm tối ưu hóa chi phí nhân viên, đào tạo năng lực quản lý cho  đội  ngũ  quản  lý;  xây  dựng  văn  hóa, hướng tới đào tạo, phát triển nội bộ đảm bảo cân  bằng,  ổn  định  nhân  sự  và  tiếp  tục  rà soát  công  tác  tuyển  dụng,  đào  tạo,  chính sách nhằm thu hút và giữ chân nhân sự có năng lực.
+
+## Ủy ban Xử lý rủi ro (UBXLRR)
+
+- Gồm có 06 thành viên.
+- UBXLRR chịu trách nhiệm quản lý chính sách dự  phòng,  quyết  định  hoặc  phê  duyệt  các biện pháp thu hồi nợ đối với nợ đã sử dụng dự phòng  để  xử  lý  rủi  ro,  quyết  định  các  biện pháp xử lý các khoản nợ quá hạn hoặc trong hạn tiềm ẩn rủi ro, quyết định và phê duyệt các biện pháp xử lý đối với các sự kiện rủi ro hoạt động có phát sinh tổn thất tài chính.
+
+## Hội đồng Mua bán nợ
+
+- Gồm có 09 thành viên.
+
+## Ủy ban Cơ cấu nợ (UBCCN)
+
+- Gồm  có  09  thành  viên,  chịu  trách  nhiệm tham mưu cho HĐQT trong việc phê duyệt cơ cấu lại thời hạn trả nợ, tham mưu cho HĐQT trong việc phê duyệt sửa đổi, bổ sung hoặc thay  thế  các  quy  định  có  liên  quan  thuộc phạm vi chức năng của Ủy ban Cơ cấu nợ.
+- Trong năm 2023, UBCCN đã tổ chức 38 cuộc họp với 70 hồ sơ.
+
+## Ủy ban Hợp tác Chiến lược (SAC)
+
+- Gồm 04 thành viên.
+- Hội đồng Mua bán nợ chịu trách nhiệm tham mưu cho HĐQT về hoạt động mua, bán nợ tại OCB; phê duyệt mua, bán nợ trong phạm vi thẩm quyền theo quy định. Trong năm 2023, Hội đồng Mua bán nợ đã xử lý 06 hồ sơ theo thẩm quyền.
+- Trong năm 2023 đã có 03 cuộc họp SAC được tổ chức nhằm trao đổi và thống nhất về định hướng hợp tác chiến lược và phát triển kinh doanh giữa OCB và Ngân hàng Aozora (Nhật Bản).
+
+## Ủy ban Tín dụng
+
+- Gồm có 10 thành viên.
+- Trong năm 2023, Ủy ban Tín dụng đã phê duyệt hồ sơ tín dụng theo phạm vi phân cấp và phê duyệt khung quản lý rủi ro tín dụng.
+
+<!-- image -->
+
+## Hoạt động của thành viên độc lập của HĐQT và kết quả đánh giá của thành viên độc lập về hoạt động của HĐQT 3
+
+Năm 2023 là năm thứ 4 trong nhiệm kỳ (2020 - 2025) của HĐQT, HĐQT OCB có 02 (hai) thành viên độc lập là Ông Pham Tri Nguyen và Ông Bùi Minh Đức. Ông Pham Tri Nguyen giữ vị trí thành viên Ủy ban Quản lý rủi ro và chịu trách nhiệm phát triển hợp tác với các định chế nước ngoài; kết nối, đầu tư từ các quỹ đầu tư nước ngoài. Ông Bùi Minh Đức phụ trách công tác quản trị kế toán kiểm toán của Ngân hàng.
+
+- Các thành viên HĐQT độc lập đã tham gia đầy đủ các cuộc họp của HĐQT trong năm để thực hiện nhiệm vụ được phân công.
+- Các thành viên HĐQT độc lập đã thực hiện việc xem xét và đóng góp ý kiến đối với chiến lược, kế hoạch kinh doanh và các văn bản của Ngân hàng thuộc thẩm quyền.
+- Tham gia giám sát và đôn đốc BĐH trong việc thực hiện kế hoạch kinh doanh.
+- Các thành viên HĐQT độc lập đã có những đóng góp tích cực về công tác quản trị của Ngân hàng, bảo đảm tính độc lập và khách quan trong việc ra quyết định của HĐQT.
+
+Đánh giá của các thành viên HĐQT độc lập về hoạt động của HĐQT OCB:
+
+- HĐQT OCB đã hoạt động theo đúng nhiệm vụ quy định tại Điều lệ OCB, Quy chế tổ chức hoạt động, quy định của pháp luật.
+- Các thành viên HĐQT làm việc tích cực và hiệu quả trên tinh thần cẩn trọng, minh bạch và trách nhiệm.
+- HĐQT cũng đã thực hiện tốt việc hoạch định chiến lược cho Ngân hàng và hỗ trợ BĐH hoàn thành mục tiêu kế hoạch kinh doanh năm 2023.
+
+## Hoạt động giám sát đối với Ban Điều hành 4
+
+<!-- image -->
+
+Trong năm 2023, HĐQT đã tổ chức các buổi làm việc với BĐH để trao đổi thông tin nhằm triển khai và thực thi kế hoạch kinh doanh:
+
+- Thực hiện theo Điều lệ và các quy định nội bộ của OCB.
+- HĐQT luôn đảm bảo sự giám sát các hoạt động điều hành của Ban Tổng Giám đốc thông qua cơ chế Ban Tổng Giám đốc báo cáo định kỳ đến HĐQT về hoạt động toàn hàng tại các phiên họp HĐQT và phê duyệt các đề xuất của Ban Tổng Giám đốc.
+
+## Thực hiện nghị quyết của ĐHĐCĐ năm 2023 5
+
+<!-- image -->
+
+Ngoài việc thực hiện Nghị quyết về hoạt động kinh doanh, trong năm 2023 OCB đã thực hiện các nghị quyết của ĐHĐCĐ năm 2023 đề ra như sau:
+
+- Sửa đổi và ban hành Điều lệ OCB năm 2023;
+- Thực hiện trích lập các quỹ năm 2022;
+- Đã chọn Công ty TNHH Ernst &amp; Young Việt Nam thực hiện kiểm toán BCTC năm 2024;
+- Đã được Ngân hàng Nhà nước Việt Nam chấp thuận việc thay đổi địa điểm đặt trụ sở chính của OCB đến địa điểm mới là tòa nhà The Hallmark số 15 Trần Bạch Đằng, phường Thủ Thiêm, thành phố Thủ Đức, thành phố Hồ Chí Minh.
+- Về việc tăng vốn điều lệ: Hoàn thành việc tăng vốn điều lệ lên 20.548.242.940.000 đồng do phát hành cổ phiếu thưởng cho cổ đông hiện hữu, chính thức nằm trong Top Ngân hàng tư nhân có vốn điều lệ lớn nhất hệ thống.
+
+<!-- image -->
+
+## BÁO CÁO CÔNG KHAI CÁC LỢI ÍCH LIÊN QUAN
+
+Theo quy định tại Điều 39 Luật các tổ chức tín dụng năm 2010, OCB báo cáo công khai đến ĐHĐCĐ các lợi ích liên quan đến HĐQT, BKS, BĐH tính đến thời điểm 31/12/2023 như sau:
+
+| Đối tượng         | Số lượng thành viên   | Số doanh nghiệp là người có liên quan   |
+|-------------------|-----------------------|-----------------------------------------|
+| Hội đồng Quản trị | 09 thành viên         | 09 doanh nghiệp                         |
+| Ban Kiểm soát     | 03 thành viên         | 01 doanh nghiệp                         |
+| Ban Điều hành     | 06 thành viên         | 02 doanh nghiệp                         |
+
+## CÁC NỘI DUNG KHÁC HĐQT CẦN BÁO CÁO ĐHĐCĐ THEO LUẬT ĐỊNH
+
+Báo cáo về các giao dịch giữa Ngân hàng, công ty con, công ty do Ngân hàng nắm quyền kiểm soát trên 50% trở lên vốn Điều lệ với thành viên HĐQT và những người có liên quan: có phát sinh (theo báo cáo tình hình quản trị công ty năm 2023).
+
+Báo cáo về các giao dịch giữa Ngân hàng với công ty trong đó thành viên HĐQT là thành viên sáng lập hoặc là người quản lý doanh nghiệp trong thời gian 03 năm gần nhất trước thời điểm giao dịch: Không phát sinh.
+
+Báo cáo công khai danh sách người vay:
+
+Theo quy định tại Điều 127.1 Luật Các tổ chức tín dụng 2010, OCB báo cáo công khai với ĐHĐCĐ về việc cho vay đối tượng hạn chế cấp tín dụng đến thời điểm ngày 31/12/2023 như sau:
+
+- Đối tượng: CBNV của OCB có chức danh thuộc đối tượng hạn chế cấp tín dụng
+- Tổng số CBNV vay vốn: 1.159 người
+- Tổng số món vay: 99 món vay và 1.483 khoản thẻ tín dụng
+- Tổng hạn mức cấp tín dụng: 254,07 tỷ đồng
+- Tổng dư nợ thực tế tại ngày 31/12/2023: 202,16 tỷ đồng
+
+Việc cho vay các đối tượng nói trên đã được OCB thực hiện tuân thủ theo quy định pháp luật và quy định của OCB.
+
+Báo cáo kết quả phân loại nợ, cam kết ngoại bảng, trích lập dự phòng rủi ro, sử dụng dự phòng rủi ro và xử lý tổn thất tính đến thời điểm ngày 31/12/2023 như sau:
+
+- Kết quả phân loại nợ tại 31/12/2023: Tổng nợ nội bảng (tổng Tài sản có) là 197.145 tỷ đồng; Tổng nợ xấu là 3.975 tỷ đồng; Tỷ lệ nợ xấu là 2,02%
+- Tổng cam kết ngoại bảng: 8.122 tỷ đồng
+- Kết quả trích lập dự phòng rủi ro tại ngày 31/12/2023: 2.530 tỷ đồng
+- Kết quả sử dụng dự phòng để xử lý rủi ro trong năm 2023: 703 tỷ đồng
+- Kết quả sử dụng dự phòng để xử lý tổn thất tồn đọng: OCB chưa phát sinh xử lý tổn thất theo quy định tại Thông tư 11
+
+## ĐỊNH HƯỚNG HOẠT ĐỘNG CỦA HĐQT NĂM 2024 II
+
+<!-- image -->
+
+Năm 2024 được xem là năm bản lề quan trọng trong chiến lược phát triển giai đoạn 2021 - 2025, nhằm đạt đươc mục tiêu đưa OCB vào Top ngân hàng hàng đầu tại Việt Nam, HĐQT quyết định đưa ra các định hướng hoạt động như sau:
+
+- Điều chỉnh cơ cấu tổ chức, hệ thống quản lý hiệu suất theo hướng tinh gọn, hiệu quả.
+- Từng bước tái cơ cấu lại danh mục kinh doanh theo hướng đa dạng nguồn thu, nâng cao chất lượng tài sản, tích cực đẩy mạnh công tác thu hồi xử lý nợ xấu, xử lý tài sản đảm bảo.
+- Triển khai áp dụng chuẩn mực báo cáo tài chính quốc tế (IFRS) và các tiêu chuẩn cao hơn trong công tác quản trị doanh nghiệp theo thông lệ quốc tế.
+- Triển khai các chương trình chiến lược cải thiện năng lực cạnh tranh và phát triển bền vững, định vị OCB là 'Ngân hàng xanh tiên phong tại Việt Nam'.
+- Ra mắt thành công New OMNI 4.0, thúc đẩy Open Banking, số hoá quy trình và mở rộng ứng dụng công nghệ dữ liệu vào các lĩnh vực hoạt động.
+- Nâng cao chất lượng tuyển dụng, đào tạo và phát triển nguồn nhân lực.
+- Tiếp tục mở rộng mạng lưới CN/PGD trên cả nước với kế hoạch mở rộng thêm 17 Chi nhánh và Phòng Giao dịch trong 2024.
+
+## Định hướng về chỉ tiêu kế hoạch cơ bản năm 2024 :
+
+ĐVT: tỷ đồng
+
+|   STT | Chỉ tiêu 2024        | Thực hiện 2023   | Kế hoạch 2024   | So sánh KH2024vàTH2023   | So sánh KH2024vàTH2023   |
+|-------|----------------------|------------------|-----------------|--------------------------|--------------------------|
+|     1 | Tổng tài sản         | 240.114          | 286.562         | 46.448                   | 19%                      |
+|     2 | Tổng huy động TT1    | 168.112          | 197.346         | 29.234                   | 17%                      |
+|     3 | Tổng dư nợ TT1 (*)   | 148.005          | 177.592         | 29.586                   | 20%                      |
+|     4 | Tỷ lệ nợ xấu (SBV)   | 2,02%            | <3%             | -                        | -                        |
+|     5 | Lợi nhuận trước thuế | 4.139            | 6.885           | 2.746                    | 66%                      |
+
+(*)  Chỉ tiêu Tổng dư nợ TT1 sẽ được điều chỉnh theo hạn mức tăng trưởng tín dụng NHNN phê duyệt.
+
+## CHƯƠNG 05 BÁO CÁO CỦA BAN KIỂM SOÁT
+
+| Kết quả hoạt động của Ban Kiểm soát năm2023        |   73 |
+|----------------------------------------------------|------|
+| Đánh giá tình hình thực hiện nghịquyếtĐHĐCĐnăm2023 |   74 |
+| Phương hướng hoạt độngnăm2024                      |   75 |
+
+<!-- image -->
+
+## KẾT QUẢ HOẠT ĐỘNG CỦA BAN KIỂM SOÁT NĂM 2023
+
+## Tổng kết cuộc họp của Ban Kiểm soát 1
+
+<!-- image -->
+
+Trong năm 2023, BKS đã tổ chức 06 phiên họp vào các ngày: 11/01/2023, 13/3/2023, 04/4/2023, 13/7/2023, 13/10/2023 và 13/12/2023. BKS đã duy trì hoạt động theo đúng quy định pháp luật và Điều lệ OCB. Các thành viên BKS đều tham dự đầy đủ các phiên họp định kỳ và biểu quyết thống nhất thông qua các vấn đề, nội dung thuộc chức năng, nhiệm vụ của BKS.
+
+Ngoài ra, BKS thường xuyên tham gia các cuộc họp định kỳ của Ban Điều hành, tổ chức trao đổi, thảo luận và đánh giá hoạt động của Kiểm toán nội bộ để phục vụ cho mục đích kiểm soát của BKS.
+
+<!-- image -->
+
+## Kết quả thẩm định báo cáo tài chính năm 2023
+
+Trên cơ sở Báo cáo tài chính 6 tháng đầu năm 2023 và Báo cáo tài chính năm 2023 đã được soát xét và kiểm toán bởi Công ty TNHH Ernst &amp; Young Việt Nam và đã được công bố trên website của OCB theo đúng quy định hiện hành. Ban Kiểm soát thống nhất với các ý kiến, nhận xét tại Báo cáo kiểm toán của Công ty TNHH Ernst &amp; Young Việt Nam như sau: báo cáo tài chính riêng lẻ và báo cáo tài chính hợp nhất đã phản ánh trung thực và hợp lý trên các khía cạnh trọng yếu, tình hình tài chính của OCB tại ngày 31/12/2023 cũng như kết quả hoạt động kinh doanh và lưu chuyển tiền tệ cho năm tài chính kết thúc cùng ngày, phù hợp với các chuẩn mực kế toán Việt Nam, hệ thống kế toán các tổ chức tín dụng Việt Nam và các quy định pháp lý có liên quan đến việc lập và trình bày báo cáo tài chính.
+
+<!-- image -->
+
+## Kết quả giám sát đối với HĐQT, Tổng Giám đốc (TGĐ) và các người điều hành khác
+
+Trong năm 2023, BKS đã thực hiện giám sát đối với HĐQT, TGĐ và các người điều hành hoạt động quản trị điều hành với các nội dung sau:
+
+- Giám sát việc thực hiện các quy định của pháp luật và Điều lệ OCB trong việc quản trị và điều hành;
+- Giám sát việc triển khai hệ thống kiểm soát nội bộ và quản trị rủi ro thông qua hoạt động kiểm toán nội bộ;
+- Rà soát việc tuân thủ các quy định của pháp luật trong việc xây dựng và ban hành quy chế, quy định nội bộ của HĐQT và TGĐ;
+- Giám sát việc thực hiện các chỉ thị của NHNN trong hoạt động ngân hàng;
+- Giám sát việc thực hiện nghị quyết Đại hội đồng cổ đông.
+
+Qua công tác giám sát, BKS đánh giá hoạt động quản trị, điều hành đã được triển khai phù hợp theo quy định pháp luật và quy định của OCB, bao gồm việc tuân thủ các hạn chế để đảm bảo an toàn trong hoạt động của OCB được quy định tại Khoản 1, Điều 127 của Luật các TCTD số 47/2010/QH12.
+
+Ngoài ra, HĐQT đã tích cực triển khai công tác quản trị ngân hàng, thay đổi cơ cấu tổ chức, có các quyết định kịp thời nhằm hỗ trợ và tạo điều kiện cho Ban điều hành triển khai hoạt động kinh doanh và giải quyết các khó khăn vướng mắc trong hoạt động kinh doanh. TGĐ đã tổ chức, điều hành hoạt động ngân hàng theo quy định pháp luật và quy định nội bộ của OCB.
+
+BKS đánh giá các hoạt động kinh doanh của OCB đã được HĐQT và TGĐ thực hiện tuân thủ theo quy định pháp luật và quy định nội bộ của OCB.
+
+<!-- image -->
+
+## Kết quả đánh giá sự phối hợp hoạt động giữa BKS với HĐQT, TGĐ và các cổ đông 4
+
+Sự phối hợp giữa BKS với HĐQT, TGĐ và các cổ đông OCB được thực hiện theo nguyên tắc tuân thủ quy định pháp luật và quy định của OCB và vì lợi ích chung của OCB.
+
+HĐQT đã tạo điều kiện thuận lợi cho BKS thực hiện đầy đủ chức năng nhiệm vụ theo quy định, BKS đã tham dự đầy đủ các phiên họp trực tiếp của HĐQT, trong các phiên họp BKS báo cáo về hoạt động của BKS, tham gia thảo luận và đóng góp ý kiến của từng phiên họp.
+
+Các kiến nghị của BKS và Kiểm toán nội bộ đã được HĐQT và TGĐ xem xét và chỉ đạo các phòng ban liên quan thực hiện.
+
+## Thù lao, chi phí hoạt động và các lợi ích khác của BKS 5
+
+<!-- image -->
+
+Mức thù lao, chi phí hoạt động và các lợi ích khác của BKS trong phạm vi ngân sách hoạt động của HĐQT và BKS đã được ĐHĐCĐ năm 2023 thông qua.
+
+## Hoạt động kiểm toán nội bộ 6
+
+<!-- image -->
+
+Trong năm 2023, BKS đã giám sát, chỉ đạo Phòng Kiểm toán nội bộ triển khai các hoạt động theo chức năng, nhiệm vụ như sau:
+
+- Hoàn thành 100% kế hoạch kiểm toán năm 2023 đã được BKS phê duyệt. Cụ thể đã hoàn thành 30/30 nội dung/đơn vị được kiểm toán theo kế hoạch.
+- Rà soát và ban hành Sổ tay kiểm toán nội bộ và tiếp tục hoàn thiện các quy định, hướng dẫn công việc có liên quan đến kiểm toán nội bộ.
+- Lập  kế  hoạch  kiểm  toán  nội  bộ  năm  2024  theo  định  hướng  rủi  ro  và  quy  định  tại  Thông  tư 13/2018/TT-NHNN ngày 18/5/2018 của Thống đốc NHNN quy định về hệ thống kiểm soát nội bộ của ngân hàng thương mại, chi nhánh ngân hàng nước ngoài.
+- Qua kết quả kiểm toán, Phòng Kiểm toán nội bộ đã có các kiến nghị để khắc phục các sai sót, sửa đổi, bổ sung các quy định, quy trình nhiệm vụ nhằm tăng cường quản lý rủi ro và hiệu quả hoạt động.
+- Phòng Kiểm toán nội bộ đã thực hiện đầy đủ, kịp thời các báo cáo theo quy định của NHNN và quy định nội bộ của OCB.
+
+## ĐÁNH GIÁ TÌNH HÌNH THỰC HIỆN NGHỊ QUYẾT ĐHĐCĐ NĂM 2023
+
+## Kết quả giám sát tình hình hoạt động và tài chính của OCB 1
+
+<!-- image -->
+
+HĐQT đã hoàn thành các chỉ tiêu kế hoạch kinh doanh do ĐHĐCĐ năm 2023 giao như sau:
+
+|   STT | Chỉ tiêu hoạt động kinh doanh   | Kế hoạch 2023 do ĐHĐCĐgiao   | Thực hiện 31/12/2023   | Tỷ lệ hoàn thànhKH   |
+|-------|---------------------------------|------------------------------|------------------------|----------------------|
+|     1 | Tổng tài sản                    | 242.152                      | 240.114                | 99%                  |
+|     2 | Tổng huy động TT1               | 173.087                      | 168.112                | 97%                  |
+|     3 | Tổng dư nợ TT1                  | 147.330                      | 148.005                | 100%                 |
+|     4 | Tỷ lệ nợ xấu                    | <3%                          | 2,02%                  | Đạt                  |
+|     5 | Lợi nhuận trước thuế            | 6.000                        | 4.139                  | 69%                  |
+
+ĐVT: tỷ đồng
+
+Các chỉ số về quản lý rủi ro cũng được quản trị và tuân thủ đầy đủ theo quy định của cơ quan quản lý nhà nước.
+
+<!-- image -->
+
+## Kết quả thực hiện các nghị quyết khác của Đại hội đồng cổ đông năm 2023 2
+
+Ngoài việc thực hiện các chỉ tiêu kinh doanh, trong năm 2023 HĐQT, BKS đã thực hiện các nghị quyết của ĐHĐCĐ đề ra như sau:
+
+- Sửa đổi và ban hành Điều lệ OCB năm 2023.
+- Đã hoàn thành việc trích lập các quỹ năm 2022.
+- Hoàn thành việc lựa chọn Công ty TNHH Ernst &amp; Young Việt Nam để thực hiện kiểm toán BCTC năm 2024.
+- Đã được NHNN Việt Nam chấp thuận việc thay đổi địa điểm đặt trụ sở chính của OCB đến địa điểm mới là tòa nhà The Hallmark số 15 Trần Bạch Đằng, phường Thủ Thiêm, thành phố Thủ Đức, thành phố Hồ Chí Minh.
+- Hoàn thành việc tăng vốn điều lệ lên 20.548.242.940.000 đồng do phát hành cổ phiếu thưởng cho cổ đông hiện hữu, chính thức nằm trong Top Ngân hàng tư nhân có vốn điều lệ lớn nhất hệ thống.
+
+## PHƯƠNG HƯỚNG HOẠT ĐỘNG NĂM 2024
+
+Để hoàn thành tốt nhiệm vụ được giao, Ban Kiểm soát xác định nhiệm vụ trọng tâm trong năm 2024 như sau:
+
+- Giám sát hoạt động quản trị, điều hành của OCB trong việc tuân thủ quy định pháp luật, quy định nội bộ và Điều lệ OCB.
+- Giám sát việc thực hiện Nghị quyết Đại hội đồng cổ đông và Nghị quyết của Hội đồng quản trị.
+- Giám sát thực trạng tài chính, thẩm định báo cáo tài chính 06 tháng đầu năm và hàng năm; đánh giá tính hợp lý, hợp pháp, trung thực và mức độ cẩn trọng trong công tác kế toán, thống kê và lập báo cáo tài chính.
+- Rà soát, cập nhật, bổ sung quy định nội bộ của Ban Kiểm soát phù hợp với quy định của pháp luật.
+- Đã phê duyệt kế hoạch Kiểm toán nội bộ năm 2024 theo định hướng rủi ro và quy định tại Thông tư 13/2018/TT-NHNN.
+- Chỉ đạo KTNB xây dựng và hoàn thiện các quy trình kiểm toán nội bộ, ứng dụng công nghệ thông tin vào hoạt động kiểm toán nội bộ để nâng cao năng suất lao động, chất lượng hoạt động của kiểm toán nội bộ.
+- Thực hiện các chức năng nhiệm vụ khác của Ban Kiểm soát theo quy định của pháp luật và Điều lệ OCB.
+- Thực hiện và chỉ đạo thực hiện các yêu cầu của Ngân hàng Nhà nước và các cơ quan chức năng theo quy định pháp luật.
+
+75
+
+## CHƯƠNG
+
+## 06 BÁO CÁO PHÁT TRIỂN BỀN VỮNG
+
+| Tiêu chuẩn kinh tế GRI 200    |   80 |
+|-------------------------------|------|
+| Tiêu chuẩn môi trường GRI 300 |   96 |
+| Tiêu chuẩn xã hội GRI 400     |  105 |
+
+## TỔNG QUAN BÁO CÁO PHÁT TRIỂN BỀN VỮNG
+
+Năm 2023 là một năm khó khăn chung cho nền kinh tế thế giới và Việt Nam, với sự giảm sút cả tăng trưởng GDP, thương mại và đầu tư toàn cầu; trong khi nợ xấu tăng và lạm phát vẫn duy trì ở mức cao, gắn với những diễn biến căng thẳng của các xung đột địa chính trị và phân mảnh công nghệ, thời tiết cực đoan và dịch bệnh diện rộng...
+
+Trước những thách thức khó lường từ biến động của nền kinh tế trong nước và thế giới, nhờ chú trọng phát triển bền vững, nhiều ngân hàng đã xây dựng biện pháp 'phòng vệ' hiệu quả từ sớm, qua đó đạt kết quả kinh doanh tốt. Tại OCB, là một trong những ngân hàng luôn tiên phong và kiên định với mô hình quản trị theo định hướng phát triển bền vững. Do đó, ngân hàng đã thực hiện hàng loạt các dự án quan trọng bao gồm: Trở thành ngân hàng đầu tiên tại Việt Nam công bố hoàn thành triển khai và áp dụng nền tảng quản lý vốn theo Basel II Nâng cao và Basel III; Tuyên bố chiến lược phát triển bền vững, đưa OCB trở thành ngân hàng XANH tiên phong tại Việt Nam, hàng loạt các chương trình, gói tín dụng xanh đã được cung cấp đến khách hàng, tiên phong áp dụng số hóa vào sản phẩm, dịch vụ và hoạt động nội bộ... Đây là kim chỉ nam giúp ngân hàng vững vàng ứng phó với những khó khăn, thách thức để lan tỏa niềm tin và giá trị tích cực đến với cộng đồng.
+
+Báo cáo Phát triển bền vững (BCPTBV) 2023 của OCB là bức tranh tổng thế về các hoạt động của ngân hàng gắn kết với các vấn đề phát triển bền vững trong năm, thông qua phương pháp tiếp cận mục tiêu tăng trưởng kinh tế với mục tiêu phát triển cộng đồng, xã hội và bảo vệ môi trường. Bởi đối với OCB, minh bạch, khách quan, trung thực - chính là giá trị xuyên suốt của Ngân hàng trong suốt hành trình 27 năm qua.
+
+Vì một  tương lai
+
+<!-- image -->
+
+Các hoạt động của ngân hàng đều thực hiện trên cơ sở tuân thủ quy định pháp luật Việt Nam, tiếp cận các chuẩn mực quốc tế, đảm bảo tính minh bạch, hệ thống quản trị rủi ro, đảm bảo lợi ích tối đa cho cổ đông, khách hàng, người lao động và cộng đồng.
+
+Chúng tôi tin rằng, đích đến của phát triển bền vững là mang đến giá trị lâu dài về tài chính, môi trường, xã hội, nâng tầm trải nghiệm của khách hàng, tăng giá trị cho Ngân hàng cho các cổ đông, kiến tạo một xã hội tốt đẹp hơn. Đây sẽ là nguồn cảm hứng để chúng tôi không ngừng đầu tư và phát triển một ngân hàng XANH mang tên OCB GREENBANK.
+
+<!-- image -->
+
+## I. TIÊU CHUẨN KINH TẾ GRI 200
+
+## 1. HIỆU QUẢ HOẠT ĐỘNG KINH TẾ 2023
+
+Kết thúc năm 2023, trước tình hình khó khăn, và nhiều biến động quốc tế, trong nước nhưng OCB vẫn duy trì đà tăng trưởng trong các hoạt động kinh doanh cốt lõi, bên cạnh đó là việc kiện toàn hệ thống quản lý rủi ro theo chuẩn quốc tế, tiếp tục tăng cường số hóa toàn diện.
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+Năm 2023, OCB đã được các tổ chức uy tín trong nước và quốc tế vinh danh tại nhiều giải thưởng quan trọng, đây chính là sự ghi nhận cho những nỗ lực trong hoạt động kinh doanh của ngân hàng, khẳng định uy tín và vị trí thương hiệu OCB trên thị trường ngân hàng tài chính khu vực và quốc tế:
+
+<!-- image -->
+
+## 2. NHỮNG TIÊU CHUẨN TRỌNG YẾU VỀ KINH TẾ
+
+## Quản trị rủi ro hướng đến phát triển bền vững 2.1
+
+<!-- image -->
+
+Hoạt động trong lĩnh vực tài chính, OCB nhận thức rõ trách nhiệm quan trọng của mình trong hoạt động quản trị rủi ro. Chính vì vậy, hệ thống quản lý rủi ro (QLRR) áp dụng tại OCB được tổ chức xuyên suốt từ Hội sở đến từng đơn vị kinh doanh. Theo đó, trách nhiệm QLRR là trách nhiệm của tất cả CBNV tham gia trực tiếp, gián tiếp vào từng hoạt động của ngân hàng.
+
+Đến hết năm 2023, hoạt động quản trị rủi ro của OCB đã được nâng tầm phù hợp với chiến lược phát triển cũng như với định hướng của NHNN và thông lệ Basel II. OCB đã hoàn thành triển khai và áp dụng nền tảng tính vốn điện toán đám mây theo Basel II Nâng cao, trở thành ngân hàng đầu tiên tại Việt Nam hoàn thành tất cả các yêu cầu tiên tiến của Basel trong chuẩn mực quản trị rủi ro quốc tế. Cụ thể: OCB đã hoàn thành xây dựng nền tảng toàn diện về quản lý vốn và tài sản có rủi ro theo Basel, gồm 4 yêu cầu chính: Các kho dữ liệu số (Data warehouse) tập trung theo tiêu chuẩn quốc tế; Xây dựng và kiểm định đầy đủ các mô hình đo lường rủi ro tín dụng; Phương pháp luận tính toán tài sản có rủi ro cho rủi ro tín dụng và tỉ lệ an toàn vốn (CAR) theo Basel II nâng cao; Ứng dụng nền tảng số Moody's vào tính toán và quản lý tài sản có rủi ro theo Basel II nâng cao.
+
+Dự án đã giúp OCB hoàn thiện cơ sở hạ tầng dữ liệu ngân hàng một cách toàn diện, áp dụng các mô hình dữ liệu theo tiêu chuẩn kỹ thuật tiên tiến, có tính ứng dụng cao cho hoạt động kinh doanh và quản lý rủi ro. Theo đó, rút ngắn thời gian triển khai xây dựng và kiểm định các mô hình rủi ro của ngân hàng từ 3 tháng xuống còn chưa đầy 1 tháng. Đồng thời, OCB đã xây dựng và kiểm nghiệm đầy đủ các mô hình cho phân khúc bán lẻ và doanh nghiệp theo yêu cầu, bao gồm: đo lường khả năng khách hàng vỡ nợ (PD), đo lường tỷ lệ tổn thất khi vỡ nợ (LGD) và tổng dư nợ tại thời điểm vỡ nợ (EAD) theo từng phân khúc, sản phẩm. Kết quả đánh giá cũng cho thấy các mô hình đều đáp ứng đầy đủ yêu cầu của Basel cũng như thông lệ quốc tế.
+
+Đặc biệt, dựa trên kết quả mô hình và được sự tham vấn của các đối tác về hoạt động quản lý rủi ro tín dụng, OCB đã hoàn thiện và áp dụng phương pháp quản lý vốn theo Basel II nâng cao. Cụ thể, ngân hàng đã triển khai phương pháp xếp hạng nội bộ nâng cao (AIRB) để tính vốn với danh mục khoản phải đòi bán lẻ và phương pháp xếp hạng nội bộ cơ bản (FIRB) với danh mục khoản phải đòi doanh nghiệp theo chuẩn Basel II. So với phương pháp quản lý hệ số an toàn vốn Basel II tiêu chuẩn (SA) đang được áp dụng tại Việt Nam, đây là một bước tiến lớn của OCB, thể hiện mức độ phát triển cao về dữ liệu và phương pháp đo lường rủi ro. Thay vì áp dụng chung một mức độ đo lường rủi ro cho một nhóm khoản vay và khách hàng có tính chất tương đồng theo Basel II tiêu chuẩn, kết quả đo lường rủi ro theo phương pháp Basel II nâng cao cho phép ngân hàng đo lường và phân loại rủi ro chi tiết đến từng hợp đồng vay, khách hàng vay. Đây là cơ sở để ngân hàng triển khai các phương thức quản lý danh mục chủ động và áp dụng lãi suất cho vay linh hoạt theo mức độ rủi ro cho từng khoản vay, củng cố nền tảng quản trị rủi ro vững chắc, hướng đến sự minh bạch, nâng cao vị thế cạnh tranh, cũng như tăng cường sức mạnh và khả năng chống chịu trước các biến động kinh tế vĩ mô có thể xảy ra.
+
+Bên cạnh đó, trong năm 2023, OCB đã quản trị rủi ro hiệu quả bằng việc triển khai hoạt động/công cụ cụ thể:
+
+- Triển khai mô hình kiểm soát rủi ro ba tuyến bảo vệ: Tuyến bảo vệ thứ nhất; Tuyến bảo vệ thứ hai và Tuyến bảo vệ thứ ba;
+- Thu thập và phân tích số liệu tổn thất (Loss Data Collection - LDC);
+- Tự đánh giá kiểm soát rủi ro hoạt động (Risk Control Self Assessment - RCSA);
+- Chỉ số rủi ro trọng yếu (Key Risk indicators - KRI);
+- Nhận diện rủi ro sớm đối với các chính sách, quy định, sản phẩm, dịch vụ mới;
+- Các chuyên đề giám sát từ xa nhằm phát hiện sớm gian lận, rủi ro tập trung vào các hoạt động trọng yếu của ngân hàng;
+- Thu thập và phân tích các phát hiện của kiểm toán nội bộ, kiểm toán độc lập, các cơ quan thanh tra… để đánh giá điểm yếu kiểm soát và lên kế hoạch giảm thiểu rủi ro;
+- Thu thập các sự vụ tổn thất từ các tổ chức tài chính khác để phân tích bài học kinh nghiệm, bổ sung các biện pháp ngăn ngừa rủi ro;
+- Sử dụng công cụ sơ đồ hóa các quy trình nghiệp vụ (Business Process Mapping - BPM) để xác định mức độ rủi ro hoạt động của từng quy trình nghiệp vụ;
+- Đặc biệt, năm 2023 OCB thực hiện đầu tư, triển khai và đưa vào vận hành hệ thống quản lý gian lận trên nền tảng IBM® Safer Payments để giám sát, chủ động ngăn chặn và quản lý các hành vi gian lận trong hoạt động ngân hàng đa kênh kỹ thuật số hướng đến việc bảo vệ khách hàng, mang lại trải nghiệm tối ưu, an toàn khi sử dụng sản phẩm dịch vụ, giảm thiểu tổn thất cho ngân hàng và đáp ứng các quy định của NHNN về giám sát giao dịch và phòng chống gian lận.
+
+<!-- image -->
+
+## Hoạt động chống tham nhũng 2.1
+
+<!-- image -->
+
+Hoạt động trong lĩnh vực tài chính, OCB luôn ý thức rõ vai trò, trách nhiệm của mình trong công tác phòng chống tham nhũng, tội phạm và rửa tiền. Do đó, ngân hàng đặc biệt chú trọng xây dựng cơ chế, chính sách và đào tạo để ngăn chặn các hành vi này xảy ra. Cụ thể:
+
+- Ban hành các quy chế hoạt động của Ban chỉ đạo và Tiểu ban chỉ đạo phòng, chống tham nhũng và tội phạm:
+- Tại Hội sở, Ban chỉ đạo Phòng, chống tham nhũng và tội phạm hoạt động theo quy chế số 03/2022/QĐ-HĐQT ngày 16/3/2022
+- Tại Chi nhánh trong toàn hệ thống OCB, Tiểu ban chỉ đạo Phòng, chống tham nhũng và tội phạm hoạt động theo quy chế số 03/2022/QĐ-HĐQT ngày 16/3/2022
+- Công tác tuyên truyền, phổ biến, giáo dục về phòng, chống tham nhũng luôn được OCB triển khai một cách sâu rộng và quyết liệt. Bởi HĐQT, Ban Điều hành luôn xem đây nhiệm vụ xuyên suốt không thể thiếu trong công tác hoạt động kinh doanh.
+- Tuyên truyền, phổ biến chủ trương, chính sách, pháp luật về PCTN và tội phạm đến CNBV thông qua các buổi họp giao ban tại tất cả các Đơn vị
+- Thường xuyên cảnh báo các phương thức, thủ đoạn của tội phạm trong hoạt động ngân hàng cũng như hướng dẫn khách hàng cách sử dụng dịch vụ ngân hàng an toàn
+- Tích cực bồi dưỡng, nâng cao trình độ nghiệp vụ, đạo đức nghề nghiệp cho CBNV. Tất cả CBNV đều nhận thức và tích cực tham gia phòng, chống, ngăn ngừa, phát hiện, tố giác vi phạm pháp luật góp phần đảm bảo an ninh, an toàn cho hoạt động ngân hàng
+- Hoạt động phòng ngừa tham nhũng tại OCB luôn được thực hiện, giám sát chặt chẽ:
+- Công khai, minh bạch về tổ chức và hoạt động của cơ quan, tổ chức, đơn vị
+- Thực hiện nghiêm các quy định về đảm bảo tính dân chủ, công khai, minh bạch trong công tác tổ chức nhân sự về tuyển dụng, bổ nhiệm, điều động, luân chuyển, đánh giá, khen thưởng và kỷ luật CBNV
+- Thực hiện trả lương qua tài khoản cho 100% cán bộ nhân viên trong toàn hệ thống
+- Thực hiện cải cách hành chính, ứng dụng khoa học, công nghệ trong quản lý, thanh toán không dùng tiền mặt
+- Ban hành các hệ thống văn bản lập quy về Quy định nội quy lao động; Quy định chi tiêu mua sắm nội bộ; Quy định thanh toán, tạm ứng; Quy định định mức quản lý chi phí hành chính; Quy định mua sắm tài sản và quản lý tài sản; Quy định chế độ công tác phí…
+- Ban hành bộ quy tắc ứng xử và đạo đức nghề nghiệp
+- Định kỳ 6 tháng một lần Ban chỉ đạo PCTN họp kế hoạch triển khai công tác PCTN.
+- Ban chỉ đạo PCTN và tội phạm, Tiểu ban chỉ đạo PCTN và tội phạm luôn quan tâm và chỉ đạo thực hiện hiệu quả công tác phòng chống tham nhũng, thường xuyên kiểm tra giám sát nhằm ngăn ngừa, phát hiện và xử lý kịp thời các vụ việc có dấu hiệu tham nhũng. Cho đến nay, tại OCB không phát sinh trường hợp nào liên quan đến tham nhũng.
+
+<!-- image -->
+
+<!-- image -->
+
+## Tăng trưởng tín dụng xanh 2.3
+
+<!-- image -->
+
+Hiện nay 'xanh hóa nền kinh tế' đang là xu hướng toàn cầu và ngày càng được quan tâm trong các chương trình nghị sự quốc tế, nhằm giảm thiểu những tác động tiêu cực từ tăng trưởng kinh tế đến môi trường và xã hội. Trong số đó, tín dụng xanh, ngân hàng xanh đóng vai trò rất quan trọng trong việc triển khai thành công chiến lược quốc gia về tăng trưởng xanh giai đoạn 2021-2030, tầm nhìn 2050, tạo nguồn lực giúp các doanh nghiệp đầu tư dự án, chương trình, cơ sở hạ tầng nhằm giảm thiểu phát thải, bảo vệ môi trường.
+
+Nhận thức được tầm quan trọng của tín dụng xanh, tại Việt Nam, theo chỉ thị số 03/CT-NHNN ngày 24/3/2015 và Thông tư 17/2022/TT-NHNN ngày 23/12/2022, NHNN đã yêu cầu các NHTM: thúc đẩy cấp tín dụng xanh cho những dự án có mục tiêu rõ ràng về việc bảo vệ môi trường, bắt buộc phân loại, đánh giá và quản lý rủi ro về môi trường, khuyến khích hoạt động kinh doanh thân thiện với môi trường.
+
+Là một trong những NHTM tiên phong triển khai quản lý rủi ro môi trường và xã hội (MT&amp;XH). Ngay từ năm 2012, OCB đã ban hành Chính sách quản lý rủi ro MT&amp;XH với sự tư vấn của IFC và OCB đã đưa nội dung này vào là một phần trong hoạt động của OCB, đặc biệt là hoạt động cấp tín dụng.
+
+<!-- image -->
+
+Bắt đầu triển khai tín dụng xanh từ năm 2015 và đẩy mạnh từ cuối năm 2019, đến nay, OCB đang cho thấy đà tăng trưởng tích cực về quy mô nguồn vốn hỗ trợ khách hàng có hoạt động kinh doanh bền vững. Bên cạnh đó, với sự đồng hành và tài trợ của hai tổ chức tài chính lớn là Ngân hàng Phát triển Châu Á (ADB) và Tập đoàn Tài chính Quốc tế (IFC), cho thấy sự đánh giá cao của các tổ chức tài chính quốc tế đối với chương trình tín dụng xanh của OCB, trong đó: ADB cấp hạn mức vay 25 triệu USD và hạn mức tài trợ thương mại 100 triệu USD, trong khi đầu năm 2023 IFC cấp hạn mức vay 100 triệu USD và hạn mức tài trợ thương mại 60 triệu USD và đầu tháng 3/2024, IFC đã công bố kế hoạch đầu tư thêm 150 triệu USD vào dịch vụ tư vấn về tài chính xanh dành OCB. Đây là một khoản vay có giá trị 150 triệu USD, thời hạn lên tới 5 năm tài trợ cho mục đích mở rộng danh mục cho vay của OCB đối với các dự án phát triển bền vững trong các lĩnh vực xã hội và khí hậu đủ điều kiện.
+
+Trong giai đoạn này, quy mô tín dụng xanh tại OCB đang trong xu hướng tăng dần và đạt tỷ trọng trung bình  8-10%  trong  tổng  quy  mô  dư  nợ  tín  dụng  toàn  hàng  (tỷ  trọng  dư  nợ  tín  dụng  xanh  cuối  năm 2021-2022-2023 lần lượt đạt 11,2%-9,1% và gần 9%/tổng dư nợ, trong khi đó: đến 30/6/2023, dư nợ cấp tín dụng xanh tại Việt Nam đạt gần 528.300 tỷ đồng, chiếm tỷ trọng khoảng 4,2% tổng dư nợ toàn nền kinh tế.
+
+Để đạt được kết quả trên, trong thời gian qua OCB đã từng bước xây dựng và hoàn thiện khung chính sách tín dụng xanh và Hệ thống quản lý rủi ro MT&amp;XH làm cơ sở cho các hoạt động của OCB hướng tới mục tiêu tăng trưởng xanh và bền vững. Với hệ thống quản lý rủi ro MT&amp;XH, OCB đã cụ thể hóa được vai trò của mình như sau:
+
+<!-- image -->
+
+Phát triển các sản phẩm, dịch vụ ngân hàng có xét tới lợi ích về MT&amp;XH. Là một trong những ngân hàng đầu tiên thực hiện chiến lược chuyển đổi số, OCB đã triển khai thành công ngân hàng số OCB OMNI từ năm 2019 dựa trên 3 nền tảng công nghệ nổi trội: Nền tảng tích hợp và số hóa quy trình nội bộ; Nền tảng ngân hàng hợp kênh OCP (OMNI-Channel Platform) và Nền tảng phân tích Analytics, khẳng định tính tiên phong với 3 tính năng nổi trội: Tốc độ - An toàn - Tiện nghi. Trên cơ sở đó, OCB đã đẩy mạnh phát triển các sản phẩm dịch vụ ngân hàng điện tử, ngân hàng số. Ngoài ra, trong hoạt động quản lý nội bộ cũng được điều chỉnh theo hướng thân thiện hơn với môi trường thông qua việc sử dụng các thiết bị tiết kiệm năng lượng, phát triển các hoạt động trực tuyến, số hóa hầu hết các quy trình nội bộ... nhằm giảm thiểu các hoạt động liên quan đến giấy tờ, văn phòng phẩm, tiêu thụ năng lượng...
+
+<!-- image -->
+
+Đẩy mạnh các hoạt động cấp tín dụng xanh trên cơ sở triển khai hệ thống quản lý rủi ro MT&amp;XH. Việc đầu tư vào các lĩnh vực xanh đòi hỏi thời gian hoàn vốn dài, chi phí đầu tư lớn. Trong bối cảnh đó, OCB đã phát huy vai trò quan trọng trong việc tạo nguồn vốn cho các dự án đầu tư xanh. Đồng thời, OCB cũng có vai trò định hướng, nâng cao ý thức của các khách hàng thông qua việc truyền thông về chính sách quản lý rủi ro MT&amp;XH.
+
+<!-- image -->
+
+Trên cơ sở đó, các khách hàng khi tiếp cận tín dụng xanh tại OCB sẽ được áp dụng chương trình phê duyệt tín dụng chuyên biệt với tốc độ xử lý hồ sơ ưu tiên và lãi suất ưu đãi. Với các dự án lớn, OCB có sự ưu tiên về nguồn lực để tập trung đẩy nhanh tốc độ xử lý hồ sơ phê duyệt tín dụng cũng như xử lý giải ngân cấp tín dụng cho khách hàng để đảm bảo tiến độ triển khai dự án của chủ đầu tư. Ngoài ra, OCB cũng xây dựng và triển khai các chương trình tín dụng cụ thể cho những dự án tài chính vi mô (như sản phẩm cho vay nông nghiệp nông thôn, sản phẩm cho vay phát triển điện mặt trời áp mái) để đảm bảo sự động bộ trong thủ tục, nhanh chóng trong thời gian xét duyệt và giải ngân cấp tín dụng.
+
+Trong thời gian tới, OCB tiếp tục đầu tư triển khai các chương trình 'tín dụng xanh' hướng tới phát triển bền vững. Đặc biệt năm 2024, OCB sẽ công bố chiến lược kinh doanh phát triển bền vững và hướng tới trở thành Ngân hàng xanh tiên phong tại Việt Nam OCB Green Bank . Đây là vấn đề mà các tổ chức tài chính quốc tế như WB, IFC, ADB… trong quá trình làm việc với OCB rất khuyến nghị thúc đẩy các chương trình xanh, phát triển bền vững, trách nhiệm xã hội và quản trị minh bạch. OCB thực tế cũng đã xây dựng các chuẩn mực xanh trong hoạt động từ nhiều năm trước, nhưng trong năm 2024, OCB đưa các nội dung này thành chiến lược tổng thể, xây dựng thành khung ESG để điều chỉnh tất cả các sản phẩm OCB đưa ra thị trường, đồng thời nâng cao tiêu chuẩn trong quản trị, quản lý nội bộ trong ngân hàng và xây dựng, bảo vệ môi trường, đóng góp nhất định vào sự phát triển bền vững của cộng đồng cũng như của Việt Nam.
+
+<!-- image -->
+
+## Bứt phá mạnh mẽ trong hoạt động chuyển đổi số và bán lẻ
+
+Được biết đến là ngân hàng tiên phong trong các chuyển đổi số, phát triển mô hình hợp kênh (OMNI channel) tại Việt Nam. Tại OCB, các hoạt động đầu tư vào công nghệ và chuyển đổi số luôn được ngân hàng chú trọng đầu tư và là chiến lược ưu tiên của ngân hàng trong giai đoạn 3-5 năm trở lại đây, từ đó mang đến những kết quả ấn tượng.
+
+Gia tăng
+
+40%
+
+khách hàng mới trên ứng dụng ngân hàng số OCB OMNI
+
+<!-- image -->
+
+## Tối ưu
+
+chi phí vận hành, tăng cường hệ thống QTRR &amp; ATTT
+
+Tăng
+
+doanh thu mỗi năm qua các kênh số hóa
+
+20%
+
+## Hoàn thiện
+
+khung sản phẩm và dịch vụ, từ đó tạo ra lợi thế cạnh tranh dài hạn
+
+Trong năm 2023, OCB cũng đã ghi dấu ấn tượng trên hành trình chuyển đổi số và bán lẻ khi ra mắt Ngân hàng số thế hệ mới Liobank - Ngân hàng số dành riêng cho giới trẻ và sản phẩm thẻ OCB Mastercard World 2in1 cho phân khúc khách hàng cao cấp. Đây là dòng thẻ ứng dụng công nghệ tích hợp, cho phép kết nối cùng lúc thẻ tín dụng và thẻ thanh toán trên cùng một phôi thẻ vật lý và một con chip duy nhất, tự động hóa nhận biết và ưu tiên nguồn tiền phù hợp trong từng giao dịch, giúp chủ thẻ tối ưu hóa trong việc quản lý tài chính.
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+Với những hoạt động ấn tượng trên, OCB ghi nhận kết quả tương xứng khi thu thuần ngoài lãi có sự tăng  trưởng  trở  lại  so  với  năm  2022  khi  tăng 40,9%, đạt 2.234 tỷ đồng. Thu thuần dịch vụ đạt 882 tỷ đồng, nổi bật là ngân hàng số OCB OMNI và mảng dịch vụ  Thẻ.  Cụ  thể,  tổng  số  lượng  người dùng OCB OMNI tăng 28% so với 2022; số lượng giao dịch đã được thực hiện trong năm 2023 tăng 60,9%  so  với  2022;  Tổng  số  lượng  tiền  gửi  huy động tăng 23% so với cùng kỳ.
+
+Mảng dịch vụ thẻ có bước tăng trưởng đột phá tính từ thời điểm 3 năm trở lại đây, tổng số lượng thẻ phát hành tăng trưởng 348% so với năm 2020 và đạt kỳ vọng tăng 93% ở các dòng thẻ ghi nợ khi so sánh với cùng kỳ 2022. Các chỉ số doanh số giao dịch  thẻ  tín  dụng,  dư  nợ  thẻ  tín  dụng,  tổng  thu thuần đều ghi nhận mức tăng trưởng dương so với năm 2022, cụ thể đạt tỷ lệ gia tăng lần lượt là 97%, 31% và 64%.
+
+<!-- image -->
+
+<!-- image -->
+
+## Gia tăng tiện ích tối ưu trải nghiệm cho phân khúc khách hàng cá nhân
+
+- Kiên định với mục tiêu xác lập xây dựng và phát triển nền tảng ngân hàng hợp kênh theo xu hướng hiện đại 'All in One - Tất cả trong 1', ngân hàng số OCB OMNI liên tục được cải tiến và nâng cấp để phục vụ khách hàng tốt hơn. Sau hơn 5 năm hình thành và phát triển, OCB OMNI đã thu hút hơn 2 triệu lượt đăng ký sử dụng với số lượng giao dịch năm 2023 tăng 58% so với năm 2022 và tăng 25 lần so với năm 2018. Số dư tiết kiệm online năm 2023 tăng 55% so với năm 2023, tỷ lệ khách hàng gửi tiết kiệm online trên tổng khách hàng gửi tiết kiệm đạt 41%. Đặc biệt, số dư CASA năm 2023 tăng 44% so với năm 2022.
+- Không dừng lại ở đó, OCB liên tục đưa ra các gói giải pháp, sản phẩm ưu đãi, dành cho đa dạng khách hàng từ sản xuất kinh doanh, vay tiêu dùng đến vay mua nhà… Cụ thể, đối với nhu nhu cầu mua nhà, ngân hàng xây dựng sản phẩm Khởi đầu An Cư và Dream Home phù hợp với nhóm khách hàng có nguồn thu cố định với thời gian ân hạn dài đến 60 tháng, kỳ hạn ưu đãi đa dạng từ 12 tháng trở lên. Ngoài ra, với mong muốn tiết kiệm thời gian, chi phí trên hành trình tìm kiếm ngôi nhà mơ ước, OCB cũng đã tung nền tảng tìm, vay mua nhà tất cả trong 1 - Unlock Dream Home. Đến nay, nền tảng đã kết nối thêm gần 30.000 môi giới, thêm 40.000 tài sản được đăng tin, đi vào vận hành thành công mobile app dành cho môi giới và khách hàng vay. Song song, OCB cũng đã xây dựng và tung ra thị trường đa dạng các gói tài khoản như: OCB Speed Up, OCB Invest/Invest Pro, Tài khoản số đẹp lộc phát… nhằm gia tăng tiện ích, tối ưu trải nghiệm cho khách hàng.
+
+<!-- image -->
+
+<!-- image -->
+
+## Đa dạng giải pháp và ưu đãi hỗ trợ khách hàng SME tiếp cận vốn vay
+
+Với định hướng tập trung phát triển phân khúc khách hàng doanh nghiệp vừa và nhỏ, OCB đã liên tục triển khai các sản phẩm - giải pháp tài chính được 'may đo' cho từng tiểu phân khúc khách hàng theo lĩnh vực kinh doanh cụ thể, đặc biệt đối với các ngành nghề ưu tiên theo định hướng của Chính phủ để kích thích phục hồi phát triển kinh tế như: lĩnh vực đầu tư Công, du lịch, lưu trú - ăn uống, xuất nhập khẩu… với các hình thức hỗ trợ thiết thực bao gồm: giảm lãi suất cho vay, mở các điều kiện và thủ tục để doanh nghiệp dễ dàng tiếp cận nguồn vốn ngân hàng. Bên cạnh đó, năm 2023, OCB cũng tập trung nâng cấp hạ tầng công nghệ và đẩy mạnh phát triển các giải pháp số hóa nhằm nâng cao sự thuận tiện trong thanh toán cũng như tăng hiệu quả quản lý dòng tiền cho doanh nghiệp.
+
+- Cụ thể, với sự trợ lực từ các định chế tài chính quốc tế: khoản vay 100 triệu USD từ Tổ chức Tài chính Quốc tế (IFC) và khoản 55 triệu USD từ DEG (Định chế Tài chính Phát triển thuộc Ngân hàng Tái thiết KFW của Đức), OCB đã nhanh chóng 'mở van tín dụng' cho các doanh nghiệp SME bằng hàng loạt các chính sách hỗ trợ để tiếp cận nguồn vốn 'giá rẻ', đặc biệt là nhóm doanh nghiệp do phụ nữ làm chủ và nhóm doanh nghiệp kinh doanh theo định hướng 'xanh hóa', hướng đến mục tiêu phát triển bền vững. Theo đó, OCB liên tục triển khai các chương trình hỗ trợ lãi suất vay vốn ngắn hạn và trung dài hạn với mức ưu đãi chỉ từ 6,99%/năm, tổng hạn mức đến 5000 tỷ đồng. Đặc biệt, các doanh nghiệp kinh doanh trong các lĩnh vực ngành nghề ưu tiên phát triển như: Vận chuyển, Lưu trú và ăn uống, FMCG, Giáo dục, Xuất nhập khẩu, FDI hoặc khách hàng theo chương trình tín dụng nhanh tại Khối SME... sẽ được giảm thêm 0,2%/năm, lãi suất siêu ưu đãi chỉ còn 6,79%/năm.
+- Ra  mắt  2  sản  phẩm  cấp  tín  dụng  mới  'SME Express Loan' và 'SME Easy Loan', với nhiều ưu điểm  vượt  trội:  phê  duyệt  nhanh  trong  24h; đánh  giá  cấp  tín  dụng  dựa  trên  thực  tế  kinh doanh; hồ sơ thủ tục đơn giản, chỉ cần những chứng từ tối thiểu; hay hạn mức liên thông vay vốn, bảo lãnh, tài trợ thương mại.
+- Bên cạnh những ưu đãi về nguồn vốn, OCB còn tích cực hỗ trợ khách hàng SME tối ưu hiệu quả quản lý tài chính thông qua gói Giải pháp số xanh SME GreenBiz - 'Vận hành số xanh - Đi nhanh đón đầu' được thiết kế phù hợp với nhu cầu giao dịch, quản lý dòng tiền và  thanh  toán  của  từng  phân  khúc  khách hàng.  Gói  giải  pháp  hỗ  trợ  'xanh  hóa'  vận hành  thông  qua  việc  tự  động  hóa  các  quy trình  thủ  công,  hạn  chế  giấy  tờ,  cung  cấp dịch vụ nhanh chóng, thuận tiện, mọi lúc mọi nơi và chủ yếu được thực hiện trên kênh số.
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## Cung cấp giải pháp số hóa trọn gói, tối ưu lợi ích và chi phí cho doanh nghiệp 2.7
+
+- Tiên phong áp dụng số hóa vào các sản phẩm, dịch vụ tài chính, OCB đã và đang mang đến nhiều lợi ích về thời gian, chi phí, nhân sự, đặc biệt là tính bảo mật cho khách hàng doanh nghiệp.
+- Trong năm vừa qua, OCB tiếp tục tự động hóa các giao dịch trong chuỗi cung ứng từ đầu vào đến đầu ra thông qua các giải pháp tài chính xanh đa dạng dành cho doanh nghiệp. Với gần 200 Open API tương ứng các dịch vụ khác nhau từ cơ bản như truy vấn, tra cứu tài khoản/giao dịch, liên kết ví đến các nghiệp vụ xử lý và quản trị dòng tiền tự động như QRcode động, Virtual Account, xử lý công nợ, trích nợ tự động,… Ngoài ra, thông qua ngân hàng số OMNI Corp, OCB đã và đang triển khai các công cụ tài chính, mua bán ngoại tệ trực tuyến phục vụ đa dạng nhu cầu khách hàng. Trong thời gian tới, OCB sẽ phát triển thêm các tính năng phức tạp hơn như đăng ký khoản vay, đăng ký bảo lãnh, yêu cầu giải ngân, các loại hình thanh toán mua bán trái phiếu cổ phiếu, kinh doanh ngoại hối và thanh toán quốc tế,… Với những giải pháp tài chính OCB mang lại, doanh nghiệp có thể tiết kiệm thời gian, tối ưu nguồn nhân lực, rút ngắn quy trình để tập trung phát triển các hoạt động sản xuất kinh doanh và mở rộng mạng lưới khai thác. OCB đồng hành cùng doanh nghiệp không chỉ trong các công tác quản lý tài chính, vận hành nội bộ mà còn cùng nhau phát triển kinh doanh và khai thác hệ sinh thái của hai bên.
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## Cung cấp dịch vụ tư vấn M&amp;A trọn gói và phát triển khách hàng FDI với đội ngũ nhân sự đa ngôn ngữ 2.8
+
+- Với thế mạnh là ngân hàng có đối tác chiến lược Nhật Bản (Ngân hàng Aozora - AOZ), kể từ năm 2020 đến nay, hoạt động phát triển mảng M&amp;A, khách hàng FDI nói chung và khách hàng FDI Nhật Bản nói riêng tại OCB được diễn ra mạnh mẽ. Theo thống kê sơ bộ, lượng tiền gửi của khách hàng FDI có khuynh hướng tăng rất mạnh từ đầu năm 2023 đến nay và chiếm tỷ trọng đáng kể trong tổng quy mô tiền gửi của phân khúc khách hàng có vốn FDI là khách hàng FDI Nhật Bản.
+- Tại OCB, chúng tôi có đội ngũ nhân sự FDI đa ngôn ngữ, chuyên nghiệp và giàu kinh nghiệm, thông qua dịch vụ 'hỗ trợ một cửa' từ các kênh Japan Desk, Korean Desk, Taiwan Desk và MNC Desk. Do đó chúng tôi sẵn sàng mang đến cho khách hàng các giải pháp tài chính toàn diện, như: Quản lý tài khoản, quản lý dòng tiền, quản lý thanh khoản, tài trợ thương mại, mua bán ngoại hối,...
+
+## TIÊU CHUẨN MÔI TRƯỜNG GRI 300
+
+Trên cơ sở định hướng chỉ đạo của NHNN đối với các tổ chức tín dụng về việc hướng hoạt động cấp tín dụng theo xu thế chung bảo vệ môi trường, đảm bảo phát triển bền vững, OCB luôn ý thức và hướng tới hoạt động kinh doanh gắn với môi trường và xã hội.
+
+Có thể nói, năm 2023 là năm bản lề để OCB tái khởi động các chiến dịch hướng đến mục tiêu trở thành ngân hàng xanh. Cụ thể, OCB đã và đang từng bước xanh hóa hoạt động ngân hàng, hướng dòng vốn tín dụng vào việc tài trợ dự án thân thiện với môi trường, thúc đẩy các ngành sản xuất, dịch vụ, tiêu dùng xanh, năng lượng sạch và năng lượng tái tạo; góp phần tích cực thúc đẩy tăng trưởng xanh, phát triển bền vững.
+
+Trong hoạt động, OCB cũng đã thực hiện hàng loạt các giải pháp nhằm giảm tiêu hao năng lượng. Cụ thể như:
+
+## ĐỐI VỚI HỆ THỐNG THIẾT BỊ CHIẾU SÁNG
+
+## 1. Chiếu sáng bằng đèn LED
+
+- Đèn LED tiết kiệm năng lượng hơn so với các nguồn chiếu sáng truyền thống, chẳng hạn như bóng đèn sợi đốt hoặc đèn huỳnh quang. Chúng sử dụng ít năng lượng hơn và tuổi thọ lâu hơn, giảm nhu cầu thay thế thường xuyên và các chi phí liên quan.
+
+## 2. Cảm biến chuyển động
+
+- Cảm biến chuyển động có thể phát hiện khi có người trong phòng và bật đèn cũng như tắt chúng khi phòng không có người. Điều này giúp giảm lượng năng lượng bị lãng phí khi bật đèn trong các phòng không có người.
+- Sử dụng cảm biến cài đặt nhận diện có người đi lại khu vực hành lang các tầng tòa nhà đèn sẽ tự mở sáng trong 1 giây, khi không có người đèn sẽ tự tắt trong 5 giây.
+- Khu vực thang bộ thoát hiểm, WC cũng thực hiện tương tự phương pháp tiết kiệm điện như khu vực hành lang nêu trên.
+
+## 3. Cảm biến ánh sáng ban ngày:
+
+- Cảm biến ánh sáng ban ngày tự động điều chỉnh độ sáng của ánh sáng trong nhà dựa trên mức độ ánh sáng tự nhiên trong phòng. Điều này giúp giảm lượng ánh sáng nhân tạo cần thiết vào ban ngày, tiết kiệm năng lượng và giảm chi phí.
+
+## 4. Bộ hẹn giờ và bộ điều chỉnh độ sáng
+
+- Có thể đặt bộ hẹn giờ để bật và tắt đèn vào những thời điểm cụ thể, trong khi bộ điều chỉnh độ sáng cho phép điều chỉnh độ sáng của đèn cho phù hợp với nhu cầu của mình. Cả hai giải pháp này đều có thể giúp giảm lãng phí năng lượng và giảm chi phí điện năng.
+- Cài đặt mở - ngắt đèn chiếu sáng các poster hình ảnh truyền thông quảng cáo bên trong khu vực văn phòng khi hết giờ làm việc, các bảng hiệu - bảng quảng cáo OCB tại các CN/PGD (cài đặt timer mở Poster từ 7h00 - 17h00 &amp; Bảng hiệu, quảng cáo từ 18h00 - 22h00 hàng ngày).
+
+## TIẾT KIỆM NĂNG LƯỢNG TÒA NHÀ
+
+## 1. Cách nhiệt
+
+- Cách nhiệt thích hợp cho tường, mái và sàn nhà có thể giúp tránh thất thoát nhiệt, giảm tiêu thụ năng lượng, mà còn giúp điều chỉnh nhiệt độ tự nhiên.
+- Sự hạn chế của sự tiêu thụ năng lượng không chỉ giúp giảm hóa đơn điện mà còn đóng góp tích cực vào việc giảm lượng khí nhà kính thải ra môi trường. Đồng thời, môi trường sống cũng trở nên thoải mái hơn với mức nhiệt độ ổn định.
+
+## 2. Chiếu sáng
+
+- Lắp đặt các thiết bị chiếu sáng tiết kiệm năng lượng, chẳng hạn như đèn LED và triển khai hệ thống điều khiển ánh sáng có thể giảm đáng kể mức tiêu thụ năng lượng.
+- Sử dụng cảm biến cài đặt nhận diện có người đi lại khu vực này đèn sẽ tự mở sáng trong 1 giây, khi không có người đèn sẽ tự tắt trong 5 giây (thời gian cài đặt tắt - mở tùy vào nhu cầu sử dụng).
+- Khu vực WC cũng thực hiện tương tự phương pháp tiết kiệm điện như khu vực hành lang nêu trên.
+- Mở đèn vào giờ nhân viên làm việc hành chính (mở vào lúc 8h00 sáng và tắt đèn vào 17h00 hàng ngày). Bảo vệ tuần tra các tầng tòa nhà văn phòng Hội sở và bảo vệ trực tại các đơn vị CN/PGD trên toàn hệ thống chịu trách nhiệm thực hiện.
+- Bên trong phòng họp các tầng không được mở đèn xuyên suốt khi không có cuộc họp, nhân viên chuẩn bị phòng họp chỉ được mở đèn từ thời gian setup cuộc họp và ngắt đèn ngay sau khi kết thúc cuộc họp.
+- Cài đặt mở - ngắt đèn chiếu sáng các poster hình ảnh truyền thông quảng cáo bên trong khu vực văn phòng khi hết giờ làm việc.
+- Tắt đèn khi đi ra khỏi phòng làm việc riêng thời gian lâu (&gt;30 phút).
+
+## 3. Hệ thống HVAC (điều hòa không khí)
+
+- Lắp đặt hệ thống thông gió và điều hòa không khí (HVAC) hiệu suất cao có thể giúp giảm mức tiêu thụ năng lượng và giảm chi phí năng lượng.
+
+## 4. Cửa sổ
+
+- Lắp đặt cửa sổ hiệu suất cao với kính phủ mềm low-e có thể giúp giảm thất thoát nhiệt và nâng cao hiệu quả sử dụng năng lượng (tùy vào hiện trạng thiết kế và mặt bằng, không gian tòa nhà cho phép thực hiện).
+
+## 5. Ứng dụng giải pháp tấm pin mặt trời
+
+- Một giải pháp tiết kiệm năng lượng điện đột phá hơn đó là sử dụng tấm pin mặt trời. Được xem là một bước tiến vượt bậc trong việc sử dụng nguồn năng lượng tái tạo, tấm pin mặt trời giúp tận dụng ánh sáng mặt trời để cung cấp điện sử dụng.
+- Không chỉ giúp giảm thiểu sự phụ thuộc vào nguồn điện từ lưới, mà còn giúp tiết kiệm một lượng lớn tiền điện hàng tháng. Mang lại lợi ích tài chính và góp phần bảo vệ môi trường bằng cách giảm lượng khí thải từ nguồn năng lượng hóa thạch.
+
+<!-- image -->
+
+## 6. Hệ thống Quản lý năng lượng
+
+- Việc lắp đặt hệ thống quản lý năng lượng để theo dõi và kiểm soát mức tiêu thụ năng lượng có thể giúp giảm lãng phí năng lượng và giảm chi phí năng lượng.
+
+## 7. Thiết bị tiết kiệm nước
+
+- Lắp đặt thiết bị tiết kiệm nước, chẳng hạn như vòi hoa sen và bồn vệ sinh có lưu lượng thấp, có thể giảm lượng nước tiêu thụ và giảm chi phí năng lượng.
+- Lắp đặt hệ thống cung cấp nước uống tinh khiết, phương pháp lọc nước tự động trực tiếp bằng công nghệ hiện đại tại các tầng làm việc, chủ động trong kiểm soát lấy mẫu, bảo dưỡng thiết bị định kỳ, đảm bảo sức khỏe người sử dụng, góp phần tiết kiệm năng lượng tiêu hao, chi phí phát sinh, tính chủ động cao trong quá trình sử dụng, bảo vệ môi trường xả thải.
+
+## 8. Cây xanh &amp; Màu sơn tường
+
+- Bố trí các chậu cây xanh chủng loại thích ứng bên trong văn phòng tại các khu vực phù hợp các tầng tòa nhà và sơn tường nhà màu trắng nhằm tạo không gian văn phòng hài hòa, tăng cảm giác làm việc thoải mái, nhẹ nhàng, góp phần tăng hiệu suất không gian làm việc thẩm mỹ, hiện đại, giảm thiểu tiêu hao năng lượng.
+
+<!-- image -->
+
+## ĐỐI VỚI CÁC THIẾT BỊ SỬ DỤNG ĐIỆN
+
+## 1. Chọn mua các thiết bị phù hợp với nhu cầu của sử dụng
+
+- Khi mua, chọn tìm các thiết bị ít hao tổn hoặc tiết kiệm điện năng, chọn các thiết bị điện như: máy nóng lạnh, máy điều hòa, tủ lạnh, tivi… có thiết kế, kích cỡ, dung tích, công năng và công suất phù hợp, tránh mua các thiết bị có công suất quá lớn trong khi không cần thiết phải sử dụng nhiều đến vậy. Đồng thời, ưu tiên sử dụng các thiết bị có nhãn tiết kiệm năng lượng.
+
+## 2. Rút phích cắm tất cả các thiết bị khi không sử dụng
+
+- Lưu ý rút phích cắm điện các thiết bị khi không có nhu cầu sử dụng như: tivi, hệ thống loa âm thanh, quạt điện và các thiết bị văn phòng như  máy tính, máy in, máy photo, máy scan,… Đây là hành động thiết thực giúp tiết kiệm điện.
+
+## 3. Thay thế kịp thời các thiết bị điện cũ gây tiêu tốn năng lượng
+
+- Kiểm tra, thay thế các thiết bị điện đã sử dụng lâu ngày bằng các thiết bị mới được thiết kế có tính năng tiết kiệm điện (các thiết bị điện cũ ngoài nguy cơ rủi ro ngưng hoạt động bất chợt, còn gây tiêu hao năng lượng, rò rỉ điện,…).
+
+## 4. Thường xuyên vệ sinh và bảo dưỡng thiết bị
+
+- Thiết bị dùng lâu ngày sẽ giảm dần hiệu suất hoạt động. Thiết bị sẽ cần nhiều năng lượng hơn để hoạt động hiệu quả, gây hao tốn nhiên liệu hơn, đặc biệt là các thiết bị điện. Cần đảm bảo thiết bị luôn trong trạng thái sạch sẽ và được bảo dưỡng thường xuyên. Thiết bị hoạt động trơn tru hơn, tiêu thụ ít năng lượng hơn và có tuổi thọ cao hơn.
+
+## 5. Cách sử dụng các thiết bị thông dụng để tiết kiệm điện
+
+- Máy điều hòa: Nhiệt độ nên để ở mức từ 250C trở lên vào ban ngày và 270C trở lên vào ban đêm (Tòa nhà sẽ cài đặt mặc định nhiệt độ tùy vào sự thay đổi thời tiết từng giai đoạn khí hậu phù hợp yêu cầu sử dụng, ngoại trừ P. sever mở máy lạnh xuyên suốt theo nhiệt độ quy định). Hệ thống máy điều hòa cần được kiểm tra và vệ sinh màng lọc, bảo dưỡng định kỳ nhằm tăng tuổi thọ máy và làm giảm mức độ tiêu hao điện tiêu thụ qua thời gian sử dụng.
+- Tủ lạnh: Vị trí đặt tủ cần khô thoáng, tránh xa các nguồn nhiệt như bếp,… Hai mặt bên và sau lưng tủ phải cách tường tối thiểu 10cm để đảm bảo không khí được lưu thông tự nhiên. Khi dùng chú ý không mở cửa tủ nhiều lần, thực hiện thao tác đóng và mở cửa tủ càng nhanh càng tốt.
+- Máy tính: Tắt bớt các chương trình, tháo bớt các thiết bị không cần thiết, chọn chế độ Standby (Sleep) khi muốn dừng làm việc trong thời gian ngắn để bảo vệ máy, giảm bớt độ sáng của màn hình hoặc tắt màn hình khi không sử dụng.
+
+## VIỆC DI CHUYỂN
+
+## Tiết kiệm xăng và giảm phát khí thải CO 2
+
+- Khuyến khích sử dụng các phương tiện giao thông khác như: đi bộ, đi xe đạp, xe điện, phương tiện giao thông công cộng hoặc đi chung xe bất cứ khi nào có thể. Đây là cách để hạn chế các phương tiện tiêu thụ nhiên liệu hóa thạch hữu hiệu nhất.
+- Lúc mua phương tiện di chuyển mới nên chọn dòng tiết kiệm xăng (xe máy, xe công vụ, xe chở tiền cho ngân hàng…). Đây cũng chính là cách giúp giảm sự phát thải khí CO 2 .
+
+## SỬ DỤNG VẬT LIỆU TÁI CHẾ &amp; PHÂN LOẠI - TÁI SỬ DỤNG
+
+## 1. Sử dụng vật liệu tái chế &amp; tự hủy sinh học
+
+- Giảm chất thải sinh hoạt bằng cách hạn chế sử dụng các sản phẩm đóng gói sẵn.
+- Chọn các sản phẩm tái chế, tái sử dụng. Việc cắt giảm các chất thải ra ngoài môi trường cũng giúp tiết kiệm năng lượng và khí phát thải ra ngoài môi trường.
+- Tái chế năng lượng có thể bao gồm tái chế nhiên liệu như biodiesel từ dầu thải, sử dụng năng lượng từ việc đốt chất thải và phát điện từ nhiệt độ thải từ quá trình sản xuất. Việc tạo ra năng lượng từ tài nguyên tái chế không chỉ giúp tiết kiệm nguồn năng lượng mà còn giảm tác động tiêu cực lên môi trường.
+- Sử dụng các loại túi vải hoặc túi nilon tự huỷ sinh học. Quá trình sản xuất các túi này thường tuân thủ nghiêm ngặt các quy tắc tiết kiệm tài nguyên (điện, nước...) và sản phẩm có tính thân thiện môi trường cao, tái sử dụng được nhiều lần. Do đó khi sử dụng chúng, đã giúp tiết kiệm đáng kể nguồn tài nguyên.
+
+## 2. Phân loại rác và tái sử dụng mọi thứ có thể
+
+- Khi phân loại rác, có thể giúp tăng số lần sử dụng các sản phẩm mình không cần nữa. Ngoài ra việc phân loại rác vô cơ và hữu cơ giúp cho việc xử lý rác nhanh hơn. Do đó tốt hơn cho môi trường.
+
+<!-- image -->
+
+## TIẾT KIỆM TÀI NGUYÊN
+
+## 1. Phê duyệt hồ sơ bằng phần mềm thay thế cho giấy in
+
+- Giảm thiểu phần lớn lượng giấy in bản cứng khi trình phê duyệt, góp phần tiết kiệm tài nguyên sản xuất giấy và không gian lưu trữ, phòng chống cháy nổ, bảo vệ môi trường.
+
+## 2. Sử dụng tiết kiệm giấy in/photo và đảm bảo chất lượng mực in
+
+- Tận dụng giấy in/photo 02 mặt đối với bản soạn thảo, hồ sơ phục vụ hội họp nội bộ, các nội dung in ấn không quan trọng hoặc không phải hồ sơ trình duyệt đặc thù lên cấp lãnh đạo hoặc hồ sơ in bản cứng cần lưu trữ theo quy định.
+- Sử dụng dịch vụ bơm mực in/photo chất lượng, không bơm mực không rõ nguồn gốc lẫn nhiều cặn tạp chất gây ảnh hưởng chất lượng hình ảnh, nội dung in ấn/photo, làm giảm tuổi thọ thiết bị máy in/ máy photo sử dụng thường xuyên, phát sinh chi phí sửa chữa/thay thế thiết bị, gây tiêu hao năng lượng.
+
+## 3. Sử dụng tiết kiệm giấy vệ sinh và nước sinh hoạt khu WC
+
+4. Sử dụng giấy vệ sinh và nước vệ sinh cá nhân mức độ phù hợp nhu cầu, tránh lãng phí tài nguyên, nhằm tiết kiệm chi phí vật tư và góp phần bảo vệ môi trường.
+
+## TIẾT KIỆM NĂNG LƯỢNG Ở CÔNG TRÌNH XÂY DỰNG TRANG BỊ NỘI THẤT
+
+## Trong quá trình xây dựng và vận hành các công trình, các giải pháp tiết kiệm năng lượng có thể được thực hiện qua các phương án sau:
+
+- Thiết kế xây dựng thông minh: Sử dụng thiết kế thông minh với vật liệu cách nhiệt, ánh sáng tự nhiên và hệ thống thông gió hiệu quả để giảm sự phụ thuộc vào hệ thống điều hòa không khí. Sử dụng chủng loại, vật liệu cải tạo xây dựng thân thiện môi trường.
+- Sử dụng nguồn năng lượng tái tạo: Lắp đặt hệ thống năng lượng tái tạo như năng lượng mặt trời để cung cấp điện cho công trình, giảm tiêu thụ năng lượng từ nguồn hóa thạch.
+- Quản lý tiêu thụ năng lượng: Sử dụng hệ thống quản lý năng lượng để giám sát và điều chỉnh việc sử dụng điện tại công trình, bằng cách tắt thiết bị không cần thiết và áp dụng chế độ tiết kiệm năng lượng.
+
+<!-- image -->
+
+## TIÊU CHUẨN XÃ HỘI GRI 400
+
+## 1. OCB - BẢN SẮC VĂN HÓA PHƯƠNG ĐÔNG
+
+<!-- image -->
+
+Tính đến 31/12/2023, tổng số CBNV của OCB:
+
+nhân sự 6.816
+
+đảm bảo nguồn nhân lực cho toàn bộ hoạt động kinh  doanh  và  vận  hành  của  tất  cả  các  Đơn  vị trong hệ thống.
+
+Tổng số nhân viên có Hợp đồng lao động dài hạn (12 tháng trở lên) là
+
+nhân sự 6.365
+
+chiếm 93,0%, tổng số nhân viên có Hợp đồng lao động ngắn hạn (dưới 12 tháng) là 451 chiếm 7,0%
+
+<!-- image -->
+
+Tỷ lệ  quản  lý  trên  tổng  số CBNV của OCB là 18%
+
+<!-- image -->
+
+- 4.853 nhân viên (71,0%) thuộc Vùng 1
+- 1.363 nhân viên (20,0%) thuộc Vùng 2
+- 600  nhân  viên  (8,0%)  thuộc Vùng 3
+
+nhân
+
+sự 2.936 chiếm 44,0%
+
+Tổng số nhân sự nam là
+
+nhân sự 3.743
+
+chiếm 56,0%
+
+Tổng số nhân sự nữ là
+
+<!-- image -->
+
+<!-- image -->
+
+Tổng số nhân viên có Hợp đồng toàn thời gian (nhân viên chính thức) là
+
+nhân sự 6.642
+
+chiếm  97,0%,  tổng  số  nhân  viên  có  Hợp đồng bán thời gian (Hợp đồng đào tạo) là 174 chiếm 3,0%
+
+<!-- image -->
+
+- Nam quản lý chiếm 55,5%
+- Nữ quản lý chiếm 45,5%
+
+<!-- image -->
+
+Tại OCB, không có sự khác biệt về mức lương tối thiểu vùng đang áp dụng cho người lao động nam và nữ.
+
+|   Vùng | Tỷ lệ %sovới mứclương tối thiểu vùng   | Mức lương tối thiểu đối vớiNam   | Mức lương tối thiểu đối vớiNữ   |
+|--------|----------------------------------------|----------------------------------|---------------------------------|
+|      1 | Bằng 107% mứclương tối thiểu vùng      | 5.007.600 đồng                   | 5.007.600 đồng                  |
+|      2 | Bằng 108% mứclương tối thiểu vùng      | 4.451.200 đồng                   | 4.451.200 đồng                  |
+|      3 | Bằng 111% mứclương tối thiểu vùng      | 3.894.800 đồng                   | 3.894.800 đồng                  |
+
+## Trong năm 2023:
+
+<!-- image -->
+
+Tổng  số  lượng  nhân  viên tuyển mới là
+
+<!-- image -->
+
+<!-- image -->
+
+- Nhân viên tuyển mới nhỏ hơn 30 tuổi là 1.748 (chiếm 50,8%)
+- Nhân viên tuyển mới từ 30 - 50 tuổi là 1.683 (chiếm 49,0%)
+- Nhân viên tuyển mới lớn hơn 50 tuổi là 8 (chiếm 0,2%)
+
+<!-- image -->
+
+Tổng số nhân viên nam tuyển mới là
+
+1.818
+
+nhân viên
+
+chiếm 52,8%
+
+<!-- image -->
+
+<!-- image -->
+
+- Số  lượng  nhân  viên  tuyển  mới  ở Vùng 1 là 2.495 (chiếm 72,5%)
+- Số  lượng  nhân  viên  tuyển  mới  ở Vùng 2 là 649 (chiếm 18,9%)
+- Số  lượng  nhân  viên  tuyển  mới  ở Vùng 3 là 295 (chiếm 8,6%)
+
+<!-- image -->
+
+## Các chế độ phúc lợi cung cấp cho nhân viên toàn thời gian gồm có:
+
+- Chăm sóc sức khỏe: Bảo Việt Health care;
+- Bảo hiểm an toàn cá nhân (tai nạn 24/24);
+- Quyền sở hữu cổ phiếu;
+- Chế độ phúc lợi khác: tiền sinh nhật, hiếu hỷ, chương trình teambuilding, khám sức khỏe định kỳ, lì xì nhân dịp Tết Nguyên đán, hỗ trợ chi phí đi lại dịp lễ Tết, khám sức khỏe định kỳ, các sản phẩm tín dụng ưu đãi đối với cán bộ nhân viên, mở rộng chương trình Bảo hiểm sức khỏe cho CBNV có thâm niên làm việc và kết quả hoàn thành công việc tốt. OCB cũng dành sự quan tâm đặc biệt tới CBNV nữ thông qua việc: quà tặng và tổ chức các hoạt động chúc mừng ngày 08/3 và 20/10. Bên cạnh đó, OCB cũng có những hoạt động chăm lo cho gia đình CBNV như quà vào ngày Quốc tế thiếu nhi 01/6, Trung thu, tặng học bổng OCB cho con CBNV…
+
+## 2. HOẠT ĐỘNG ĐÀO TẠO VÀ PHÁT TRIỂN
+
+- OCB luôn đẩy mạnh triển khai các chương trình  đào  tạo    với  đa  dạng  hình  thức  khác nhau  như  đào  tạo  trực  tiếp,  đào  tạo  trực tuyến, blended learning, hybrid và đặc biệt là  elearning  để  lan  tỏa  văn  hóa  học  tập, nâng cao chất lượng nhân sự, gia tăng hiệu quả công việc và cá nhân hóa trải nghiệm học viên.
+- Các chương trình đào tạo tân tuyển; đào tạo lộ trình học tập các chức danh: đào tạo nâng cao năng lực bán hàng cho đội ngũ kinh doanh; đào tạo nâng cao năng lực lãnh đạo. Bên cạnh đó, chương trình đào tạo Digital Academy đã tổ chức cho những nhân sự chuyên trách nhằm phát triển năng lực số của CBNV phục vụ cho mục tiêu chiến lược 5 năm của OCB.
+- Phát triển văn hóa học tập chủ động là mục tiêu quan trọng mà OCB hướng đến. Chuỗi các khóa Micro learning về Excel, PPT, English, Leadership…, chương trình Bàn tròn chuyển đổi, diễn đàn OCB Café Talk, O-Ted Talk, chương trình thi đua 'Tôi tự học' hay tự nâng cấp năng lực tiếng Anh thông qua Elsa App thu hút sự tham gia của đông đảo CBNV. Ngoài ra, chương trình Phân cấp đào tạo và Phát triển Giảng viên nội bộ đến từng Đơn vị/Phòng ban, đào tạo kỹ năng huấn luyện cho toàn bộ CBQL và thành lập cộng đồng huấn luyện - OCB Coaching Community cũng là một trong những nỗ lực của OCB trong việc lan tỏa văn hóa học tập.
+- Phát triển đội ngũ nhân sự tiềm năng, xây dựng lực lượng kế cận là một trong những hoạt động được ưu tiên chú trọng. OCB có các chương trình quy hoạch cho CBNV tại ĐVKD như: Chương trình Giám đốc Trung tâm chuyên doanh tiềm năng; Chương trình ROM Academy; Chương trình Giám đốc Quan hệ khách hàng/Tín dụng tiềm năng; Chương trình Kiểm soát viên Dịch vụ khách hàng tiềm năng; Chương trình Kiểm soát viên Dịch vụ Tín dụng tiềm năng, bên cạnh các chương trình quy hoạch dành cho các vị trí kế cận tại Hội sở, nổi bật như: OCB Line-Up Leader, OCB Talented Banker, OCB Talented Technologist. Những chương trình quy hoạch này đã đào tạo hơn 200 nhân sự tiềm năng, đáp ứng hơn 45% nhu cầu bổ nhiệm từ nguồn nhân sự nội bộ.
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## Kết quả hoạt động đào tạo:
+
+khóa học 390
+
+được tổ chức
+
+## Trong năm 2023, đã có:
+
+khóa học 145
+
+cung cấp kiến thức về kỹ năng
+
+khóa học 245
+
+đào tạo về sản phẩm, nghiệp vụ, quy trình
+
+| Tổng thời lượng đào tạo bình quân trên toàn hệ thống   | 27,8 giờ   |
+|--------------------------------------------------------|------------|
+| Số giờ đào tạo bìnhquânchoCBNVnữ                       | 15,5 giờ   |
+| Số giờ đào tạo bìnhquânchoCBNVnam                      | 12,3 giờ   |
+| Số giờ đào tạo bình quân cho Cấp Quản lý               | 41,71 giờ  |
+| Số giờ đào tạo bình quân cho Cấp Nhân viên             | 25,56 giờ  |
+
+<!-- image -->
+
+Ngân sách đào tạo sử dụng để tổ chức các hoạt động đào tạo trong năm 2023 là
+
+triệu đồng 3.718
+
+## 3. HOẠT ĐỘNG NỘI BỘ
+
+Trong năm 2023, nhiều chương trình gắn kết, phát triển văn hóa và chính sách phúc lợi cho CBNV được triển khai, có thể kể đến như: Tập san O-Magazine, HR Newsletter, Culture Nudge, Culture Champion, Appreciation, OCB Star, các hoạt động nhân ngày lễ đặc biệt 08/3, Trung thu, 20/10, Noel, Chính sách cho vay ưu đãi CBNV, chính sách bảo hiểm sức khỏe,… nhằm gia tăng lòng tự hào thương hiệu tổ chức, lấy khách hàng làm trọng tâm, phát huy tinh thần trách nhiệm, sáng tạo, hợp tác cùng phát triển và nỗ lực không ngừng của CBNV theo các giá trị cốt lõi của OCB.
+
+<!-- image -->
+
+## 4. HOẠT ĐỘNG AN SINH XÃ HỘI
+
+Được biết đến là một trong những NHTMCP hoạt động hiệu quả, duy trì tăng trưởng các hoạt động kinh doanh cốt lõi và quan tâm, đồng hành cùng khách hàng phát triển, OCB còn là một thương hiệu tiên phong, chủ động và tích cực thực hiện trách nhiệm cộng đồng thông qua hàng loạt các chương trình an sinh xã hội, thiện nguyện ý nghĩa, thiết thực và lan tỏa năng lượng tích cực đến cộng đồng.
+
+Trong năm 2023, OCB cũng nằm trong top 30 doanh nghiệp nộp thuế lớn nhất Việt Nam, điều này khẳng định nguyên tắc kinh doanh của ngân h trong việc tuân thủ các quy định của pháp luật Việt Nam, đảm bảo mục tiêu tăng trưởng ổn định, bền vững và minh bạch, đem lại những giá trị thịnh vượng cho khách hàng, đối tác, nhà đầu tư, góp phần an sinh xã hội tại các địa phương.
+
+Song song đó, ngân hàng cũng luôn tiên phong, chủ động trong các hoạt động vì cộng đồng như tài trợ chương trình đi bộ đồng hành gây quỹ 'Vì người nghèo' của phường Thủ Thiêm, Thành phố Thủ Đức; Tài trợ chương trình 'Tết ấm yêu thương' của huyện Yên Mô, tỉnh Ninh Bình… và đặc biệt là triển khai 2 đợt ký kết đồng hành cùng Quỹ Hiểu về trái tim nhằm hỗ trợ trẻ em có hoàn cảnh khó khăn mắc bệnh tim bẩm sinh có cơ hội được chữa trị.
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## CHƯƠNG 07 MẠNG LƯỚI HOẠT ĐỘNG
+
+Tính đến 31/12/2023, mạng lưới hoạt động của OCB bao gồm:
+
+01
+
+Trung tâm kinh doanh
+
+57
+
+Chi nhánh
+
+101 Phòng Giao dịch
+
+## MẠNG LƯỚI HOẠT ĐỘNG
+
+## NGÂN HÀNG TMCP PHƯƠNG ĐÔNG
+
+Trải qua hơn 27 năm hoạt động và phát triển, OCB hiện có hơn 200 đơn vị kinh doanh trải dài tại khắp các tỉnh thành, trung tâm kinh tế trọng điểm trên cả nước. Với định hướng 'Lấy khách hàng làm trọng tâm' , OCB liên tục khai trương nhiều Chi nhánh/Phòng Giao dịch mới trên toàn quốc nhằm giúp khách hàng dễ dàng tiếp cận nhiều sản phẩm, dịch vụ hiện đại, an toàn của ngân hàng.
+
+Các điểm giao dịch mới được thiết kế theo quy chuẩn nhận diện thương hiệu mới của OCB, trong đó toàn bộ nội thất được trang bị hiện đại, tinh tế và ứng dụng những công nghệ tiên tiến nhất.
+
+Bên cạnh đó, việc di dời và chọn lựa những địa điểm mới nằm tại các tuyến đường trung tâm, đông dân cư cũng được ngân hàng ưu tiên thực hiện. Trong năm 2023, OCB được cấp phép và đã hoàn thành khai trương đưa vào hoạt động 10 điểm giao dịch bao gồm: 04 Chi nhánh (CN) mới tại các tỉnh thành: Bình Phước, Phú Yên, Hà Tĩnh và Thái Bình, 06 Phòng Giao dịch (PGD) mới trực thuộc các CN Hà Thành, Quảng Ninh, Bắc Ninh, Ninh Bình và Tây Ninh.
+
+## Cụ thể
+
+Các Chi nhánh mở mới: CN Bình Phước (Số 482 Khu TĐC Quốc lộ 14, Khu phố Phú Thanh, Phường Tân Phú, Thành phố Đồng Xoài,Tỉnh Bình Phước), CN Phú Yên (294 Trần Hưng Đạo, Phường 6, Thành phố Tuy Hoà, Tỉnh Phú Yên), CN Hà Tĩnh (Số 22 - 24 Đường Trần Phú, Phường Bắc Hà, Thành phố Hà Tĩnh, Tỉnh Hà Tĩnh), CN Thái Bình (Shophouse Vincom PG1-17 đường Quang Trung,  Phường Đề Thám, Thành phố Thái Bình, Tỉnh Thái Bình).
+
+Các Phòng Giao dịch mở mới: PGD Bãi Cháy (486A đường Hạ Long, Phường Bãi Cháy, Thành phố Hạ Long, Tỉnh Quảng Ninh), PGD Từ Sơn (số 444-446 Trần Phú, Phường Đình Bảng, Thành phố Từ Sơn, Tỉnh Bắc Ninh), PGD Gia Viễn (Khu tái định cư, Đường Hồng Dân, Thị trấn Me, Huyện Gia Viễn, Tỉnh Ninh Bình), PGD Hòa Thành (35-37 Hùng Vương, Phường Long Hoa, Thị xã Hòa Thành, Tỉnh Tây Ninh), PGD Trảng Bàng (Căn A2-A3 Khu thương mại Trảng Bàng, Đường Nguyễn Du, Phường Trảng Bàng, Thị xã Trảng Bàng, Tỉnh Tây Ninh), PGD Times City (Sàn thương mại SO-01, Khu đô thị Vinhomes Times City, số 458 Minh Khai, Phường Vĩnh Tuy, Quận Hai Bà Trưng, Thành phố Hà Nội).
+
+Đồng thời, ngân hàng cũng hoàn thành di dời và khai trương hoạt động tại trụ sở mới của 12 đơn vị, bao gồm: 01 Chi nhánh (CN) và 11 Phòng Giao dịch (PGD). Đó là CN Thanh Hóa (Thanh Hóa), PGD Hội An (Quảng Nam), PGD Nam Đà Nẵng (Đà Nẵng), PGD Thanh Khê (Đà Nẵng), PGD Tân Uyên (Bình Dương), PGD Hóc Môn (Tp. Hồ Chí Minh), PGD Nguyễn Sơn (Tp. Hồ Chí Minh), PGD Phú Thọ (Tp. Hồ Chí Minh), PGD Bắc Đà Nẵng (Đà Nẵng), PGD Quang Trung (Thanh Hóa), PGD Tân Sơn (Thanh Hóa), PGD Quang Trung HCM (Tp. Hồ Chí Minh)
+
+<!-- image -->
+
+Hiện nay, OCB sở hữu mạng lưới hoạt động gồm 159 CN/PGD hiện diện tại hầu hết các tỉnh, thành phố trọng điểm trên cả nước, tạo điều kiện thuận lợi cho khách hàng đến giao dịch và sử dụng các dịch vụ của ngân hàng. Các CN/PGD mới của OCB đều được trang bị cơ sở vật chất hiện đại, các quy trình  quản  lý  theo  tiêu  chuẩn  quốc  tế.  Dự  kiến trong  năm  2024,  OCB  sẽ  tiếp  tục  khai  trương thêm 05 Chi nhánh và 12 Phòng Giao dịch, nâng tổng  số  điểm  giao  dịch  lên  176  điểm  tại  48  tỉnh thành trên cả nước. Với không gian giao dịch đẳng cấp, sang trọng, cùng đội ngũ CBNV ưu tú được đào tạo bài bản, các điểm giao dịch mới chắc chắn sẽ  đem  đến  những  trải  nghiệm  tối  ưu  nhất  cho khách hàng cá nhân, doanh nghiệp và khách hàng ưu tiên khi đến giao dịch cùng OCB.
+
+| Tên                | Địa chỉ                                                                                                            |
+|--------------------|--------------------------------------------------------------------------------------------------------------------|
+| HỘISỞ              | Tòa nhà The Hallmark, Số 15 Trần Bạch Đằng, Phường Thủ Thiêm, Thành phố Thủ Đức, Tp.HCM                            |
+| CNTP. HỒCHÍ MINH   | Một phần tầng 1 và một phần tầng 7 cao ốc 123, số 123-127 Võ Văn Tần, Phường Võ Thị Sáu, Quận 3, Tp.HCM            |
+| PGDPHẠMVĂNHAI      | Một phần tầng trệt, lầu 1, 2 tòa nhà Blue Square, số 91 Phạm Văn Hai, Phường 3, Quận Tân Bình, Tp.HCM              |
+| PGDNGUYỄNTHÁIBÌNH  | 194 Nguyễn Công Trứ, Phường Nguyễn Thái Bình, Quận 1, Tp.HCM                                                       |
+| PGDMINHKHAI        | Tòa nhà D&DTower, 458 Nguyễn Thị Minh Khai, Phường 2, Quận 3, Tp.HCM                                               |
+| PGDBẠCHĐẰNG        | 117-119 Bạch Đằng, Phường 15, Quận Bình Thạnh, Tp.HCM                                                              |
+| PGDNGUYỄNVĂNTRỖI   | 157 Đường Nguyễn Văn Trỗi, Phường 11, Quận Phú Nhuận, Tp.HCM                                                       |
+| CNBẾNTHÀNH         | Một phần tầng trệt Tòa nhà Golden Tower, số 06 Nguyễn Thị Minh Khai, phường Đa Kao, quận 1, Tp.HCM                 |
+| PGDTHEHALLMARK     | Tòa nhà The Hallmark, Số 15 Trần Bạch Đằng, Phường Thủ Thiêm, Thành phố Thủ Đức, Tp.HCM                            |
+| PGDKINH TẾ         | 135 Trần Hưng Đạo, Phường Cầu Ông Lãnh, Quận 1, Tp.HCM                                                             |
+| PGDQUẬN9           | Số95(sốcũ172)đườngNguyễnVănTăng,khuphốChânPhúcCẩm,phường Long Thạnh Mỹ, thành phố Thủ Đức, Tp.HCM                  |
+| PGDTRUNGSƠN        | Tầng trệt, tầng lửng và lầu 1 số 20-22 đường 9, khu dân cư Trung Sơn, ấp 4, xã Bình Hưng, huyện Bình Chánh, Tp.HCM |
+| CNPHÚNHUẬN         | 146 Lê Văn Sỹ , Phường 10, Quận Phú Nhuận, Tp.HCM                                                                  |
+| PGDHOÀNGVĂNTHỤ     | 253 Hoàng Văn Thụ, Phường 2, Quận Tân Bình, Tp.HCM                                                                 |
+| PGDCỦCHI           | Số 93 Tỉnh lộ 8, Thị trấn Củ Chi, Huyện Củ Chi, Tp.HCM                                                             |
+| PGDHÓCMÔN          | Một phần căn nhà số 46/1B đường Lý Thường Kiệt, KP3, Thị trấn Hóc Môn, Huyện Hóc Môn, Tp.HCM                       |
+| CNCHỢLỚN           | 419- 421 An Dương Vương, Phường 3, Quận 5, Tp.HCM                                                                  |
+| PGDLÝTHƯỜNGKIỆT    | 268 Lý Thường Kiệt, Phường 14, Quận 10, Tp.HCM                                                                     |
+| PGDNGUYỄNTRIPHƯƠNG | Tầng trệt, tòa nhà B1, 279 Nguyễn Tri Phương, phường 5, quận 10, Tp.HCM                                            |
+| PGDSÀIGÒN          | 159 Tô Hiến Thành, Phường 13, Quận 10. Tp.HCM                                                                      |
+| CNGIA ĐỊNH         | Tầng trệt, tòa nhà số 24C Phan Đăng Lưu, Phường Võ Thị Sáu, Quận Bình Thạnh, Tp.HCM                                |
+| PGDGÒVẤP           | 588 - 590 Phan Văn Trị, Phường 7, Quận Gò Vấp, Tp.HCM                                                              |
+| PGDPHẠMNGỌCTHẠCH   | 17 PhạmNgọcThạch, Phường Võ Thị Sáu, Quận 3, Tp.HCM                                                                |
+| PGDQUANGTRUNGHCM   | 311 - 313 Đường Quang Trung, Phường 10, Quận Gò Vấp, Tp.HCM                                                        |
+| PGDPHỔQUANG        | GM-119D và GM-119E Dự án Golden Mansion, số 119 Phổ Quang, Phường 9, quận Phú Nhuận, Tp.HCM                        |
+| CNPHÚLÂM           | 549-551 Hồng Bàng, Phường 14, Quận 5, Tp.HCM                                                                       |
+
+| Tên             | Địa chỉ                                                                                                                |
+|-----------------|------------------------------------------------------------------------------------------------------------------------|
+| PGDHÒABÌNH      | Số 270 - 272 Hòa Bình, phường Hiệp Tân, quận Tân Phú, Tp.HCM                                                           |
+| PGDBÌNH TÂN     | Số 253-255 Đường Tên Lửa, Phường Bình Trị Đông B, Quận Bình Tân, Tp.HCM                                                |
+| PGDBÌNHPHÚ      | 127-129 Chợ Lớn, Phường 11, Quận 6, Tp.HCM                                                                             |
+| CNTÂNTHUẬN      | 252A Nguyễn Thị Thập, Phường Tân Quy, Quận 7, Tp.HCM                                                                   |
+| PGDPHÚMỸHƯNG    | D2-20 Lô R19-1 Khu phố Mỹ Toàn 3, Phường Tân Phong, Quận 7, Tp.HCM                                                     |
+| CNTHỦĐỨC        | 751A Kha Vạn Cân, Phường Linh Tây, Tp. Thủ Đức, Tp.HCM                                                                 |
+| PGDCÁTLÁI       | 286 Nguyễn Thị Định, Phường Bình Trưng Tây, Tp. Thủ Đức, Tp.HCM                                                        |
+| CNTÂNBÌNH       | 435G - 435H Hoàng Văn Thụ, Phường 4 , Quận Tân Bình, Tp.HCM                                                            |
+| PGDTÂNPHÚ       | Số829Avàmộtphầnnhàsố827ALũyBánBích,PhườngTânThành,QuậnTân Phú, Tp.HCM                                                  |
+| CNQUẬN4         | 39-41 Hoàng Diệu, Phường 13, Quận 4, Tp.HCM                                                                            |
+| PGDTHỦTHIÊM     | 14-16 Trần Não, Khu phố 5, Phường An Phú, Tp. Thủ Đức, Tp.HCM                                                          |
+| CNBẠCLIÊU       | 442 Đường Trần Phú, Khóm1, Phường 7, Tp. Bạc Liêu, Tỉnh Bạc Liêu                                                       |
+| PGDTRẦNPHÚ      | B7- B9 Trung tâm Thương mại Bạc Liêu, phường 3, thành phố Bạc Liêu, tỉnh Bạc Liêu                                      |
+| PGDHỘPHÒNG      | 275 quốc lộ 1A, khóm 2, phường Hộ Phòng, thị xã Giá Rai, Tỉnh Bạc Liêu                                                 |
+| PGDGÀNHHÀO      | Ấp 3, đường Phan Ngọc Hiển, Thị trấn Gành Hào, Huyện Đông Hải, Tỉnh Bạc Liêu                                           |
+| PGDPHƯỚCLONG    | Ấp Long Thành, thị trấn Phước Long, huyện Phước Long, Tỉnh Bạc Liêu                                                    |
+| CNSÓCTRĂNG      | 53 đường Trần Hưng Đạo, Phường 3, Tp. Sóc Trăng, Tỉnh Sóc Trăng                                                        |
+| PGDLONGPHÚ      | Số203đườngĐoànThếTrung,Ấp3,ThịtrấnLongPhú,HuyệnLongPhú,Tỉnh Sóc Trăng                                                  |
+| CNCÀMAU         | 137K Nguyễn Tất Thành, Phường 8, Tp. Cà Mau, Tỉnh Cà Mau                                                               |
+| PGDPHANNGỌCHIỂN | 90 và 90B Trần Hưng Đạo, Khóm7, Phường 5, Thành phố Cà Mau, Tỉnh Cà Mau                                                |
+| PGDSÔNGĐỐC      | Nhàsố9,đườnglộSôngĐốc-CàMau,khóm10,thịtrấnSôngĐốc,huyệnTrần Văn Thời, tỉnh Cà Mau                                      |
+| PGDĐẦMDƠI       | 38-39 Dương Thị CầmVân, khóm 4, Thị trấn ĐầmDơi, huyện ĐầmDơi, tỉnh Cà Mau                                             |
+| CNKIÊN GIANG    | 281-283 Đường Nguyễn Trung Trực, Phường Vĩnh Lạc, Tp. Rạch Giá, Tỉnh Kiên Giang                                        |
+| PGDPHÚQUỐC      | 56 Nguyễn Trung Trực, Thị trấn Dương Đông, Huyện Phú Quốc, Tỉnh Kiên Giang                                             |
+| PGDRẠCHSỎI      | Lô L4-15 và L4-16 đường Mai Thị Hồng Hạnh, phường Rạch Sỏi, thành phố Rạch Giá, Tỉnh Kiên Giang                        |
+| PGDRẠCHGIÁ      | Số 223 - 225 Trần Phú, khu phố 3 và số 86/7- 86/9 Nguyễn Hùng Sơn, phường Vĩnh Thanh Vân, Tp Rạch Giá, tỉnh Kiên Giang |
+| CNCẦNTHƠ        | 14-16B Hòa Bình, Phường An Cư, Quận Ninh Kiều, Thành phố Cần Thơ                                                       |
+
+| Tên            | Địa chỉ                                                                                                  |
+|----------------|----------------------------------------------------------------------------------------------------------|
+| PGDXUÂNKHÁNH   | PG1-11, số 209 đường 30/4, Phường Xuân Khánh, Quận Ninh Kiều, Tp. Cần Thơ                                |
+| PGDANHÒA       | 153-155 Cách mạng tháng Tám, Phường An Hoà, Quận Ninh Kiều, Tp. Cần Thơ                                  |
+| PGDTHỐTNỐT     | 150, Quốc Lộ 91, khu vực Phụng Thạnh 1, Phường Thốt Nốt, Quận Thốt Nốt, Tp. Cần Thơ                      |
+| PGDTRẦNHƯNGĐẠO | 67-69 Trần Hưng Đạo, Phường An Cư, Quận Ninh Kiều, Tp. Cần Thơ                                           |
+| CNVĨNHLONG     | 81-83 PhạmThái Bường, Phường 4, Tp. Vĩnh Long, Tỉnh Vĩnh Long                                            |
+| PGDVŨNGLIÊM    | Số 168 và 170 đường Nam Kỳ Khởi Nghĩa, Khóm 2, TT. Vũng Liêm, Huyện Vũng Liêm, Tỉnh Vĩnh Long            |
+| CNĐỒNGTHÁP     | Số 109-111-113 Nguyễn Huệ, Phường Mỹ Phú, Tp. Cao Lãnh, Tỉnh Đồng Tháp                                   |
+| PGDSAĐÉC       | Số 166-168 đường Hùng Vương, Khóm1, Phường 2, Tp. Sa Đéc, Tỉnh Đồng Tháp                                 |
+| CNANGIANG      | 54 Trần Hưng Đạo, Phường Mỹ Bình, Tp. Long Xuyên, Tỉnh An Giang                                          |
+| PGDTÂNCHÂU     | 104 Tôn Đức Thắng, Phường Long Thạnh, Thị xã Tân Châu,Tỉnh An Giang                                      |
+| PGDCHÂUĐỐC     | 76-78ĐườngNguyễnVănThoại,PhườngChâuPhúA,ThịxãChâuĐốc,Tỉnh An Giang                                       |
+| PGDTHOẠISƠN    | 499-501 Đường Nguyễn Huệ, Ấp Đông Sơn 2, Thị trấn Núi Sập, Huyện Thoại Sơn, Tỉnh An Giang                |
+| CNHẬUGIANG     | PG1-20 Vincom shophouse Vị Thanh, Số 1 đường 3 tháng 2, Phường 5, Tp. Hậu Giang, Tỉnh Hậu Giang          |
+| CNLONGAN       | 202-204 Đường Hùng Vương, Phường 2, Tp. Tân An, Tỉnh Long An                                             |
+| PGDBẾNLỨC      | 188-190 Khu phố 2, Đường Nguyễn Hữu Thọ, Thị trấn Bến Lức, Huyện Bến Lức, Tỉnh Long An                   |
+| PGDĐỨCHÒA      | 200C, Khu vực 3, Thị trấn Đức Hòa, Huyện Đức Hòa, Tỉnh Long An                                           |
+| PGDCẦNGIUỘC    | 75 Khu phố 2, Quốc lộ 50, Thị trấn Cần Giuộc, Huyện Cần Giuộc, Tỉnh Long An                              |
+| CNBÌNHDƯƠNG    | 233 KP2, Đại lộ Bình Dương, Phường Phú Thọ, Thành phố Thủ dầu Một, Tỉnh Bình Dương                       |
+| PGDDĨAN        | Số 30,đường9,KĐTTrungtâmHC,KhuphốNhịĐồng2,P.DĩAn,Tp.DĩAn, Tỉnh Bình Dương                                |
+| PGDTHUẬNAN     | Số 141 Bis khu phố Đông Tư, Phường Lái Thiêu, Thành phố Thuận An, Tỉnh Bình Dương                        |
+| PGDTÂNUYÊN     | 49 KP Bình Hòa 1, Phường Tân Phước Khánh, Thị xã Tân Uyên, Tỉnh Bình Dương                               |
+| PGDBẾNCÁT      | 72 Hùng Vương, khu phố 1, Phường Mỹ Phước, Thị xã Bến Cát, Tỉnh Bình Dương                               |
+| CNĐỒNGNAI      | K27 - K50, KP7, đường Võ Thị Sáu (đường 5 nối dài), Phường Thống Nhất, Thành phố Biên Hòa, Tỉnh Đồng Nai |
+| PGDBIÊNHÒA     | Số 34D - 34E đường Cách Mạng Tháng Tám, Phường Quang Vinh, Tp. Biên Hòa, Tỉnh Đồng Nai                   |
+| PGDTÂNHIỆP     | Lô 25 - 26 Đồng Khởi, Khu phố 4, Phường Tân Hiệp, Tp. Biên Hòa, Tỉnh Đồng Nai                            |
+
+| Tên                    | Địa chỉ                                                                                                                                |
+|------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| PGDTRẢNGBOM            | B21-B22 Nguyễn Hữu Cảnh, Thị trấn Trảng Bom, Huyện Trảng Bom, Tỉnh Đồng Nai                                                            |
+| CNTRUNGVIỆT            | 34-36 Đường Quang Trung, Phường Thạch Thang, Quận Hải Châu, Tp. Đà Nẵng                                                                |
+| PGDHẢICHÂU             | 92 Đường Chi Lăng, Phường Hải Châu 2, Quận Hải Châu, Tp. Đà Nẵng                                                                       |
+| PGDBẮCĐÀNẴNG           | Số 79 - 81 Nguyễn Sinh Sắc, Phường Hòa Minh, Quận Liên Chiểu, Tp. Đà Nẵng                                                              |
+| PGD2THÁNG9             | Một phần căn nhà 86, đường 2 tháng 9, Phường Bình Hiên, Quận Hải Châu, Tp. Đà Nẵng                                                     |
+| PGDTHANHKHÊ            | 135 đường Điện Biên Phủ, tổ 67, phường Chính Gián, Quận Thanh Khê, Tp. Đà Nẵng                                                         |
+| PGDNAMĐÀNẴNG           | 45 - 47 - 49 Nguyễn Phước Lan, Phường Hòa Xuân, Quận CẩmLệ, Tp. Đà Nẵng                                                                |
+| PGDSƠNTRÀ              | 1011 Ngô Quyền, Phường An Hải Đông, Quận Sơn Trà, Tp. Đà Nẵng                                                                          |
+| CNKHÁNHHÒA             | Số 89 - 89 AYersin, Phường Phương Sài, Tp. Nha Trang, Tỉnh Khánh Hòa                                                                   |
+| PGD23THÁNG10           | Số 406 đường 23 tháng 10, Xã Vĩnh Hiệp, Tp. Nha Trang, Tỉnh Khánh Hòa                                                                  |
+| PGDHOÀNGDIỆU           | 38 đường 6C, Phường Phước Long, Tp. Nha Trang, Tỉnh Khánh Hòa                                                                          |
+| PGDCAMRANH             | Số 84 đường 22/8, Phường CamThuận, Tp. CamRanh, Tỉnh Khánh Hòa                                                                         |
+| CNĐĂKLĂK               | 269 Lê Hồng Phong, Phường Thống Nhất, Tp. Buôn MaThuột, Tỉnh Đắk Lắk                                                                   |
+| PGDEAHLEO              | 570 - 572 đường Giải Phóng, Thị trấn Ea Drăng, Huyện Ea H'leo, Tỉnh Đắk Lắk                                                            |
+| PGDEATAM               | 429 Đường Lê Duẩn, Phường Ea Tam, Tp. Buôn MaThuột, Tỉnh Đắk Lắk                                                                       |
+| PGDEAKAR               | 101 Nguyễn Tất Thành, Thị trấn EaKar, Huyện EaKar, Tỉnh Đắk Lắk                                                                        |
+| CNQUẢNGNAM             | LôD41-42,ĐườngN10nốidài,khuTTTMTamKỳ,PhườngPhướcHòa,Tp.TamKỳ, TỉnhQuảngNam                                                             |
+| PGDHỘIAN               | Số 540 Hai Bà Trưng, phường Tân An, Thành phố Hội An, TỉnhQuảngNam                                                                     |
+| PGDNÚI THÀNH(ĐIỆN BÀN) | 34 Trần Nhân Tông, Khối 4, phường Vĩnh Điện, Thị xã Điện Bàn, TỉnhQuảngNam                                                             |
+| CNHÀNỘI                | Số 28 Cát Linh, Phường Cát Linh, Quận Đống Đa, Tp. Hà Nội                                                                              |
+| PGDTRÀNGAN             | Một phần tầng 1 và một phần tầng 6 số 165 Thái Hà, Phường Láng Hạ, Quận Đống Đa, Tp. Hà Nội                                            |
+| PGDĐÔNGĐÔ              | Tầng 1, Tầng 2 và tầng 3 Tòa nhà 86-88 Đông Các, Phường ÔChợDừa, Quận Đống Đa, Tp. Hà Nội                                              |
+| PGDSAOVIỆT             | Một phần tầng 1, Tòa nhà HH4, Sông Đà Twin Tower, Đường Phạm Hùng, Quận NamTừLiêm, Tp. Hà Nội                                          |
+| PGDVĂNQUÁN             | Một phần tầng 1 và mộtphầntầng 5 tòa nhà NewSkyLine, lô CC2, khu đô thị Văn Quán - Yên Phúc, Phường Văn Quán, Quận Hà Đông, Tp. Hà Nội |
+| PGDTIMES CITY          | Sàn giao dịch SO-01, Nhà số T01, Khu đô thị Vinhomes Times City, Số 458 Minh Khai, Phường Vĩnh Tuy, Quận Hai Bà Trưng, Tp. Hà Nội      |
+| CNTHĂNGLONG            | Tòa nhà 66A phố Trần Hưng Đạo, Phường Trần Hưng Đạo, Quận Hoàn Kiếm, Tp. Hà Nội                                                        |
+
+| Tên            | Địa chỉ                                                                                                                                     |
+|----------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| CNHẢIPHÒNG     | Số 93 Trần Phú, Phường Cầu Đất, Quận Ngô Quyền, Tp. Hải Phòng                                                                               |
+| PGDNGÔQUYỀN    | Thửa 11, Lô 22B, Khu đô thị ngã năm sân bay Cát Bi, Phường Đông Khê, Quận Ngô Quyền, Tp. Hải Phòng                                          |
+| PGDLẠCHTRAY    | Số 201A-203-203B Lạch Tray, Phường Lạch Tray, Quận Ngô Quyền, Tp. Hải Phòng                                                                 |
+| PGDLÊCHÂN      | Số278Q-278HđườngTrầnNguyênHãn,phườngNiệmNghĩa,quậnLêChân, Tp. Hải Phòng                                                                     |
+| CNBÀRỊAVŨNGTÀU | Số 148 Lê Hồng Phong, Phường 4, Tp. Vũng Tàu, Tỉnh Bà Rịa- Vũng Tàu                                                                         |
+| PGDBÀRỊA       | Số 233 đường Cách Mạng Tháng Tám, Phường Phước Hiệp, Tp. Bà Rịa, Tỉnh Bà Rịa - Vũng Tàu                                                     |
+| PGDRẠCHDỪA     | Số 313 đường 30/4, Phường Rạch Dừa, Tp. Vũng Tàu, Tỉnh Bà Rịa - Vũng Tàu                                                                    |
+| PGDPHÚMỸ       | Số 292 đường Độc Lập, Khu phố Quảng Phú, P. Phú Mỹ, Thị xã Phú Mỹ, Tỉnh Bà Rịa Vũng Tàu                                                     |
+| CNQUẢNGNINH    | 607 đường Lê Thánh Tông, Phường Bạch Đằng Tp. Hạ Long, Tỉnh Quảng Ninh                                                                      |
+| PGDCẨMPHẢ      | Số 164 Trần Phú, Phường CẩmTây, Tp. CẩmPhả, Tỉnh Quảng Ninh                                                                                 |
+| PGDUÔNGBÍ      | Số 308 đường Quang Trung, Phường Quang Trung, Tp. Uông Bí, Tỉnh Quảng Ninh                                                                  |
+| PGDBÃI CHÁY    | 486A Đường Hạ Long, Phường Bãi Cháy, Tp. Hạ Long, Tỉnh Quảng Ninh                                                                           |
+| CNTHANHHÓA     | Mộtphầntầng1,tầnglửng,tầng2vàtầng3củaLô01-02,dựánHạcThành Tower đường Phan Chu Trinh, Phường Điện Biên, Thành phố Thanh Hóa, Tỉnh Thanh Hóa |
+| PGDTÂNSƠN      | Một phần tầng 1, tầng 2 và tầng 3 của Tòa nhà, Lô 24-25, đường Lê Hoàn, Phường Điện Biên, TP. Thanh Hóa, Tỉnh Thanh Hóa                     |
+| PGDQUANGTRUNG  | Số 321 Quang Trung 2, Phường Đông Vệ, Tp. Thanh Hóa, Tỉnh Thanh Hóa                                                                         |
+| PGDLAMSƠN      | Số 380 Lê Lai, Phường Đông Sơn, Tp. Thanh Hóa, Tỉnh Thanh Hóa                                                                               |
+| CNNGHỆAN       | Số 07 Đường Lê Hồng Phong, Phường Hưng Bình, Tp. Vinh, Tỉnh Nghệ An                                                                         |
+| PGDVINH        | Lô A-19, khu dân cư Golden City 10, đường Mai Hắc Đế, phường Quán Bàu, Tp. Vinh, Tỉnh Nghệ An                                               |
+| PGDHƯNGDŨNG    | Số 118 đường Nguyễn Phong Sắc, Phường Hưng Dũng, Tp. Vinh, Tỉnh Nghệ An                                                                     |
+| PGDDIỄNCHÂU    | Khối 3, Thị trấn Diễn Châu, Huyện Diễn Châu, Tỉnh Nghệ An                                                                                   |
+| CNQUẢNGNGÃI    | Số 134 Hùng Vương, Phường Trần Phú, Tp. Quảng Ngãi, Tỉnh Quảng Ngãi                                                                         |
+| PGDBÌNHSƠN     | Số 332 PhạmVănĐồng, Thị trấn Châu Ô, Huyện Bình Sơn, Tỉnh Quảng Ngãi                                                                        |
+| PGDSÔNGVỆ      | Số 17-19 PhạmVănĐồng, Thị trấn Sông Vệ, Huyện Tư Nghĩa, Tỉnh Quảng Ngãi                                                                     |
+| CNLẠNGSƠN      | Số 483 đường Bà Triệu, Khối 4, Phường Vĩnh Trại, Tp. Lạng Sơn, Tỉnh Lạng Sơn                                                                |
+| CNBẮCNINH      | Số 10 Nguyễn Đăng Đạo, Phường Tiền An, Tp. Bắc Ninh, Tỉnh Bắc Ninh                                                                          |
+| PGDTỪSƠN       | Tầng 1 và Tầng 2 của tòa nhà số 444 - 446 Trần Phú, Phường Đình Bảng, Thành phố Từ Sơn, Tỉnh Bắc Ninh                                       |
+
+| Tên              | Địa chỉ                                                                                                                  |
+|------------------|--------------------------------------------------------------------------------------------------------------------------|
+| CNNINHBÌNH       | Số 850 đường Trần Hưng Đạo, Phường Tân Thành, Tp. Ninh Bình, Tỉnh Ninh Bình                                              |
+| PGDGIA VIỄN      | Khu tái định cư,ĐườngHồngDân, Phố Mới, Thị trấn me, Huyện Gia Viễn, Tỉnh Ninh Bình                                       |
+| PGDNINHSƠN       | Số 718 Nguyễn Công Trứ, Phường Ninh Sơn, Tp. Ninh Bình, Tỉnh Ninh Bình                                                   |
+| CNTHÁINGUYÊN     | Một phần tầng 1 và một phần tầng 2, số 25 đường Hoàng Văn Thụ, Phường Phan Đình Phùng, Tp. Thái Nguyên, Tỉnh Thái Nguyên |
+| PGDPHỔYÊN        | Số 173 đường Trường Chinh, Phường Ba Hàng, Tp. Phổ Yên, Tỉnh Thái Nguyên                                                 |
+| CNPLEIKU         | 40C Hùng Vương, Phường Ia Kring, Tp. Pleiku, Tỉnh Gia Lai                                                                |
+| PGDBIỂNHỒ        | 12 Võ Văn Kiệt, Tổ 7, phường Yên Thế, Thành phố Pleiku, Tỉnh Gia Lai                                                     |
+| CNVĨNHPHÚC       | Mộtphầntầng1vàtầng2số392MêLinh,PhườngLiênBảo,Tp.VĩnhYên,Tỉnh Vĩnh Phúc                                                   |
+| CNBÌNHĐỊNH       | 463 Trần Hưng Đạo, Phường Lê Hồng Phong, TP. Quy Nhơn, Tỉnh Bình Định                                                    |
+| CNLONGBIÊN       | 127 Nguyễn Văn Cừ, Phường Ngọc Lâm, Quận Long Biên, TP. Hà Nội                                                           |
+| CNCẦUGIẤY        | Tầng1vàTầng2số69HoàngQuốcViệt,PhườngNghĩaĐô,QuậnCầuGiấy,TP. Hà Nội                                                       |
+| CNTÂYNINH        | Số 348 đường 30 tháng 4, KP1, Phường 3, Thành phố Tây Ninh, Tỉnh Tây Ninh                                                |
+| PGDTRẢNGBÀNG     | Căn A2-A3 khu thương mại Trảng Bàng, Đường Nguyễn Du, Phường Trảng Bàng, Thị xã Trảng Bàng, Tỉnh Tây Ninh                |
+| PGDHÒATHÀNH      | 35 - 37 Hùng Vương, Phường Long Hoa, Thị xã Hòa Thành, Tỉnh Tây Ninh                                                     |
+| CNĐÀLẠT          | Số 24 Hai Bà Trưng, Phường 6, Tp. Đà Lạt, TỉnhLâmĐồng                                                                    |
+| CNLINHĐÀM        | Số 10BT1 Linh Đàm, Phường Thịnh Liệt, Quận Hoàng Mai, Tp. Hà Nội                                                         |
+| CNHUẾ            | Số 117 Nguyễn Huệ, Phường Phú Nhuận, Thành phố Huế, Tỉnh Thừa Thiên Huế                                                  |
+| CNHÀTHÀNH(KIMMÃ) | Mộtphầntầng1,mộtphầntầng2số265đườngCầuGiấy,DịchVọng,QuậnCầu Giấy, Tp. Hà Nội                                             |
+| CNHƯNGYÊN        | Tầng 1 số 76-78 và 80 đường Nguyễn Bình, Phường Nhân Hòa, Thị xã Mỹ Hào, Tỉnh Hưng Yên                                   |
+| CNHÀNAM          | Số 260 Lê Công Thanh, Phường Minh Khai, Tp. Phủ Lý, TỉnhHàNam                                                            |
+| CNBẮCGIANG       | Số 273 Nguyễn Thị Lưu, Phường Ngô Quyền, Tp. Bắc Giang, Tỉnh Bắc Giang                                                   |
+| CNBÌNHTHUẬN      | Số 349 Trần Hưng Đạo, Phường Bình Hưng, Tp. Phan Thiết, Tỉnh Bình Thuận                                                  |
+| CNBÌNHPHƯỚC      | Số482khuTĐCQuốclộ14,KhuphốPhúThanh,PhườngTânPhú,Tp.ĐồngXoài, Tỉnh Bình Phước                                             |
+| CNTHÁI BÌNH      | Shophouse Vincom PG1 - 17, ĐườngQuangTrung, PhườngĐềThám,Thànhphố Thái Bình, Tỉnh Thái Bình                              |
+| CNHÀTĨNH         | Số 22 - 24 đường Trần Phú, Phường Bắc Hà, Thành phố Hà Tĩnh, Tỉnh Hà Tĩnh                                                |
+| CNPHÚYÊN         | 294 Trần Hưng Đạo, Phường 6, Thành phố Tuy Hòa, Tỉnh Phú Yên                                                             |
+
+## CHƯƠNG 08 BÁO CÁO TÀI CHÍNH VÀ THUYẾT MINH
+
+<!-- image -->
+
+## BÁO CÁO KIỂM TOÁN ĐỘC LẬP
+
+<!-- image -->
+
+<!-- image -->
+
+## BÁO CÁO KIỂM TOÁN ĐỘC LẬP (Tiếp theo)
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## BÁO CÁO TÌNH HÌNH TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+<!-- image -->
+
+<!-- image -->
+
+## BÁO CÁO LƯU CHUYỂN TIỀN TỆ HỢP NHẤT (Tiếp theo)
+
+## BÁO CÁO LƯU CHUYỂN TIỀN TỆ HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+## THUYẾT MINH BÁO CÁO TÀI CHÍNH HỢP NHẤT (Tiếp theo)
+
+<!-- image -->
+
+<!-- image -->
+
+Hội sở
+
+Điện thoại
+
+Hotline
+
+Website
+
+(84) 28. 38220 960 (84) 28. 38220 960
+
+1800 6678 1800 6678
+
+http://www.ocb.com.vn http://www.ocb.com.vn

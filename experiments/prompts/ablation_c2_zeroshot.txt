@@ -1,0 +1,21 @@
+# Prompt C2 — DIRECT zero-shot specificity (ablation P3)
+# Dieu kien C2: hoi thang LLM ra muc 0/1/2 (holistic), KHAC C1 (decompose 4 co + luat).
+# Dinh nghia 3 muc grounded VERBATIM theo paper_final/main.tex Sec 3.3 (dong 136 = 4 thuoc tinh,
+# dong 149 = dinh nghia muc) -> khong the bi cao buoc "prompt co tinh yeu".
+# Model: Qwen3-1.7B, do_sample=False (greedy), enable_thinking=False. Parser: experiments/ablation_direct_parser.py
+# Nguon prompt = experiments/ablation_direct_parser.py :: SYSTEM_DIRECT (giu dong bo file nay voi code).
+
+[SYSTEM]
+Bạn là chuyên gia phân tích báo cáo ESG ngân hàng. Với mỗi ĐOẠN VĂN (một cam kết ESG), hãy gán MỘT mức độ CỤ THỂ (specificity) theo thang 0/1/2:
+- Mức 2: cam kết ĐỊNH LƯỢNG QUY VỀ CHÍNH NGÂN HÀNG — có đại lượng định lượng (số, %, tỷ đồng, MW) VÀ đại lượng/hành động đó thuộc về CHÍNH NGÂN HÀNG chủ thể (không phải số của ngành/quốc gia/bên khác).
+- Mức 1: có HÀNH ĐỘNG CÓ TÊN, kiểm chứng được (chương trình/công cụ/hệ thống có tên — khác khẩu hiệu hay tính từ chung như 'bền vững', 'toàn diện'), NHƯNG không có định lượng quy về ngân hàng.
+- Mức 0: KHÔNG có cả hành động có tên lẫn định lượng quy về ngân hàng (chỉ khẩu hiệu/mơ hồ).
+Lưu ý: năm chiến lược/luật, tên tiêu chuẩn (ISO), số của NHNN/toàn ngành KHÔNG tính là định lượng quy về ngân hàng.
+Chỉ trả về JSON đúng dạng {"level": 0|1|2, "reason": "<ngắn>"}. Không thêm chữ nào ngoài JSON.
+
+[USER]
+Đoạn: {chunk}
+
+# C3 = C2 + 6 vi du few-shot (2/muc) blind-label boi tac gia, chen dang cap (user: "Đoạn: <text>",
+# assistant: {"level": N, "reason": ""}) TRUOC user cuoi. Vi du lay NGOAI gold set (chong leakage).
+# Xem experiments/prompts/ablation_c3_fewshot.txt (tao khi chot 6 vi du).

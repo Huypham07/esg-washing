@@ -1,0 +1,21 @@
+# C3 few-shot exemplars (ablation P3) — 6 vi du (2/muc), NGOAI 400 gold (leakage-free), blind-label boi tac gia.
+# Chen dang cap (user: "Đoạn: <text>", assistant: {"level": N}) TRUOC user cuoi trong prompt C2.
+# C: phuc hoi OCR (# -> đ). Nhan = nhan NGUOI cua tac gia (khong phai C1).
+
+## [A] level=0  (src=viettinbank/2021, chunk_id=viettinbank_2021__c0210)
+Năm 2021, VietinBank tiếp tục triển khai các chế độ phúc lợi, đãi ngộ chung đối với CBNV trong toàn hệ thống nhằm chăm lo đời sống, tái tạo sức lao động, tạo sự cân bằng giữa công việccuộc sống, tăng sự gắn kết và các chế độ phúc lợi, đãi ngộ vượt trội đối với cán bộ có thành tích cao, cán bộ nhân tài, lãnh đạo các vị trí chủ chốt, lãnh đạo cấp cao để ghi nhận sự đóng góp, giữ chân cán bộ có năng lực, trình độ cao.
+
+## [B] level=2  (src=vietcombank/2023, chunk_id=vietcombank_2023__c0186)
+Bên cạnh đó, tiếp nối và phát huy truyền thống là một ngân hàng Xanh – Vì cộng đồng, trong năm 2023, VCB đã cam kết triển khai các chương trình an sinh xã hội với tổng ngân sách 309 tỷ đồng. Hoạt động an sinh xã hội và thiện nguyện chiếm ~40% tổng ngân sách cam kết; Hoạt động y tế, giáo dục, đầu tư phát triển cộng đồng chiếm ~50% tổng ngân sách cam kết; Hoạt động khác chiếm ~10% tổng ngân sách cam kết.
+
+## [E] level=1  (src=vietcombank/2020, chunk_id=vietcombank_2020__c0093)
+BKS đã phối hợp với HĐQT, BĐH để rà soát các quy định về quản trị nội bộ (Điều lệ tổ chức và hoạt động của VCB, Quy chế tổ chức và hoạt động của HĐQT, Quy chế quản trị nội bộ), rà soát, ban hành các quy định nội bộ của BKS (Quy chế tổ chức và hoạt động của BKS, Quy định về Chuẩn mực đạo đức nghề nghiệp của TV BKS, Quy chế kiểm soát, kiểm toán nội bộ, .
+
+## [C] level=0  (src=viettinbank/2020, chunk_id=viettinbank_2020__c0188)
+Để đảm bảo mục tiêu PTBV, VietinBank sẽ tiếp tục phát huy hiệu quả của các hoạ t động đã triển khai, hoàn thiện và bổ sung các VBCS, ưu tiên nguồn lực để thúc đẩy tăng trưởng Tín dụng Xanh, đặc biệt đối với các dự án tiết kiệm và hiệu quả năng lượng, ưu tiên nguồn lực để tài trợ các dự án đầu tư vào lĩnh vực bảo vệ môi trường, ứng phó biến đổi khí hậu và PTBV.
+
+## [J2] level=2  (src=mbbank/2021, chunk_id=mbbank_2021__c0210)
+Năm 2021, MB đã dành ~386 tỷ đồng cho chương trình phát triển cộng đồng theo các lĩnh vực ưu tiên như: hỗ trợ phòng chống dịch bệnh Covid- 19, đền ơn đáp nghĩa, xây dựng nông thôn mới, đầu tư cho giáo dục, y tế, xóa đói giảm nghèo. Năm 2021 MB đã hỗ trợ 285 tỷ đồng cho 38 tỉnh, thành phố và 15 đơn vị thực hiện công tác phòng chống dịch bệnh Covid- 19.
+
+## [J3] level=1  (src=bidv/2023, chunk_id=bidv_2023__c0197)
+BIDV cũng là ngân hàng đầu tiên phục vụ chương trình chuyển nhượng kết quả giảm phát thải tại Việt Nam, tăng cường hợp tác tại COP28 tại Dubai như trao văn bản hợp tác với Ngân hàng Phát triển Châu Á (ADB) và Standard Chartered Bank về thúc đẩy các hoạt động tài trợ xanh, tài chính bền vững.

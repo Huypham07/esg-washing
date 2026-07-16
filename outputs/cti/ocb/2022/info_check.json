@@ -1,0 +1,14 @@
+{
+  "bank": "ocb",
+  "year": 2022,
+  "n_chunks": 107,
+  "non_esg_share": 0.523,
+  "n_commitment": 33,
+  "spec_level_counts": {
+    "0": 13,
+    "1": 14,
+    "2": 6
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

@@ -1,0 +1,14 @@
+{
+  "bank": "shb",
+  "year": 2021,
+  "n_chunks": 298,
+  "non_esg_share": 0.658,
+  "n_commitment": 61,
+  "spec_level_counts": {
+    "0": 32,
+    "1": 12,
+    "2": 17
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

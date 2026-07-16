@@ -1,0 +1,111 @@
+{
+  "bank": "bidv",
+  "years": {
+    "2023": {
+      "basic": {
+        "n_chunks": 266,
+        "n_esg_chunks": 126,
+        "esg_share": 0.474,
+        "n_commitment": 147,
+        "commit_share": 0.553,
+        "n_commit_esg": 85
+      },
+      "overall_esg": {
+        "n_commit_esg": 85,
+        "lvl0": 33,
+        "lvl1": 29,
+        "lvl2": 23,
+        "cti_loose": 0.3882,
+        "cti_strict": 0.7294
+      },
+      "per_pillar": [
+        {
+          "pillar": "env",
+          "n_commit": 42,
+          "lvl0": 11,
+          "lvl1": 15,
+          "lvl2": 16,
+          "cti_loose": 0.2619,
+          "cti_strict": 0.619,
+          "n_esg_chunks": 47,
+          "disclosure_share": 0.2611
+        },
+        {
+          "pillar": "soc",
+          "n_commit": 41,
+          "lvl0": 14,
+          "lvl1": 12,
+          "lvl2": 15,
+          "cti_loose": 0.3415,
+          "cti_strict": 0.6341,
+          "n_esg_chunks": 48,
+          "disclosure_share": 0.2667
+        },
+        {
+          "pillar": "gov",
+          "n_commit": 51,
+          "lvl0": 25,
+          "lvl1": 18,
+          "lvl2": 8,
+          "cti_loose": 0.4902,
+          "cti_strict": 0.8431,
+          "n_esg_chunks": 85,
+          "disclosure_share": 0.4722
+        }
+      ]
+    },
+    "2024": {
+      "basic": {
+        "n_chunks": 301,
+        "n_esg_chunks": 139,
+        "esg_share": 0.462,
+        "n_commitment": 164,
+        "commit_share": 0.545,
+        "n_commit_esg": 84
+      },
+      "overall_esg": {
+        "n_commit_esg": 84,
+        "lvl0": 33,
+        "lvl1": 22,
+        "lvl2": 29,
+        "cti_loose": 0.3929,
+        "cti_strict": 0.6548
+      },
+      "per_pillar": [
+        {
+          "pillar": "env",
+          "n_commit": 39,
+          "lvl0": 12,
+          "lvl1": 8,
+          "lvl2": 19,
+          "cti_loose": 0.3077,
+          "cti_strict": 0.5128,
+          "n_esg_chunks": 48,
+          "disclosure_share": 0.25
+        },
+        {
+          "pillar": "soc",
+          "n_commit": 42,
+          "lvl0": 15,
+          "lvl1": 10,
+          "lvl2": 17,
+          "cti_loose": 0.3571,
+          "cti_strict": 0.5952,
+          "n_esg_chunks": 49,
+          "disclosure_share": 0.2552
+        },
+        {
+          "pillar": "gov",
+          "n_commit": 50,
+          "lvl0": 25,
+          "lvl1": 15,
+          "lvl2": 10,
+          "cti_loose": 0.5,
+          "cti_strict": 0.8,
+          "n_esg_chunks": 95,
+          "disclosure_share": 0.4948
+        }
+      ]
+    }
+  }
+}

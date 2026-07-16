@@ -1,0 +1,34 @@
+# M1 - topic E/S/G masked-BCE (spec 02 #1)
+backbone: vinai/phobert-base
+en_backbone: roberta-base        # upper-bound E2
+zero_shot_backbone: xlm-roberta-base
+max_length: 256
+word_segment: true
+labels: [env, soc, gov]
+loss: masked_bce
+pos_weight: auto
+dropout: 0.05249460840378278     # tuned (Optuna, val macro-F1 0.8571, 20 trials)
+train:                           # tuned; chay --tune de tim lai, copy ket qua vao day
+  lr: 2.7396836004694616e-05
+  batch_size: 16
+  epochs: 10
+  warmup_ratio: 0.06467163677523774
+  weight_decay: 0.019448553647326953
+  seeds: [42, 43, 44, 45, 46]
+threshold_tuning: per_label_f1   # tune tren dev, khong mac dinh 0.5
+tune:                            # Optuna TPE + MedianPruner (esgwash.models.tuning)
+  max_epochs: 10                 # tran tren; best-epoch checkpoint tren dev = early stopping,
+                                 # pruner cat trial te som nen epoch thua khong ton nhieu
+  space:                         # [low, high]; lr & weight_decay sample thang log
+    lr: [1.0e-5, 5.0e-5]
+    batch_size: [16, 32]
+    warmup_ratio: [0.0, 0.2]
+    weight_decay: [1.0e-3, 0.1]
+    dropout: [0.05, 0.3]
+cross_label:                     # vong 2 chuan bi data (spec 01 #3): ESGBERT cross-inference
+  confidence: 0.9                # tau — chi dien nhan >= tau (hoac <= 1-tau cho negative)
+  probs_path: data/processed/gold/esgbert_probs.parquet
+  table_path: data/processed/gold/topic_labeled.parquet   # bang nhan dich, train mac dinh dung
+data:
+  masked_table: data/processed/gold/topic_masked.parquet  # trung gian (truoc cross_label)
+output_dir: outputs/models/topic

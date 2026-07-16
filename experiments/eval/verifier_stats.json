@@ -1,0 +1,15 @@
+{
+  "n_committed": 3184,
+  "n_parse_ok": 3184,
+  "n_any_downgrade": 1099,
+  "quant_claimed": 1437,
+  "quant_dropped_digit": 444,
+  "flags_claimed_after_digit": 6386,
+  "flags_dropped_substring": 1120,
+  "evidence_pass": 5266,
+  "mismatch_vs_stored": 0,
+  "pct_chunks_any_downgrade": 34.5,
+  "pct_quant_dropped_by_digit_check": 30.9,
+  "pct_flags_dropped_by_substring": 17.5,
+  "pct_evidence_pass_substring": 82.5
+}

@@ -1,0 +1,7 @@
+# Specificity scorer: small instruct-LLM + rubric (3 muc)
+model: Qwen/Qwen3-1.7B     # ho Qwen3 (co VI); doi sang 0.6B/0.5B neu can nhe hon
+max_new_tokens: 512        # du cho chunk nhieu item, tranh JSON bi cat -> parse fail
+enable_thinking: false     # tat de output JSON gon
+retries: 2                 # so lan thu lai khi parse JSON loi, sau do fallback spec_level=0
+# spec_level: 2 = dinh luong & quy ve chu the | 1 = hanh dong co ten & quy ve chu the | 0 = mo ho
+# is_specific = (spec_level >= 1). CTI = ti le Muc 0. spec_rubric + spec_raw luu kem de phan tich nguoc.

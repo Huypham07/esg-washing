@@ -1,0 +1,6 @@
+# P4 - chi so (spec 2026-06-16): CTI/NAR/QDR, khong grounding
+bootstrap:
+  n_resamples: 1000
+  ci: 0.95
+min_commitments_per_cell: 30   # duoi nguong -> chi vao bang pooled
+output: outputs/index/cti.parquet

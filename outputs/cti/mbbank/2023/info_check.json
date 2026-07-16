@@ -1,0 +1,14 @@
+{
+  "bank": "mbbank",
+  "year": 2023,
+  "n_chunks": 248,
+  "non_esg_share": 0.44,
+  "n_commitment": 89,
+  "spec_level_counts": {
+    "0": 37,
+    "1": 29,
+    "2": 23
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

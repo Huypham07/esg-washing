@@ -1,0 +1,178 @@
+{
+  "basis": "relabel derived-from-flags (reconcile 07/07)",
+  "n_cells": 45,
+  "raw_headline": {
+    "VDR": 0.4791,
+    "NAR": 0.3035,
+    "QDR": 0.2174
+  },
+  "M": {
+    "A": {
+      "n": 390,
+      "counts": [
+        [
+          127,
+          36,
+          12
+        ],
+        [
+          17,
+          92,
+          21
+        ],
+        [
+          5,
+          19,
+          61
+        ]
+      ]
+    },
+    "B": {
+      "n": 389,
+      "counts": [
+        [
+          129,
+          36,
+          8
+        ],
+        [
+          20,
+          91,
+          19
+        ],
+        [
+          9,
+          21,
+          56
+        ]
+      ]
+    }
+  },
+  "corrected_headline": {
+    "A": {
+      "VDR": 0.4337,
+      "NAR": 0.3168,
+      "QDR": 0.2495
+    },
+    "B": {
+      "VDR": 0.4669,
+      "NAR": 0.317,
+      "QDR": 0.2161
+    }
+  },
+  "bootstrap_CI_95": {
+    "VDR": [
+      0.3568,
+      0.51
+    ],
+    "NAR": [
+      0.2142,
+      0.4159
+    ],
+    "QDR": [
+      0.1863,
+      0.3274
+    ],
+    "n_boot_used": 2000,
+    "n_singular_skipped": 0
+  },
+  "stat_tests": {
+    "temporal_cti": {
+      "raw": {
+        "rho": -0.2964,
+        "p": 0.04801
+      },
+      "corrected": {
+        "rho": -0.3206,
+        "p": 0.03176
+      },
+      "significance_flip": false
+    },
+    "temporal_nar": {
+      "raw": {
+        "rho": 0.3394,
+        "p": 0.02255
+      },
+      "corrected": {
+        "rho": 0.3376,
+        "p": 0.02334
+      },
+      "significance_flip": false
+    },
+    "temporal_qdr": {
+      "raw": {
+        "rho": -0.0442,
+        "p": 0.7732
+      },
+      "corrected": {
+        "rho": -0.0968,
+        "p": 0.527
+      },
+      "significance_flip": false
+    },
+    "cti_vs_qdr": {
+      "raw": {
+        "rho": -0.4765,
+        "p": 0.0009363
+      },
+      "corrected": {
+        "rho": -0.2357,
+        "p": 0.1191
+      },
+      "significance_flip": true
+    }
+  },
+  "per_pillar": {
+    "raw": {
+      "E": {
+        "VDR": 0.4337,
+        "QDR": 0.2413,
+        "delta": 0.1923
+      },
+      "S": {
+        "VDR": 0.4715,
+        "QDR": 0.2384,
+        "delta": 0.2331
+      },
+      "G": {
+        "VDR": 0.5537,
+        "QDR": 0.147,
+        "delta": 0.4066
+      }
+    },
+    "corrected_A": {
+      "E": {
+        "VDR": 0.3654,
+        "QDR": 0.283,
+        "delta": 0.0824
+      },
+      "S": {
+        "VDR": 0.4288,
+        "QDR": 0.289,
+        "delta": 0.1398
+      },
+      "G": {
+        "VDR": 0.5339,
+        "QDR": 0.1325,
+        "delta": 0.4013
+      }
+    },
+    "corrected_B": {
+      "E": {
+        "VDR": 0.3963,
+        "QDR": 0.2498,
+        "delta": 0.1464
+      },
+      "S": {
+        "VDR": 0.4636,
+        "QDR": 0.255,
+        "delta": 0.2085
+      },
+      "G": {
+        "VDR": 0.5672,
+        "QDR": 0.1001,
+        "delta": 0.4671
+      }
+    }
+  }
+}

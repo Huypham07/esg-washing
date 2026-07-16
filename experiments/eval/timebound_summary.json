@@ -1,0 +1,42 @@
+{
+  "n_committed": 3184,
+  "TBR": {
+    "mean_of_cells": 0.2952,
+    "pooled": 0.3009
+  },
+  "TBR_by_pillar": {
+    "E": 0.3631,
+    "S": 0.2911,
+    "G": 0.275
+  },
+  "TBR_by_year": {
+    "2020": 0.2531,
+    "2021": 0.2735,
+    "2022": 0.3009,
+    "2023": 0.3111,
+    "2024": 0.3371
+  },
+  "TBR_year_spearman": {
+    "rho": 0.3891,
+    "p": 0.008257
+  },
+  "P_timeframe_given_level": {
+    "0": 0.054,
+    "1": 0.3859,
+    "2": 0.7277
+  },
+  "monotonic_increasing": true,
+  "level2_no_deadline": {
+    "overall": 0.2723,
+    "n_level2": 683,
+    "by_pillar": {
+      "E": 0.2464,
+      "S": 0.2754,
+      "G": 0.2291
+    }
+  },
+  "TQR": {
+    "mean_of_cells": 0.154,
+    "pooled": 0.1561
+  }
+}

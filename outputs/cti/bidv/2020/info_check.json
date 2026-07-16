@@ -1,0 +1,14 @@
+{
+  "bank": "bidv",
+  "year": 2020,
+  "n_chunks": 299,
+  "non_esg_share": 0.579,
+  "n_commitment": 72,
+  "spec_level_counts": {
+    "0": 33,
+    "1": 21,
+    "2": 18
+  },
+  "chunk_gt_256tok": 0,
+  "spec_parse_fail": 0
+}

@@ -1,0 +1,5 @@
+# Spec 05
+bank_signals: data/external/bank_signals.csv
+synthetic_mix_levels: [0.1, 0.3, 0.5]
+threshold_perturbation: 0.05
+outputs_dir: outputs/metrics

@@ -1,0 +1,14 @@
+zip_path: source_data/raw_ocr_annual_report.zip
+output_dir: data
+
+scope:
+  banks: [agribank, bidv, bsc, mbbank, ocb, shb, techcombank, vietcombank, viettinbank, vpbank]
+  years: [2020, 2021, 2022, 2023, 2024]
+
+chunk:
+  max_tokens: 256    # khop max_length PhoBERT cua topic/commitment (tranh cat duoi chunk khi classify)
+  tokenizer: Qwen/Qwen3-0.6B
+  semantic:
+    embedder: bkai-foundation-models/vietnamese-bi-encoder
+    threshold: 0.5    # cosine cau ke nhau < threshold -> cat ranh gioi y
+report_dir: experiments/chunking    # QA/_qa_report -> experiments (chunks.parquet van o data/)

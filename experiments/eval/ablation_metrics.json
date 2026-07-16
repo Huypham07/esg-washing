@@ -1,0 +1,196 @@
+{
+  "meta": {
+    "phase": "P3-full",
+    "git_sha": "214f93a",
+    "config": "configs/specificity.yml (Qwen3-1.7B, do_sample=False)",
+    "n_committed_A": 390,
+    "seed": 42,
+    "n_boot": 2000,
+    "source": "gold_classified.parquet + gold_annot_{1,2}_relabeled.xlsx (recomputed; NOT eval_gold_report.json)",
+    "sanity_mismatch_c1_stored_vs_rederive": 0,
+    "c1_noverif_rubric_vs_raw_disagree": 0
+  },
+  "human_ceiling": {
+    "qwk_AB_committedA_n": [
+      0.7058,
+      390
+    ],
+    "qwk_AB_bothCommitted_n": [
+      0.7031,
+      387
+    ]
+  },
+  "paired_diffs": {
+    "verifier_gain_full_minus_noverif": {
+      "delta_qwk": 0.1218,
+      "ci95": [
+        0.0655,
+        0.1803
+      ],
+      "frac_gt0": 1.0
+    },
+    "decomp_c1noverif_vs_c2": {
+      "delta_qwk": 0.4593,
+      "ci95": [
+        0.3777,
+        0.5416
+      ],
+      "frac_gt0": 1.0
+    },
+    "decomp_c1noverif_vs_c3": {
+      "delta_qwk": 0.2797,
+      "ci95": [
+        0.1885,
+        0.3653
+      ],
+      "frac_gt0": 1.0
+    },
+    "fullmethod_c1_vs_c2": {
+      "delta_qwk": 0.5811,
+      "ci95": [
+        0.4949,
+        0.6702
+      ],
+      "frac_gt0": 1.0
+    },
+    "fullmethod_c1_vs_c3": {
+      "delta_qwk": 0.4014,
+      "ci95": [
+        0.2983,
+        0.499
+      ],
+      "frac_gt0": 1.0
+    }
+  },
+  "conditions": {
+    "C1_full": {
+      "qwk_A": 0.6629,
+      "qwk_A_ci95": [
+        0.5913,
+        0.73
+      ],
+      "qwk_B": 0.6455,
+      "acc_A": 0.7179,
+      "macro_f1_A": 0.7099,
+      "vdr_bias": 0.0667,
+      "level_dist": {
+        "0": 175,
+        "1": 130,
+        "2": 85
+      }
+    },
+    "C1_minus_verifier": {
+      "qwk_A": 0.5412,
+      "qwk_A_ci95": [
+        0.4638,
+        0.6103
+      ],
+      "qwk_B": 0.5379,
+      "acc_A": 0.5744,
+      "macro_f1_A": 0.5619,
+      "vdr_bias": -0.0128,
+      "level_dist": {
+        "0": 144,
+        "1": 81,
+        "2": 165
+      },
+      "n_changed_vs_full": 97
+    },
+    "majority_class": {
+      "qwk_A": 0.0,
+      "qwk_A_ci95": [
+        0.0,
+        0.0
+      ],
+      "qwk_B": 0.0,
+      "acc_A": 0.3821,
+      "macro_f1_A": 0.1843,
+      "vdr_bias": 0.6179,
+      "level_dist": {
+        "0": 390
+      }
+    },
+    "C2_direct_0shot": {
+      "qwk_A": 0.0818,
+      "qwk_A_ci95": [
+        0.0138,
+        0.1499
+      ],
+      "qwk_B": 0.0982,
+      "acc_A": 0.3923,
+      "macro_f1_A": 0.2716,
+      "vdr_bias": 0.4744,
+      "level_dist": {
+        "0": 334,
+        "1": 35,
+        "2": 21
+      },
+      "parse_fail": 0
+    },
+    "C3_direct_fewshot": {
+      "qwk_A": 0.2615,
+      "qwk_A_ci95": [
+        0.1699,
+        0.3482
+      ],
+      "qwk_B": 0.2733,
+      "acc_A": 0.4231,
+      "macro_f1_A": 0.4015,
+      "vdr_bias": 0.041,
+      "level_dist": {
+        "0": 165,
+        "1": 57,
+        "2": 168
+      },
+      "parse_fail": 0
+    }
+  },
+  "inv_cpu_digitpresence": {
+    "n_seed": 149,
+    "n_base_nonspecific": 42,
+    "per_perturbation": {
+      "national_strategy": 1.0,
+      "standards": 1.0,
+      "decorative_count": 1.0,
+      "year_reference": 1.0
+    },
+    "overall_flip_rate": 1.0
+  },
+  "inv_c1_side": {
+    "n_base_nonspecific": 127,
+    "per_perturbation": {
+      "national_strategy": {
+        "flip_is_specific": 0.2755905511811024,
+        "flip_quantity_shortcut": 0.09448818897637795,
+        "flip_level2": 0.08661417322834646
+      },
+      "standards": {
+        "flip_is_specific": 0.2755905511811024,
+        "flip_quantity_shortcut": 0.12598425196850394,
+        "flip_level2": 0.11811023622047244
+      },
+      "decorative_count": {
+        "flip_is_specific": 0.12598425196850394,
+        "flip_quantity_shortcut": 0.06299212598425197,
+        "flip_level2": 0.05511811023622047
+      },
+      "year_reference": {
+        "flip_is_specific": 0.11811023622047244,
+        "flip_quantity_shortcut": 0.047244094488188976,
+        "flip_level2": 0.03937007874015748
+      }
+    },
+    "overall": {
+      "flip_is_specific": 0.19881889763779528,
+      "flip_quantity_shortcut": 0.0826771653543307,
+      "flip_level2": 0.07480314960629922
+    }
+  },
+  "c1_live_mismatch": 0,
+  "notes": [
+    "C1_full = decomposition+verifier+rule (proposed method).",
+    "C1_minus_verifier = derive_flags on PRE-verifier flags (spec_rubric); isolates verifier gain.",
+    "C2/C3 = direct LLM (no decomposition). decomp value = C1_minus_verifier vs C2/C3 (both no verifier).",
+    "INV: DigitPresence flip ~1.0 (CPU) vs C1 flip_quantity_shortcut (LLM); C1 thap = robust khong an digit-shortcut."
+  ]
+}

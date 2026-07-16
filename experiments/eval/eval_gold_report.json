@@ -1,0 +1,269 @@
+{
+  "n_chunks": 400,
+  "labels": {
+    "env": {
+      "model_vs_A": {
+        "n": 400,
+        "precision": 0.8037,
+        "recall": 0.7706,
+        "f1": 0.7868,
+        "accuracy": 0.8225,
+        "cohen_kappa": 0.6349
+      },
+      "model_vs_B": {
+        "n": 400,
+        "precision": 0.816,
+        "recall": 0.76,
+        "f1": 0.787,
+        "accuracy": 0.82,
+        "cohen_kappa": 0.6315
+      },
+      "human_ceiling_A_vs_B": {
+        "n": 400,
+        "precision": 0.8571,
+        "recall": 0.8824,
+        "f1": 0.8696,
+        "accuracy": 0.8875,
+        "cohen_kappa": 0.7707
+      }
+    },
+    "soc": {
+      "model_vs_A": {
+        "n": 400,
+        "precision": 0.825,
+        "recall": 0.88,
+        "f1": 0.8516,
+        "accuracy": 0.8275,
+        "cohen_kappa": 0.6462
+      },
+      "model_vs_B": {
+        "n": 400,
+        "precision": 0.8333,
+        "recall": 0.8772,
+        "f1": 0.8547,
+        "accuracy": 0.83,
+        "cohen_kappa": 0.6502
+      },
+      "human_ceiling_A_vs_B": {
+        "n": 400,
+        "precision": 0.8947,
+        "recall": 0.9067,
+        "f1": 0.9007,
+        "accuracy": 0.8875,
+        "cohen_kappa": 0.771
+      }
+    },
+    "gov": {
+      "model_vs_A": {
+        "n": 400,
+        "precision": 0.8396,
+        "recall": 0.8279,
+        "f1": 0.8337,
+        "accuracy": 0.8225,
+        "cohen_kappa": 0.6434
+      },
+      "model_vs_B": {
+        "n": 400,
+        "precision": 0.8679,
+        "recall": 0.8106,
+        "f1": 0.8383,
+        "accuracy": 0.8225,
+        "cohen_kappa": 0.6421
+      },
+      "human_ceiling_A_vs_B": {
+        "n": 400,
+        "precision": 0.8722,
+        "recall": 0.9209,
+        "f1": 0.8959,
+        "accuracy": 0.885,
+        "cohen_kappa": 0.7676
+      }
+    },
+    "commit": {
+      "model_vs_A": {
+        "n": 400,
+        "precision": 0.975,
+        "recall": 1.0,
+        "f1": 0.9873,
+        "accuracy": 0.975,
+        "cohen_kappa": NaN
+      },
+      "model_vs_B": {
+        "n": 400,
+        "precision": 0.9725,
+        "recall": 1.0,
+        "f1": 0.9861,
+        "accuracy": 0.9725,
+        "cohen_kappa": NaN
+      },
+      "human_ceiling_A_vs_B": {
+        "n": 400,
+        "precision": 0.9949,
+        "recall": 0.9923,
+        "f1": 0.9936,
+        "accuracy": 0.9875,
+        "cohen_kappa": 0.7555
+      }
+    },
+    "co_hanh_dong_ten": {
+      "model_vs_A": {
+        "n": 400,
+        "precision": 0.7905,
+        "recall": 0.8019,
+        "f1": 0.7962,
+        "accuracy": 0.7875,
+        "cohen_kappa": 0.5743
+      },
+      "model_vs_B": {
+        "n": 400,
+        "precision": 0.8,
+        "recall": 0.8038,
+        "f1": 0.8019,
+        "accuracy": 0.7925,
+        "cohen_kappa": 0.5841
+      },
+      "human_ceiling_A_vs_B": {
+        "n": 400,
+        "precision": 0.8469,
+        "recall": 0.8551,
+        "f1": 0.851,
+        "accuracy": 0.845,
+        "cohen_kappa": 0.6895
+      }
+    },
+    "co_so_dinh_luong": {
+      "model_vs_A": {
+        "n": 400,
+        "precision": 0.8737,
+        "recall": 0.5804,
+        "f1": 0.6975,
+        "accuracy": 0.82,
+        "cohen_kappa": 0.5767
+      },
+      "model_vs_B": {
+        "n": 400,
+        "precision": 0.8211,
+        "recall": 0.5909,
+        "f1": 0.6872,
+        "accuracy": 0.8225,
+        "cohen_kappa": 0.5679
+      },
+      "human_ceiling_A_vs_B": {
+        "n": 400,
+        "precision": 0.8561,
+        "recall": 0.7902,
+        "f1": 0.8218,
+        "accuracy": 0.8775,
+        "cohen_kappa": 0.7287
+      }
+    },
+    "quy_ve_bank": {
+      "model_vs_A": {
+        "n": 400,
+        "precision": 0.7752,
+        "recall": 0.8889,
+        "f1": 0.8282,
+        "accuracy": 0.7925,
+        "cohen_kappa": 0.5694
+      },
+      "model_vs_B": {
+        "n": 400,
+        "precision": 0.7674,
+        "recall": 0.8959,
+        "f1": 0.8267,
+        "accuracy": 0.7925,
+        "cohen_kappa": 0.572
+      },
+      "human_ceiling_A_vs_B": {
+        "n": 400,
+        "precision": 0.8778,
+        "recall": 0.8622,
+        "f1": 0.87,
+        "accuracy": 0.855,
+        "cohen_kappa": 0.7061
+      }
+    },
+    "co_moc_tg": {
+      "model_vs_A": {
+        "n": 400,
+        "precision": 0.9068,
+        "recall": 0.7279,
+        "f1": 0.8075,
+        "accuracy": 0.8725,
+        "cohen_kappa": 0.7139
+      },
+      "model_vs_B": {
+        "n": 400,
+        "precision": 0.9153,
+        "recall": 0.7152,
+        "f1": 0.803,
+        "accuracy": 0.8675,
+        "cohen_kappa": 0.7054
+      },
+      "human_ceiling_A_vs_B": {
+        "n": 400,
+        "precision": 0.894,
+        "recall": 0.9184,
+        "f1": 0.906,
+        "accuracy": 0.93,
+        "cohen_kappa": 0.8503
+      }
+    },
+    "spec_level": {
+      "model_vs_A": {
+        "n": 390,
+        "accuracy": 0.7179,
+        "quadratic_weighted_kappa": 0.6629,
+        "qdr_kappa": 0.587,
+        "rate_pred": {
+          "0": 0.449,
+          "1": 0.333,
+          "2": 0.218
+        },
+        "rate_true": {
+          "0": 0.382,
+          "1": 0.377,
+          "2": 0.241
+        }
+      },
+      "model_vs_B": {
+        "n": 389,
+        "accuracy": 0.7095,
+        "quadratic_weighted_kappa": 0.6484,
+        "qdr_kappa": 0.5692,
+        "rate_pred": {
+          "0": 0.445,
+          "1": 0.334,
+          "2": 0.221
+        },
+        "rate_true": {
+          "0": 0.406,
+          "1": 0.38,
+          "2": 0.213
+        }
+      },
+      "human_ceiling_A_vs_B": {
+        "n": 387,
+        "accuracy": 0.7881,
+        "quadratic_weighted_kappa": 0.7031,
+        "qdr_kappa": 0.689,
+        "rate_pred": {
+          "0": 0.408,
+          "1": 0.382,
+          "2": 0.209
+        },
+        "rate_true": {
+          "0": 0.382,
+          "1": 0.377,
+          "2": 0.24
+        }
+      }
+    }
+  },
+  "_provenance": {
+    "regenerated": "2026-07-11 P07 pre-flight (rescore only)",
+    "predictions": "experiments/eval/gold_classified.parquet (run B, unchanged)",
+    "gold": "data/gold_annot_{1,2}_relabeled.xlsx (relabel hien tai, commit 1ff50ca)",
+    "scorer": "experiments/eval_gold.py::evaluate (shared single source of truth)"
+  }
+}

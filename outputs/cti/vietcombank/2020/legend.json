@@ -1,0 +1,7 @@
+{
+  "cti": "Cheap Talk Index — share of ESG commitment chunks rated vague (spec_level=0); higher = more washing.",
+  "nar": "Named Action Rate — share citing a named action/tool (spec_level=1) but unquantified.",
+  "qdr": "Quantified Disclosure Rate — share with a figure attributable to the bank (spec_level=2).",
+  "n_commit": "Unique ESG commitment chunks in (bank, year); denominator for CTI/NAR/QDR.",
+  "spec_level": "0=vague, 1=named action, 2=quantified. CTI+NAR+QDR=1."
+}

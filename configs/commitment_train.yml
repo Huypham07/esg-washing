@@ -1,0 +1,25 @@
+# Commitment classifier (single-head) - baseline tu train
+backbone: vinai/phobert-base
+max_length: 256
+word_segment: true
+heads: [commitment]
+augment_action_500: true         # action_500 (ESG-wide) -> phu tru S/G
+augment_ml_promise: true         # ml_promise EN+FR+JA dich VI -> phu tru S/G
+en_backbone: roberta-base        # upper-bound: train+test tren EN goc
+dropout: 0.10605526046474684     # tuned (Optuna, val macro-F1 0.9092, 20 trials)
+tune:                            # Optuna TPE + MedianPruner (esgwash.models.tuning)
+  max_epochs: 10
+  space:
+    lr: [1.0e-5, 5.0e-5]
+    batch_size: [16, 32]
+    warmup_ratio: [0.0, 0.2]
+    weight_decay: [1.0e-3, 0.1]
+    dropout: [0.05, 0.3]
+train:                           # tuned; chay --tune de tim lai, copy ket qua vao day
+  lr: 4.206483775132464e-05
+  batch_size: 32
+  epochs: 10
+  warmup_ratio: 0.01899008388799873
+  weight_decay: 0.008318548857106223
+  seeds: [42, 43, 44, 45, 46]
+output_dir: outputs/models/commitment

@@ -1,0 +1,27 @@
+{
+  "model": "Qwen/Qwen3-1.7B",
+  "do_sample": false,
+  "enable_thinking": false,
+  "max_new_tokens": 512,
+  "retries": 2,
+  "torch": "2.10.0+cu128",
+  "transformers": "4.57.6",
+  "pred_column": {
+    "c1_live": "spec_level",
+    "c2_c3": "spec_level_pred"
+  },
+  "n_chunks": 390,
+  "n_vague_seeds": 149,
+  "n_fewshot": 6,
+  "c1_live_vs_gold_mismatch": "0/390",
+  "dry_run_parse_ok": "C2=5/5 C3=5/5",
+  "c2_parse_fail": 0,
+  "c3_parse_fail": 0,
+  "inv_n_base": 127,
+  "inv_overall": {
+    "flip_is_specific": 0.19881889763779528,
+    "flip_quantity_shortcut": 0.0826771653543307,
+    "flip_level2": 0.07480314960629922
+  },
+  "elapsed_sec": 7248
+}
